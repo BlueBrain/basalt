@@ -199,7 +199,6 @@ function(bob_begin_cxx_flags)
     # remove warnings for spdlog ...
     set(FLAGS "${FLAGS} -Wno-format-nonliteral")
     set(FLAGS "${FLAGS} -Wno-sign-conversion")
-    set(FLAGS "${FLAGS} -Wno-useless-cast")
     set(FLAGS "${FLAGS} -Wno-shadow")
     # -----------
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -232,6 +231,7 @@ function(bob_begin_cxx_flags)
         set(FLAGS "${FLAGS} -Wold-style-cast")
         set(FLAGS "${FLAGS} -Woverloaded-virtual")
         set(FLAGS "${FLAGS} -Wunused")
+        set(FLAGS "${FLAGS} -Wno-useless-cast")  # spdlog
         if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "6.0")
           set(FLAGS "${FLAGS} -Wduplicated-cond")
           set(FLAGS "${FLAGS} -Wmisleading-indentation")
