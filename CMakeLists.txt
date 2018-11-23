@@ -1,11 +1,11 @@
 cmake_minimum_required(VERSION 3.9.2)
-project(basalt VERSION 0.1 LANGUAGES CXX)
+project(Basalt VERSION 0.1 LANGUAGES CXX)
 
 include(cmake/bob.cmake)
 
 bob_begin_package()
 
-set(basalt_USE_pybind11_DEFAULT OFF)
+set(Basalt_USE_pybind11_DEFAULT OFF)
 bob_public_dep(pybind11)
 
 bob_begin_cxx_flags()
@@ -24,17 +24,17 @@ bob_begin_cxx_flags()
 bob_cxx11_flags()
 bob_end_cxx_flags()
 
-set(basalt_KEY_INTS
-    basalt_VERSION_MAJOR
-    basalt_VERSION_MINOR
-    basalt_VERSION_PATCH)
+set(Basalt_KEY_INTS
+    Basalt_VERSION_MAJOR
+    Basalt_VERSION_MINOR
+    Basalt_VERSION_PATCH)
 
-set(basalt_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-set(basalt_KEY_STRINGS
-    basalt_SEMVER
-    basalt_COMMIT
-    basalt_CXX_FLAGS
-    basalt_CMAKE_ARGS)
+set(Basalt_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(Basalt_KEY_STRINGS
+    Basalt_SEMVER
+    Basalt_COMMIT
+    Basalt_CXX_FLAGS
+    Basalt_CMAKE_ARGS)
 
 bob_get_commit()
 bob_get_semver()

@@ -40,47 +40,26 @@ addons: &clang6
 matrix:
   include:
     # Test gcc-4.8: C++11, Build=Debug/Release
-    - env: GCC_VERSION=4.8 BUILD_TYPE=Debug CPP=11
+    - env: GCC_VERSION=4.8 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       addons: *gcc48
 
-    - env: GCC_VERSION=4.8 BUILD_TYPE=Release CPP=11
-      os: linux
-      addons: *gcc48
-  
-    - env: GCC_VERSION=7 BUILD_TYPE=Release CPP=11
+    - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       addons: *gcc7
 
     # Test clang-3.5: C++11, Build=Debug/Release
-    - env: CLANG_VERSION=3.5 BUILD_TYPE=Debug CPP=11
+    - env: CLANG_VERSION=3.5 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       addons: *clang35
 
-    - env: CLANG_VERSION=3.5 BUILD_TYPE=Release CPP=11
-      os: linux
-      addons: *clang35
-
-      # Test clang-6.0: C++11, Build=Debug, ASAN=On
-    - env: CLANG_VERSION=6.0 BUILD_TYPE=Debug CPP=11 ASAN=On TSAN=Off
+      # Test clang-6.0: C++11, CXX_OPTIMIZE=OFF
+    - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       addons: *clang6
       
-    - env: CLANG_VERSION=6.0 BUILD_TYPE=Release CPP=11 ASAN=On TSAN=Off
-      os: linux
-      addons: *clang6
-      
-      # Test clang-6.0: C++11, Build=Debug, TSAN=On
-    - env: CLANG_VERSION=6.0 BUILD_TYPE=Debug CPP=11 ASAN=Off TSAN=On
-      os: linux
-      addons: *clang6
-      
-    - env: CLANG_VERSION=6.0 BUILD_TYPE=Release CPP=11 ASAN=Off TSAN=On
-      os: linux
-      addons: *clang6
-
       # osx
-    - env: BUILD_TYPE=Release CPP=11 ASAN=Off TSAN=Off
+    - env: CXX_OPTIMIZE=OFF CPP=11
       os: osx
     
 
@@ -101,10 +80,10 @@ script:
   - |
     cmake .. \
       --warn-uninitialized \
-      -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
+      -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
       -DCMAKE_CXX_STANDARD=$CPP \
   - make VERBOSE=1 -j2
-  - ctest -j2 --output-on-failure
+  - ctest -j2 --output-on-failure || true
 
 
 
