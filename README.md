@@ -40,4 +40,6 @@ Contributions are welcome, via GitHub pull-requests and bug tracker.
 ## pull-requests
 
 Please make sure to execute `dev/clang-format.sh` and `dev/clang-tidy.sh`
-before submitting a patch.
+before submitting a patch. Also use 
+[cmake-format](https://github.com/cheshirekow/cmake_format)
+to format your CMake changes.
