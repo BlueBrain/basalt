@@ -1,8 +1,9 @@
+#include <basalt/network.hh>
+
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/sinks/rotating_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-#include <basalt/network.hh>
 
 namespace basalt {
 

@@ -1,11 +1,9 @@
 #ifndef BASALT_NETWORK_HH
 #define BASALT_NETWORK_HH
 
-#include <cassert>
-#include <cstdlib>
-#include <iostream>
+#include <iosfwd>
+#include <memory>
 #include <string>
-#include <type_traits>
 #include <utility>
 #include <vector>
 

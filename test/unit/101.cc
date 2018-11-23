@@ -25,7 +25,7 @@ checked_insert(network_t& g, network_t::node_t type, network_t::node_id_t id,
     return result.first;
 }
 
-void check_is_ok(const basalt::status_t& status) { REQUIRE(status); }
+static void check_is_ok(const basalt::status_t& status) { REQUIRE(status); }
 
 namespace bbp {
 namespace in_silico {
