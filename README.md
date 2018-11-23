@@ -1,5 +1,7 @@
 # Basalt - C++11 Graph Storage library
 
+Basic graph database backed by RocksDB key-value storage [![Build Status](https://travis-ci.org/tristan0x/basalt.svg?branch=master)](https://travis-ci.org/tristan0x/basalt)
+
 # Build instruction
 
 [CMake](https://cmake.org) is required to build this library.
