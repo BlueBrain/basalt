@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.9.2)
+cmake_minimum_required(VERSION 3.5.1)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 project(Basalt VERSION 0.1 LANGUAGES CXX)
 
 include(cmake/bob.cmake)
@@ -39,11 +40,15 @@ set(Basalt_KEY_STRINGS
 bob_get_commit()
 bob_get_semver()
 
+find_package(RocksDB 4.1.0 REQUIRED)
+
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
 include_directories(${basalt_include_directory})
 
-set(catch2_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
-set(spdlog_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
+set(catch2_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
+set(spdlog_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 
 add_subdirectory(src)
 add_subdirectory(test/unit)
