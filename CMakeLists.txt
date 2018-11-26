@@ -42,8 +42,10 @@ bob_get_semver()
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
 include_directories(${basalt_include_directory})
 
-set(catch2_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
-set(spdlog_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
+set(catch2_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
+set(spdlog_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 
 add_subdirectory(src)
 add_subdirectory(test/unit)

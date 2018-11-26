@@ -3,7 +3,7 @@
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
-#include <basalt/network.hh>
+#include <basalt/basalt.hpp>
 
 using basalt::network_t;
 
@@ -20,7 +20,7 @@ template <typename Payload>
 inline network_t::node_uid_t
 checked_insert(network_t& g, network_t::node_t type, network_t::node_id_t id,
                const Payload& payload) {
-    const auto result = g.insert(type, id, payload);
+    const auto result = g.nodes().insert(type, id, payload);
     REQUIRE(result.second);
     return result.first;
 }
@@ -95,14 +95,14 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     check_is_ok(g.commit());
 
     // connect the 2 synapses together
-    check_is_ok(g.connect(s0, s1));
+    check_is_ok(g.connections().connect(s0, s1));
 
     // connect synapse 0 to the 2 astrocytes
-    check_is_ok(g.connect(s0, {a0, a1}));
+    check_is_ok(g.connections().connect(s0, {a0, a1}));
 
     network_t::node_uids_t nodes;
-    // get all nodes connected to synapse 0
-    check_is_ok(g.get(s0, nodes));
+    // get all nodes_t connected to synapse 0
+    check_is_ok(g.connections().get(s0, nodes));
     for (auto const& node : nodes) {
         std::cout << s0 << " ↔ " << node << std::endl;
         // (S:0) ↔ (S:1)
@@ -112,10 +112,22 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
 
     nodes.clear();
     // only get astrocytes connected to synapse 0
-    check_is_ok(g.get(s0, node_type::astrocyte, nodes));
+    check_is_ok(g.connections().get(s0, node_type::astrocyte, nodes));
     for (auto const& astrocyte : nodes) {
         std::cout << s0 << " ↔ " << astrocyte << std::endl;
         // (S:0) ↔ (A:0)
         // (S:0) ↔ (A:1)
+    }
+
+    // iterate over all nodes
+    for (const auto& node: g.nodes()) {
+        std::cout << node << std::endl;
+    }
+    // iterator over second of nodes
+    auto count = 0lu;
+    g.nodes().count(count).raise_on_error();
+    const auto nodes_end = g.nodes().end();
+    for (auto node = g.nodes().begin(count/ 2); node != nodes_end; ++node) {
+        std::cout << *node << std::endl;
     }
 }
