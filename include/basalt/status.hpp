@@ -4,6 +4,10 @@
 #include <iosfwd>
 #include <string>
 
+#include <basalt/fwd.hpp>
+
+/// /todo TCL move node_uid_t outside network_t ?
+
 namespace basalt {
 struct status_t {
     status_t(int code_, std::string message_);
@@ -12,7 +16,10 @@ struct status_t {
     inline bool operator!() const noexcept { return code != 0; }
     inline explicit operator bool() const noexcept { return code == 0; }
     void raise_on_error() const;
-    static const status_t& not_implemented();
+
+    static const status_t& error_not_implemented();
+    static status_t error_missing_node(const node_uid_t& node);
+    static const status_t& ok();
 
     const int code;
     const std::string& message;

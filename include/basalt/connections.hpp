@@ -2,23 +2,23 @@
 #define BASALT_CONNECTIONS_HPP
 
 #include <basalt/fwd.hpp>
-#include <basalt/network.hpp>
 #include <basalt/status.hpp>
 
 namespace basalt {
 
 class connections_t {
   public:
-    explicit connections_t(network_pimpl_t& pimpl);
+    explicit connections_t(network_impl_t& pimpl);
     /**
      * \brief Create an edge between 2 nodes.
      * Connection can be inserted even if nodes aren't yet in the graph.
      * It is visible only if both nodes are inserted.
      * \param commit whether uncommitted operations should be flushed or not
+
      * \return information whether operation succeeded or not
      */
-    status_t connect(const network_t::node_uid_t& node1,
-                     const network_t::node_uid_t& node2, bool commit = false)
+    status_t connect(const node_uid_t& node1, const node_uid_t& node2,
+                     const payload_t& payload = {}, bool commit = false)
         __attribute__((warn_unused_result));
 
     /**
@@ -26,8 +26,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t connect(const network_t::node_uid_t& node,
-                     const network_t::node_uids_t& nodes, bool commit = false);
+    status_t connect(const node_uid_t& node, const node_uids_t& nodes,
+                     const payload_t& payload = {}, bool commit = false);
 
     /**
      * \brief check connectivity between 2 nodes
@@ -37,9 +37,8 @@ class connections_t {
      * are connected, false otherwise. The \a second member provides
      * information whether operation succeeded or not
      */
-    std::pair<bool, status_t>
-    connected(const network_t::node_uid_t& node1,
-              const network_t::node_uid_t& node2) const
+    std::pair<bool, status_t> connected(const node_uid_t& node1,
+                                        const node_uid_t& node2) const
         __attribute__((warn_unused_result));
 
     /**
@@ -48,8 +47,7 @@ class connections_t {
      * \param connections accumulator where connected nodes are added.
      * \return information whether operation succeeded or not
      */
-    status_t get(const network_t::node_uid_t& node,
-                 network_t::node_uids_t& connections) const
+    status_t get(const node_uid_t& node, node_uids_t& connections) const
         __attribute__((warn_unused_result));
 
     /**
@@ -59,8 +57,8 @@ class connections_t {
      * \param connections accumulator where connected nodes are added
      * \return information whether operation succeeded or not
      */
-    status_t get(const network_t::node_uid_t& node, network_t::node_t filter,
-                 network_t::node_uids_t& connections) const
+    status_t get(const node_uid_t& node, node_t filter,
+                 node_uids_t& connections) const
         __attribute__((warn_unused_result));
 
     /**
@@ -68,9 +66,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const network_t::node_uid_t& node1,
-                   const network_t::node_uid_t& node2, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node1, const node_uid_t& node2,
+                   bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief remove connections of a given type
@@ -80,24 +77,22 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const network_t::node_uid_t& node, network_t::node_t filter,
-                   size_t& removed, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node, node_t filter, size_t& removed,
+                   bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief remove all connections of a node
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase_connections(const network_t::node_uid_t& node,
-                               bool commit = false)
+    status_t erase(const node_uid_t& node, bool commit = false)
         __attribute__((warn_unused_result));
 
     std::pair<std::size_t, status_t> count() const
         __attribute__((warn_unused_result));
 
   private:
-    network_pimpl_t& pimpl_;
+    network_impl_t& pimpl_;
 };
 
 } // namespace basalt

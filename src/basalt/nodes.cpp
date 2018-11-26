@@ -1,27 +1,25 @@
 #include <basalt/node_iterator.hpp>
 #include <basalt/nodes.hpp>
 
-#include "network_pimpl.hpp"
+#include "network_impl.hpp"
 
 namespace basalt {
 
-nodes_t::nodes_t(network_pimpl_t& pimpl) : pimpl_(pimpl) {}
+nodes_t::nodes_t(network_impl_t& pimpl) : pimpl_(pimpl) {}
 
 nodes_t::~nodes_t() = default;
 
-status_t nodes_t::erase(const network_t::node_uid_t& id, bool commit) {
-    pimpl_.logger_get()->debug("erase(id={}, commit={})", id, commit);
-    return status_t::not_implemented();
+status_t nodes_t::has(const node_uid_t& node, bool& result) const {
+    return pimpl_.nodes_has(node, result);
 }
 
-status_t nodes_t::erase(const network_t::node_uids_t& ids, bool commit) {
-    pimpl_.logger_get()->debug("erase(ids={}, commit={})", ids, commit);
-    return status_t::not_implemented();
+status_t nodes_t::erase(const node_uid_t& node, bool commit) {
+    return pimpl_.nodes_erase(node, commit);
 }
 
 status_t nodes_t::count(std::size_t& count) const {
     count = 0;
-    return status_t::not_implemented();
+    return status_t::error_not_implemented();
 }
 
 node_iterator nodes_t::begin(size_t pos) const {

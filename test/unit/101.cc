@@ -6,6 +6,10 @@
 #include <basalt/basalt.hpp>
 
 using basalt::network_t;
+using basalt::node_id_t;
+using basalt::node_t;
+using basalt::node_uid_t;
+using basalt::node_uids_t;
 
 /**
  * \brief Helper function adding a node to a graph and checking operation
@@ -17,8 +21,8 @@ using basalt::network_t;
  * \return node unique identifier
  */
 template <typename Payload>
-inline network_t::node_uid_t
-checked_insert(network_t& g, network_t::node_t type, network_t::node_id_t id,
+inline node_uid_t
+checked_insert(network_t& g, node_t type, node_id_t id,
                const Payload& payload) {
     const auto result = g.nodes().insert(type, id, payload);
     REQUIRE(result.second);
@@ -100,7 +104,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     // connect synapse 0 to the 2 astrocytes
     check_is_ok(g.connections().connect(s0, {a0, a1}));
 
-    network_t::node_uids_t nodes;
+    node_uids_t nodes;
     // get all nodes_t connected to synapse 0
     check_is_ok(g.connections().get(s0, nodes));
     for (auto const& node : nodes) {

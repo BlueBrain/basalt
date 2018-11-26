@@ -2,13 +2,14 @@
 #define BASALT_NETWORK_HXX
 
 #include <basalt/network.hpp>
+#include <basalt/status.hpp>
 
 namespace basalt {
 
 template <typename T>
-std::pair<network_t::node_uid_t, status_t>
-nodes_t::insert(network_t::node_t type, network_t::node_id_t id,
-                const T& /*payload*/, bool /*commit*/) {
+std::pair<node_uid_t, status_t> nodes_t::insert(node_t type, node_id_t id,
+                                                const T& /*payload*/,
+                                                bool /*commit*/) {
     return {{type, id}, {1, "operation-no-implemented"}};
 }
 
@@ -20,8 +21,8 @@ nodes_t::insert(network_t::node_t type, network_t::node_id_t id,
  * \return information whether operation succeeded or not
  */
 template <typename T>
-status_t nodes_t::get(network_t::node_uid_t /*uid*/, T& /*payload*/) const {
-    return {1, "operation-no-implemented"};
+status_t nodes_t::get(node_uid_t /*uid*/, T& /*payload*/) const {
+    return status_t::error_not_implemented();
 }
 
 } // namespace basalt

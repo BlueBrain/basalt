@@ -3,15 +3,15 @@
 
 #include <iterator>
 
-#include <basalt/network.hpp>
+#include <basalt/fwd.hpp>
 
 namespace basalt {
 
 /// \brief Iterator class for nodes
-class node_iterator : public std::iterator<std::input_iterator_tag,
-                                           const network_t::node_uid_t> {
+class node_iterator
+    : public std::iterator<std::input_iterator_tag, const node_uid_t> {
   public:
-    node_iterator(const network_pimpl_t& pimpl, size_t from);
+    node_iterator(const network_impl_t& pimpl, size_t from);
     node_iterator(const node_iterator& rhs);
     node_iterator& operator++() { return *this; }
     node_iterator& operator++(int) { return *this; }
@@ -20,7 +20,7 @@ class node_iterator : public std::iterator<std::input_iterator_tag,
     const value_type& operator*();
 
   private:
-    const network_pimpl_t& pimpl_;
+    const network_impl_t& pimpl_;
 };
 
 } // namespace basalt

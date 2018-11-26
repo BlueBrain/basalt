@@ -9,7 +9,7 @@ namespace basalt {
 
 class nodes_t {
   public:
-    explicit nodes_t(network_pimpl_t& pimpl);
+    explicit nodes_t(network_impl_t& pimpl);
     ~nodes_t();
     /**
      * \brief Iterate over nodes
@@ -39,9 +39,9 @@ class nodes_t {
      * \return information whether operation succeeded or not
      */
     template <typename T>
-    std::pair<network_t::node_uid_t, status_t>
-    insert(network_t::node_t type, network_t::node_id_t id, const T& payload,
-           bool commit = false) __attribute__((warn_unused_result));
+    std::pair<node_uid_t, status_t>
+    insert(node_t type, node_id_t id, const T& payload, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief Retrieve a node from the graph
@@ -51,32 +51,23 @@ class nodes_t {
      * \return information whether operation succeeded or not
      */
     template <typename T>
-    status_t get(network_t::node_uid_t uid, T& payload) const
+    status_t get(node_uid_t uid, T& payload) const
         __attribute__((warn_unused_result));
 
-    status_t has(const network_t::node_id_t& node, bool& result) const
+    status_t has(const node_uid_t& node, bool& result) const
         __attribute__((warn_unused_result));
 
     /**
      * \brief Remove a node from the graph
-     * \param id pair of node type and identifier
+     * \param node pair of node type and identifier
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const network_t::node_uid_t& id, bool commit = false)
-        __attribute__((warn_unused_result));
-
-    /**
-     * \brief Remove several nodes from the graph
-     * \param ids vector if pair of node types and identifiers
-     * \param commit whether uncommitted operations should be flushed or not
-     * \return information whether operation succeeded or not
-     */
-    status_t erase(const network_t::node_uids_t& ids, bool commit = false)
+    status_t erase(const node_uid_t& node, bool commit = false)
         __attribute__((warn_unused_result));
 
   private:
-    network_pimpl_t& pimpl_;
+    network_impl_t& pimpl_;
 };
 } // namespace basalt
 

@@ -1,6 +1,7 @@
 set(basalt_SOURCES
     basalt/network.cpp
-    basalt/network_pimpl.hpp
+    basalt/network_impl.cpp
+    basalt/network_impl.hpp
     basalt/nodes.cpp
     basalt/node_iterator.cpp
     basalt/connections.cpp
@@ -15,3 +16,4 @@ set(basalt_HEADERS
 include_directories(${spdlog_include_directory}
                     ${CMAKE_CURRENT_SOURCE_DIR}/basalt)
 add_library(basalt ${basalt_SOURCES} ${basalt_HEADERS})
+target_link_libraries(basalt ${RocksDB_LIBRARIES})
