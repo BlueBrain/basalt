@@ -10,6 +10,7 @@ namespace basalt {
 /// Forward declarations
 class connections_t;
 class network_impl_t;
+class node_iterator_impl;
 class node_iterator;
 class nodes_t;
 

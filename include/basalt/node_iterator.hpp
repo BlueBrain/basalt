@@ -1,6 +1,7 @@
 #ifndef BASALT_NODE_ITERATOR_HPP
 #define BASALT_NODE_ITERATOR_HPP
 
+#include <memory>
 #include <iterator>
 
 #include <basalt/fwd.hpp>
@@ -20,7 +21,7 @@ class node_iterator
     const value_type& operator*();
 
   private:
-    const network_impl_t& pimpl_;
+    std::shared_ptr<node_iterator_impl> pimpl_;
 };
 
 } // namespace basalt
