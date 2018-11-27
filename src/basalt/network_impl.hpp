@@ -50,6 +50,9 @@ class network_impl_t {
     inline const db_t& db_get() const noexcept { return this->db_; }
     inline db_t& db_get() noexcept { return this->db_; }
 
+    /** \name Key encoding/decoding functions
+     *  \{
+     */
     static void encode(const node_uid_t& node, node_key_t& key);
     static void encode_connection_prefix(const node_uid_t& node,
                                          connection_key_prefix_t& key);
@@ -59,8 +62,14 @@ class network_impl_t {
                        connection_key_t& key);
     static void encode(const node_uid_t& node1, const node_uid_t& node2,
                        connection_keys_t& key);
+    static void
+    encode_reversed_connection(const char* data, size_t size,
+                               network_impl_t::connection_key_t& key);
     static void decode_connection_dest(const char* data, size_t size,
                                        node_uid_t& uid);
+    /**
+     *  \}
+     */
 
     status_t nodes_has(const node_uid_t& node, bool& result) const;
     status_t nodes_erase(const node_uid_t& node, bool commit);
@@ -87,7 +96,7 @@ class network_impl_t {
 
     status_t connections_erase(const node_uid_t& node, node_t filter,
                                size_t& removed, bool commit);
-    status_t connections_erase(const node_uid_t& node, bool commit);
+    status_t connections_erase(const node_uid_t& node, std::size_t& removed, bool commit);
 
     status_t commit();
 

@@ -83,9 +83,10 @@ class connections_t {
     /**
      * \brief remove all connections of a node
      * \param commit whether uncommitted operations should be flushed or not
+     * \param removed number of nodes removed during the operation
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node, bool commit = false)
+    status_t erase(const node_uid_t& node, std::size_t& removed, bool commit = false)
         __attribute__((warn_unused_result));
 
     std::pair<std::size_t, status_t> count() const

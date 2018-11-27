@@ -44,8 +44,8 @@ status_t connections_t::erase(const node_uid_t& node, node_t filter,
     return pimpl_.connections_erase(node, filter, removed, commit);
 }
 
-status_t connections_t::erase(const node_uid_t& node, bool commit) {
-    return pimpl_.connections_erase(node, commit);
+status_t connections_t::erase(const node_uid_t& node, std::size_t& removed, bool commit) {
+    return pimpl_.connections_erase(node, removed, commit);
 }
 
 } // namespace basalt

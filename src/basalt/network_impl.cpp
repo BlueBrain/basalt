@@ -103,6 +103,16 @@ void network_impl_t::decode_connection_dest(const char* data, size_t size,
                  sizeof(node_id_t));
 }
 
+void network_impl_t::encode_reversed_connection(
+    const char* data, size_t size, connection_key_t& key) {
+    assert(size == std::tuple_size<connection_key_t>::value);
+    key[0] = 'E';
+    std::strncpy(key.data() + 1, data + 1 + sizeof(node_t) + sizeof(node_id_t),
+                 sizeof(node_t) + sizeof(node_id_t));
+    std::strncpy(key.data() + 1 + sizeof(node_t) + sizeof(node_id_t),
+                 data + 1, sizeof(node_t) + sizeof(node_id_t));
+}
+
 status_t network_impl_t::to_status(const rocksdb::Status& status) {
     return {status.code(), status.ToString()};
 }
@@ -111,7 +121,7 @@ status_t network_impl_t::to_status(const rocksdb::Status& status) {
 
 status_t network_impl_t::nodes_has(const basalt::node_uid_t& node,
                                    bool& result) const {
-    logger_get()->debug("has(node={})", node);
+    logger_get()->debug("nodes_has(node={})", node);
     node_key_t key;
     encode(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -120,20 +130,26 @@ status_t network_impl_t::nodes_has(const basalt::node_uid_t& node,
     return status_t::ok();
 }
 
+/// \todo TCL use a single batch
 status_t network_impl_t::nodes_erase(const node_uid_t& node, bool commit) {
-    logger_get()->debug("erase(node={}, commit={})", node, commit);
+    logger_get()->debug("nodes_erase(node={}, commit={})", node, commit);
     node_key_t key;
     encode(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
     const auto result = db_get()->SingleDelete(async_write, slice);
+    auto removed = 0ul;
+    connections_erase(node, removed, commit);
     return to_status(result);
 }
+
+///// connections methods
 
 status_t network_impl_t::connections_connect(const node_uid_t& node1,
                                              const node_uid_t& node2,
                                              const payload_t& data,
                                              bool commit) {
-    logger_get()->debug("connect(node1={}, node2={}, commit={})", node1, node2, commit);
+    logger_get()->debug("connections_connect(node1={}, node2={}, commit={})",
+                        node1, node2, commit);
     { // check presence of both nodes
         bool node_present;
         nodes_has(node1, node_present).raise_on_error();
@@ -161,7 +177,8 @@ status_t network_impl_t::connections_connect(const node_uid_t& node,
                                              const node_uids_t& nodes,
                                              const payload_t& payload,
                                              bool commit) {
-    logger_get()->debug("connect(node={}, nodes={}, commit={})", node, nodes, commit);
+    logger_get()->debug("connections_connect(node={}, nodes={}, commit={})",
+                        node, nodes, commit);
     { // check presence of both nodes
         bool node_present;
         nodes_has(node, node_present).raise_on_error();
@@ -192,7 +209,8 @@ status_t network_impl_t::connections_connect(const node_uid_t& node,
 std::pair<bool, status_t>
 network_impl_t::connections_connected(const basalt::node_uid_t& node1,
                                       const basalt::node_uid_t& node2) const {
-    logger_get()->debug("connected(node1={}, node2={})", node1, node2);
+    logger_get()->debug("connections_connected(node1={}, node2={})", node1,
+                        node2);
     connection_key_t key;
     encode(node1, node2, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -202,7 +220,8 @@ network_impl_t::connections_connected(const basalt::node_uid_t& node1,
 
 status_t network_impl_t::connections_get(const node_uid_t& node,
                                          node_uids_t& connections) const {
-    logger_get()->debug("get(node={}, connections={})", node, connections);
+    logger_get()->debug("connections_get(node={}, connections={})", node,
+                        connections);
     connection_key_prefix_t key;
     encode_connection_prefix(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -226,7 +245,8 @@ status_t network_impl_t::connections_get(const node_uid_t& node,
 
 status_t network_impl_t::connections_get(const node_uid_t& node, node_t filter,
                                          node_uids_t& connections) const {
-    logger_get()->debug("get(node={}, filter={}, connections={})", node, filter, connections);
+    logger_get()->debug("connections_get(node={}, filter={}, connections={})",
+                        node, filter, connections);
     connection_key_type_prefix_t key;
     encode_connection_prefix(node, filter, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -251,7 +271,8 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_t filter,
 status_t network_impl_t::connections_erase(const node_uid_t& node1,
                                            const node_uid_t& node2,
                                            bool commit) {
-    logger_get()->debug("erase(node1={}, node2={}, commit={})", node1, node2, commit);
+    logger_get()->debug("connections_erase(node1={}, node2={}, commit={})",
+                        node1, node2, commit);
 
     connection_keys_t keys;
     encode(node1, node2, keys);
@@ -262,26 +283,106 @@ status_t network_impl_t::connections_erase(const node_uid_t& node1,
         batch.Delete(key_slice);
     }
     return to_status(db_get()->Write(async_write, &batch));
+}
 
+status_t network_impl_t::connections_erase(const node_uid_t& node,
+                                           size_t& removed,
+                                           bool commit) {
+    logger_get()->debug("connections_erase(node={}, commit={})", node, commit);
+    connection_key_prefix_t key;
+    encode_connection_prefix(node, key);
+    const rocksdb::Slice slice(key.data(), key.size());
+    auto iter = db_get()->NewIterator(default_read_options);
+    iter->Seek(slice);
+    if (!iter->status().ok()) {
+        removed = 0;
+        return to_status(iter->status());
+    }
+    rocksdb::WriteBatch batch;
+    // iterate over all connections
+    auto connections = 0ul;
+    while (iter->Valid()) {
+        // remove the key
+        auto const& conn_slice = iter->key();
+        batch.Delete(conn_slice);
+
+        // remove the reverse connection
+        connection_key_t reversed_key;
+        encode_reversed_connection(conn_slice.data(), conn_slice.size(),
+                                   reversed_key);
+        ;
+        batch.Delete(rocksdb::Slice(reversed_key.data(),
+          reversed_key.size()));
+        ++connections;
+        iter->Next();
+        {
+            const auto &next_status = iter->status();
+            if (!next_status.ok()) {
+                removed = 0;
+                return to_status(next_status);
+            }
+        }
+    }
+    auto const& status = to_status(db_get()->Write(async_write, &batch));
+    if (status) {
+        removed = connections;
+    } else {
+        removed = 0;
+    }
+    return status;
 }
 
 status_t network_impl_t::connections_erase(const node_uid_t& node,
                                            node_t filter, size_t& removed,
                                            bool commit) {
-    logger_get()->debug("erase(node={}, filter={}, commit={})", node, filter, commit);
-    removed = 0;
-    return status_t::error_not_implemented();
-}
+    logger_get()->debug("connections_erase(node={}, filter={}, commit={})",
+                        node, filter, commit);
+    connection_key_type_prefix_t  key;
+    encode_connection_prefix(node, filter, key);
+    auto iter = db_get()->NewIterator(default_read_options);
+    iter->Seek(rocksdb::Slice(key.data(), key.size()));
+    if (!iter->status().ok()) {
+        removed = 0;
+        return to_status(iter->status());
+    }
 
-status_t network_impl_t::connections_erase(const node_uid_t& node,
-                                           bool commit) {
-    logger_get()->debug("erase_connections(node={}, commit={})", node, commit);
-    return status_t::error_not_implemented();
+    // iterate over all connections
+    rocksdb::WriteBatch batch;
+    auto connections = 0ul;
+    while (iter->Valid()) {
+        auto const& conn_slice = iter->key();
+        batch.Delete(conn_slice);
+
+        // remove the reverse connection
+        connection_key_t reversed_key;
+        encode_reversed_connection(conn_slice.data(), conn_slice.size(),
+        reversed_key);
+        batch.Delete(rocksdb::Slice(reversed_key.data(), reversed_key.size()));
+        ++connections;
+        iter->Next();
+        {
+            const auto &next_status = iter->status();
+            if (!next_status.ok()) {
+                removed = 0;
+                return to_status(next_status);
+            }
+        }
+    }
+    { // commit changes
+        const auto &status = to_status(db_get()->Write(async_write, &batch));
+        if (!status) {
+            removed = 0;
+        } else {
+            removed = connections;
+        }
+        return status;
+    }
+
 }
 
 status_t network_impl_t::commit() {
     logger_get()->debug("commit()");
-    return status_t::error_not_implemented();
+    return to_status(db_get()->Flush(rocksdb::FlushOptions()));
 }
 
 } // namespace basalt

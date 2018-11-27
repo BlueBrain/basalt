@@ -1,6 +1,6 @@
 #include <ostream>
-#include <stdexcept>
 #include <sstream>
+#include <stdexcept>
 
 #include <basalt/network.hpp>
 #include <basalt/status.hpp>
