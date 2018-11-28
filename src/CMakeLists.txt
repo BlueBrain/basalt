@@ -3,13 +3,13 @@ set(basalt_SOURCES
     basalt/network_impl.cpp
     basalt/network_impl.hpp
     basalt/nodes.cpp
-        basalt/node_iterator_impl.hpp
-        basalt/node_iterator_impl.cpp
+    basalt/node_iterator_impl.hpp
+    basalt/node_iterator_impl.cpp
     basalt/node_iterator.cpp
     basalt/connections.cpp
     basalt/status.cpp
-        basalt/graph.hpp
-        basalt/graph.cpp)
+    basalt/graph.hpp
+    basalt/graph.cpp)
 set(basalt_HEADERS
     ${basalt_include_directory}/basalt/connections.hpp
     ${basalt_include_directory}/basalt/fwd.hpp

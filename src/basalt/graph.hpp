@@ -18,7 +18,10 @@ class graph {
         std::array<char, 1 + 2 * (sizeof(node_id_t) + sizeof(node_t))>;
     using connection_keys_t = std::array<connection_key_t, 2>;
 
-    /** \name Key encoding/decoding functions
+    constexpr static auto connection_key_size =
+        std::tuple_size<connection_key_t>::value;
+
+    /** \name Key encoding functions
      *  \{
      */
     static void encode(const node_uid_t& node, node_key_t& key);
@@ -32,10 +35,18 @@ class graph {
                        connection_keys_t& key);
     static void encode_reversed_connection(const char* data, size_t size,
                                            connection_key_t& key);
-    static void decode_connection_dest(const char* data, size_t size,
-                                       node_uid_t& uid);
     /**
      *  \}
+     */
+
+    /** \name Key decoding functions
+     * \{
+     */
+    static void decode_connection_dest(const char* data, size_t size,
+                                       node_uid_t& uid);
+    static void decode_node(const char* data, size_t size, node_uid_t& node);
+    /**
+     * \}
      */
 };
 

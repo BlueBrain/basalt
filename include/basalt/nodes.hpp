@@ -30,12 +30,23 @@ class nodes_t {
         __attribute__((warn_unused_result));
 
     /**
+     * \brief Insert a node in the graph
+     * \param type node type
+     * \param id node identifier
+     * \param node unique node identifier returned to caller
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    status_t insert(node_t type, node_id_t id, node_uid_t& node,
+                    bool commit = false) __attribute__((warn_unused_result));
+
+    /**
      * \brief Insert a node in the graph.
      * \tparam T node payload type
      * \param type node type
      * \param id node identifier
      * \param payload node payload
-     * \param res unique node identifier returned to caller
+     * \param node unique node identifier returned to caller
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
@@ -44,17 +55,36 @@ class nodes_t {
                     node_uid_t& res, bool commit = false)
         __attribute__((warn_unused_result));
 
+    status_t insert(node_t type, node_id_t id, const char* data,
+                    std::size_t size, node_uid_t& node, bool commit = false)
+        __attribute__((warn_unused_result));
+
     /**
      * \brief Retrieve a node from the graph
      * \tparam T node payload type
-     * \param uid node unique identifier
+     * \param node node unique identifier
      * \param payload object updated if node is present
      * \return information whether operation succeeded or not
      */
     template <typename T>
-    status_t get(node_uid_t uid, T& payload) const
+    status_t get(const node_uid_t& node, T& payload) const
         __attribute__((warn_unused_result));
 
+    /**
+     * \brief Retrive a node from the graph
+     * \param node node unique identifier
+     * \param value payload object updated if not is present
+     * \return information whether operation succeeded or not
+     */
+    status_t get(const node_uid_t& node, std::string* value) const
+        __attribute__((warn_unused_result));
+
+    /**
+     * \brief Check presence of a node in the graph
+     * \param node node unique identifier
+     * \param result reference set to true if node exists, false otherwise
+     * \return information whether operation managed to update \a result
+     */
     status_t has(const node_uid_t& node, bool& result) const
         __attribute__((warn_unused_result));
 

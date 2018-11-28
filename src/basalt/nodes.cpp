@@ -1,3 +1,5 @@
+#include <limits>
+
 #include <basalt/node_iterator.hpp>
 #include <basalt/nodes.hpp>
 
@@ -9,8 +11,23 @@ nodes_t::nodes_t(network_impl_t& pimpl) : pimpl_(pimpl) {}
 
 nodes_t::~nodes_t() = default;
 
+status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id,
+                         const char* data, std::size_t size,
+                         basalt::node_uid_t& node, bool commit) {
+    return pimpl_.nodes_insert(type, id, data, size, node, commit);
+}
+
+status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id,
+                         basalt::node_uid_t& node, bool commit) {
+    return pimpl_.nodes_insert(type, id, node, commit);
+}
+
 status_t nodes_t::has(const node_uid_t& node, bool& result) const {
     return pimpl_.nodes_has(node, result);
+}
+
+status_t nodes_t::get(const basalt::node_uid_t& node, std::string* value) const {
+    return pimpl_.nodes_get(node, value);
 }
 
 status_t nodes_t::erase(const node_uid_t& node, bool commit) {
@@ -27,9 +44,7 @@ node_iterator nodes_t::begin(size_t pos) const {
 }
 
 node_iterator nodes_t::end() const {
-    auto count = 0lu;
-    pimpl_.nodes_get().count(count).raise_on_error();
-    return node_iterator(pimpl_, count);
+    return node_iterator(pimpl_, std::numeric_limits<std::size_t>::max());
 }
 
 } // namespace basalt

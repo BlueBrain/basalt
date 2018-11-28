@@ -6,10 +6,11 @@
 namespace rocksdb {
 
 /// forward declaration
+class ColumnFamilyHandle;
 class DB;
-class Status;
 class Iterator;
-
+class Status;
+class WriteBatch;
 } // namespace rocksdb
 
 namespace spdlog {
