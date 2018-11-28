@@ -24,9 +24,10 @@ template <typename Payload>
 inline node_uid_t
 checked_insert(network_t& g, node_t type, node_id_t id,
                const Payload& payload) {
-    const auto result = g.nodes().insert(type, id, payload);
-    REQUIRE(result.second);
-    return result.first;
+    node_uid_t nuid;
+    const auto result = g.nodes().insert(type, id, payload, nuid);
+    REQUIRE(result);
+    return nuid;
 }
 
 static void check_is_ok(const basalt::status_t& status) { REQUIRE(status); }

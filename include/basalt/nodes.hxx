@@ -7,10 +7,10 @@
 namespace basalt {
 
 template <typename T>
-std::pair<node_uid_t, status_t> nodes_t::insert(node_t type, node_id_t id,
-                                                const T& /*payload*/,
-                                                bool /*commit*/) {
-    return {{type, id}, {1, "operation-no-implemented"}};
+status_t nodes_t::insert(node_t type, node_id_t id, const T& /*payload*/,
+                         node_uid_t& res, bool /*commit*/) {
+    res = {type, id};
+    return status_t::error_not_implemented();
 }
 
 /**

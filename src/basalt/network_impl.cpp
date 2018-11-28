@@ -103,14 +103,14 @@ void network_impl_t::decode_connection_dest(const char* data, size_t size,
                  sizeof(node_id_t));
 }
 
-void network_impl_t::encode_reversed_connection(
-    const char* data, size_t size, connection_key_t& key) {
+void network_impl_t::encode_reversed_connection(const char* data, size_t size,
+                                                connection_key_t& key) {
     assert(size == std::tuple_size<connection_key_t>::value);
     key[0] = 'E';
     std::strncpy(key.data() + 1, data + 1 + sizeof(node_t) + sizeof(node_id_t),
                  sizeof(node_t) + sizeof(node_id_t));
-    std::strncpy(key.data() + 1 + sizeof(node_t) + sizeof(node_id_t),
-                 data + 1, sizeof(node_t) + sizeof(node_id_t));
+    std::strncpy(key.data() + 1 + sizeof(node_t) + sizeof(node_id_t), data + 1,
+                 sizeof(node_t) + sizeof(node_id_t));
 }
 
 status_t network_impl_t::to_status(const rocksdb::Status& status) {
@@ -206,16 +206,16 @@ status_t network_impl_t::connections_connect(const node_uid_t& node,
     return to_status(db_get()->Write(async_write, &batch));
 }
 
-std::pair<bool, status_t>
-network_impl_t::connections_connected(const basalt::node_uid_t& node1,
-                                      const basalt::node_uid_t& node2) const {
+status_t network_impl_t::connections_connected(const basalt::node_uid_t& node1,
+                                               const basalt::node_uid_t& node2,
+                                               bool& res) const {
     logger_get()->debug("connections_connected(node1={}, node2={})", node1,
                         node2);
     connection_key_t key;
     encode(node1, node2, key);
     const rocksdb::Slice slice(key.data(), key.size());
-    return {db_get()->KeyMayExist(default_read_options, slice, nullptr),
-            status_t::ok()};
+    res = db_get()->KeyMayExist(default_read_options, slice, nullptr);
+    return status_t::ok();
 }
 
 status_t network_impl_t::connections_get(const node_uid_t& node,
@@ -286,8 +286,7 @@ status_t network_impl_t::connections_erase(const node_uid_t& node1,
 }
 
 status_t network_impl_t::connections_erase(const node_uid_t& node,
-                                           size_t& removed,
-                                           bool commit) {
+                                           size_t& removed, bool commit) {
     logger_get()->debug("connections_erase(node={}, commit={})", node, commit);
     connection_key_prefix_t key;
     encode_connection_prefix(node, key);
@@ -311,12 +310,11 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
         encode_reversed_connection(conn_slice.data(), conn_slice.size(),
                                    reversed_key);
         ;
-        batch.Delete(rocksdb::Slice(reversed_key.data(),
-          reversed_key.size()));
+        batch.Delete(rocksdb::Slice(reversed_key.data(), reversed_key.size()));
         ++connections;
         iter->Next();
         {
-            const auto &next_status = iter->status();
+            const auto& next_status = iter->status();
             if (!next_status.ok()) {
                 removed = 0;
                 return to_status(next_status);
@@ -337,7 +335,7 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
                                            bool commit) {
     logger_get()->debug("connections_erase(node={}, filter={}, commit={})",
                         node, filter, commit);
-    connection_key_type_prefix_t  key;
+    connection_key_type_prefix_t key;
     encode_connection_prefix(node, filter, key);
     auto iter = db_get()->NewIterator(default_read_options);
     iter->Seek(rocksdb::Slice(key.data(), key.size()));
@@ -356,12 +354,12 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
         // remove the reverse connection
         connection_key_t reversed_key;
         encode_reversed_connection(conn_slice.data(), conn_slice.size(),
-        reversed_key);
+                                   reversed_key);
         batch.Delete(rocksdb::Slice(reversed_key.data(), reversed_key.size()));
         ++connections;
         iter->Next();
         {
-            const auto &next_status = iter->status();
+            const auto& next_status = iter->status();
             if (!next_status.ok()) {
                 removed = 0;
                 return to_status(next_status);
@@ -369,7 +367,7 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
         }
     }
     { // commit changes
-        const auto &status = to_status(db_get()->Write(async_write, &batch));
+        const auto& status = to_status(db_get()->Write(async_write, &batch));
         if (!status) {
             removed = 0;
         } else {
@@ -377,7 +375,6 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
         }
         return status;
     }
-
 }
 
 status_t network_impl_t::commit() {

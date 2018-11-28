@@ -18,10 +18,9 @@ status_t connections_t::connect(const node_uid_t& node,
     return pimpl_.connections_connect(node, nodes, payload, commit);
 }
 
-std::pair<bool, status_t>
-connections_t::connected(const node_uid_t& node1,
-                         const node_uid_t& node2) const {
-    return pimpl_.connections_connected(node1, node2);
+status_t connections_t::connected(const node_uid_t& node1,
+                                  const node_uid_t& node2, bool& res) const {
+    return pimpl_.connections_connected(node1, node2, res);
 }
 
 status_t connections_t::get(const node_uid_t& node,
@@ -44,7 +43,8 @@ status_t connections_t::erase(const node_uid_t& node, node_t filter,
     return pimpl_.connections_erase(node, filter, removed, commit);
 }
 
-status_t connections_t::erase(const node_uid_t& node, std::size_t& removed, bool commit) {
+status_t connections_t::erase(const node_uid_t& node, std::size_t& removed,
+                              bool commit) {
     return pimpl_.connections_erase(node, removed, commit);
 }
 

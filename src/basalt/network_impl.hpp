@@ -84,9 +84,8 @@ class network_impl_t {
     status_t connections_get(const node_uid_t& node,
                              node_uids_t& connections) const;
 
-    std::pair<bool, status_t>
-    connections_connected(const node_uid_t& node1,
-                          const node_uid_t& node2) const;
+    status_t connections_connected(const node_uid_t& node1,
+                                   const node_uid_t& node2, bool& res) const;
 
     status_t connections_get(const node_uid_t& node, node_t filter,
                              node_uids_t& connections) const;
@@ -96,7 +95,8 @@ class network_impl_t {
 
     status_t connections_erase(const node_uid_t& node, node_t filter,
                                size_t& removed, bool commit);
-    status_t connections_erase(const node_uid_t& node, std::size_t& removed, bool commit);
+    status_t connections_erase(const node_uid_t& node, std::size_t& removed,
+                               bool commit);
 
     status_t commit();
 

@@ -35,12 +35,13 @@ class nodes_t {
      * \param type node type
      * \param id node identifier
      * \param payload node payload
+     * \param res unique node identifier returned to caller
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
     template <typename T>
-    std::pair<node_uid_t, status_t>
-    insert(node_t type, node_id_t id, const T& payload, bool commit = false)
+    status_t insert(node_t type, node_id_t id, const T& payload,
+                    node_uid_t& res, bool commit = false)
         __attribute__((warn_unused_result));
 
     /**

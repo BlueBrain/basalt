@@ -33,13 +33,11 @@ class connections_t {
      * \brief check connectivity between 2 nodes
      * \param node1
      * \param node2
-     * \return a pair where \a first member is true if both nodes exists and
-     * are connected, false otherwise. The \a second member provides
-     * information whether operation succeeded or not
+     * \param res a boolean indicating whether node1 and node2 are connected
+     * \return provides information whether operation succeeded or not
      */
-    std::pair<bool, status_t> connected(const node_uid_t& node1,
-                                        const node_uid_t& node2) const
-        __attribute__((warn_unused_result));
+    status_t connected(const node_uid_t& node1, const node_uid_t& node2,
+                       bool& res) const __attribute__((warn_unused_result));
 
     /**
      * \brief get nodes connected to one node
@@ -86,11 +84,15 @@ class connections_t {
      * \param removed number of nodes removed during the operation
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node, std::size_t& removed, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node, std::size_t& removed,
+                   bool commit = false) __attribute__((warn_unused_result));
 
-    std::pair<std::size_t, status_t> count() const
-        __attribute__((warn_unused_result));
+    /**
+     * \brief returns the number of connections in the network
+     * \param res the number of connections
+     * \return information whether operation succeeded or not
+     */
+    status_t count(std::size_t& res) const __attribute__((warn_unused_result));
 
   private:
     network_impl_t& pimpl_;
