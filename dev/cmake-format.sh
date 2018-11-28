@@ -7,7 +7,7 @@ if ! ${CMAKE_FORMAT:-cmake-format} --version >/dev/null 2>&1 ; then
     exit 1
 fi
 
-find $SCRIPT_DIR/.. -path $SCRIPT_DIR/../src/third_party -prune \
+find $SCRIPT_DIR/.. -path $SCRIPT_DIR/../src/third_party -prune -o \
   -type f -name CMakeLists.txt \
   -exec ${CMAKE_FORMAT:-cmake-format} -i \{\} \;
 
