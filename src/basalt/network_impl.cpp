@@ -61,8 +61,10 @@ static const auto connections_cfo = []() {
     options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(
         1 + sizeof(node_t) + sizeof(node_id_t)));
     // Enable prefix bloom for mem tables
+#if ROCKSDB_MAJOR == 4
     options.memtable_prefix_bloom_bits = 100000000;
     options.memtable_prefix_bloom_probes = 6;
+#endif
 
     // Enable prefix bloom for SST files
     rocksdb::BlockBasedTableOptions table_options;
