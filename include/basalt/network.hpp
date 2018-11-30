@@ -26,12 +26,8 @@ class network_t {
     explicit network_t(const std::string& path);
     ~network_t();
 
-    /** \name nodes accessor
-     ** \{
-     */
-    const nodes_t& nodes() const;
+    /// \brief nodes accessor
     nodes_t& nodes();
-    /** \} */
 
     /** \name connections accessor
      ** \{
