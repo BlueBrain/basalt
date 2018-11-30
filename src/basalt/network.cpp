@@ -20,8 +20,6 @@ const connections_t& network_t::connections() const {
 
 connections_t& network_t::connections() { return pimpl_->connections_get(); }
 
-const nodes_t& network_t::nodes() const { return pimpl_->nodes_get(); }
-
 nodes_t& network_t::nodes() { return pimpl_->nodes_get(); }
 
 status_t network_t::commit() { return pimpl_->commit(); }

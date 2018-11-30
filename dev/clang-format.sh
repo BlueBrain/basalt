@@ -7,7 +7,7 @@ if ! ${CLANG_FORMAT:-clang-format} --version >/dev/null 2>&1 ; then
     exit 1
 fi
 
-find $SCRIPT_DIR/../include $SCRIPT_DIR/../src/basalt $SCRIPT_DIR/../test \
+find $SCRIPT_DIR/../include $SCRIPT_DIR/../src/basalt $SCRIPT_DIR/../tests \
   -type f \
   \( -name "*.hpp" -o -name "*.hxx" -o -name "*.cpp" \) \
   -exec ${CLANG_FORMAT:-clang-format} -i \{\} \;

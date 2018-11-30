@@ -13,7 +13,6 @@ status_t nodes_t::insert(node_t type, node_id_t id, const T& payload,
                          node_uid_t& res, bool commit) {
     std::ostringstream oss;
     payload.serialize(oss);
-    oss.rdbuf()->in_avail();
     // \fixme TCL get buffer beginning and length from ostringstream
     // to avoid extra std::string copy.
     const std::string data(oss.str());

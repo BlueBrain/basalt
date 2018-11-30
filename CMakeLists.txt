@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.5.1)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-project(Basalt VERSION 0.1 LANGUAGES CXX)
+project(Basalt VERSION 0.0.1 LANGUAGES CXX)
 
 include(cmake/bob.cmake)
 
 bob_begin_package()
 
-set(Basalt_USE_pybind11_DEFAULT OFF)
-bob_public_dep(pybind11)
+bob_option(Basalt_USE_pybind11 "Build Python bindings" OFF)
+bob_option(Basalt_BUILD_PYTHON_PACKAGE "Build Python package" OFF)
 
 bob_begin_cxx_flags()
 bob_cxx11_flags()
@@ -52,6 +52,8 @@ set(spdlog_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 
 add_subdirectory(src)
-add_subdirectory(test/unit)
+if(NOT Basalt_BUILD_PYTHON_PACKAGE)
+  add_subdirectory(tests/unit)
+endif()
 
 bob_end_package()
