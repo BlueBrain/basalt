@@ -74,7 +74,7 @@ static const auto connections_cfo = []() {
     return options;
 }();
 
-static const std::string nodes_cfn = "nodes";
+static const std::string nodes_cfn = rocksdb::kDefaultColumnFamilyName;
 static const std::string connections_cfn = "connections";
 
 void network_impl_t::setup_db(const std::string& path) {
@@ -118,8 +118,6 @@ network_impl_t::network_impl_t(const std::string& path)
     std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
     column_families.emplace_back(nodes_cfn, nodes_cfo);
     column_families.emplace_back(connections_cfn, connections_cfo);
-    column_families.emplace_back(rocksdb::kDefaultColumnFamilyName,
-                                 rocksdb::ColumnFamilyOptions());
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     handles.reserve(2);
     to_status(
@@ -127,7 +125,6 @@ network_impl_t::network_impl_t(const std::string& path)
         .raise_on_error();
     nodes.reset(handles[0]);
     connections.reset(handles[1]);
-    delete handles[2];
 
     db_.reset(db);
     mkdir(std::string(path + "/logs").c_str(), 0777);

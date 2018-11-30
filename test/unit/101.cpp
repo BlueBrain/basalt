@@ -104,7 +104,7 @@ TEST_CASE("one-node-db", "[graph]") {
         {
             std::string data;
             REQUIRE(g.nodes().get(node, &data).code ==
-              basalt::status_t::missing_node_code);
+                    basalt::status_t::missing_node_code);
             REQUIRE(data.empty());
         }
 

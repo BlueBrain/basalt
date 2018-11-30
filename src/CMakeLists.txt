@@ -9,7 +9,7 @@ set(basalt_SOURCES
     basalt/connections.cpp
     basalt/status.cpp
     basalt/graph.hpp
-    basalt/graph.cpp)
+)
 set(basalt_HEADERS
     ${basalt_include_directory}/basalt/connections.hpp
     ${basalt_include_directory}/basalt/fwd.hpp

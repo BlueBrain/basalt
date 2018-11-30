@@ -8,12 +8,12 @@
 
 namespace basalt {
 struct status_t {
-  enum Code {
-    ok_code = 0,
-    not_implemented_code = -1,
-    missing_node_code = -2,
-    invalid_connection_code = -3
-  };
+    enum Code {
+        ok_code = 0,
+        not_implemented_code = -1,
+        missing_node_code = -2,
+        invalid_connection_code = -3
+    };
 
     status_t(Code code_, const std::string& message_);
     status_t() = delete;

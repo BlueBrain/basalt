@@ -69,15 +69,15 @@ class network_impl_t {
                                size_t& removed, bool commit);
     status_t connections_erase(const node_uid_t& node, std::size_t& removed,
                                bool commit);
-    status_t connections_erase(rocksdb::WriteBatch& batch,
-                               const node_uid_t& node, size_t& removed);
-
     status_t commit();
 
     static status_t to_status(const rocksdb::Status& status);
     static void setup_db(const std::string& path);
 
   private:
+    status_t connections_erase(rocksdb::WriteBatch& batch,
+                               const node_uid_t& node, size_t& removed);
+
     const std::string& path_;
     nodes_t nodes_;
     connections_t connections_;

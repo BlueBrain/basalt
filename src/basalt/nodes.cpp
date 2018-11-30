@@ -26,7 +26,8 @@ status_t nodes_t::has(const node_uid_t& node, bool& result) const {
     return pimpl_.nodes_has(node, result);
 }
 
-status_t nodes_t::get(const basalt::node_uid_t& node, std::string* value) const {
+status_t nodes_t::get(const basalt::node_uid_t& node,
+                      std::string* value) const {
     return pimpl_.nodes_get(node, value);
 }
 
