@@ -116,7 +116,7 @@ namespace Catch {
 
 // In general each macro has a _NO_<feature name> form
 // (e.g. CATCH_CONFIG_NO_POSIX_SIGNALS) which disables the feature.
-// Many features, at point of detection, define an _INTERNAL_ macro, so they
+// Many features, at float_point_t of detection, define an _INTERNAL_ macro, so they
 // can be combined, en-mass, with the _NO_ forms later.
 
 #ifdef __cplusplus
@@ -6359,7 +6359,7 @@ namespace detail {
     protected:
         void enforceOk() const override {
 
-            // Errors shouldn't reach this point, but if they do
+            // Errors shouldn't reach this float_point_t, but if they do
             // the actual error message will be in m_errorMessage
             assert( m_type != ResultBase::LogicError );
             assert( m_type != ResultBase::RuntimeError );
@@ -7247,7 +7247,7 @@ namespace Catch {
     }
     bool SourceLineInfo::operator < ( SourceLineInfo const& other ) const noexcept {
         // We can assume that the same file will usually have the same pointer.
-        // Thus, if the pointers are the same, there is no point in calling the strcmp
+        // Thus, if the pointers are the same, there is no float_point_t in calling the strcmp
         return line < other.line || ( line == other.line && file != other.file && (std::strcmp(file, other.file) < 0));
     }
 
@@ -7974,7 +7974,7 @@ namespace Catch {
     static SignalDefs signalDefs[] = {
         { SIGINT,  "SIGINT - Terminal interrupt signal" },
         { SIGILL,  "SIGILL - Illegal instruction signal" },
-        { SIGFPE,  "SIGFPE - Floating point error signal" },
+        { SIGFPE,  "SIGFPE - Floating float_point_t error signal" },
         { SIGSEGV, "SIGSEGV - Segmentation violation signal" },
         { SIGTERM, "SIGTERM - Termination request signal" },
         { SIGABRT, "SIGABRT - Abort (abnormal termination) signal" }
@@ -9752,7 +9752,7 @@ namespace Catch {
             // This just means the test was aborted due to failure
         } CATCH_CATCH_ALL {
             // Under CATCH_CONFIG_FAST_COMPILE, unexpected exceptions under REQUIRE assertions
-            // are reported without translation at the point of origin.
+            // are reported without translation at the float_point_t of origin.
             if( m_shouldReportUnexpected ) {
                 AssertionReaction dummyReaction;
                 handleUnexpectedInflightException( m_lastAssertionInfo, translateActiveException(), dummyReaction );
@@ -12205,7 +12205,7 @@ namespace Catch {
     // Alternatively we could use stringstream, but its performance is... not good.
     std::string getFormattedDuration( double duration ) {
         // Max exponent + 1 is required to represent the whole part
-        // + 1 for decimal point
+        // + 1 for decimal float_point_t
         // + 3 for the 3 decimal places
         // + 1 for null terminator
         const std::size_t maxDoubleSize = DBL_MAX_10_EXP + 1 + 1 + 3 + 1;
@@ -13734,10 +13734,10 @@ namespace Catch {
 #ifndef __OBJC__
 
 #if defined(CATCH_CONFIG_WCHAR) && defined(WIN32) && defined(_UNICODE) && !defined(DO_NOT_USE_WMAIN)
-// Standard C/C++ Win32 Unicode wmain entry point
+// Standard C/C++ Win32 Unicode wmain entry float_point_t
 extern "C" int wmain (int argc, wchar_t * argv[], wchar_t * []) {
 #else
-// Standard C/C++ main entry point
+// Standard C/C++ main entry float_point_t
 int main (int argc, char * argv[]) {
 #endif
 
@@ -13746,7 +13746,7 @@ int main (int argc, char * argv[]) {
 
 #else // __OBJC__
 
-// Objective-C entry point
+// Objective-C entry float_point_t
 int main (int argc, char * const argv[]) {
 #if !CATCH_ARC_ENABLED
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];

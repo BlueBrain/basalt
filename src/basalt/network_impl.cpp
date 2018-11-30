@@ -86,7 +86,7 @@ void network_impl_t::setup_db(const std::string& path) {
         if (status.code() == rocksdb::Status::kInvalidArgument) {
             return;
         }
-        assert(status.ok());
+        to_status(status).raise_on_error();
     }
 
     std::vector<std::string> column_family_names;
