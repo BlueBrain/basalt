@@ -6,14 +6,6 @@
 sudo: required
 language: cpp
 
-addons: &gcc48
-  apt:
-    packages:
-      - g++-4.8
-      - librocksdb-dev
-    sources:
-      - ubuntu-toolchain-r-test
-
 addons: &gcc7
   apt:
     packages:
@@ -21,15 +13,6 @@ addons: &gcc7
       - librocksdb-dev
     sources:
       - ubuntu-toolchain-r-test
-
-addons: &clang35
-  apt:
-    packages:
-      - clang-3.5
-      - librocksdb-dev
-    sources:
-      - ubuntu-toolchain-r-test
-      - llvm-toolchain-precise-3.5
 
 addons: &clang6
   apt:
@@ -50,24 +33,14 @@ addons: &clang7
       - llvm-toolchain-xenial-7
 
 matrix:
+  allow_failures:
+    - os: osx
   include:
-    # Test gcc-4.8: C++11
-    - env: GCC_VERSION=4.8 CXX_OPTIMIZE=OFF CPP=11
-      os: linux
-      dist: xenial
-      addons: *gcc48
-
-    # Test gcc-7: C++11
+      # Test gcc-7: C++11
     - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       dist: xenial
       addons: *gcc7
-
-    # Test clang-3.5: C++11
-    - env: CLANG_VERSION=3.5 CXX_OPTIMIZE=OFF CPP=11
-      os: linux
-      dist: xenial
-      addons: *clang35
 
       # Test clang-6.0: C++11
     - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
@@ -107,7 +80,7 @@ script:
       -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
       -DCMAKE_CXX_STANDARD=$CPP \
   - make VERBOSE=1 -j2
-  - ctest -j2 --output-on-failure || true
+  - ctest -j2 --output-on-failure
 
 
 

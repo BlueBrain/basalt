@@ -1,29 +1,61 @@
 #include <basalt/node_iterator.hpp>
 #include <basalt/nodes.hpp>
 
-#include "network_pimpl.hpp"
+#include "network_impl.hpp"
+#include "node_iterator_impl.hpp"
 
 namespace basalt {
 
-static const node_iterator::value_type fixme{0, 0};
+node_iterator::node_iterator(const basalt::network_impl_t& pimpl, size_t from) {
+    // \fixme TCL this limit value is node_iterator_impl internal stuff
+    // and so should not be used here
+    if (from == std::numeric_limits<std::size_t>::max()) {
+        pimpl_ = node_iterator_impl_ptr(nullptr);
+    } else {
+        pimpl_ = pimpl.node_iterator(from);
+        std::advance(*this, from);
+    }
+}
 
-node_iterator::node_iterator(const basalt::network_pimpl_t& pimpl, size_t from)
-    : pimpl_(pimpl) {
-    this->pimpl_.logger_get()->debug("node_iterator: creating from {}", from);
-};
 node_iterator::node_iterator(const basalt::node_iterator& rhs)
-    : pimpl_(rhs.pimpl_) {
-    this->pimpl_.logger_get()->debug("node_iterator: creating copy");
+    : pimpl_(rhs.pimpl_) {}
+
+node_iterator& node_iterator::operator++() {
+    ++*pimpl_;
+    return *this;
 }
 
-bool node_iterator::operator!=(const basalt::node_iterator& /*rhs*/) const {
-    return true;
+node_iterator& node_iterator::operator++(int value) {
+    while (value-- > 0) {
+        this->operator++();
+    }
+    return *this;
 }
 
-bool node_iterator::operator==(const basalt::node_iterator& /*rhs*/) const {
-    return false;
+bool node_iterator::operator==(const basalt::node_iterator& rhs) const {
+    if (pimpl_) {
+        if (rhs.pimpl_) {
+            return *this->pimpl_ == *rhs.pimpl_;
+        } else {
+            if (pimpl_->end_reached()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else {
+        if (rhs.pimpl_) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
-const node_iterator::value_type& node_iterator::operator*() { return fixme; }
+bool node_iterator::operator!=(const basalt::node_iterator& rhs) const {
+    return !(*this == rhs);
+}
+
+const node_iterator::value_type& node_iterator::operator*() { return **pimpl_; }
 
 } // namespace basalt
