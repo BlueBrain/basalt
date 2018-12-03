@@ -16,10 +16,6 @@ namespace basalt {
 /// \brief Undirected Connectivity Graph
 class network_t {
   public:
-    using node_t = int;
-    using node_id_t = std::size_t;
-    using node_uid_t = std::pair<node_t, std::size_t>;
-    using node_uids_t = std::vector<node_uid_t>;
     using node_const_iterator_t =
         std::iterator<std::input_iterator_tag, const node_t>;
 
@@ -52,20 +48,18 @@ class network_t {
     status_t commit() __attribute__((warn_unused_result));
 
   private:
-    std::unique_ptr<network_pimpl_t> pimpl_;
+    std::unique_ptr<network_impl_t> pimpl_;
 };
 
 /// \brief node_id_t constructor helper function
-network_t::node_uid_t make_id(network_t::node_t type, network_t::node_id_t id);
+node_uid_t make_id(node_t type, node_id_t id);
 
 } // namespace basalt
 
 /// \brief specialization to gently push a \a node_uid_t to an output stream
-std::ostream& operator<<(std::ostream& ostr,
-                         const basalt::network_t::node_uid_t& id);
+std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id);
 
 /// \brief specialization to gently push a \a node_uids_t to an output stream
-std::ostream& operator<<(std::ostream& ostr,
-                         const basalt::network_t::node_uids_t& ids);
+std::ostream& operator<<(std::ostream& ostr, const basalt::node_uids_t& ids);
 
 #endif // !BASALT_NETWORK_HPP

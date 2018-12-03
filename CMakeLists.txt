@@ -41,6 +41,7 @@ bob_get_commit()
 bob_get_semver()
 
 find_package(RocksDB 4.1.0 REQUIRED)
+include_directories(${RocksDB_INCLUDE_DIR})
 
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
 include_directories(${basalt_include_directory})
