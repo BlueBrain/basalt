@@ -13,12 +13,27 @@ class connections_t {
      * \brief Create an edge between 2 nodes.
      * Connection can be inserted even if nodes aren't yet in the graph.
      * It is visible only if both nodes are inserted.
+     * \param node1 first node to connect
+     * \param node2 second node to connect
      * \param commit whether uncommitted operations should be flushed or not
-
      * \return information whether operation succeeded or not
      */
-    status_t connect(const node_uid_t& node1, const node_uid_t& node2,
-                     const payload_t& payload = {}, bool commit = false)
+    status_t insert(const node_uid_t& node1, const node_uid_t& node2,
+                    bool commit = false) __attribute__((warn_unused_result));
+
+    /**
+     * \brief Create an edge between 2 nodes.
+     * Connection can be inserted even if nodes aren't yet in the graph.
+     * It is visible only if both nodes are inserted.
+     * \param node1 first node to connect
+     * \param node2 second node to connect
+     * \param data payload
+     * \param size payload length
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    status_t insert(const node_uid_t& node1, const node_uid_t& node2,
+                    const char* data, std::size_t size, bool commit = false)
         __attribute__((warn_unused_result));
 
     /**
@@ -26,8 +41,13 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t connect(const node_uid_t& node, const node_uids_t& nodes,
-                     const payload_t& payload = {}, bool commit = false);
+    status_t insert(const node_uid_t& node, const node_uids_t& nodes,
+                    const std::vector<const char*>& data = {},
+                    const std::vector<std::size_t>& sizes = {}, bool commit = false);
+
+    status_t insert(node_t type, node_id_t id, const char* data,
+                    std::size_t size, node_uid_t& node, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief check connectivity between 2 nodes
@@ -36,8 +56,8 @@ class connections_t {
      * \param res a boolean indicating whether node1 and node2 are connected
      * \return provides information whether operation succeeded or not
      */
-    status_t connected(const node_uid_t& node1, const node_uid_t& node2,
-                       bool& res) const __attribute__((warn_unused_result));
+    status_t has(const node_uid_t& node1, const node_uid_t& node2,
+                 bool& res) const __attribute__((warn_unused_result));
 
     /**
      * \brief get nodes connected to one node

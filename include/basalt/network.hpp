@@ -32,7 +32,6 @@ class network_t {
     /** \name connections accessor
      ** \{
      */
-    const connections_t& connections() const;
     connections_t& connections();
     /** \} */
 
