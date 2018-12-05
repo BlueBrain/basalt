@@ -46,18 +46,21 @@ class network_impl_t {
     status_t nodes_get(const basalt::node_uid_t& node, std::string* value);
     std::shared_ptr<node_iterator_impl> node_iterator(std::size_t from) const;
 
-    status_t connections_connect(const node_uid_t& node1,
-                                 const node_uid_t& node2, const payload_t& data,
-                                 bool commit = false);
-    status_t connections_connect(const node_uid_t& node,
-                                 const node_uids_t& nodes,
-                                 const payload_t& payload, bool commit);
+    status_t connections_insert(const node_uid_t& node1,
+                                const node_uid_t& node2, const char* data,
+                                std::size_t size, bool commit);
+
+    status_t connections_insert(const node_uid_t& node,
+                                const node_uids_t& nodes,
+                                const std::vector<const char*>& data,
+                                const std::vector<std::size_t>& sizes,
+                                bool commit);
 
     status_t connections_get(const node_uid_t& node,
                              node_uids_t& connections) const;
 
-    status_t connections_connected(const node_uid_t& node1,
-                                   const node_uid_t& node2, bool& res) const;
+    status_t connections_has(const node_uid_t& node1, const node_uid_t& node2,
+                             bool& res) const;
 
     status_t connections_get(const node_uid_t& node, node_t filter,
                              node_uids_t& connections) const;

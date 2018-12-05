@@ -8,15 +8,15 @@
 
 namespace basalt {
 
-template <typename T>
-status_t nodes_t::insert(node_t type, node_id_t id, const T& payload,
+template <typename Payload>
+status_t nodes_t::insert(node_t type, node_id_t id, const Payload& data,
                          node_uid_t& res, bool commit) {
     std::ostringstream oss;
-    payload.serialize(oss);
+    data.serialize(oss);
     // \fixme TCL get buffer beginning and length from ostringstream
     // to avoid extra std::string copy.
-    const std::string data(oss.str());
-    return insert(type, id, data.c_str(), data.size(), res, commit);
+    const std::string raw(oss.str());
+    return insert(type, id, raw.c_str(), raw.size(), res, commit);
 }
 
 /**

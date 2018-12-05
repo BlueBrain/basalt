@@ -1,5 +1,4 @@
 #include <dirent.h>
-#include <iostream>
 
 #include "network_impl.hpp"
 
@@ -225,10 +224,10 @@ network_impl_t::node_iterator(std::size_t from) const {
 
 ///// connections methods
 
-status_t network_impl_t::connections_connect(const node_uid_t& node1,
-                                             const node_uid_t& node2,
-                                             const payload_t& data,
-                                             bool commit) {
+status_t network_impl_t::connections_insert(const node_uid_t& node1,
+                                            const node_uid_t& node2,
+                                            const char* data, std::size_t size,
+                                            bool commit) {
     logger_get()->debug("connections_connect(node1={}, node2={}, commit={})",
                         node1, node2, commit);
     { // check presence of both nodes
@@ -248,7 +247,7 @@ status_t network_impl_t::connections_connect(const node_uid_t& node1,
 
     graph::connection_keys_t keys;
     graph::encode(node1, node2, keys);
-    const rocksdb::Slice data_slice(data.data(), data.size());
+    const rocksdb::Slice data_slice(data, size);
     rocksdb::WriteBatch batch;
 
     for (const auto& key : keys) {
@@ -258,10 +257,10 @@ status_t network_impl_t::connections_connect(const node_uid_t& node1,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-status_t network_impl_t::connections_connect(const node_uid_t& node,
-                                             const node_uids_t& nodes,
-                                             const payload_t& payload,
-                                             bool commit) {
+status_t network_impl_t::connections_insert(
+    const node_uid_t& node, const node_uids_t& nodes,
+    const std::vector<const char*>& data, const std::vector<std::size_t>& sizes,
+    bool commit) {
     logger_get()->debug("connections_connect(node={}, nodes={}, commit={})",
                         node, nodes, commit);
     { // check presence of both nodes
@@ -283,34 +282,46 @@ status_t network_impl_t::connections_connect(const node_uid_t& node,
 
     std::vector<graph::connection_keys_t> keys(nodes.size());
     rocksdb::WriteBatch batch;
-    const rocksdb::Slice data_slice(payload.data(), payload.size());
-    for (auto i = 0u; i < nodes.size(); ++i) {
+    if (data.empty()) {
+      for (auto i = 0u; i < nodes.size(); ++i) {
         graph::encode(node, nodes[i], keys[i]);
         for (const auto& key : keys[i]) {
-            batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()),
-                      data_slice);
+          batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()),
+                    rocksdb::Slice());
         }
+      }
+    } else {
+      for (auto i = 0u; i < nodes.size(); ++i) {
+        graph::encode(node, nodes[i], keys[i]);
+        for (const auto &key : keys[i]) {
+          batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()),
+                    rocksdb::Slice(data[i], sizes[i]));
+        }
+      }
     }
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-status_t network_impl_t::connections_connected(const basalt::node_uid_t& node1,
-                                               const basalt::node_uid_t& node2,
-                                               bool& res) const {
-    logger_get()->debug("connections_connected(node1={}, node2={})", node1,
-                        node2);
+status_t network_impl_t::connections_has(const basalt::node_uid_t& node1,
+                                         const basalt::node_uid_t& node2,
+                                         bool& res) const {
+    logger_get()->debug("connections_has(node1={}, node2={})", node1, node2);
     graph::connection_key_t key;
     graph::encode(node1, node2, key);
-    res =
-        db_get()->KeyMayExist(default_read_options, connections.get(),
-                              rocksdb::Slice(key.data(), key.size()), nullptr);
-    return status_t::ok();
+    std::string value;
+    const auto& status = db_get()->Get(default_read_options, connections.get(), rocksdb::Slice(key.data(), key.size()), &value);
+    if (status.IsNotFound()) {
+        res = false;
+        return status_t::ok();
+    } else if (status.ok()) {
+        res = true;
+    }
+    return to_status(status);
 }
 
 status_t network_impl_t::connections_get(const node_uid_t& node,
                                          node_uids_t& connections) const {
-    logger_get()->debug("connections_get(node={}, connections={})", node,
-                        connections);
+    logger_get()->debug("connections_get(node={})", node);
     graph::connection_key_prefix_t key;
     graph::encode_connection_prefix(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -318,12 +329,17 @@ status_t network_impl_t::connections_get(const node_uid_t& node,
         db_get()->NewIterator(default_read_options, this->connections.get());
     iter->Seek(slice);
     while (iter->Valid()) {
-        node_uid_t dest;
         auto const& conn_key = iter->key();
-        graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);
-        if (node < dest) {
-            connections.push_back(dest);
+        if (std::memcmp(key.data(), conn_key.data(), key.size())) {
+          /// FIXME TCL prefix enumeration does not work, more keys
+          /// are being returned by iterator.
+          /// workaround: this test filter keys that do not have proper prefix
+          iter->Next();
+          continue;
         }
+        node_uid_t dest;
+        graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);
+        connections.push_back(dest);
         iter->Next();
     }
     return to_status(iter->status());
@@ -343,12 +359,17 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_t filter,
         return to_status(iter->status());
     }
     while (iter->Valid()) {
-        node_uid_t dest;
         auto const& conn_key = iter->key();
-        graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);
-        if (node < dest) {
-            connections.push_back(dest);
+        if (std::memcmp(key.data(), conn_key.data(), key.size())) {
+          /// FIXME TCL prefix enumeration does not work, more keys
+          /// are being returned by iterator.
+          /// workaround: this test filter keys that do not have proper prefix
+          iter->Next();
+          continue;
         }
+        node_uid_t dest;
+        graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);
+        connections.push_back(dest);
         iter->Next();
     }
     return status_t::ok();
@@ -380,10 +401,6 @@ status_t network_impl_t::connections_erase(rocksdb::WriteBatch& batch,
 
     auto iter = db_get()->NewIterator(default_read_options, connections.get());
     iter->Seek(slice);
-    if (!iter->status().ok()) {
-        removed = 0;
-        return to_status(iter->status());
-    }
 
     // iterate over all connections
     auto connections = 0ul;

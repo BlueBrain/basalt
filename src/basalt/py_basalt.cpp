@@ -208,15 +208,96 @@ PYBIND11_MODULE(_basalt, m) {
     py::class_<b::network_t>(m, "Network")
         .def(py::init<const std::string&>())
         .def_property_readonly("nodes", &b::network_t::nodes)
+        .def_property_readonly("connections", &b::network_t::connections)
         .def("commit", &b::network_t::commit);
 
-    py::class_<b::nodes_t>(m, "Nodes")
-      .def("__iter__",
-           [](const b::nodes_t& nodes) {
-             return py::make_iterator(nodes.begin(), nodes.end());
-           },
-           py::keep_alive<0, 1>())
+    py::class_<b::connections_t>(m, "Connections")
+        .def("insert",
+             [](b::connections_t& connections, const b::node_uid_t& node1,
+                const b::node_uid_t& node2, bool commit) {
+                 const auto status = connections.insert(node1, node2, commit);
+                 status.raise_on_error();
+             },
+             "Create an edge between 2 nodes", "node1"_a, "node2"_a,
+             "commit"_a = false)
 
+        .def("insert",
+             [](b::connections_t& connections, const b::node_uid_t& node1,
+                const b::node_uid_t& node2, py::array_t<char> data,
+                bool commit = false) {
+                 if (data.ndim() != 1) {
+                     throw std::runtime_error(
+                         "Number of dimensions must be one");
+                 }
+                 const auto status = connections.insert(
+                     node1, node2, data.data(), data.size(), commit);
+                 status.raise_on_error();
+             },
+             "insert a node in the graph", "node1"_a, "node2"_a, "data"_a,
+             "commit"_a = false)
+
+        .def("has",
+             [](const b::connections_t& connections, const b::node_uid_t& node1,
+                const b::node_uid_t& node2) {
+                 bool result;
+                 connections.has(node1, node2, result).raise_on_error();
+                 return result;
+             },
+             "Check connectivity between 2 nodes", "node1"_a, "node2"_a)
+
+        .def(
+            "get",
+            [](const b::connections_t& connections, const b::node_uid_t& node) {
+                b::node_uids_t eax;
+                connections.get(node, eax).raise_on_error();
+                return eax;
+            },
+            "get nodes connected to one node", "node"_a)
+
+        .def("get",
+             [](const b::connections_t& connections, const b::node_uid_t& node,
+                b::node_t filter) {
+                 b::node_uids_t eax;
+                 connections.get(node, filter, eax).raise_on_error();
+                 return eax;
+             },
+             "get nodes of a specific type connected to one node", "node"_a,
+             "filter"_a)
+
+        .def("erase",
+             [](b::connections_t& connections, const b::node_uid_t& node1,
+                const b::node_uid_t& node2, bool commit = false) {
+                 connections.erase(node1, node2, commit).raise_on_error();
+             },
+             "remove connection between 2 nodes", "node1"_a, "node2"_a,
+             "commit"_a = false)
+
+        .def("erase",
+             [](b::connections_t& connections, const b::node_uid_t& node,
+                bool commit = false) {
+                 std::size_t removed;
+                 connections.erase(node, removed, commit).raise_on_error();
+                 return removed;
+             },
+             "remove all connections of a node", "node"_a, "commit"_a = false)
+
+        .def("erase",
+             [](b::connections_t& connections, const b::node_uid_t& node,
+                b::node_t filter, bool commit = false) {
+                 std::size_t removed;
+                 connections.erase(node, filter, removed, commit)
+                     .raise_on_error();
+                 return removed;
+             },
+             "remove all connections of a node", "node"_a, "filter"_a,
+             "commit"_a = false);
+
+    py::class_<b::nodes_t>(m, "Nodes")
+        .def("__iter__",
+             [](const b::nodes_t& nodes) {
+                 return py::make_iterator(nodes.begin(), nodes.end());
+             },
+             py::keep_alive<0, 1>())
 
         .def("insert",
              [](b::nodes_t& nodes, b::node_t type, b::node_id_t id,

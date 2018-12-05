@@ -6,21 +6,27 @@ namespace basalt {
 
 connections_t::connections_t(network_impl_t& pimpl) : pimpl_(pimpl) {}
 
-status_t connections_t::connect(const node_uid_t& node1,
-                                const node_uid_t& node2,
-                                const payload_t& payload, bool commit) {
-    return pimpl_.connections_connect(node1, node2, payload, commit);
+status_t connections_t::insert(const node_uid_t& node1, const node_uid_t& node2,
+                               bool commit) {
+    return pimpl_.connections_insert(node1, node2, "", 0, commit);
 }
 
-status_t connections_t::connect(const node_uid_t& node,
-                                const node_uids_t& nodes,
-                                const payload_t& payload, bool commit) {
-    return pimpl_.connections_connect(node, nodes, payload, commit);
+status_t connections_t::insert(const node_uid_t& node1, const node_uid_t& node2,
+                               const char* data, std::size_t size,
+                               bool commit) {
+    return pimpl_.connections_insert(node1, node2, data, size, commit);
 }
 
-status_t connections_t::connected(const node_uid_t& node1,
-                                  const node_uid_t& node2, bool& res) const {
-    return pimpl_.connections_connected(node1, node2, res);
+status_t connections_t::insert(const node_uid_t& node, const node_uids_t& nodes,
+                               const std::vector<const char*>& data,
+                               const std::vector<std::size_t>& sizes,
+                               bool commit) {
+    return pimpl_.connections_insert(node, nodes, data, sizes, commit);
+}
+
+status_t connections_t::has(const node_uid_t& node1, const node_uid_t& node2,
+                            bool& res) const {
+    return pimpl_.connections_has(node1, node2, res);
 }
 
 status_t connections_t::get(const node_uid_t& node,

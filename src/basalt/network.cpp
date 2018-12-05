@@ -14,10 +14,6 @@ network_t::network_t(const std::string& path)
 
 network_t::~network_t() = default;
 
-const connections_t& network_t::connections() const {
-    return pimpl_->connections_get();
-}
-
 connections_t& network_t::connections() { return pimpl_->connections_get(); }
 
 nodes_t& network_t::nodes() { return pimpl_->nodes_get(); }

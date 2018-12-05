@@ -45,16 +45,27 @@ class nodes_t {
      * \tparam T node payload type
      * \param type node type
      * \param id node identifier
-     * \param payload node payload
+     * \param data node payload
      * \param node unique node identifier returned to caller
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    template <typename T>
-    status_t insert(node_t type, node_id_t id, const T& payload,
-                    node_uid_t& res, bool commit = false)
+    template <typename Payload>
+    status_t insert(node_t type, node_id_t id, const Payload& data,
+                    node_uid_t& node, bool commit = false)
         __attribute__((warn_unused_result));
 
+    /**
+     * \brief Insert a node in the graph.
+     * \tparam T node payload type
+     * \param type node type
+     * \param id node identifier
+     * \param data node payload
+     * \param size payload length
+     * \param node unique node identifier returned to caller
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
     status_t insert(node_t type, node_id_t id, const char* data,
                     std::size_t size, node_uid_t& node, bool commit = false)
         __attribute__((warn_unused_result));

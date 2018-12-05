@@ -164,13 +164,13 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     }
 
     // connect the 2 synapses together
-    check_is_ok(g.connections().connect(s0, s1));
+    check_is_ok(g.connections().insert(s0, s1));
 
     // connect synapse 0 to the 2 astrocytes
-    check_is_ok(g.connections().connect(s0, {a0, a1}));
+    check_is_ok(g.connections().insert(s0, {a0, a1}));
 
     // connect 2 astrocyte segments
-    check_is_ok(g.connections().connect(a0, a1));
+    check_is_ok(g.connections().insert(a0, a1));
 
     node_uids_t nodes;
     // get all nodes_t connected to synapse 0
