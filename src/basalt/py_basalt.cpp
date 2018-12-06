@@ -14,11 +14,25 @@
 
 #include "circuit_payloads.hpp"
 #include "network_impl.hpp"
+#include <basalt/version.hpp>
 
 namespace py = pybind11;
 using namespace pybind11::literals;
 namespace b = basalt;
 namespace c = basalt::circuit;
+
+static const auto basalt_version = []() -> std::string {
+    std::ostringstream oss;
+    oss << BASALT_MAJOR << '.' << BASALT_MINOR << '.' << BASALT_PATCH;
+    return oss.str();
+}();
+
+static const auto rocksdb_version = []() -> std::string {
+    std::ostringstream oss;
+    const auto version = b::rocksdb_version();
+    oss << version[0] << '.' << version[1] << '.' << version[2];
+    return oss.str();
+};
 
 // See
 // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#making-opaque-types
@@ -28,6 +42,8 @@ PYBIND11_MAKE_OPAQUE(c::float_point_t);
 
 PYBIND11_MODULE(_basalt, m) {
     m.doc() = "Basic graph database backed by RocksDB key-value storage";
+    m.attr("__rocksdb_version__") = rocksdb_version();
+    m.attr("__version__") = basalt_version;
 
     // see
     // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#binding-stl-containers
