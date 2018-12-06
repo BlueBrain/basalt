@@ -1,9 +1,9 @@
 /**
-  * \file src/basalt/circuit_payloads.cpp
-  * Provides definition of classes used as payload for node
-  * and edges of biological circuit made of neurons, synapses,
-  * astrocytes, and segments.
-*/
+ * \file src/basalt/circuit_payloads.cpp
+ * Provides definition of classes used as payload for node
+ * and edges of biological circuit made of neurons, synapses,
+ * astrocytes, and segments.
+ */
 #include "circuit_payloads.hpp"
 #include "py_helpers.hpp"
 
