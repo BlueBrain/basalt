@@ -27,6 +27,9 @@ using int_vector_t = std::vector<uint32_t>;
  * \brief Payload description of a node of type Neuron
  */
 struct neuron_t {
+    neuron_t() = default;
+    neuron_t(uint32_t gid, int_vector_t& astro_idx, int_vector_t& syn_idx);
+
     uint32_t gid;
     int_vector_t astro_idx;
     int_vector_t syn_idx;
@@ -42,6 +45,13 @@ struct neuron_t {
  * \brief Payload description of a node of type Synapse
  */
 struct synapse_t {
+    synapse_t() = default;
+    synapse_t(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx,
+              int_vector_t& astro_idx, bool is_excitatory,
+              const float_point_t& pre, const float_point_t& post,
+              const std::string& mesh_filename,
+              const std::string& skeleton_filename, float psd_area);
+
     uint32_t pre_gid;
     uint32_t post_gid;
     uint32_t nrn_idx;
@@ -69,6 +79,14 @@ struct synapse_t {
  * \brief Payload description of a node of type Astrocyte
  */
 struct astrocyte_t {
+    astrocyte_t() = default;
+    astrocyte_t(uint32_t astrocyte_id, uint32_t microdomain_id,
+                float soma_center_x, float soma_center_y, float soma_center_z,
+                float soma_radius, const std::string& name,
+                const std::string& mtype,
+                const std::string& morphology_filename,
+                int_vector_t& synapses_idx, int_vector_t& neurons_idx);
+
     uint32_t astrocyte_id;
     uint32_t microdomain_id;
 
@@ -100,6 +118,17 @@ struct astrocyte_t {
  * \brief Payload description of a node of type MicroDomain
  */
 struct microdomain_t {
+    using vertex_coordinates_t = std::vector<std::array<float, 3>>;
+    using triangles_t = std::vector<std::array<uint32_t, 3>>;
+
+    microdomain_t() = default;
+    microdomain_t(uint32_t microdomain_id, uint32_t astrocyte_id,
+                  int_vector_t& neighbors,
+                  vertex_coordinates_t& vertex_coordinates,
+                  triangles_t& triangles, const float_point_t& centroid,
+                  double area, double volume, const std::string& mesh_filename,
+                  int_vector_t& neurons_idx, int_vector_t& synapses_idx);
+
     uint32_t microdomain_id;
     uint32_t astrocyte_id;
 
@@ -108,8 +137,8 @@ struct microdomain_t {
     int_vector_t neighbors;
 
     // mesh data
-    std::vector<std::array<float, 3>> vertex_coordinates;
-    std::vector<std::array<uint32_t, 3>> triangles;
+    vertex_coordinates_t vertex_coordinates;
+    triangles_t triangles;
 
     // geometric centroid, not the same as the morphology soma center
     float_point_t centroid;
@@ -142,6 +171,11 @@ struct microdomain_t {
  * \brief Payload description of a node of type Segment
  */
 struct segment_t {
+    segment_t() = default;
+    segment_t(uint32_t section_id, uint32_t segment_id, uint8_t type, float x1,
+              float y1, float z1, float r1, float x2, float y2, float z2,
+              float r2);
+
     uint32_t section_id;
     uint32_t segment_id;
     uint8_t type;
@@ -167,6 +201,9 @@ struct segment_t {
  * \brief Payload description of an edge between an Astrocyte and a Segment
  */
 struct edge_astrocyte_segment_t {
+    edge_astrocyte_segment_t() = default;
+    edge_astrocyte_segment_t(const float_point_t& astrocyte,
+                             const float_point_t& vasculature);
     // endfoot starting point on morphology
     float_point_t astrocyte;
 
