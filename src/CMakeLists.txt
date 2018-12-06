@@ -53,6 +53,7 @@ if(Basalt_BUILD_PYTHON_PACKAGE)
 else()
   add_library(basalt ${basalt_SOURCES} ${basalt_HEADERS})
   bob_library_includes(basalt)
+  bob_export_target(basalt)
   target_link_libraries(basalt ${RocksDB_LIBRARIES})
   install(FILES ${basalt_HEADERS} DESTINATION include)
 
