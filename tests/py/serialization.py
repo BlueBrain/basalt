@@ -172,9 +172,7 @@ class Astrocyte(unittest.TestCase):
         return basalt.Astrocyte(
             astrocyte_id=42,
             microdomain_id=43,
-            soma_center_x=44.0,
-            soma_center_y=45.0,
-            soma_center_z=46.0,
+            soma_center=basalt.Point(44.0, 45.0, 46.0),
             soma_radius=47.0,
             name="name",
             mtype="mtype",
@@ -186,9 +184,7 @@ class Astrocyte(unittest.TestCase):
     def check_object(self, a):
         self.assertEqual(a.astrocyte_id, 42)
         self.assertEqual(a.microdomain_id, 43)
-        self.assertEqual(a.soma_center_x, 44)
-        self.assertEqual(a.soma_center_y, 45)
-        self.assertEqual(a.soma_center_z, 46)
+        self.assertEqual(list(a.soma_center), [44.0, 45.0, 46.0])
         self.assertEqual(a.soma_radius, 47)
         self.assertEqual(a.name, "name")
         self.assertEqual(a.mtype, "mtype")
