@@ -6,8 +6,9 @@ Basic graph database backed by RocksDB key-value storage [![Build Status](https:
 
 ## Requirements
 
-* [CMake](https://cmake.org) build system.
-* [RocksDB](https://rocksdb.org/)
+* [CMake](https://cmake.org) build system, version 3.5.1 or higher.
+* [RocksDB](https://rocksdb.org/), a persistent key-value store,
+  version version 4.1.1 or higher.
 
 ## C++ Library
 
@@ -23,7 +24,7 @@ CTEST_OUTPUT_ON_FAILURE=1 make all test
 To install the library
 ```sh
 pushd build
-cmake -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
 make all install
 ```
 
