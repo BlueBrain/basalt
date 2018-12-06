@@ -81,19 +81,15 @@ struct synapse_t {
 struct astrocyte_t {
     astrocyte_t() = default;
     astrocyte_t(uint32_t astrocyte_id, uint32_t microdomain_id,
-                float soma_center_x, float soma_center_y, float soma_center_z,
-                float soma_radius, const std::string& name,
-                const std::string& mtype,
+                const float_point_t& soma_center, float soma_radius,
+                const std::string& name, const std::string& mtype,
                 const std::string& morphology_filename,
                 int_vector_t& synapses_idx, int_vector_t& neurons_idx);
 
     uint32_t astrocyte_id;
     uint32_t microdomain_id;
 
-    float soma_center_x;
-    float soma_center_y;
-    float soma_center_z;
-
+    float_point_t soma_center;
     float soma_radius;
 
     std::string name;
@@ -104,8 +100,8 @@ struct astrocyte_t {
     int_vector_t neurons_idx;
 
     static std::unique_ptr<astrocyte_t>
-    create(uint32_t astrocyte_id, uint32_t microdomain_id, float soma_center_x,
-           float soma_center_y, float soma_center_z, float soma_radius,
+    create(uint32_t astrocyte_id, uint32_t microdomain_id,
+           const float_point_t& soma_center, float soma_radius,
            const std::string& name, const std::string& mtype,
            const std::string& morphology_filename,
            pybind11::array_t<uint32_t>& synapses_idx,

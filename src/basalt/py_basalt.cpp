@@ -136,8 +136,8 @@ PYBIND11_MODULE(_basalt, m) {
     py::class_<c::astrocyte_t>(m, "Astrocyte")
         .def(py::init<>())
         .def(py::init(&c::astrocyte_t::create), "astrocyte_id"_a = 0,
-             "microdomain_id"_a = 0, "soma_center_x"_a = 0.,
-             "soma_center_y"_a = 0., "soma_center_z"_a = 0.,
+             "microdomain_id"_a = 0,
+             "soma_center"_a = c::float_point_t({0., 0., 0.}),
              "soma_radius"_a = 0., "name"_a = "", "mtype"_a = "",
              "morphology_filename"_a = "",
              "synapses_idx"_a = py::array_t<uint32_t>(0),
@@ -146,9 +146,7 @@ PYBIND11_MODULE(_basalt, m) {
         .def("deserialize", &c::astrocyte_t::deserialize)
         .def_readwrite("astrocyte_id", &c::astrocyte_t::astrocyte_id)
         .def_readwrite("microdomain_id", &c::astrocyte_t::microdomain_id)
-        .def_readwrite("soma_center_x", &c::astrocyte_t::soma_center_x)
-        .def_readwrite("soma_center_y", &c::astrocyte_t::soma_center_y)
-        .def_readwrite("soma_center_z", &c::astrocyte_t::soma_center_z)
+        .def_readwrite("soma_center", &c::astrocyte_t::soma_center)
         .def_readwrite("soma_radius", &c::astrocyte_t::soma_radius)
         .def_readwrite("name", &c::astrocyte_t::name)
         .def_readwrite("mtype", &c::astrocyte_t::mtype)
