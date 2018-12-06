@@ -8,16 +8,22 @@ set(basalt_SOURCES
     basalt/node_iterator_impl.hpp
     basalt/node_iterator_impl.cpp
     basalt/node_iterator.cpp
-    basalt/status.cpp)
+    basalt/status.cpp
+    basalt/version.cpp)
 set(basalt_HEADERS
     ${basalt_include_directory}/basalt/connections.hpp
     ${basalt_include_directory}/basalt/fwd.hpp
     ${basalt_include_directory}/basalt/network.hpp
     ${basalt_include_directory}/basalt/nodes.hxx
     ${basalt_include_directory}/basalt/node_iterator.hpp
-    ${basalt_include_directory}/basalt/nodes.hpp)
+    ${basalt_include_directory}/basalt/nodes.hpp
+    ${CMAKE_CURRENT_BINARY_DIR}/basalt/version.hpp)
+
+configure_file(basalt/version.hpp.in basalt/version.hpp @ONLY)
+
 include_directories(${spdlog_include_directory}
-                    ${CMAKE_CURRENT_SOURCE_DIR}/basalt)
+                    ${CMAKE_CURRENT_SOURCE_DIR}/basalt
+                    ${CMAKE_CURRENT_BINARY_DIR})
 
 set(PYBIND11_SOURCES
     basalt/circuit_payloads.hpp

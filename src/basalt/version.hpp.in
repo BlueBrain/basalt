@@ -1,0 +1,16 @@
+#ifndef BASALT_VERSION_HPP
+#define BASALT_VERSION_HPP
+
+#include <array>
+
+#define BASALT_MAJOR @Basalt_VERSION_MAJOR@
+#define BASALT_MINOR @Basalt_VERSION_MINOR@
+#define BASALT_PATCH @Basalt_VERSION_PATCH@
+
+namespace basalt {
+
+std::array<int, 3> rocksdb_version();
+
+} // namespace basalt
+
+#endif //BASALT_VERSION_HPP
