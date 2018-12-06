@@ -43,7 +43,8 @@ class connections_t {
      */
     status_t insert(const node_uid_t& node, const node_uids_t& nodes,
                     const std::vector<const char*>& data = {},
-                    const std::vector<std::size_t>& sizes = {}, bool commit = false);
+                    const std::vector<std::size_t>& sizes = {},
+                    bool commit = false);
 
     status_t insert(node_t type, node_id_t id, const char* data,
                     std::size_t size, node_uid_t& node, bool commit = false)
