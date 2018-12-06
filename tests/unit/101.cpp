@@ -91,7 +91,9 @@ enum node_type { synapse, segment, astrocyte };
 
 static std::string new_db_path() {
     char db_path[] = "/tmp/basalt-ut-XXXXXX";
-    mkdtemp(db_path);
+    if (mkdtemp(db_path) == nullptr) {
+        throw std::runtime_error(strerror(errno));
+    };
     return db_path;
 }
 
