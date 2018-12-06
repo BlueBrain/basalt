@@ -112,7 +112,6 @@ class TestNetwork(unittest.TestCase):
         self.assertFalse(g.connections.has(A, S1))
         self.assertFalse(g.connections.has(S1, A))
 
-
     def test_connections(self):
         path = tempfile.mkdtemp()
         g = Network(path)
