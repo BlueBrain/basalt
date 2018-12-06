@@ -88,22 +88,19 @@ void synapse_t::deserialize(pybind11::array_t<char>& data) {
 // astrocyte_t
 
 astrocyte_t::astrocyte_t(uint32_t astrocyte_id, uint32_t microdomain_id,
-                         float soma_center_x, float soma_center_y,
-                         float soma_center_z, float soma_radius,
+                         const float_point_t& soma_center, float soma_radius,
                          const std::string& name, const std::string& mtype,
                          const std::string& morphology_filename,
                          int_vector_t& synapses_idx, int_vector_t& neurons_idx)
     : astrocyte_id(astrocyte_id), microdomain_id(microdomain_id),
-      soma_center_x(soma_center_x), soma_center_y(soma_center_y),
-      soma_center_z(soma_center_z), soma_radius(soma_radius), name(name),
+      soma_center(soma_center), soma_radius(soma_radius), name(name),
       mtype(mtype), morphology_filename(morphology_filename),
       synapses_idx(std::move(synapses_idx)),
       neurons_idx(std::move(neurons_idx)) {}
 
 std::unique_ptr<astrocyte_t>
 astrocyte_t::create(uint32_t astrocyte_id, uint32_t microdomain_id,
-                    float soma_center_x, float soma_center_y,
-                    float soma_center_z, float soma_radius,
+                    const float_point_t& soma_center, float soma_radius,
                     const std::string& name, const std::string& mtype,
                     const std::string& morphology_filename,
                     pybind11::array_t<uint32_t>& synapses_idx,
@@ -113,16 +110,15 @@ astrocyte_t::create(uint32_t astrocyte_id, uint32_t microdomain_id,
     fill_vector(synapses_idx, synapses_idx_vector);
     fill_vector(neurons_idx, neurons_idx_vector);
     return std::unique_ptr<astrocyte_t>(new astrocyte_t(
-        astrocyte_id, microdomain_id, soma_center_x, soma_center_y,
-        soma_center_z, soma_radius, name, mtype, morphology_filename,
-        synapses_idx_vector, neurons_idx_vector));
+        astrocyte_id, microdomain_id, soma_center, soma_radius, name, mtype,
+        morphology_filename, synapses_idx_vector, neurons_idx_vector));
 }
 
 pybind11::array astrocyte_t::serialize() const {
     std::ostringstream oss;
-    oss << astrocyte_id << ' ' << microdomain_id << ' ' << soma_center_x << ' '
-        << soma_center_y << ' ' << soma_center_z << ' ' << soma_radius << ' '
-        << name << ' ' << mtype << ' ' << morphology_filename << ' ';
+    oss << astrocyte_id << ' ' << microdomain_id << ' ' << soma_center << ' '
+        << soma_radius << ' ' << name << ' ' << mtype << ' '
+        << morphology_filename << ' ';
     serialize_vector(oss, synapses_idx);
     serialize_vector(oss, neurons_idx);
     return to_py_array(oss);
@@ -131,8 +127,8 @@ pybind11::array astrocyte_t::serialize() const {
 void astrocyte_t::deserialize(pybind11::array_t<char>& data) {
     std::istringstream iss;
     from_py_array(data, iss);
-    iss >> astrocyte_id >> microdomain_id >> soma_center_x >> soma_center_y >>
-        soma_center_z >> soma_radius >> name >> mtype >> morphology_filename;
+    iss >> astrocyte_id >> microdomain_id >> soma_center >> soma_radius >>
+        name >> mtype >> morphology_filename;
     deserialize_vector(iss, synapses_idx);
     deserialize_vector(iss, neurons_idx);
 }
