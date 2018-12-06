@@ -82,7 +82,7 @@ setup(
     author_email='bbp-ou-hpc@groupes.epfl.ch',
     description='Graph DB Storage',
     long_description='',
-    packages=find_packages(),
+    packages=['basalt'],
     ext_modules=[CMakeExtension('basalt')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
