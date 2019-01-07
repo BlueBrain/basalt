@@ -9,6 +9,7 @@ set(basalt_SOURCES
     basalt/node_iterator_impl.cpp
     basalt/node_iterator.cpp
     basalt/status.cpp
+    basalt/settings.hpp
     basalt/version.cpp)
 set(basalt_HEADERS
     ${basalt_include_directory}/basalt/connections.hpp
@@ -20,8 +21,10 @@ set(basalt_HEADERS
     ${CMAKE_CURRENT_BINARY_DIR}/basalt/version.hpp)
 
 configure_file(basalt/version.hpp.in basalt/version.hpp @ONLY)
+configure_file(basalt/settings.hpp.in basalt/settings.hpp @ONLY)
 
-include_directories(${spdlog_include_directory}
+include_directories(${cereal_include_directory}
+                    ${spdlog_include_directory}
                     ${CMAKE_CURRENT_SOURCE_DIR}/basalt
                     ${CMAKE_CURRENT_BINARY_DIR})
 
@@ -30,27 +33,10 @@ set(PYBIND11_SOURCES
     basalt/circuit_payloads.cpp
     basalt/py_basalt.cpp
     basalt/py_helpers.hpp)
-foreach(pybind_cpp basalt/py_basalt.cpp basalt/circuit_payloads.cpp)
-  if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set_source_files_properties(
-      ${pybind_cpp}
-      PROPERTIES
-      COMPILE_FLAGS
-      "-Wno-undef -Wno-extra-semi -Wno-duplicate-enum -Wno-undefined-reinterpret-cast -Wno-missing-prototypes -Wno-reserved-id-macro -Wno-old-style-cast -Wno-deprecated -Wno-shadow-field -Wno-covered-switch-default -Wno-range-loop-analysis -Wno-zero-as-null-pointer-constant"
-      )
-  else()
-    set_source_files_properties(
-      ${pybind_cpp}
-      PROPERTIES
-      COMPILE_FLAGS
-      "-Wno-old-style-cast -Wno-deprecated -Wno-zero-as-null-pointer-constant")
-  endif()
-endforeach(pybind_cpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 
-message(STATUS "PYTHON_PACKAGEBUILD: ${Basalt_BUILD_PYTHON_PACKAGE}")
 if(Basalt_BUILD_PYTHON_PACKAGE)
-  add_subdirectory(third_party/pybind11)
+  add_subdirectory(${pybind11_project_directory})
   pybind11_add_module(_basalt
                       ${PYBIND11_SOURCES}
                       ${basalt_SOURCES}

@@ -9,8 +9,6 @@ namespace basalt {
 
 nodes_t::nodes_t(network_impl_t& pimpl) : pimpl_(pimpl) {}
 
-nodes_t::~nodes_t() = default;
-
 status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id,
                          const char* data, std::size_t size,
                          basalt::node_uid_t& node, bool commit) {
