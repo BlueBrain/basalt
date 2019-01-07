@@ -4,10 +4,11 @@
  * and edges of biological circuit made of neurons, synapses,
  * astrocytes, and segments.
  */
+
 #include "circuit_payloads.hpp"
+#include "basalt/settings.hpp"
 #include "py_helpers.hpp"
 
-namespace basalt {
 namespace circuit {
 
 // neuron_t
@@ -20,26 +21,25 @@ neuron_t::create(uint32_t gid, pybind11::array_t<uint32_t>& astro_idx,
                  pybind11::array_t<uint32_t>& syn_idx) {
     int_vector_t astro_idx_vector;
     int_vector_t syn_idx_vector;
-    fill_vector(astro_idx, astro_idx_vector);
-    fill_vector(syn_idx, syn_idx_vector);
+    basalt::fill_vector(astro_idx, astro_idx_vector);
+    basalt::fill_vector(syn_idx, syn_idx_vector);
     return std::unique_ptr<neuron_t>(
         new neuron_t(gid, astro_idx_vector, syn_idx_vector));
 }
 
-pybind11::array_t<char> neuron_t::serialize() const {
+pybind11::array_t<char> neuron_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << gid << ' ';
-    serialize_vector(oss, astro_idx);
-    serialize_vector(oss, syn_idx);
-    return to_py_array(oss);
+    basalt::serialize_vector(oss, astro_idx);
+    basalt::serialize_vector(oss, syn_idx);
+    return basalt::to_py_array(oss);
 }
 
-void neuron_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void neuron_t::deserialize_sstream(pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> gid;
-    deserialize_vector(iss, astro_idx);
-    deserialize_vector(iss, syn_idx);
+    basalt::deserialize_vector(iss, astro_idx);
+    basalt::deserialize_vector(iss, syn_idx);
 }
 
 // synapse_t
@@ -61,26 +61,25 @@ synapse_t::create(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx,
                   const std::string& mesh_filename,
                   const std::string& skeleton_filename, float psd_area) {
     int_vector_t astro_idx_vector;
-    fill_vector(astro_idx, astro_idx_vector);
+    basalt::fill_vector(astro_idx, astro_idx_vector);
     return std::unique_ptr<synapse_t>(new synapse_t(
         pre_gid, post_gid, nrn_idx, astro_idx_vector, is_excitatory, pre, post,
         mesh_filename, skeleton_filename, psd_area));
 }
 
-pybind11::array_t<char> synapse_t::serialize() const {
+pybind11::array_t<char> synapse_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << pre_gid << ' ' << post_gid << ' ' << nrn_idx << ' ';
-    serialize_vector(oss, astro_idx);
+    basalt::serialize_vector(oss, astro_idx);
     oss << is_excitatory << ' ' << pre << ' ' << post << ' ' << mesh_filename
         << ' ' << skeleton_filename << ' ' << psd_area;
-    return to_py_array(oss);
+    return basalt::to_py_array(oss);
 }
 
-void synapse_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void synapse_t::deserialize_sstream(pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> pre_gid >> post_gid >> nrn_idx;
-    deserialize_vector(iss, astro_idx);
+    basalt::deserialize_vector(iss, astro_idx);
     iss >> is_excitatory >> pre >> post >> mesh_filename >> skeleton_filename >>
         psd_area;
 }
@@ -107,30 +106,29 @@ astrocyte_t::create(uint32_t astrocyte_id, uint32_t microdomain_id,
                     pybind11::array_t<uint32_t>& neurons_idx) {
     int_vector_t synapses_idx_vector;
     int_vector_t neurons_idx_vector;
-    fill_vector(synapses_idx, synapses_idx_vector);
-    fill_vector(neurons_idx, neurons_idx_vector);
+    basalt::fill_vector(synapses_idx, synapses_idx_vector);
+    basalt::fill_vector(neurons_idx, neurons_idx_vector);
     return std::unique_ptr<astrocyte_t>(new astrocyte_t(
         astrocyte_id, microdomain_id, soma_center, soma_radius, name, mtype,
         morphology_filename, synapses_idx_vector, neurons_idx_vector));
 }
 
-pybind11::array astrocyte_t::serialize() const {
+pybind11::array astrocyte_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << astrocyte_id << ' ' << microdomain_id << ' ' << soma_center << ' '
         << soma_radius << ' ' << name << ' ' << mtype << ' '
         << morphology_filename << ' ';
-    serialize_vector(oss, synapses_idx);
-    serialize_vector(oss, neurons_idx);
-    return to_py_array(oss);
+    basalt::serialize_vector(oss, synapses_idx);
+    basalt::serialize_vector(oss, neurons_idx);
+    return basalt::to_py_array(oss);
 }
 
-void astrocyte_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void astrocyte_t::deserialize_sstream(pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> astrocyte_id >> microdomain_id >> soma_center >> soma_radius >>
         name >> mtype >> morphology_filename;
-    deserialize_vector(iss, synapses_idx);
-    deserialize_vector(iss, neurons_idx);
+    basalt::deserialize_vector(iss, synapses_idx);
+    basalt::deserialize_vector(iss, neurons_idx);
 }
 
 // microdomain_t
@@ -165,42 +163,41 @@ microdomain_t::create(uint32_t microdomain_id, uint32_t astrocyte_id,
     triangles_t triangles_vector;
     int_vector_t neurons_idx_vector;
     int_vector_t synapses_idx_vector;
-    fill_vector(neighbors, neighbors_vector);
-    fill_vector(vertex_coordinates, vertex_coordinates_vector);
-    fill_vector(triangles, triangles_vector);
-    fill_vector(neurons_idx, neurons_idx_vector);
-    fill_vector(synapses_idx, synapses_idx_vector);
+    basalt::fill_vector(neighbors, neighbors_vector);
+    basalt::fill_vector(vertex_coordinates, vertex_coordinates_vector);
+    basalt::fill_vector(triangles, triangles_vector);
+    basalt::fill_vector(neurons_idx, neurons_idx_vector);
+    basalt::fill_vector(synapses_idx, synapses_idx_vector);
     return std::unique_ptr<microdomain_t>(new microdomain_t(
         microdomain_id, astrocyte_id, neighbors_vector,
         vertex_coordinates_vector, triangles_vector, centroid, area, volume,
         mesh_filename, neurons_idx_vector, synapses_idx_vector));
 }
 
-pybind11::array microdomain_t::serialize() const {
+pybind11::array microdomain_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << microdomain_id << ' ' << astrocyte_id << ' ';
-    serialize_vector(oss, neighbors);
-    serialize_vector(oss, vertex_coordinates);
-    serialize_vector(oss, triangles);
+    basalt::serialize_vector(oss, neighbors);
+    basalt::serialize_vector(oss, vertex_coordinates);
+    basalt::serialize_vector(oss, triangles);
 
     oss << centroid << ' ' << area << ' ' << volume << ' ' << mesh_filename
         << ' ';
-    serialize_vector(oss, neurons_idx);
-    serialize_vector(oss, synapses_idx);
+    basalt::serialize_vector(oss, neurons_idx);
+    basalt::serialize_vector(oss, synapses_idx);
 
-    return to_py_array(oss);
+    return basalt::to_py_array(oss);
 }
 
-void microdomain_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void microdomain_t::deserialize_sstream(pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> microdomain_id >> astrocyte_id;
-    deserialize_vector(iss, neighbors);
-    deserialize_vector(iss, vertex_coordinates);
-    deserialize_vector(iss, triangles);
+    basalt::deserialize_vector(iss, neighbors);
+    basalt::deserialize_vector(iss, vertex_coordinates);
+    basalt::deserialize_vector(iss, triangles);
     iss >> centroid >> area >> volume >> mesh_filename;
-    deserialize_vector(iss, neurons_idx);
-    deserialize_vector(iss, synapses_idx);
+    basalt::deserialize_vector(iss, neurons_idx);
+    basalt::deserialize_vector(iss, synapses_idx);
 }
 
 // segment_t
@@ -220,17 +217,16 @@ std::unique_ptr<segment_t> segment_t::create(uint32_t section_id,
         section_id, segment_id, type, x1, y1, z1, r1, x2, y2, z2, r2));
 }
 
-pybind11::array segment_t::serialize() const {
+pybind11::array segment_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << section_id << ' ' << segment_id << ' ' << type << ' ' << x1 << ' '
         << y1 << ' ' << z1 << ' ' << r1 << ' ' << x2 << ' ' << y2 << ' ' << z2
         << ' ' << r2;
-    return to_py_array(oss);
+    return basalt::to_py_array(oss);
 }
 
-void segment_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void segment_t::deserialize_sstream(pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> section_id >> segment_id >> type >> x1 >> y1 >> z1 >> r1 >> x2 >>
         y2 >> z2 >> r2;
 }
@@ -249,17 +245,16 @@ edge_astrocyte_segment_t::create(const float_point_t& astrocyte,
         new edge_astrocyte_segment_t(astrocyte, vasculature));
 }
 
-pybind11::array edge_astrocyte_segment_t::serialize() const {
+pybind11::array edge_astrocyte_segment_t::serialize_sstream() const {
     std::ostringstream oss;
     oss << astrocyte << ' ' << vasculature;
-    return to_py_array(oss);
+    return basalt::to_py_array(oss);
 }
 
-void edge_astrocyte_segment_t::deserialize(pybind11::array_t<char>& data) {
-    std::istringstream iss;
-    from_py_array(data, iss);
+void edge_astrocyte_segment_t::deserialize_sstream(
+    pybind11::array_t<char>& data) {
+    basalt::imemstream iss(data);
     iss >> astrocyte >> vasculature;
 }
 
 } // namespace circuit
-} // namespace basalt

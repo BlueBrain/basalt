@@ -10,7 +10,6 @@
 
 #include "py_helpers.hpp"
 
-namespace basalt {
 namespace circuit {
 
 using float_point_t = std::array<float, 3>;
@@ -37,9 +36,15 @@ struct neuron_t {
     static std::unique_ptr<neuron_t>
     create(uint32_t gid, pybind11::array_t<uint32_t>& astro_idx,
            pybind11::array_t<uint32_t>& syn_idx);
-    pybind11::array_t<char> serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array_t<char> serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a neuron_t
+template <class Archive>
+void serialize(Archive& ar, neuron_t& neuron) {
+    ar(neuron.gid, neuron.astro_idx, neuron.syn_idx);
+}
 
 /**
  * \brief Payload description of a node of type Synapse
@@ -71,9 +76,16 @@ struct synapse_t {
            const float_point_t& pre, const float_point_t& post,
            const std::string& mesh_filename,
            const std::string& skeleton_filename, float psd_area);
-    pybind11::array_t<char> serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array_t<char> serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a synapse_t
+template <class Archive>
+void serialize(Archive& ar, synapse_t& s) {
+    ar(s.pre_gid, s.post_gid, s.nrn_idx, s.astro_idx, s.is_excitatory, s.pre,
+       s.post, s.mesh_filename, s.skeleton_filename, s.psd_area);
+}
 
 /**
  * \brief Payload description of a node of type Astrocyte
@@ -106,9 +118,16 @@ struct astrocyte_t {
            const std::string& morphology_filename,
            pybind11::array_t<uint32_t>& synapses_idx,
            pybind11::array_t<uint32_t>& neurons_idx);
-    pybind11::array serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a astrocyte_t
+template <class Archive>
+void serialize(Archive& ar, astrocyte_t& a) {
+    ar(a.astrocyte_id, a.microdomain_id, a.soma_center, a.soma_radius, a.name,
+       a.mtype, a.morphology_filename, a.synapses_idx, a.neurons_idx);
+}
 
 /**
  * \brief Payload description of a node of type MicroDomain
@@ -159,9 +178,17 @@ struct microdomain_t {
            const std::string& mesh_filename,
            pybind11::array_t<uint32_t>& neurons_idx,
            pybind11::array_t<uint32_t>& synapses_idx);
-    pybind11::array serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a microdomain_t
+template <class Archive>
+void serialize(Archive& ar, microdomain_t& m) {
+    ar(m.microdomain_id, m.astrocyte_id, m.neighbors, m.vertex_coordinates,
+       m.triangles, m.centroid, m.area, m.volume, m.mesh_filename,
+       m.neurons_idx, m.synapses_idx);
+}
 
 /**
  * \brief Payload description of a node of type Segment
@@ -189,9 +216,16 @@ struct segment_t {
                                              float x1, float y1, float z1,
                                              float r1, float x2, float y2,
                                              float z2, float r2);
-    pybind11::array serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a segment_t
+template <class Archive>
+void serialize(Archive& ar, segment_t& s) {
+    ar(s.section_id, s.segment_id, s.type, s.x1, s.y1, s.z1, s.r1, s.x2, s.y2,
+       s.z2, s.r2);
+}
 
 /**
  * \brief Payload description of an edge between an Astrocyte and a Segment
@@ -208,15 +242,20 @@ struct edge_astrocyte_segment_t {
 
     static std::unique_ptr<edge_astrocyte_segment_t>
     create(const float_point_t& astrocyte, const float_point_t& vasculature);
-    pybind11::array serialize() const;
-    void deserialize(pybind11::array_t<char>& data);
+    pybind11::array serialize_sstream() const;
+    void deserialize_sstream(pybind11::array_t<char>& data);
 };
+
+/// Cereal serialization method for \a edge_astrocyte_segment_t
+template <class Archive>
+void serialize(Archive& ar, edge_astrocyte_segment_t& a) {
+    ar(a.astrocyte, a.vasculature);
+}
 
 /**
  *  \}
  */
 
 } // namespace circuit
-} // namespace basalt
 
 #endif // BASALT_CIRCUIT_PAYLOADS_HPP

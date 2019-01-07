@@ -9,6 +9,23 @@ bob_begin_package()
 bob_option(Basalt_USE_pybind11 "Build Python bindings" OFF)
 bob_option(Basalt_BUILD_PYTHON_PACKAGE "Build Python package" OFF)
 
+set(Basalt_SERIALIZATION_METHODS CEREAL SSTREAM)
+bob_input(Basalt_SERIALIZATION
+          CEREAL
+          STRING
+          "Serialization method: ${Basalt_SERIALIZATION_METHODS}")
+set_property(CACHE Basalt_SERIALIZATION
+             PROPERTY STRINGS "${Basalt_SERIALIZATION_METHODS}")
+list(FIND Basalt_SERIALIZATION_METHODS ${Basalt_SERIALIZATION} index)
+if(index EQUAL -1)
+  message(
+    FATAL_ERROR
+      "Unknown serialization '${Basalt_SERIALIZATION}'. Expected one of : ${Basalt_SERIALIZATION_METHODS}"
+    )
+endif()
+unset(Basalt_SERIALIZATION_METHODS)
+unset(index)
+
 bob_begin_cxx_flags()
 bob_cxx11_flags()
 
@@ -48,6 +65,10 @@ include_directories(${basalt_include_directory})
 
 set(catch2_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
+set(cereal_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/cereal/include)
+set(pybind11_project_directory ${PROJECT_SOURCE_DIR}/src/third_party/pybind11)
+set(pybind11_include_directory ${pybind11_project_directory}/include)
 set(spdlog_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 

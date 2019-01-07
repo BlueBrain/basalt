@@ -10,7 +10,6 @@ namespace basalt {
 class nodes_t {
   public:
     explicit nodes_t(network_impl_t& pimpl);
-    ~nodes_t();
     /**
      * \brief Iterate over nodes
      * \param pos starting position, default at the beginning

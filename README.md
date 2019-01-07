@@ -83,4 +83,6 @@ Please make sure to execute `dev/check.sh` before submitting a patch in order to
 * format CMake files with [cmake-format](https://github.com/cheshirekow/cmake_format)
 to format your CMake changes.
 * run Python static analysis and code formatting with
-  [`flake8`](http://flake8.pycqa.org) and [`black`](https://github.com/ambv/black)
+  [`flake8`](http://flake8.pycqa.org) and [`black`](https://github.com/ambv/black).
+  Also install [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear)
+  *flake8* plugin.

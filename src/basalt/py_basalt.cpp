@@ -7,19 +7,40 @@
 #include <string>
 #include <vector>
 
-#include <pybind11/numpy.h>
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wdeprecated"
+#pragma clang diagnostic ignored "-Wduplicate-enum"
+#pragma clang diagnostic ignored "-Wextra-semi"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wrange-loop-analysis"
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#pragma clang diagnostic ignored "-Wshadow-field"
+#pragma clang diagnostic ignored "-Wundef"
+#pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#endif // defined(__clang__)
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic pop
+#endif // defined(__clang__)
 
 #include "circuit_payloads.hpp"
 #include "network_impl.hpp"
-#include <basalt/version.hpp>
+#include "basalt/version.hpp"
 
 namespace py = pybind11;
 using namespace pybind11::literals;
-namespace b = basalt;
-namespace c = basalt::circuit;
 
 static const auto basalt_version = []() -> std::string {
     std::ostringstream oss;
@@ -29,17 +50,21 @@ static const auto basalt_version = []() -> std::string {
 
 static const auto rocksdb_version = []() -> std::string {
     std::ostringstream oss;
-    const auto version = b::rocksdb_version();
+    const auto version = basalt::rocksdb_version();
     oss << version[0] << '.' << version[1] << '.' << version[2];
     return oss.str();
 };
 
 // See
 // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#making-opaque-types
-PYBIND11_MAKE_OPAQUE(c::point_vector_t);
-PYBIND11_MAKE_OPAQUE(c::int_vector_t);
-PYBIND11_MAKE_OPAQUE(c::float_point_t);
+PYBIND11_MAKE_OPAQUE (circuit::point_vector_t);
+PYBIND11_MAKE_OPAQUE (circuit::int_vector_t);
+PYBIND11_MAKE_OPAQUE (circuit::float_point_t);
 
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
+#endif // defined(__clang__)
 PYBIND11_MODULE(_basalt, m) {
     m.doc() = "Basic graph database backed by RocksDB key-value storage";
     m.attr("__rocksdb_version__") = rocksdb_version();
@@ -47,21 +72,21 @@ PYBIND11_MODULE(_basalt, m) {
 
     // see
     // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#binding-stl-containers
-    py::bind_vector<c::point_vector_t>(m, "FloatPointVector",
+    py::bind_vector <circuit::point_vector_t>(m, "FloatPointVector",
                                        py::buffer_protocol());
 
-    py::bind_vector<c::int_vector_t>(m, "IntegerPointVector",
+    py::bind_vector <circuit::int_vector_t>(m, "IntegerPointVector",
                                      py::buffer_protocol());
 
-    py::class_<c::float_point_t>(m, "Point")
+    py::class_ <circuit::float_point_t>(m, "Point")
         .def(py::init<>())
-        .def(py::init([](c::float_point_t::value_type x,
-                         c::float_point_t::value_type y,
-                         c::float_point_t::value_type z) {
-            return c::float_point_t{x, y, z};
+        .def(py::init([] (circuit::float_point_t::value_type x,
+                         circuit::float_point_t::value_type y,
+                         circuit::float_point_t::value_type z) {
+            return circuit::float_point_t{x, y, z};
         }))
-        .def(py::init([](const std::list<c::float_point_t::value_type>& list) {
-            c::float_point_t eax;
+        .def(py::init([](const std::list <circuit::float_point_t::value_type>& list) {
+            circuit::float_point_t eax;
             if (list.size() != eax.size()) {
                 throw std::runtime_error("Invalid list size");
             }
@@ -69,166 +94,166 @@ PYBIND11_MODULE(_basalt, m) {
             return eax;
         }))
 
-        .def("__len__", [](const c::float_point_t& p) { return p.size(); })
+        .def("__len__", [](const circuit::float_point_t& p) { return p.size(); })
         .def("__iter__",
-             [](const c::float_point_t& p) {
+             [](const circuit::float_point_t& p) {
                  return py::make_iterator(p.begin(), p.end());
              },
              py::keep_alive<0, 1>())
         .def("__getitem__",
-             [](const c::float_point_t& p, int index) { return p[index]; })
+             [](const circuit::float_point_t& p, int index) { return p[index]; })
         .def("__setitem__",
-             [](c::float_point_t& p, int index,
-                c::float_point_t::value_type value) { p[index] = value; })
+             [] (circuit::float_point_t& p, int index,
+                circuit::float_point_t::value_type value) { p[index] = value; })
 
         .def("__repr__",
-             [](const c::float_point_t& p) {
+             [](const circuit::float_point_t& p) {
                  std::ostringstream oss;
                  oss << "basalt.Point(" << p[0] << ", " << p[1] << ", " << p[2]
                      << ")";
                  return oss.str();
              })
-        .def_property("x", [](const c::float_point_t& p) { return p[0]; },
-                      [](c::float_point_t& p,
-                         c::float_point_t::value_type value) { p[0] = value; })
+        .def_property("x", [](const circuit::float_point_t& p) { return p[0]; },
+                      [] (circuit::float_point_t& p,
+                         circuit::float_point_t::value_type value) { p[0] = value; })
 
-        .def_property("y", [](const c::float_point_t& p) { return p[1]; },
-                      [](c::float_point_t& p,
-                         c::float_point_t::value_type value) { p[1] = value; })
+        .def_property("y", [](const circuit::float_point_t& p) { return p[1]; },
+                      [] (circuit::float_point_t& p,
+                         circuit::float_point_t::value_type value) { p[1] = value; })
 
-        .def_property("z", [](const c::float_point_t& p) { return p[2]; },
-                      [](c::float_point_t& p,
-                         c::float_point_t::value_type value) { p[2] = value; });
+        .def_property("z", [](const circuit::float_point_t& p) { return p[2]; },
+                      [] (circuit::float_point_t& p,
+                         circuit::float_point_t::value_type value) { p[2] = value; });
 
-    py::class_<c::neuron_t>(m, "Neuron")
+    py::class_ <circuit::neuron_t>(m, "Neuron")
         .def(py::init<>())
-        .def(py::init(&c::neuron_t::create), "gid"_a,
+        .def(py::init(&circuit::neuron_t::create), "gid"_a,
              "astro_idx"_a = py::array_t<uint32_t>(0),
              "syn_idx"_a = py::array_t<uint32_t>(0))
-        .def("serialize", &c::neuron_t::serialize)
-        .def("deserialize", &c::neuron_t::deserialize)
-        .def_readwrite("gid", &c::neuron_t::gid)
-        .def_readwrite("astro_idx", &c::neuron_t::astro_idx)
-        .def_readwrite("syn_idx", &c::neuron_t::syn_idx);
+        .def("serialize", &basalt::serialize<circuit::neuron_t>)
+        .def("deserialize", &basalt::deserialize<circuit::neuron_t>)
+        .def_readwrite("gid", &circuit::neuron_t::gid)
+        .def_readwrite("astro_idx", &circuit::neuron_t::astro_idx)
+        .def_readwrite("syn_idx", &circuit::neuron_t::syn_idx);
 
-    py::class_<c::synapse_t>(m, "Synapse")
+    py::class_ <circuit::synapse_t>(m, "Synapse")
         .def(py::init<>())
-        .def(py::init(&c::synapse_t::create), "pre_gid"_a = 0, "post_gid"_a = 0,
+        .def(py::init(&circuit::synapse_t::create), "pre_gid"_a = 0, "post_gid"_a = 0,
              "nrn_idx"_a = 0, "astro_idx"_a = py::array_t<uint32_t>(0),
              "is_excitatory"_a = false,
-             "pre"_a = c::float_point_t({0., 0., 0.}),
-             "post"_a = c::float_point_t({0., 0., 0.}), "mesh_filename"_a = "",
+             "pre"_a = circuit::float_point_t({0., 0., 0.}),
+             "post"_a = circuit::float_point_t({0., 0., 0.}), "mesh_filename"_a = "",
              "skeleton_filename"_a = "", "psd_area"_a = 0.)
-        .def("serialize", &c::synapse_t::serialize)
-        .def("deserialize", &c::synapse_t::deserialize)
-        .def_readwrite("pre", &c::synapse_t::pre)
-        .def_readwrite("pre_gid", &c::synapse_t::pre_gid)
-        .def_readwrite("post_gid", &c::synapse_t::post_gid)
-        .def_readwrite("nrn_idx", &c::synapse_t::nrn_idx)
-        .def_readwrite("astro_idx", &c::synapse_t::astro_idx)
-        .def_readwrite("is_excitatory", &c::synapse_t::is_excitatory)
-        .def_readwrite("pre", &c::synapse_t::pre)
-        .def_readwrite("post", &c::synapse_t::post)
-        .def_readwrite("mesh_filename", &c::synapse_t::mesh_filename)
-        .def_readwrite("skeleton_filename", &c::synapse_t::skeleton_filename)
-        .def_readwrite("psd_area", &c::synapse_t::psd_area);
+        .def("serialize", &basalt::serialize<circuit::synapse_t>)
+        .def("deserialize", &basalt::deserialize<circuit::synapse_t>)
+        .def_readwrite("pre", &circuit::synapse_t::pre)
+        .def_readwrite("pre_gid", &circuit::synapse_t::pre_gid)
+        .def_readwrite("post_gid", &circuit::synapse_t::post_gid)
+        .def_readwrite("nrn_idx", &circuit::synapse_t::nrn_idx)
+        .def_readwrite("astro_idx", &circuit::synapse_t::astro_idx)
+        .def_readwrite("is_excitatory", &circuit::synapse_t::is_excitatory)
+        .def_readwrite("pre", &circuit::synapse_t::pre)
+        .def_readwrite("post", &circuit::synapse_t::post)
+        .def_readwrite("mesh_filename", &circuit::synapse_t::mesh_filename)
+        .def_readwrite("skeleton_filename", &circuit::synapse_t::skeleton_filename)
+        .def_readwrite("psd_area", &circuit::synapse_t::psd_area);
 
-    py::class_<c::astrocyte_t>(m, "Astrocyte")
+    py::class_<circuit::astrocyte_t>(m, "Astrocyte")
         .def(py::init<>())
-        .def(py::init(&c::astrocyte_t::create), "astrocyte_id"_a = 0,
+        .def(py::init(&circuit::astrocyte_t::create), "astrocyte_id"_a = 0,
              "microdomain_id"_a = 0,
-             "soma_center"_a = c::float_point_t({0., 0., 0.}),
+             "soma_center"_a = circuit::float_point_t({0., 0., 0.}),
              "soma_radius"_a = 0., "name"_a = "", "mtype"_a = "",
              "morphology_filename"_a = "",
              "synapses_idx"_a = py::array_t<uint32_t>(0),
              "neurons_idx"_a = py::array_t<uint32_t>(0))
-        .def("serialize", &c::astrocyte_t::serialize)
-        .def("deserialize", &c::astrocyte_t::deserialize)
-        .def_readwrite("astrocyte_id", &c::astrocyte_t::astrocyte_id)
-        .def_readwrite("microdomain_id", &c::astrocyte_t::microdomain_id)
-        .def_readwrite("soma_center", &c::astrocyte_t::soma_center)
-        .def_readwrite("soma_radius", &c::astrocyte_t::soma_radius)
-        .def_readwrite("name", &c::astrocyte_t::name)
-        .def_readwrite("mtype", &c::astrocyte_t::mtype)
+        .def("serialize", &basalt::serialize<circuit::astrocyte_t>)
+        .def("deserialize", &basalt::deserialize<circuit::astrocyte_t>)
+        .def_readwrite("astrocyte_id", &circuit::astrocyte_t::astrocyte_id)
+        .def_readwrite("microdomain_id", &circuit::astrocyte_t::microdomain_id)
+        .def_readwrite("soma_center", &circuit::astrocyte_t::soma_center)
+        .def_readwrite("soma_radius", &circuit::astrocyte_t::soma_radius)
+        .def_readwrite("name", &circuit::astrocyte_t::name)
+        .def_readwrite("mtype", &circuit::astrocyte_t::mtype)
         .def_readwrite("morphology_filename",
-                       &c::astrocyte_t::morphology_filename)
-        .def_readwrite("synapses_idx", &c::astrocyte_t::synapses_idx)
-        .def_readwrite("neurons_idx", &c::astrocyte_t::neurons_idx);
+                       &circuit::astrocyte_t::morphology_filename)
+        .def_readwrite("synapses_idx", &circuit::astrocyte_t::synapses_idx)
+        .def_readwrite("neurons_idx", &circuit::astrocyte_t::neurons_idx);
 
-    py::class_<c::microdomain_t>(m, "MicroDomain")
+    py::class_ <circuit::microdomain_t>(m, "MicroDomain")
         .def(py::init<>())
-        .def(py::init(&c::microdomain_t::create), "microdomain_id"_a = 0,
+        .def(py::init(&circuit::microdomain_t::create), "microdomain_id"_a = 0,
              "astrocyte_id"_a = 0, "neighbors"_a = py::array_t<uint32_t>(0),
              "vertex_coordinates"_a = py::array_t<float>(0),
              "triangles"_a = py::array_t<uint32_t>(0),
-             "centroid"_a = c::float_point_t({0., 0., 0.}), "area"_a = 0.,
+             "centroid"_a = circuit::float_point_t({0., 0., 0.}), "area"_a = 0.,
              "volume"_a = 0., "mesh_filename"_a = "",
              "neurons_idx"_a = py::array_t<uint32_t>(0),
              "synapses_idx"_a = py::array_t<uint32_t>(0))
-        .def("serialize", &c::microdomain_t::serialize)
-        .def("deserialize", &c::microdomain_t::deserialize)
+        .def("serialize", &basalt::serialize<circuit::microdomain_t>)
+        .def("deserialize", &basalt::deserialize<circuit::microdomain_t>)
 
-        .def_readwrite("microdomain_id", &c::microdomain_t::microdomain_id)
-        .def_readwrite("astrocyte_id", &c::microdomain_t::astrocyte_id)
-        .def_readwrite("neighbors", &c::microdomain_t::neighbors)
+        .def_readwrite("microdomain_id", &circuit::microdomain_t::microdomain_id)
+        .def_readwrite("astrocyte_id", &circuit::microdomain_t::astrocyte_id)
+        .def_readwrite("neighbors", &circuit::microdomain_t::neighbors)
         .def_readwrite("vertex_coordinates",
-                       &c::microdomain_t::vertex_coordinates)
-        .def_readwrite("triangles", &c::microdomain_t::triangles)
-        .def_readwrite("centroid", &c::microdomain_t::centroid)
-        .def_readwrite("area", &c::microdomain_t::area)
-        .def_readwrite("volume", &c::microdomain_t::volume)
-        .def_readwrite("mesh_filename", &c::microdomain_t::mesh_filename)
-        .def_readwrite("neurons_idx", &c::microdomain_t::neurons_idx)
-        .def_readwrite("synapses_idx", &c::microdomain_t::synapses_idx);
+                       &circuit::microdomain_t::vertex_coordinates)
+        .def_readwrite("triangles", &circuit::microdomain_t::triangles)
+        .def_readwrite("centroid", &circuit::microdomain_t::centroid)
+        .def_readwrite("area", &circuit::microdomain_t::area)
+        .def_readwrite("volume", &circuit::microdomain_t::volume)
+        .def_readwrite("mesh_filename", &circuit::microdomain_t::mesh_filename)
+        .def_readwrite("neurons_idx", &circuit::microdomain_t::neurons_idx)
+        .def_readwrite("synapses_idx", &circuit::microdomain_t::synapses_idx);
 
-    py::class_<c::segment_t>(m, "Segment")
+    py::class_ <circuit::segment_t>(m, "Segment")
         .def(py::init<>())
-        .def(py::init<>(&c::segment_t::create), "section_id"_a = 0,
+        .def(py::init<>(&circuit::segment_t::create), "section_id"_a = 0,
              "segment_id"_a = 0, "type"_a = 0, "x1"_a = 0., "y1"_a = 0.,
              "z1"_a = 0., "r1"_a = 0., "x2"_a = 0., "y2"_a = 0., "z2"_a = 0.,
              "r2"_a = 0.)
-        .def("serialize", &c::segment_t::serialize)
-        .def("deserialize", &c::segment_t::deserialize)
-        .def_readwrite("section_id", &c::segment_t::section_id)
-        .def_readwrite("segment_id", &c::segment_t::segment_id)
-        .def_readwrite("type", &c::segment_t::type)
-        .def_readwrite("x1", &c::segment_t::x1)
-        .def_readwrite("y1", &c::segment_t::y1)
-        .def_readwrite("z1", &c::segment_t::z1)
-        .def_readwrite("r1", &c::segment_t::r1)
-        .def_readwrite("x2", &c::segment_t::x2)
-        .def_readwrite("y2", &c::segment_t::y2)
-        .def_readwrite("z2", &c::segment_t::z2)
-        .def_readwrite("r2", &c::segment_t::r2);
+        .def("serialize", &basalt::serialize<circuit::segment_t>)
+        .def("deserialize", &basalt::deserialize<circuit::segment_t>)
+        .def_readwrite("section_id", &circuit::segment_t::section_id)
+        .def_readwrite("segment_id", &circuit::segment_t::segment_id)
+        .def_readwrite("type", &circuit::segment_t::type)
+        .def_readwrite("x1", &circuit::segment_t::x1)
+        .def_readwrite("y1", &circuit::segment_t::y1)
+        .def_readwrite("z1", &circuit::segment_t::z1)
+        .def_readwrite("r1", &circuit::segment_t::r1)
+        .def_readwrite("x2", &circuit::segment_t::x2)
+        .def_readwrite("y2", &circuit::segment_t::y2)
+        .def_readwrite("z2", &circuit::segment_t::z2)
+        .def_readwrite("r2", &circuit::segment_t::r2);
 
-    py::class_<c::edge_astrocyte_segment_t>(m, "EdgeAstrocyteSegment")
+    py::class_<circuit::edge_astrocyte_segment_t>(m, "EdgeAstrocyteSegment")
         .def(py::init<>())
-        .def(py::init<>(&c::edge_astrocyte_segment_t::create),
-             "astrocyte"_a = c::float_point_t({0., 0., 0.}),
-             "vasculature"_a = c::float_point_t({0., 0., 0.}))
-        .def("serialize", &c::edge_astrocyte_segment_t::serialize)
-        .def("deserialize", &c::edge_astrocyte_segment_t::deserialize)
-        .def_readwrite("astrocyte", &c::edge_astrocyte_segment_t::astrocyte)
+        .def(py::init<>(&circuit::edge_astrocyte_segment_t::create),
+             "astrocyte"_a = circuit::float_point_t({0., 0., 0.}),
+             "vasculature"_a = circuit::float_point_t({0., 0., 0.}))
+        .def("serialize", &basalt::serialize<circuit::edge_astrocyte_segment_t>)
+        .def("deserialize", &basalt::deserialize<circuit::edge_astrocyte_segment_t>)
+        .def_readwrite("astrocyte", &circuit::edge_astrocyte_segment_t::astrocyte)
         .def_readwrite("vasculature",
-                       &c::edge_astrocyte_segment_t::vasculature);
+                       &circuit::edge_astrocyte_segment_t::vasculature);
 
-    m.def("make_id", &b::make_id, "node_id_t constructor helper function");
+    m.def("make_id", &basalt::make_id, "node_id_t constructor helper function");
 
-    py::class_<b::status_t>(m, "Status")
-        .def_readonly("code", &b::status_t::code)
-        .def_readonly("message", &b::status_t::message)
-        .def("raise_on_error", &b::status_t::raise_on_error);
+    py::class_<basalt::status_t>(m, "Status")
+        .def_readonly("code", &basalt::status_t::code)
+        .def_readonly("message", &basalt::status_t::message)
+        .def("raise_on_error", &basalt::status_t::raise_on_error);
 
-    py::class_<b::network_t>(m, "Network")
+    py::class_<basalt::network_t>(m, "Network")
         .def(py::init<const std::string&>())
-        .def_property_readonly("nodes", &b::network_t::nodes)
-        .def_property_readonly("connections", &b::network_t::connections)
-        .def("commit", &b::network_t::commit);
+        .def_property_readonly("nodes", &basalt::network_t::nodes)
+        .def_property_readonly("connections", &basalt::network_t::connections)
+        .def("commit", &basalt::network_t::commit);
 
-    py::class_<b::connections_t>(m, "Connections")
+    py::class_<basalt::connections_t>(m, "Connections")
         .def("insert",
-             [](b::connections_t& connections, const b::node_uid_t& node1,
-                const b::node_uid_t& node2, bool commit) {
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node1,
+                const basalt::node_uid_t& node2, bool commit) {
                  const auto status = connections.insert(node1, node2, commit);
                  status.raise_on_error();
              },
@@ -236,8 +261,8 @@ PYBIND11_MODULE(_basalt, m) {
              "commit"_a = false)
 
         .def("insert",
-             [](b::connections_t& connections, const b::node_uid_t& node1,
-                const b::node_uid_t& node2, py::array_t<char> data,
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node1,
+                const basalt::node_uid_t& node2, py::array_t<char> data,
                 bool commit = false) {
                  if (data.ndim() != 1) {
                      throw std::runtime_error(
@@ -251,8 +276,8 @@ PYBIND11_MODULE(_basalt, m) {
              "commit"_a = false)
 
         .def("has",
-             [](const b::connections_t& connections, const b::node_uid_t& node1,
-                const b::node_uid_t& node2) {
+             [](const basalt::connections_t& connections, const basalt::node_uid_t& node1,
+                const basalt::node_uid_t& node2) {
                  bool result;
                  connections.has(node1, node2, result).raise_on_error();
                  return result;
@@ -261,17 +286,17 @@ PYBIND11_MODULE(_basalt, m) {
 
         .def(
             "get",
-            [](const b::connections_t& connections, const b::node_uid_t& node) {
-                b::node_uids_t eax;
+            [](const basalt::connections_t& connections, const basalt::node_uid_t& node) {
+                basalt::node_uids_t eax;
                 connections.get(node, eax).raise_on_error();
                 return eax;
             },
             "get nodes connected to one node", "node"_a)
 
         .def("get",
-             [](const b::connections_t& connections, const b::node_uid_t& node,
-                b::node_t filter) {
-                 b::node_uids_t eax;
+             [](const basalt::connections_t& connections, const basalt::node_uid_t& node,
+                basalt::node_t filter) {
+                 basalt::node_uids_t eax;
                  connections.get(node, filter, eax).raise_on_error();
                  return eax;
              },
@@ -279,15 +304,15 @@ PYBIND11_MODULE(_basalt, m) {
              "filter"_a)
 
         .def("erase",
-             [](b::connections_t& connections, const b::node_uid_t& node1,
-                const b::node_uid_t& node2, bool commit = false) {
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node1,
+                const basalt::node_uid_t& node2, bool commit = false) {
                  connections.erase(node1, node2, commit).raise_on_error();
              },
              "remove connection between 2 nodes", "node1"_a, "node2"_a,
              "commit"_a = false)
 
         .def("erase",
-             [](b::connections_t& connections, const b::node_uid_t& node,
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node,
                 bool commit = false) {
                  std::size_t removed;
                  connections.erase(node, removed, commit).raise_on_error();
@@ -296,8 +321,8 @@ PYBIND11_MODULE(_basalt, m) {
              "remove all connections of a node", "node"_a, "commit"_a = false)
 
         .def("erase",
-             [](b::connections_t& connections, const b::node_uid_t& node,
-                b::node_t filter, bool commit = false) {
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node,
+                basalt::node_t filter, bool commit = false) {
                  std::size_t removed;
                  connections.erase(node, filter, removed, commit)
                      .raise_on_error();
@@ -306,17 +331,17 @@ PYBIND11_MODULE(_basalt, m) {
              "remove all connections of a node", "node"_a, "filter"_a,
              "commit"_a = false);
 
-    py::class_<b::nodes_t>(m, "Nodes")
+    py::class_<basalt::nodes_t>(m, "Nodes")
         .def("__iter__",
-             [](const b::nodes_t& nodes) {
+             [](const basalt::nodes_t& nodes) {
                  return py::make_iterator(nodes.begin(), nodes.end());
              },
              py::keep_alive<0, 1>())
 
         .def("insert",
-             [](b::nodes_t& nodes, b::node_t type, b::node_id_t id,
+             [](basalt::nodes_t& nodes, basalt::node_t type, basalt::node_id_t id,
                 bool commit = false) {
-                 b::node_uid_t uid;
+                 basalt::node_uid_t uid;
                  const auto status = nodes.insert(type, id, uid, commit);
                  status.raise_on_error();
                  return uid;
@@ -324,13 +349,13 @@ PYBIND11_MODULE(_basalt, m) {
              "insert a node in the graph", "type"_a, "id"_a, "commit"_a = false)
 
         .def("insert",
-             [](b::nodes_t& nodes, b::node_t type, b::node_id_t id,
+             [](basalt::nodes_t& nodes, basalt::node_t type, basalt::node_id_t id,
                 py::array_t<char> data, bool commit = false) {
                  if (data.ndim() != 1) {
                      throw std::runtime_error(
                          "Number of dimensions must be one");
                  }
-                 b::node_uid_t uid;
+                 basalt::node_uid_t uid;
                  const auto status = nodes.insert(type, id, data.data(),
                                                   data.size(), uid, commit);
                  status.raise_on_error();
@@ -340,25 +365,21 @@ PYBIND11_MODULE(_basalt, m) {
              "commit"_a = false)
 
         .def("get",
-             [](b::nodes_t& nodes, b::node_uid_t node) -> py::object {
+             [](basalt::nodes_t& nodes, basalt::node_uid_t node) -> py::object {
                  std::string data;
                  auto const& status = nodes.get(node, &data);
-                 if (status.code == b::status_t::missing_node_code) {
+                 if (status.code == basalt::status_t::missing_node_code) {
                      return py::none();
                  }
                  status.raise_on_error();
-                 auto array = py::array_t<char>(data.size());
-                 auto buffer = array.request(true);
-                 strncpy(reinterpret_cast<char*>(buffer.ptr), data.data(),
-                         data.size());
-                 return std::move(array);
+                 return std::move(basalt::to_py_array(data));
              },
              "Retrieve a node from the graph", "node"_a)
 
         .def("has",
-             [](b::nodes_t& nodes, b::node_t type, b::node_id_t id) {
+             [](basalt::nodes_t& nodes, basalt::node_t type, basalt::node_id_t id) {
                  bool result = false;
-                 const auto uid = b::make_id(type, id);
+                 const auto uid = basalt::make_id(type, id);
                  auto const status = nodes.has(uid, result);
                  status.raise_on_error();
                  return result;
@@ -366,7 +387,7 @@ PYBIND11_MODULE(_basalt, m) {
              "Check presence of a node in the graph", "type"_a, "id"_a)
 
         .def("has",
-             [](b::nodes_t& nodes, b::node_uid_t node) {
+             [](basalt::nodes_t& nodes, basalt::node_uid_t node) {
                  bool result = false;
                  auto const status = nodes.has(node, result);
                  status.raise_on_error();
@@ -375,7 +396,7 @@ PYBIND11_MODULE(_basalt, m) {
              "Check presence of a node in the graph", "node"_a)
 
         .def("erase",
-             [](b::nodes_t& nodes, b::node_uid_t node, bool commit) {
+             [](basalt::nodes_t& nodes, basalt::node_uid_t node, bool commit) {
                  auto const status = nodes.erase(node, commit);
                  status.raise_on_error();
                  return status;
@@ -383,9 +404,9 @@ PYBIND11_MODULE(_basalt, m) {
              "Remove a node from the graph", "node"_a, "commit"_a = false)
 
         .def("erase",
-             [](b::nodes_t& nodes, b::node_t type, b::node_id_t id,
+             [](basalt::nodes_t& nodes, basalt::node_t type, basalt::node_id_t id,
                 bool commit) {
-                 auto const node = b::make_id(type, id);
+                 auto const node = basalt::make_id(type, id);
                  auto const status = nodes.erase(node, commit);
                  status.raise_on_error();
                  return status;
@@ -393,3 +414,6 @@ PYBIND11_MODULE(_basalt, m) {
              "Remove a node from the graph", "type"_a, "id"_a,
              "commit"_a = false);
 }
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#endif // defined(__clang__)
