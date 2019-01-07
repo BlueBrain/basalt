@@ -1,5 +1,6 @@
-include_directories(${catch2_include_directory})
+include_directories(${catch2_include_directory} ${cereal_include_directory})
 
-add_executable(101 101.cpp)
-target_link_libraries(101 PRIVATE basalt)
-add_test(NAME 101 COMMAND $<TARGET_FILE:101>)
+add_executable(unit-tests 101.cpp)
+target_link_libraries(unit-tests PRIVATE basalt)
+
+add_test(NAME unit-tests COMMAND $<TARGET_FILE:unit-tests>)

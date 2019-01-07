@@ -1,4 +1,5 @@
 import unittest
+
 import numpy as np
 
 import basalt
@@ -46,8 +47,12 @@ class Neuron(unittest.TestCase):
         n = basalt.Neuron()
         n.gid = 42
         n.astro_idx.append(43)
-        n.syn_idx.append(44)
-        return [n, basalt.Neuron(42, np.array([43]), np.array([44]))]
+        n.astro_idx.append(44)
+        n.astro_idx.append(45)
+        n.syn_idx.append(46)
+        n.syn_idx.append(47)
+        n.syn_idx.append(48)
+        return [n, basalt.Neuron(42, np.array([43, 44, 45]), np.array([46, 47, 48]))]
 
     def test_creation(self):
         n = basalt.Neuron(gid=42)
@@ -61,18 +66,21 @@ class Neuron(unittest.TestCase):
     def test_properties(self):
         neurons = Neuron.create_object()
         for n in neurons:
-            self.assertEqual(list(n.astro_idx), [43])
-            self.assertEqual(list(n.syn_idx), [44])
             self.assertEqual(n.gid, 42)
+            self.assertEqual(list(n.astro_idx), [43, 44, 45])
+            self.assertEqual(list(n.syn_idx), [46, 47, 48])
 
     def test_serialization(self):
         n, _ = Neuron.create_object()
         raw = n.serialize()
         n2 = basalt.Neuron()
         n2.deserialize(raw)
-        self.assertEqual(n2.gid, 42)
-        self.assertEqual(list(n2.astro_idx), [43])
-        self.assertEqual(list(n2.syn_idx), [44])
+        self.check_object(n2)
+
+    def check_object(self, obj):
+        self.assertEqual(obj.gid, 42)
+        self.assertEqual(list(obj.astro_idx), [43, 44, 45])
+        self.assertEqual(list(obj.syn_idx), [46, 47, 48])
 
 
 class Synapse(unittest.TestCase):

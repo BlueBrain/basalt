@@ -62,6 +62,8 @@ class TestNetwork(unittest.TestCase):
         neuron.astro_idx.append(43)
         neuron.syn_idx.append(44)
         neuron.syn_idx.append(45)
+        self.assertEqual(list(neuron.astro_idx), [43])
+        self.assertEqual(list(neuron.syn_idx), [44, 45])
         g.nodes.insert(*uid, neuron.serialize(), commit=True)
         del g
 
@@ -71,8 +73,8 @@ class TestNetwork(unittest.TestCase):
         self.assertIsNotNone(data)
         neuron = PayloadHelper.deserialize(uid, data)
         self.assertEqual(neuron.gid, 43)
-        self.assertEqual(list(neuron.astro_idx), [43])
         self.assertEqual(list(neuron.syn_idx), [44, 45])
+        self.assertEqual(list(neuron.astro_idx), [43])
 
     def test_single_connection(self):
         path = tempfile.mkdtemp()

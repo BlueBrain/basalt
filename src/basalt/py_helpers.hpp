@@ -8,13 +8,111 @@
 
 #include <array>
 #include <ostream>
+#include <sstream>
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wdeprecated"
+#pragma clang diagnostic ignored "-Wduplicate-enum"
+#pragma clang diagnostic ignored "-Wextra-semi"
+#pragma clang diagnostic ignored "-Wmissing-prototypes"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wrange-loop-analysis"
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#pragma clang diagnostic ignored "-Wshadow-field"
+#pragma clang diagnostic ignored "-Wundef"
+#pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#endif // defined(__clang__)
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/array.hpp>
+#include <cereal/types/string.hpp>
+#include <cereal/types/vector.hpp>
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic pop
+#endif // defined(__clang__)
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcovered-switch-default"
+#pragma clang diagnostic ignored "-Wdeprecated"
+#pragma clang diagnostic ignored "-Wduplicate-enum"
+#pragma clang diagnostic ignored "-Wextra-semi"
+#pragma clang diagnostic ignored "-Wold-style-cast"
+#pragma clang diagnostic ignored "-Wrange-loop-analysis"
+#pragma clang diagnostic ignored "-Wreserved-id-macro"
+#pragma clang diagnostic ignored "-Wshadow-field"
+#pragma clang diagnostic ignored "-Wundef"
+#pragma clang diagnostic ignored "-Wundefined-reinterpret-cast"
+#pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated"
+#pragma GCC diagnostic ignored "-Wold-style-cast"
+#pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
+#endif // defined(__clang__)
 #include <pybind11/numpy.h>
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__) || defined(__GNUG__)
+#pragma GCC diagnostic pop
+#endif // defined(__clang__)
+
+#include <basalt/settings.hpp>
 
 namespace basalt {
+
 /**
  * \name Serialization helpers
  * \{
  */
+
+struct membuf : std::streambuf {
+    membuf(pybind11::array_t<char>& data) {
+        auto request = data.request();
+        auto ptr = reinterpret_cast<char*>(request.ptr);
+        this->setg(ptr, ptr, ptr + request.size);
+    }
+    membuf(char* base, size_t size) { this->setg(base, base, base + size); }
+};
+
+struct imemstream : virtual membuf, std::istream {
+    imemstream(char* base, size_t size)
+        : membuf(base, size), std::istream(this) {}
+
+    imemstream(pybind11::array_t<char>& data)
+        : membuf(data), std::istream(this) {}
+};
+
+/**
+ * Create a string with hexadecimal values of a py_array
+ * \param array
+ * \return hexadecimal string
+static
+std::string py_array_to_hexadecimal(pybind11::array_t<char> &array) {
+    std::string output;
+    static const char* const lut = "0123456789ABCDEF";
+    auto request = array.request();
+    auto input = reinterpret_cast<char*>(request.ptr);
+    const auto len = request.size;
+
+    output += std::to_string(len) + ' ';
+    output.reserve(2 * len);
+    for (auto i = 0; i < len; ++i) {
+        const unsigned char c = input[i];
+        output.push_back(lut[c >> 4]);
+        output.push_back(lut[c & 15]);
+    }
+    return output;
+}
+*/
 
 /**
  * Write content of a string stream to a NumPy array
@@ -25,19 +123,21 @@ inline pybind11::array_t<char> to_py_array(const std::ostringstream& oss) {
     const std::string& data = oss.str();
     auto result = pybind11::array_t<char>(data.size());
     auto buffer = result.request();
-    strncpy(reinterpret_cast<char*>(buffer.ptr), data.data(), data.size());
+    std::memcpy(buffer.ptr, data.data(), data.size());
     return result;
 }
 
 /**
- * Read a NumPy and fill a string stream
- * \param data NumPy array to read
- * \param iss string stream to fill
+ * Write content of a string to a NumPy array
+ * \param str string to copy
+ * \return new NumPY array
  */
-inline void from_py_array(pybind11::array_t<char>& data,
-                          std::istringstream& iss) {
-    auto request = data.request();
-    iss.rdbuf()->pubsetbuf(reinterpret_cast<char*>(request.ptr), request.size);
+
+inline pybind11::array_t<char> to_py_array(const std::string& str) {
+    auto array = pybind11::array_t<char>(str.size());
+    auto buffer = array.request(true);
+    std::memcpy(buffer.ptr, str.data(), str.size());
+    return array;
 }
 
 /**
@@ -61,7 +161,7 @@ void serialize_vector(std::ostringstream& oss, const std::vector<T>& data) {
  * \param data vector to fill
  */
 template <typename T>
-void deserialize_vector(std::istringstream& iss, std::vector<T>& data) {
+void deserialize_vector(std::istream& iss, std::vector<T>& data) {
     std::size_t count;
     iss >> count;
     data.reserve(count);
@@ -126,6 +226,60 @@ void fill_vector(pybind11::buffer& buffer,
         vector.push_back(data);
         std::advance(ptr, N);
     }
+}
+
+namespace cereal {
+
+template <typename Payload>
+pybind11::array_t<char> serialize(const Payload& p) {
+    std::ostringstream oss(std::stringstream::out | std::stringstream::binary);
+    {
+        ::cereal::BinaryOutputArchive archive(oss);
+        archive(p);
+    }
+    return to_py_array(oss);
+}
+
+template <typename Payload>
+void deserialize(::pybind11::array_t<char>& data, Payload& p) {
+    imemstream iss(data);
+    ::cereal::BinaryInputArchive archive(iss);
+    archive(p);
+}
+
+} // namespace cereal
+
+template <typename Payload>
+pybind11::array_t<char> serialize_impl(const Payload& payload, int method) {
+    if (method == BASALT_CEREAL_SERIALIZATION) {
+        return cereal::serialize(payload);
+    } else if (method == BASALT_SSTREAM_SERIALIZATION) {
+        return payload.serialize_sstream();
+    } else {
+        throw std::runtime_error("Unknown serialization method");
+    }
+}
+
+template <typename Payload>
+pybind11::array_t<char> serialize(const Payload& payload) {
+    return serialize_impl(payload, BASALT_SERIALIZATION);
+}
+
+template <typename Payload>
+void deserialize_impl(Payload& payload, pybind11::array_t<char>& data,
+                      int method) {
+    if (method == BASALT_CEREAL_SERIALIZATION) {
+        cereal::deserialize(data, payload);
+    } else if (method == BASALT_SSTREAM_SERIALIZATION) {
+        payload.deserialize_sstream(data);
+    } else {
+        throw std::runtime_error("Unknown serialization method");
+    }
+}
+
+template <typename Payload>
+void deserialize(Payload& payload, pybind11::array_t<char>& data) {
+    deserialize_impl(payload, data, BASALT_SERIALIZATION);
 }
 
 /**
