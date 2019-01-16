@@ -8,6 +8,7 @@ bob_begin_package()
 
 bob_option(Basalt_USE_pybind11 "Build Python bindings" OFF)
 bob_option(Basalt_BUILD_PYTHON_PACKAGE "Build Python package" OFF)
+bob_option(USE_CLANG_TIDY "Perform C++ static analysis while compiling" OFF)
 
 set(Basalt_SERIALIZATION_METHODS CEREAL SSTREAM)
 bob_input(Basalt_SERIALIZATION
@@ -72,6 +73,13 @@ set(pybind11_include_directory ${pybind11_project_directory}/include)
 set(spdlog_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 
+if(USE_CLANG_TIDY)
+  cmake_minimum_required(VERSION 3.8)
+  find_package(ClangTidy REQUIRED)
+  set(CLANG_TIDY_ARGS "-extra-arg=-Wno-unknown-warning-option"
+      CACHE STRING "clang-tidy command options")
+  set(CMAKE_CXX_CLANG_TIDY "${ClangTidy_EXECUTABLE}" ${CLANG_TIDY_ARGS})
+endif()
 add_subdirectory(src)
 if(NOT Basalt_BUILD_PYTHON_PACKAGE)
   add_subdirectory(tests/unit)
