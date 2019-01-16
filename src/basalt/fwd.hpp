@@ -23,7 +23,6 @@ class logger;
 namespace basalt {
 
 using db_t = std::unique_ptr<rocksdb::DB>;
-
 }
 
 #endif // BASALT_IMPL_FWD_HPP
