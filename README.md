@@ -10,6 +10,14 @@ Basic graph database backed by RocksDB key-value storage [![Build Status](https:
 * [RocksDB](https://rocksdb.org/), a persistent key-value store,
   version version 4.1.1 or higher.
 
+## Getting the code
+
+This repository grabs few third-party libraries *git submodules*.
+To clone them when you clone basalt, use `git clone --recursive` option.
+
+If you have already cloned basalt, you can get submodules with command: 
+`git submodule update --recursive --init`
+
 ## C++ Library
 
 To build and run tests:
