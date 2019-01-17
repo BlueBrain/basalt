@@ -7,12 +7,13 @@
 #
 # ::
 #
-# RocksDB_FOUND           - True if RocksDB library is found.
-# RocksDB_INCLUDE_DIR     - Directory where RocksDB headers are located.
-# RocksDB_LIBRARIES       - RocksDB libraries to link against.
-# RocksDB_VERSION_MAJOR   - The major version of RocksDB. RocksDB_VERSION_MINOR
-# - The minor version of RocksDB. RocksDB_VERSION_PATCH   - The patch version of
-# RocksDB. RocksDB_VERSION_STRING  - version number as a string (ex: "4.3.2").
+# * RocksDB_FOUND           - True if RocksDB library is found.
+# * RocksDB_INCLUDE_DIR     - Directory where RocksDB headers are located.
+# * RocksDB_LIBRARIES       - RocksDB libraries to link against.
+# * RocksDB_VERSION_MAJOR   - The major version of RocksDB.
+# * RocksDB_VERSION_MINOR   - The minor version of RocksDB.
+# * RocksDB_VERSION_PATCH   - The patch version of RocksDB.
+# * RocksDB_VERSION_STRING  - version number as a string (ex: "4.3.2").
 
 find_path(RocksDB_INCLUDE_DIR NAMES rocksdb/db.h)
 find_library(RocksDB_LIBRARIES NAMES rocksdb)

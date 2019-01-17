@@ -7,13 +7,15 @@
 #
 # ::
 #
-# GoogleBenchmark_FOUND           - True if GoogleBenchmark library is found.
-# GoogleBenchmark_INCLUDE_DIR     - Directory where GoogleBenchmark headers are
-# located. GoogleBenchmark_LIBRARY         - GoogleBenchmark libraries to link
-# against. GoogleBenchmark_LIBRARY_DIR     - Directory where GoogleBenchmark
-# libraries are located. GoogleBenchmark_VERSION         - The version of Google
-# Benchmark. GoogleBenchmark_VERSION_STRING  - The version number as a string
-# (ex: "1.4.0").
+# * GoogleBenchmark_FOUND           - True if GoogleBenchmark library is found.
+# * GoogleBenchmark_INCLUDE_DIR     - Directory where GoogleBenchmark headers
+#   are located.
+# * GoogleBenchmark_LIBRARY         - GoogleBenchmark libraries to link against.
+# * GoogleBenchmark_LIBRARY_DIR     - Directory where GoogleBenchmark libraries
+#   are located.
+# * GoogleBenchmark_VERSION         - The version of Google Benchmark.
+# * GoogleBenchmark_VERSION_STRING  - The version number as a string (ex:
+#   "1.4.0").
 
 find_path(GoogleBenchmark_INCLUDE_DIR NAMES benchmark/benchmark.h)
 find_library(GoogleBenchmark_LIBRARY NAMES benchmark)
