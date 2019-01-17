@@ -7,4 +7,4 @@
 #pragma GCC diagnostic pop
 #endif // defined(__clang__)
 
-#endif //!BASALT_WARNINGS_POP_HPP
+#endif //! BASALT_WARNINGS_POP_HPP

@@ -7,4 +7,4 @@
 #pragma GCC diagnostic push
 #endif // defined(__clang__)
 
-#endif //!BASALT_WARNINGS_PUSH_HPP
+#endif //! BASALT_WARNINGS_PUSH_HPP
