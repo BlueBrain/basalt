@@ -24,8 +24,7 @@ using basalt::node_uids_t;
  * \return node unique identifier
  */
 template <typename Payload>
-inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id,
-                                 const Payload& payload) {
+inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id, const Payload& payload) {
     node_uid_t nuid;
     const auto result = g.nodes().insert(type, id, payload, nuid);
     REQUIRE(result);
@@ -47,7 +46,9 @@ inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id) {
     return nuid;
 }
 
-static void check_is_ok(const basalt::status_t& status) { REQUIRE(status); }
+static void check_is_ok(const basalt::status_t& status) {
+    REQUIRE(status);
+}
 
 namespace bbp {
 namespace in_silico {
@@ -70,21 +71,20 @@ struct synapse_t {
     float post_z;
 
     std::ostream& serialize(std::ostream& ostr) const {
-        return ostr << version << pre_gid << post_gid << nrn_idx
-                    << is_excitatory << pre_x << pre_y << pre_y << pre_z
-                    << post_x << post_y << post_z;
+        return ostr << version << pre_gid << post_gid << nrn_idx << is_excitatory << pre_x << pre_y
+                    << pre_y << pre_z << post_x << post_y << post_z;
     }
 
     void deserialize(std::istream& istr) {
-        istr >> version >> pre_gid >> post_gid >> nrn_idx >> is_excitatory >>
-            pre_x >> pre_y >> pre_y >> pre_z >> post_x >> post_y >> post_z;
+        istr >> version >> pre_gid >> post_gid >> nrn_idx >> is_excitatory >> pre_x >> pre_y >>
+            pre_y >> pre_z >> post_x >> post_y >> post_z;
     }
 };
 
 /** \} */
 
-} // namespace in_silico
-} // namespace bbp
+}  // namespace in_silico
+}  // namespace bbp
 
 /// \brief different types of node
 enum node_type { synapse, segment, astrocyte };
@@ -105,8 +105,7 @@ TEST_CASE("one-node-db", "[graph]") {
         REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 0);
         {
             std::string data;
-            REQUIRE(g.nodes().get(node, &data).code ==
-                    basalt::status_t::missing_node_code);
+            REQUIRE(g.nodes().get(node, &data).code == basalt::status_t::missing_node_code);
             REQUIRE(data.empty());
         }
 
@@ -144,12 +143,10 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     network_t g(new_db_path());
 
     // add synapses with id 0 and 1
-    const auto s0 = checked_insert(
-        g, node_type::synapse, 0,
-        synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-    const auto s1 = checked_insert(
-        g, node_type::synapse, 1,
-        synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    const auto s0 = checked_insert(g, node_type::synapse, 0,
+                                   synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    const auto s1 = checked_insert(g, node_type::synapse, 1,
+                                   synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
 
     // add astrocytes
     const auto a0 = checked_insert(g, node_type::astrocyte, 0);
@@ -159,7 +156,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
 
     {
         std::set<basalt::node_uid_t> all_nodes;
-        for (auto const& node : g.nodes()) {
+        for (auto const& node: g.nodes()) {
             all_nodes.insert(node);
         }
         REQUIRE(all_nodes.size() == 4);
@@ -178,7 +175,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     // get all nodes_t connected to synapse 0
     check_is_ok(g.connections().get(s0, nodes));
     REQUIRE(nodes.size() == 3);
-    for (auto const& node : nodes) {
+    for (auto const& node: nodes) {
         std::cout << s0 << " ↔ " << node << std::endl;
         // (S:0) ↔ (S:1)
         // (S:0) ↔ (A:0)
@@ -189,7 +186,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
     // only get astrocytes connected to synapse 0
     check_is_ok(g.connections().get(s0, node_type::astrocyte, nodes));
     REQUIRE(nodes.size() == 2);
-    for (auto const& astrocyte : nodes) {
+    for (auto const& astrocyte: nodes) {
         std::cout << s0 << " ↔ " << astrocyte << std::endl;
         // (S:0) ↔ (A:0)
         // (S:0) ↔ (A:1)
@@ -199,7 +196,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
         // iterate over all nodes
         std::set<node_uid_t> nodes_set;
         int count = 0;
-        for (const auto& node : g.nodes()) {
+        for (const auto& node: g.nodes()) {
             std::cout << node << std::endl;
             ++count;
             nodes_set.insert(node);
@@ -210,8 +207,7 @@ TEST_CASE("create simple graph and check entities", "[graph]") {
 
     // iterator over second of nodes
     auto count = 0lu;
-    REQUIRE_THROWS_AS(g.nodes().count(count).raise_on_error(),
-                      std::runtime_error);
+    REQUIRE_THROWS_AS(g.nodes().count(count).raise_on_error(), std::runtime_error);
     const auto nodes_end = g.nodes().end();
     for (auto node = g.nodes().begin(count / 2); node != nodes_end; ++node) {
         std::cout << *node << std::endl;

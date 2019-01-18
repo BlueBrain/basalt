@@ -33,9 +33,8 @@ struct neuron_t {
     int_vector_t astro_idx;
     int_vector_t syn_idx;
 
-    static std::unique_ptr<neuron_t>
-    create(uint32_t gid, pybind11::array_t<uint32_t>& astro_idx,
-           pybind11::array_t<uint32_t>& syn_idx);
+    static std::unique_ptr<neuron_t> create(uint32_t gid, pybind11::array_t<uint32_t>& astro_idx,
+                                            pybind11::array_t<uint32_t>& syn_idx);
     pybind11::array_t<char> serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -51,11 +50,10 @@ void serialize(Archive& ar, neuron_t& neuron) {
  */
 struct synapse_t {
     synapse_t() = default;
-    synapse_t(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx,
-              int_vector_t& astro_idx, bool is_excitatory,
-              const float_point_t& pre, const float_point_t& post,
-              const std::string& mesh_filename,
-              const std::string& skeleton_filename, float psd_area);
+    synapse_t(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx, int_vector_t& astro_idx,
+              bool is_excitatory, const float_point_t& pre, const float_point_t& post,
+              const std::string& mesh_filename, const std::string& skeleton_filename,
+              float psd_area);
 
     uint32_t pre_gid;
     uint32_t post_gid;
@@ -70,12 +68,12 @@ struct synapse_t {
 
     float psd_area;
 
-    static std::unique_ptr<synapse_t>
-    create(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx,
-           pybind11::array_t<uint32_t>& astro_idx, bool is_excitatory,
-           const float_point_t& pre, const float_point_t& post,
-           const std::string& mesh_filename,
-           const std::string& skeleton_filename, float psd_area);
+    static std::unique_ptr<synapse_t> create(uint32_t pre_gid, uint32_t post_gid, uint32_t nrn_idx,
+                                             pybind11::array_t<uint32_t>& astro_idx,
+                                             bool is_excitatory, const float_point_t& pre,
+                                             const float_point_t& post,
+                                             const std::string& mesh_filename,
+                                             const std::string& skeleton_filename, float psd_area);
     pybind11::array_t<char> serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -83,8 +81,8 @@ struct synapse_t {
 /// Cereal serialization method for \a synapse_t
 template <class Archive>
 void serialize(Archive& ar, synapse_t& s) {
-    ar(s.pre_gid, s.post_gid, s.nrn_idx, s.astro_idx, s.is_excitatory, s.pre,
-       s.post, s.mesh_filename, s.skeleton_filename, s.psd_area);
+    ar(s.pre_gid, s.post_gid, s.nrn_idx, s.astro_idx, s.is_excitatory, s.pre, s.post,
+       s.mesh_filename, s.skeleton_filename, s.psd_area);
 }
 
 /**
@@ -92,11 +90,10 @@ void serialize(Archive& ar, synapse_t& s) {
  */
 struct astrocyte_t {
     astrocyte_t() = default;
-    astrocyte_t(uint32_t astrocyte_id, uint32_t microdomain_id,
-                const float_point_t& soma_center, float soma_radius,
-                const std::string& name, const std::string& mtype,
-                const std::string& morphology_filename,
-                int_vector_t& synapses_idx, int_vector_t& neurons_idx);
+    astrocyte_t(uint32_t astrocyte_id, uint32_t microdomain_id, const float_point_t& soma_center,
+                float soma_radius, const std::string& name, const std::string& mtype,
+                const std::string& morphology_filename, int_vector_t& synapses_idx,
+                int_vector_t& neurons_idx);
 
     uint32_t astrocyte_id;
     uint32_t microdomain_id;
@@ -111,13 +108,12 @@ struct astrocyte_t {
     int_vector_t synapses_idx;
     int_vector_t neurons_idx;
 
-    static std::unique_ptr<astrocyte_t>
-    create(uint32_t astrocyte_id, uint32_t microdomain_id,
-           const float_point_t& soma_center, float soma_radius,
-           const std::string& name, const std::string& mtype,
-           const std::string& morphology_filename,
-           pybind11::array_t<uint32_t>& synapses_idx,
-           pybind11::array_t<uint32_t>& neurons_idx);
+    static std::unique_ptr<astrocyte_t> create(uint32_t astrocyte_id, uint32_t microdomain_id,
+                                               const float_point_t& soma_center, float soma_radius,
+                                               const std::string& name, const std::string& mtype,
+                                               const std::string& morphology_filename,
+                                               pybind11::array_t<uint32_t>& synapses_idx,
+                                               pybind11::array_t<uint32_t>& neurons_idx);
     pybind11::array serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -125,8 +121,8 @@ struct astrocyte_t {
 /// Cereal serialization method for \a astrocyte_t
 template <class Archive>
 void serialize(Archive& ar, astrocyte_t& a) {
-    ar(a.astrocyte_id, a.microdomain_id, a.soma_center, a.soma_radius, a.name,
-       a.mtype, a.morphology_filename, a.synapses_idx, a.neurons_idx);
+    ar(a.astrocyte_id, a.microdomain_id, a.soma_center, a.soma_radius, a.name, a.mtype,
+       a.morphology_filename, a.synapses_idx, a.neurons_idx);
 }
 
 /**
@@ -137,12 +133,11 @@ struct microdomain_t {
     using triangles_t = std::vector<std::array<uint32_t, 3>>;
 
     microdomain_t() = default;
-    microdomain_t(uint32_t microdomain_id, uint32_t astrocyte_id,
-                  int_vector_t& neighbors,
-                  vertex_coordinates_t& vertex_coordinates,
-                  triangles_t& triangles, const float_point_t& centroid,
-                  double area, double volume, const std::string& mesh_filename,
-                  int_vector_t& neurons_idx, int_vector_t& synapses_idx);
+    microdomain_t(uint32_t microdomain_id, uint32_t astrocyte_id, int_vector_t& neighbors,
+                  vertex_coordinates_t& vertex_coordinates, triangles_t& triangles,
+                  const float_point_t& centroid, double area, double volume,
+                  const std::string& mesh_filename, int_vector_t& neurons_idx,
+                  int_vector_t& synapses_idx);
 
     uint32_t microdomain_id;
     uint32_t astrocyte_id;
@@ -169,15 +164,11 @@ struct microdomain_t {
     int_vector_t neurons_idx;
     int_vector_t synapses_idx;
 
-    static std::unique_ptr<microdomain_t>
-    create(uint32_t microdomain_id, uint32_t astrocyte_id,
-           pybind11::array_t<uint32_t>& neighbors,
-           pybind11::array_t<float>& vertex_coordinates,
-           pybind11::array_t<uint32_t>& triangles,
-           const float_point_t& centroid, double area, double volume,
-           const std::string& mesh_filename,
-           pybind11::array_t<uint32_t>& neurons_idx,
-           pybind11::array_t<uint32_t>& synapses_idx);
+    static std::unique_ptr<microdomain_t> create(
+        uint32_t microdomain_id, uint32_t astrocyte_id, pybind11::array_t<uint32_t>& neighbors,
+        pybind11::array_t<float>& vertex_coordinates, pybind11::array_t<uint32_t>& triangles,
+        const float_point_t& centroid, double area, double volume, const std::string& mesh_filename,
+        pybind11::array_t<uint32_t>& neurons_idx, pybind11::array_t<uint32_t>& synapses_idx);
     pybind11::array serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -185,9 +176,8 @@ struct microdomain_t {
 /// Cereal serialization method for \a microdomain_t
 template <class Archive>
 void serialize(Archive& ar, microdomain_t& m) {
-    ar(m.microdomain_id, m.astrocyte_id, m.neighbors, m.vertex_coordinates,
-       m.triangles, m.centroid, m.area, m.volume, m.mesh_filename,
-       m.neurons_idx, m.synapses_idx);
+    ar(m.microdomain_id, m.astrocyte_id, m.neighbors, m.vertex_coordinates, m.triangles, m.centroid,
+       m.area, m.volume, m.mesh_filename, m.neurons_idx, m.synapses_idx);
 }
 
 /**
@@ -195,9 +185,8 @@ void serialize(Archive& ar, microdomain_t& m) {
  */
 struct segment_t {
     segment_t() = default;
-    segment_t(uint32_t section_id, uint32_t segment_id, uint8_t type, float x1,
-              float y1, float z1, float r1, float x2, float y2, float z2,
-              float r2);
+    segment_t(uint32_t section_id, uint32_t segment_id, uint8_t type, float x1, float y1, float z1,
+              float r1, float x2, float y2, float z2, float r2);
 
     uint32_t section_id;
     uint32_t segment_id;
@@ -211,11 +200,9 @@ struct segment_t {
     float z2;
     float r2;
 
-    static std::unique_ptr<segment_t> create(uint32_t section_id,
-                                             uint32_t segment_id, uint8_t type,
-                                             float x1, float y1, float z1,
-                                             float r1, float x2, float y2,
-                                             float z2, float r2);
+    static std::unique_ptr<segment_t> create(uint32_t section_id, uint32_t segment_id, uint8_t type,
+                                             float x1, float y1, float z1, float r1, float x2,
+                                             float y2, float z2, float r2);
     pybind11::array serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -223,8 +210,7 @@ struct segment_t {
 /// Cereal serialization method for \a segment_t
 template <class Archive>
 void serialize(Archive& ar, segment_t& s) {
-    ar(s.section_id, s.segment_id, s.type, s.x1, s.y1, s.z1, s.r1, s.x2, s.y2,
-       s.z2, s.r2);
+    ar(s.section_id, s.segment_id, s.type, s.x1, s.y1, s.z1, s.r1, s.x2, s.y2, s.z2, s.r2);
 }
 
 /**
@@ -232,16 +218,15 @@ void serialize(Archive& ar, segment_t& s) {
  */
 struct edge_astrocyte_segment_t {
     edge_astrocyte_segment_t() = default;
-    edge_astrocyte_segment_t(const float_point_t& astrocyte,
-                             const float_point_t& vasculature);
+    edge_astrocyte_segment_t(const float_point_t& astrocyte, const float_point_t& vasculature);
     // endfoot starting point on morphology
     float_point_t astrocyte;
 
     // endfoot ending point on vasculature surface
     float_point_t vasculature;
 
-    static std::unique_ptr<edge_astrocyte_segment_t>
-    create(const float_point_t& astrocyte, const float_point_t& vasculature);
+    static std::unique_ptr<edge_astrocyte_segment_t> create(const float_point_t& astrocyte,
+                                                            const float_point_t& vasculature);
     pybind11::array serialize_sstream() const;
     void deserialize_sstream(pybind11::array_t<char>& data);
 };
@@ -256,6 +241,6 @@ void serialize(Archive& ar, edge_astrocyte_segment_t& a) {
  *  \}
  */
 
-} // namespace circuit
+}  // namespace circuit
 
-#endif // BASALT_CIRCUIT_PAYLOADS_HPP
+#endif  // BASALT_CIRCUIT_PAYLOADS_HPP

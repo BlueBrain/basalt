@@ -8,10 +8,8 @@
 
 namespace basalt {
 
-node_iterator_impl::node_iterator_impl(const basalt::db_t& db,
-                                       rocksdb::ColumnFamilyHandle* nodes,
-                                       const std::string& /*prefix*/,
-                                       std::size_t position)
+node_iterator_impl::node_iterator_impl(const basalt::db_t& db, rocksdb::ColumnFamilyHandle* nodes,
+                                       const std::string& /*prefix*/, std::size_t position)
     : position_(position) {
     iter_ = db->NewIterator(rocksdb::ReadOptions(), nodes);
     iter_->SeekToFirst();
@@ -21,8 +19,7 @@ node_iterator_impl::node_iterator_impl(const basalt::db_t& db,
     network_impl_t::to_status(iter_->status()).raise_on_error();
 }
 
-bool node_iterator_impl::
-operator==(const basalt::node_iterator_impl& rhs) const {
+bool node_iterator_impl::operator==(const basalt::node_iterator_impl& rhs) const {
     return this->iter_ == rhs.iter_ and this->position_ == rhs.position_;
 }
 
@@ -36,8 +33,7 @@ node_iterator_impl& node_iterator_impl::operator++() {
     return *this;
 }
 
-bool node_iterator_impl::
-operator!=(const basalt::node_iterator_impl& rhs) const {
+bool node_iterator_impl::operator!=(const basalt::node_iterator_impl& rhs) const {
     return !(*this == rhs);
 }
 
@@ -51,4 +47,4 @@ bool node_iterator_impl::end_reached() const {
     return position_ == std::numeric_limits<std::size_t>::max();
 }
 
-} // namespace basalt
+}  // namespace basalt
