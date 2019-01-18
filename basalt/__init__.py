@@ -1,4 +1,5 @@
 from enum import Enum
+
 from _basalt import *
 from _basalt import __version__, __rocksdb_version__
 
