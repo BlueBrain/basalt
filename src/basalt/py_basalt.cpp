@@ -244,7 +244,8 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
         .def(py::init<const std::string&>())
         .def_property_readonly("nodes", &basalt::network_t::nodes)
         .def_property_readonly("connections", &basalt::network_t::connections)
-        .def("commit", &basalt::network_t::commit);
+        .def("commit", &basalt::network_t::commit)
+        .def("statistics", &basalt::network_t::statistics);
 
     py::class_<basalt::connections_t>(m, "Connections")
         .def("insert",
@@ -253,20 +254,34 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
                  const auto status = connections.insert(node1, node2, commit);
                  status.raise_on_error();
              },
-             "Create an edge between 2 nodes", "node1"_a, "node2"_a, "commit"_a = false)
+             "Create an edge between 2 existing nodes", "node1"_a, "node2"_a, "commit"_a = false)
 
         .def("insert",
              [](basalt::connections_t& connections, const basalt::node_uid_t& node1,
                 const basalt::node_uid_t& node2, py::array_t<char> data, bool commit = false) {
                  if (data.ndim() != 1) {
-                     throw std::runtime_error("Number of dimensions must be one");
+                     throw std::runtime_error("Number of dimensions of array 'data' must be one");
                  }
                  const auto status = connections.insert(node1, node2, data.data(),
                                                         static_cast<std::size_t>(data.size()),
                                                         commit);
                  status.raise_on_error();
              },
-             "insert a node in the graph", "node1"_a, "node2"_a, "data"_a, "commit"_a = false)
+             "Create an edge with a payload between 2 existing nodes", "node1"_a, "node2"_a,
+             "data"_a, "commit"_a = false)
+
+        .def("insert",
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node,
+                const basalt::node_t type, py::array_t<uint64_t> nodes, bool commit,
+                bool create_nodes) {
+                 if (nodes.ndim() != 1) {
+                     throw std::runtime_error("Number of dimensions of array 'nodes' must be one");
+                 }
+                 connections.insert(node, type, nodes.data(), nodes.size(), create_nodes, commit)
+                     .raise_on_error();
+             },
+             "Create an edge between a node and a list of other nodes", "node"_a, "type"_a,
+             "nodes"_a, "commit"_a = false, "create_nodes"_a = false)
 
         .def("has",
              [](const basalt::connections_t& connections, const basalt::node_uid_t& node1,

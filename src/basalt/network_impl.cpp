@@ -6,6 +6,7 @@
 #include <rocksdb/db.h>
 #include <rocksdb/filter_policy.h>
 #include <rocksdb/slice_transform.h>
+#include <rocksdb/statistics.h>
 #include <rocksdb/table.h>
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/sinks/rotating_file_sink.h>
@@ -47,6 +48,8 @@ inline static const rocksdb::Options& db_options() {
         options.prefix_extractor.reset(
             rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
         options.create_if_missing = true;
+        options.max_open_files = -1;
+        options.statistics = rocksdb::CreateDBStatistics();
         return options;
     }();
     return db_options;
@@ -58,6 +61,9 @@ inline static const rocksdb::ColumnFamilyOptions& nodes_cfo() {
         // optimize node prefix enumeration to look for all nodes of a particular
         // type
         options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t)));
+        options.write_buffer_size = 128u << 20u;     // 128MB
+        options.target_file_size_base = 128u << 20u;  // 128MB
+        options.max_bytes_for_level_base = options.target_file_size_base * 10;
         return options;
     }();
     return nodes_cfo;
@@ -70,17 +76,13 @@ inline static const rocksdb::ColumnFamilyOptions& connections_cfo() {
         // node
         options.prefix_extractor.reset(
             rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
-        // Enable prefix bloom for mem tables
-#if ROCKSDB_MAJOR == 4
-        options.memtable_prefix_bloom_bits = 100000000;
-        options.memtable_prefix_bloom_probes = 6;
-#endif
-
         // Enable prefix bloom for SST files
-        rocksdb::BlockBasedTableOptions table_options;
+        rocksdb::BlockBasedTableOptions table_options{};
         table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
         options.table_factory.reset(NewBlockBasedTableFactory(table_options));
-
+        options.write_buffer_size = 128u << 20u;       // 128MB
+        options.target_file_size_base = 128u << 20u;  // 128MB
+        options.max_bytes_for_level_base = options.target_file_size_base * 10;
         return options;
     }();
     return connections_cfo;
@@ -96,11 +98,11 @@ inline static const std::string& connections_cfn() {
     return connections_cfn;
 }
 
-void network_impl_t::setup_db(const std::string& path) {
+void network_impl_t::setup_db(const rocksdb::Options& options, const std::string& path) {
     std::unique_ptr<rocksdb::DB> db_ptr;
     {  // open db
         rocksdb::DB* db;
-        rocksdb::Status status = rocksdb::DB::Open(db_options(), path, &db);
+        rocksdb::Status status = rocksdb::DB::Open(options, path, &db);
         db_ptr.reset(db);
         if (status.code() == rocksdb::Status::kInvalidArgument) {
             return;
@@ -109,7 +111,7 @@ void network_impl_t::setup_db(const std::string& path) {
     }
 
     std::vector<std::string> column_family_names;
-    rocksdb::DB::ListColumnFamilies(db_options(), db_ptr->GetName(), &column_family_names);
+    rocksdb::DB::ListColumnFamilies(options, db_ptr->GetName(), &column_family_names);
     if (std::find(column_family_names.begin(), column_family_names.end(), nodes_cfn()) ==
         column_family_names.end()) {
         gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
@@ -128,18 +130,19 @@ void network_impl_t::setup_db(const std::string& path) {
 network_impl_t::network_impl_t(const std::string& path)
     : path_(path)
     , nodes_(*this)
-    , connections_(*this) {
+    , connections_(*this)
+    , statistics_(rocksdb::CreateDBStatistics())
+    , options_(new rocksdb::Options(db_options(), {})) {
     rocksdb::DB* db;
 
-    setup_db(path);
+    setup_db(*options_, path);
 
     std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
     column_families.emplace_back(nodes_cfn(), nodes_cfo());
     column_families.emplace_back(connections_cfn(), connections_cfo());
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     handles.reserve(2);
-    to_status(rocksdb::DB::Open(db_options(), path, column_families, &handles, &db))
-        .raise_on_error();
+    to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db)).raise_on_error();
     nodes.reset(handles[0]);
     connections.reset(handles[1]);
 
@@ -165,7 +168,7 @@ status_t network_impl_t::nodes_insert(basalt::node_t type,
                                       basalt::node_id_t id,
                                       basalt::node_uid_t& node,
                                       bool commit) {
-    logger_get()->debug("nodes_insert(type={}, id={}, commit={}", type, id, commit);
+    logger_get()->debug("nodes_insert(type={}, id={}, commit={})", type, id, commit);
     graph::node_key_t key;
     node.first = type;
     node.second = id;
@@ -179,7 +182,7 @@ status_t network_impl_t::nodes_insert(basalt::node_t type,
                                       const gsl::span<const char>& payload,
                                       basalt::node_uid_t& node,
                                       bool commit) {
-    logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={}", type, id,
+    logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={})", type, id,
                         payload.size(), commit);
     graph::node_key_t key;
     node.first = type;
@@ -207,7 +210,7 @@ status_t network_impl_t::nodes_has(const basalt::node_uid_t& node, bool& result)
 }
 
 status_t network_impl_t::nodes_get(const basalt::node_uid_t& node, std::string* value) {
-    logger_get()->debug("nodes_get(node={}", node);
+    logger_get()->debug("nodes_get(node={})", node);
     graph::node_key_t key;
     graph::encode(node, key);
     const auto& status = db_get()->Get(default_read_options(), nodes.get(),
@@ -267,6 +270,53 @@ status_t network_impl_t::connections_insert(const node_uid_t& node1,
 
     for (const auto& key: keys) {
         batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()), data_slice);
+    }
+    return to_status(db_get()->Write(write_options(commit), &batch));
+}
+
+status_t network_impl_t::connections_insert(const node_uid_t& node,
+                                            const node_t type,
+                                            const gsl::span<const std::size_t>& nodes,
+                                            bool create_nodes,
+                                            bool commit) {
+    logger_get()->debug(
+        "connections_insert(node={}, type={}, count={}, create_nodes={}, commit={})", node, type,
+        nodes.size(), create_nodes, commit);
+    if (nodes.empty()) {
+        return status_t::ok();
+    }
+    rocksdb::WriteBatch batch;
+    if (!create_nodes) {
+        bool node_present;
+        nodes_has(node, node_present).raise_on_error();
+        if (!node_present) {
+            return status_t::error_missing_node(node);
+        }
+        for (auto to_node_id: nodes) {
+            const auto to_node = make_id(type, to_node_id);
+            nodes_has(to_node, node_present).raise_on_error();
+            if (!node_present) {
+                return status_t::error_missing_node(to_node);
+            }
+        }
+    } else {
+        graph::node_key_t key;
+        graph::encode(node, key);
+        batch.Put(this->nodes.get(), rocksdb::Slice(key.data(), key.size()), rocksdb::Slice());
+    }
+    std::vector<graph::connection_keys_t> keys(nodes.size());
+    graph::node_key_t node_key;
+    for (auto i = 0u; i < keys.size(); ++i) {
+        const auto target = make_id(type, nodes[i]);
+        if (create_nodes) {
+            graph::encode(target, node_key);
+            batch.Put(this->nodes.get(), rocksdb::Slice(node_key.data(), node_key.size()),
+                      rocksdb::Slice());
+        }
+        graph::encode(node, target, keys[i]);
+        for (const auto& key: keys[i]) {
+            batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()), rocksdb::Slice());
+        }
     }
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
@@ -503,6 +553,10 @@ status_t network_impl_t::commit() {
     logger_get()->debug("commit()");
     to_status(db_get()->Flush(rocksdb::FlushOptions(), nodes.get())).raise_on_error();
     return to_status(db_get()->Flush(rocksdb::FlushOptions(), connections.get())).raise_on_error();
+}
+
+std::string network_impl_t::statistics() const {
+    return statistics_->ToString();
 }
 
 }  // namespace basalt

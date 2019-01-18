@@ -12,5 +12,5 @@ if ! ${BLACK:-black} --version >/dev/null 2>&1 ; then
     exit 1
 fi
 
-${BLACK:-black} -S setup.py tests basalt
-${FLAKE8:-flake8} tests
+${BLACK:-black} -S setup.py basalt tests
+${FLAKE8:-flake8} basalt tests
