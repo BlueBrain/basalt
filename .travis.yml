@@ -82,6 +82,7 @@ script:
       --warn-uninitialized \
       -DUSE_CLANG_TIDY:BOOL=ON \
       -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
+      -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
       -DCMAKE_CXX_STANDARD=$CPP \
   - make VERBOSE=1 -j2
   - ctest -j2 --output-on-failure

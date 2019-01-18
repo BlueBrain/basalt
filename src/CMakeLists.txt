@@ -1,3 +1,4 @@
+# pure C++ shared library
 set(basalt_SOURCES
     basalt/connections.cpp
     basalt/graph.hpp
@@ -28,33 +29,26 @@ include_directories(${cereal_include_directory}
                     ${CMAKE_CURRENT_SOURCE_DIR}/basalt
                     ${CMAKE_CURRENT_BINARY_DIR})
 
+add_library(basalt_obj OBJECT ${basalt_SOURCES} ${basalt_HEADERS})
+set_property(TARGET basalt_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+# Shared library
+add_library(basalt SHARED $<TARGET_OBJECTS:basalt_obj>)
+target_link_libraries(basalt ${RocksDB_LIBRARIES})
+bob_library_includes(basalt)
+bob_export_target(basalt)
+install(FILES ${basalt_HEADERS} DESTINATION include)
+
+# Shared library with Python bindings
 set(PYBIND11_SOURCES
     basalt/circuit_payloads.hpp
     basalt/circuit_payloads.cpp
     basalt/py_basalt.cpp
     basalt/py_helpers.hpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
-
-if(Basalt_BUILD_PYTHON_PACKAGE)
-  add_subdirectory(${pybind11_project_directory})
-  pybind11_add_module(_basalt
-                      ${PYBIND11_SOURCES}
-                      ${basalt_SOURCES}
-                      ${basalt_HEADERS})
-  target_link_libraries(_basalt PRIVATE ${RocksDB_LIBRARIES})
-else()
-  add_library(basalt ${basalt_SOURCES} ${basalt_HEADERS})
-  bob_library_includes(basalt)
-  bob_export_target(basalt)
-  target_link_libraries(basalt ${RocksDB_LIBRARIES})
-  install(FILES ${basalt_HEADERS} DESTINATION include)
-
-  if(Basalt_USE_pybind11)
-    add_subdirectory(third_party/pybind11)
-    pybind11_add_module(pybasalt
-                        ${PYBIND11_SOURCES}
-                        ${basalt_SOURCES}
-                        ${basalt_HEADERS})
-    target_link_libraries(pybasalt PRIVATE ${RocksDB_LIBRARIES})
-  endif()
-endif()
+add_subdirectory(${pybind11_project_directory})
+pybind11_add_module(_basalt
+                    SHARED
+                    ${PYBIND11_SOURCES}
+                    $<TARGET_OBJECTS:basalt_obj>)
+target_link_libraries(_basalt PRIVATE ${RocksDB_LIBRARIES})
