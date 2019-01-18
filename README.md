@@ -2,6 +2,16 @@
 
 Basic graph database backed by RocksDB key-value storage [![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
 
+# Development stage
+
+This library is still under active development, and is not meant to be used
+in a production environment.
+
+# Documentation
+
+Python API documentation in available in basalt
+[wiki](https://github.com/tristan0x/basalt/wiki/Python-API).
+
 # Build and installation instruction
 
 ## Requirements
@@ -12,10 +22,10 @@ Basic graph database backed by RocksDB key-value storage [![Build Status](https:
 
 ## Getting the code
 
-This repository grabs few third-party libraries *git submodules*.
+This repository grabs few third-party libraries as *git submodules*.
 To clone them when you clone basalt, use `git clone --recursive` option.
 
-If you have already cloned basalt, you can get submodules with command: 
+If you have already cloned basalt, you can get submodules with command:
 `git submodule update --recursive --init`
 
 ## C++ Library
@@ -64,7 +74,7 @@ To install:
 * `cmake/` directory: Additional CMake scripts
 * `dev/` directory: development utilities
 
-# Embedded library
+# Embedded third-parties
 
 External libraries are including either by copy/paste or git submodules
 in `src/third_party` directory.
