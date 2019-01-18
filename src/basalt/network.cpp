@@ -26,6 +26,10 @@ status_t network_t::commit() {
     return pimpl_->commit();
 }
 
+std::string network_t::statistics() const {
+    return pimpl_->statistics();
+}
+
 /////
 
 node_uid_t make_id(node_t type, node_id_t id) {

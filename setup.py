@@ -81,9 +81,20 @@ setup(
     author_email='bbp-ou-hpc@groupes.epfl.ch',
     description='Graph DB Storage',
     long_description='',
-    packages=['basalt'],
+    packages=['basalt', 'basalt.ngv'],
     ext_modules=[CMakeExtension('basalt')],
     cmdclass=dict(build_ext=CMakeBuild),
     zip_safe=False,
-    tests_require=['numpy>=1.13'],
+    install_requires=[
+        'cached-property>=1.5.1',
+        'docopt>=0.6.2',
+        'h5py>=2.7.1',
+        'humanize>=0.5.1',
+        'numpy>=1.13',
+        'progress>=1.4',
+    ],
+    entry_points="""
+        [console_scripts]
+        basalt-cli = basalt.cli:main
+    """,
 )

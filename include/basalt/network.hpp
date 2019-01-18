@@ -41,6 +41,11 @@ class network_t {
      */
     status_t commit() __attribute__((warn_unused_result));
 
+    /**
+     * \brief Provides human readable string of all database counters
+     */
+    std::string statistics() const;
+
   private:
     std::unique_ptr<network_impl_t> pimpl_;
 };

@@ -9,6 +9,8 @@ namespace rocksdb {
 class ColumnFamilyHandle;
 class DB;
 class Iterator;
+struct Options;
+class Statistics;
 class Status;
 class WriteBatch;
 }  // namespace rocksdb
