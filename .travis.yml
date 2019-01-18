@@ -80,6 +80,7 @@ script:
   - |
     cmake .. \
       --warn-uninitialized \
+      -DUSE_CLANG_TIDY:BOOL=ON \
       -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
       -DCMAKE_CXX_STANDARD=$CPP \
   - make VERBOSE=1 -j2
