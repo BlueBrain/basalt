@@ -32,19 +32,28 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(const node_uid_t& node1, const node_uid_t& node2, const char* data,
-                    std::size_t size, bool commit = false) __attribute__((warn_unused_result));
+    status_t insert(const node_uid_t& node1,
+                    const node_uid_t& node2,
+                    const char* data,
+                    std::size_t size,
+                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Connect a node to several nodes
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(const node_uid_t& node, const node_uids_t& nodes,
+    status_t insert(const node_uid_t& node,
+                    const node_uids_t& nodes,
                     const std::vector<const char*>& data = {},
-                    const std::vector<std::size_t>& sizes = {}, bool commit = false);
+                    const std::vector<std::size_t>& sizes = {},
+                    bool commit = false);
 
-    status_t insert(node_t type, node_id_t id, const char* data, std::size_t size, node_uid_t& node,
+    status_t insert(node_t type,
+                    node_id_t id,
+                    const char* data,
+                    std::size_t size,
+                    node_uid_t& node,
                     bool commit = false) __attribute__((warn_unused_result));
 
     /**
