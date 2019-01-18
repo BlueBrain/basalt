@@ -11,14 +11,19 @@ status_t connections_t::insert(const node_uid_t& node1, const node_uid_t& node2,
     return pimpl_.connections_insert(node1, node2, "", 0, commit);
 }
 
-status_t connections_t::insert(const node_uid_t& node1, const node_uid_t& node2, const char* data,
-                               std::size_t size, bool commit) {
+status_t connections_t::insert(const node_uid_t& node1,
+                               const node_uid_t& node2,
+                               const char* data,
+                               std::size_t size,
+                               bool commit) {
     return pimpl_.connections_insert(node1, node2, data, size, commit);
 }
 
-status_t connections_t::insert(const node_uid_t& node, const node_uids_t& nodes,
+status_t connections_t::insert(const node_uid_t& node,
+                               const node_uids_t& nodes,
                                const std::vector<const char*>& data,
-                               const std::vector<std::size_t>& sizes, bool commit) {
+                               const std::vector<std::size_t>& sizes,
+                               bool commit) {
     return pimpl_.connections_insert(node, nodes, data, sizes, commit);
 }
 

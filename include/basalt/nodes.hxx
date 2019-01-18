@@ -9,7 +9,10 @@
 namespace basalt {
 
 template <typename Payload>
-status_t nodes_t::insert(node_t type, node_id_t id, const Payload& data, node_uid_t& res,
+status_t nodes_t::insert(node_t type,
+                         node_id_t id,
+                         const Payload& data,
+                         node_uid_t& res,
                          bool commit) {
     std::ostringstream oss;
     data.serialize(oss);

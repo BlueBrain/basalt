@@ -8,8 +8,10 @@
 
 namespace basalt {
 
-node_iterator_impl::node_iterator_impl(const basalt::db_t& db, rocksdb::ColumnFamilyHandle* nodes,
-                                       const std::string& /*prefix*/, std::size_t position)
+node_iterator_impl::node_iterator_impl(const basalt::db_t& db,
+                                       rocksdb::ColumnFamilyHandle* nodes,
+                                       const std::string& /*prefix*/,
+                                       std::size_t position)
     : position_(position) {
     iter_ = db->NewIterator(rocksdb::ReadOptions(), nodes);
     iter_->SeekToFirst();
