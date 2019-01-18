@@ -19,6 +19,6 @@ using node_id_t = std::size_t;
 using node_uid_t = std::pair<node_t, std::size_t>;
 using node_uids_t = std::vector<node_uid_t>;
 
-} // namespace basalt
+}  // namespace basalt
 
-#endif // BASALT_FWD_HPP
+#endif  // BASALT_FWD_HPP

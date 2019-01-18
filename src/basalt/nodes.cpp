@@ -7,16 +7,16 @@
 
 namespace basalt {
 
-nodes_t::nodes_t(network_impl_t& pimpl) : pimpl_(pimpl) {}
+nodes_t::nodes_t(network_impl_t& pimpl)
+    : pimpl_(pimpl) {}
 
-status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id,
-                         const char* data, std::size_t size,
-                         basalt::node_uid_t& node, bool commit) {
+status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id, const char* data,
+                         std::size_t size, basalt::node_uid_t& node, bool commit) {
     return pimpl_.nodes_insert(type, id, data, size, node, commit);
 }
 
-status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id,
-                         basalt::node_uid_t& node, bool commit) {
+status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id, basalt::node_uid_t& node,
+                         bool commit) {
     return pimpl_.nodes_insert(type, id, node, commit);
 }
 
@@ -24,8 +24,7 @@ status_t nodes_t::has(const node_uid_t& node, bool& result) const {
     return pimpl_.nodes_has(node, result);
 }
 
-status_t nodes_t::get(const basalt::node_uid_t& node,
-                      std::string* value) const {
+status_t nodes_t::get(const basalt::node_uid_t& node, std::string* value) const {
     return pimpl_.nodes_get(node, value);
 }
 
@@ -46,4 +45,4 @@ node_iterator nodes_t::end() const {
     return node_iterator(pimpl_, std::numeric_limits<std::size_t>::max());
 }
 
-} // namespace basalt
+}  // namespace basalt

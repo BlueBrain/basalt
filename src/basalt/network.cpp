@@ -14,17 +14,25 @@ network_t::network_t(const std::string& path)
 
 network_t::~network_t() = default;
 
-connections_t& network_t::connections() { return pimpl_->connections_get(); }
+connections_t& network_t::connections() {
+    return pimpl_->connections_get();
+}
 
-nodes_t& network_t::nodes() { return pimpl_->nodes_get(); }
+nodes_t& network_t::nodes() {
+    return pimpl_->nodes_get();
+}
 
-status_t network_t::commit() { return pimpl_->commit(); }
+status_t network_t::commit() {
+    return pimpl_->commit();
+}
 
 /////
 
-node_uid_t make_id(node_t type, node_id_t id) { return {type, id}; }
+node_uid_t make_id(node_t type, node_id_t id) {
+    return {type, id};
+}
 
-} // namespace basalt
+}  // namespace basalt
 
 std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id) {
     return ostr << '(' << id.first << ':' << id.second << ')';
@@ -32,7 +40,7 @@ std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id) {
 
 std::ostream& operator<<(std::ostream& ostr, const basalt::node_uids_t& ids) {
     ostr << '[';
-    for (const auto& id : ids) {
+    for (const auto& id: ids) {
         ostr << id << ' ';
     }
     return ostr << ']';

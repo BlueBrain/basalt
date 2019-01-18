@@ -9,8 +9,8 @@
 namespace basalt {
 
 template <typename Payload>
-status_t nodes_t::insert(node_t type, node_id_t id, const Payload& data,
-                         node_uid_t& res, bool commit) {
+status_t nodes_t::insert(node_t type, node_id_t id, const Payload& data, node_uid_t& res,
+                         bool commit) {
     std::ostringstream oss;
     data.serialize(oss);
     // \fixme TCL get buffer beginning and length from ostringstream
@@ -38,6 +38,6 @@ status_t nodes_t::get(const node_uid_t& uid, T& payload) const {
     return status;
 }
 
-} // namespace basalt
+}  // namespace basalt
 
-#endif // !BASALT_NETWORK_HXX
+#endif  // !BASALT_NETWORK_HXX

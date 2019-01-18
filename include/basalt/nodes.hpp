@@ -25,8 +25,7 @@ class nodes_t {
     /**
      * @return number of nodes in the graph, and operation status.
      */
-    status_t count(std::size_t& count) const
-        __attribute__((warn_unused_result));
+    status_t count(std::size_t& count) const __attribute__((warn_unused_result));
 
     /**
      * \brief Insert a node in the graph
@@ -36,8 +35,8 @@ class nodes_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(node_t type, node_id_t id, node_uid_t& node,
-                    bool commit = false) __attribute__((warn_unused_result));
+    status_t insert(node_t type, node_id_t id, node_uid_t& node, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief Insert a node in the graph.
@@ -50,9 +49,8 @@ class nodes_t {
      * \return information whether operation succeeded or not
      */
     template <typename Payload>
-    status_t insert(node_t type, node_id_t id, const Payload& data,
-                    node_uid_t& node, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t insert(node_t type, node_id_t id, const Payload& data, node_uid_t& node,
+                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Insert a node in the graph.
@@ -65,9 +63,8 @@ class nodes_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(node_t type, node_id_t id, const char* data,
-                    std::size_t size, node_uid_t& node, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t insert(node_t type, node_id_t id, const char* data, std::size_t size, node_uid_t& node,
+                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Retrieve a node from the graph
@@ -77,8 +74,7 @@ class nodes_t {
      * \return information whether operation succeeded or not
      */
     template <typename T>
-    status_t get(const node_uid_t& node, T& payload) const
-        __attribute__((warn_unused_result));
+    status_t get(const node_uid_t& node, T& payload) const __attribute__((warn_unused_result));
 
     /**
      * \brief Retrive a node from the graph
@@ -95,8 +91,7 @@ class nodes_t {
      * \param result reference set to true if node exists, false otherwise
      * \return information whether operation managed to update \a result
      */
-    status_t has(const node_uid_t& node, bool& result) const
-        __attribute__((warn_unused_result));
+    status_t has(const node_uid_t& node, bool& result) const __attribute__((warn_unused_result));
 
     /**
      * \brief Remove a node from the graph
@@ -104,14 +99,13 @@ class nodes_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node, bool commit = false) __attribute__((warn_unused_result));
 
   private:
     network_impl_t& pimpl_;
 };
-} // namespace basalt
+}  // namespace basalt
 
 #include <basalt/nodes.hxx>
 
-#endif // BASALT_NODES_HPP
+#endif  // BASALT_NODES_HPP

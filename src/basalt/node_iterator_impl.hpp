@@ -12,10 +12,8 @@ namespace basalt {
 class node_iterator_impl {
   public:
     using value_type = node_iterator::value_type;
-    explicit node_iterator_impl(const db_t& db,
-                                rocksdb::ColumnFamilyHandle* nodes,
-                                const std::string& prefix,
-                                std::size_t position);
+    explicit node_iterator_impl(const db_t& db, rocksdb::ColumnFamilyHandle* nodes,
+                                const std::string& prefix, std::size_t position);
 
     inline std::size_t position_get() const { return position_; }
 
@@ -32,6 +30,6 @@ class node_iterator_impl {
     std::remove_const<value_type>::type value;
 };
 
-} // namespace basalt
+}  // namespace basalt
 
-#endif // BASALT_NODE_ITERATOR_IMPL_HPP
+#endif  // BASALT_NODE_ITERATOR_IMPL_HPP

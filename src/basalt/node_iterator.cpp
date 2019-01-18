@@ -56,6 +56,8 @@ bool node_iterator::operator!=(const basalt::node_iterator& rhs) const {
     return !(*this == rhs);
 }
 
-const node_iterator::value_type& node_iterator::operator*() { return **pimpl_; }
+const node_iterator::value_type& node_iterator::operator*() {
+    return **pimpl_;
+}
 
-} // namespace basalt
+}  // namespace basalt
