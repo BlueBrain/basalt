@@ -7,7 +7,6 @@ include(cmake/bob.cmake)
 bob_begin_package()
 
 bob_option(Basalt_USE_pybind11 "Build Python bindings" OFF)
-bob_option(Basalt_BUILD_PYTHON_PACKAGE "Build Python package" OFF)
 bob_option(USE_CLANG_TIDY "Perform C++ static analysis while compiling" OFF)
 
 set(Basalt_SERIALIZATION_METHODS CEREAL SSTREAM)

@@ -42,11 +42,10 @@ class CMakeBuild(build_ext):
             '-DPYTHON_EXECUTABLE=' + sys.executable,
             '-DBasalt_USE_pybind11:BOOL=True',
             '-DCMAKE_BUILD_TYPE=',
-            '-DBasalt_BUILD_PYTHON_PACKAGE:BOOL=TRUE',
         ]
 
         optimize = 'ON' if self.debug else 'OFF'
-        build_args = ['--config', optimize]
+        build_args = ['--config', optimize, '--target', '_basalt']
 
         if platform.system() == "Windows":
             cmake_args += [
