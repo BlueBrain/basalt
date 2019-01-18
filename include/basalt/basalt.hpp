@@ -6,4 +6,4 @@
 #include <basalt/node_iterator.hpp>
 #include <basalt/nodes.hpp>
 
-#endif // BASALT_BASALT_HPP
+#endif  // BASALT_BASALT_HPP

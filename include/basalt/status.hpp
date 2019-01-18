@@ -24,17 +24,16 @@ struct status_t {
 
     static const status_t& error_not_implemented();
     static status_t error_missing_node(const node_uid_t& node);
-    static status_t error_invalid_connection(const node_uid_t& node1,
-                                             const node_uid_t& node2);
+    static status_t error_invalid_connection(const node_uid_t& node1, const node_uid_t& node2);
     static const status_t& ok();
 
     const Code code;
     const std::string message;
 };
 
-} // namespace basalt
+}  // namespace basalt
 
 /// \brief specialization to gently push a \a status_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status);
 
-#endif // BASALT_STATUS_HPP
+#endif  // BASALT_STATUS_HPP

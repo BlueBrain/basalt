@@ -28,7 +28,7 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/array.hpp>
 #include <cereal/types/string.hpp>
@@ -37,7 +37,7 @@
 #pragma clang diagnostic pop
 #elif defined(__GNUC__) || defined(__GNUG__)
 #pragma GCC diagnostic pop
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 
 #if defined(__clang__)
 #pragma clang diagnostic push
@@ -57,13 +57,13 @@
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 #include <pybind11/numpy.h>
 #if defined(__clang__)
 #pragma clang diagnostic pop
 #elif defined(__GNUC__) || defined(__GNUG__)
 #pragma GCC diagnostic pop
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 
 #include <basalt/settings.hpp>
 
@@ -74,7 +74,7 @@ namespace basalt {
  * \{
  */
 
-struct membuf : std::streambuf {
+struct membuf: std::streambuf {
     membuf(pybind11::array_t<char>& data) {
         auto request = data.request();
         auto ptr = reinterpret_cast<char*>(request.ptr);
@@ -83,12 +83,14 @@ struct membuf : std::streambuf {
     membuf(char* base, size_t size) { this->setg(base, base, base + size); }
 };
 
-struct imemstream : virtual membuf, std::istream {
+struct imemstream: virtual membuf, std::istream {
     imemstream(char* base, size_t size)
-        : membuf(base, size), std::istream(this) {}
+        : membuf(base, size)
+        , std::istream(this) {}
 
     imemstream(pybind11::array_t<char>& data)
-        : membuf(data), std::istream(this) {}
+        : membuf(data)
+        , std::istream(this) {}
 };
 
 /**
@@ -149,7 +151,7 @@ inline pybind11::array_t<char> to_py_array(const std::string& str) {
 template <typename T>
 void serialize_vector(std::ostringstream& oss, const std::vector<T>& data) {
     oss << data.size() << ' ';
-    for (const auto idx : data) {
+    for (const auto idx: data) {
         oss << idx << ' ';
     }
 }
@@ -198,8 +200,7 @@ void fill_vector(pybind11::array_t<T>& array, std::vector<T>& vector) {
  * Fill a standard vector of \a std::array from a NumPy array
  */
 template <typename T, std::size_t N>
-void fill_vector(pybind11::buffer& buffer,
-                 std::vector<std::array<T, N>>& vector) {
+void fill_vector(pybind11::buffer& buffer, std::vector<std::array<T, N>>& vector) {
     auto info = buffer.request(false);
     if (info.size == 0) {
         return;
@@ -212,8 +213,7 @@ void fill_vector(pybind11::buffer& buffer,
     }
     if (info.shape[1] != N) {
         std::ostringstream oss;
-        oss << "Invalid dimension 1 size. Expected " << N << " but got "
-            << info.shape[1];
+        oss << "Invalid dimension 1 size. Expected " << N << " but got " << info.shape[1];
         throw std::runtime_error(oss.str());
     }
     auto ptr = reinterpret_cast<typename std::add_pointer<T>::type>(info.ptr);
@@ -247,7 +247,7 @@ void deserialize(::pybind11::array_t<char>& data, Payload& p) {
     archive(p);
 }
 
-} // namespace cereal
+}  // namespace cereal
 
 template <typename Payload>
 pybind11::array_t<char> serialize_impl(const Payload& payload, int method) {
@@ -266,8 +266,7 @@ pybind11::array_t<char> serialize(const Payload& payload) {
 }
 
 template <typename Payload>
-void deserialize_impl(Payload& payload, pybind11::array_t<char>& data,
-                      int method) {
+void deserialize_impl(Payload& payload, pybind11::array_t<char>& data, int method) {
     if (method == BASALT_CEREAL_SERIALIZATION) {
         cereal::deserialize(data, payload);
     } else if (method == BASALT_SSTREAM_SERIALIZATION) {
@@ -286,7 +285,7 @@ void deserialize(Payload& payload, pybind11::array_t<char>& data) {
  * \}
  */
 
-} // namespace basalt
+}  // namespace basalt
 
 namespace std {
 
@@ -322,6 +321,6 @@ std::istream& operator>>(std::istream& istr, std::array<T, N>& array) {
     return istr;
 }
 
-} // namespace std
+}  // namespace std
 
-#endif // BASALT_PY_HELPERS_HPP
+#endif  // BASALT_PY_HELPERS_HPP

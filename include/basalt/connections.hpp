@@ -18,8 +18,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(const node_uid_t& node1, const node_uid_t& node2,
-                    bool commit = false) __attribute__((warn_unused_result));
+    status_t insert(const node_uid_t& node1, const node_uid_t& node2, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief Create an edge between 2 nodes.
@@ -32,9 +32,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(const node_uid_t& node1, const node_uid_t& node2,
-                    const char* data, std::size_t size, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t insert(const node_uid_t& node1, const node_uid_t& node2, const char* data,
+                    std::size_t size, bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Connect a node to several nodes
@@ -43,12 +42,10 @@ class connections_t {
      */
     status_t insert(const node_uid_t& node, const node_uids_t& nodes,
                     const std::vector<const char*>& data = {},
-                    const std::vector<std::size_t>& sizes = {},
-                    bool commit = false);
+                    const std::vector<std::size_t>& sizes = {}, bool commit = false);
 
-    status_t insert(node_t type, node_id_t id, const char* data,
-                    std::size_t size, node_uid_t& node, bool commit = false)
-        __attribute__((warn_unused_result));
+    status_t insert(node_t type, node_id_t id, const char* data, std::size_t size, node_uid_t& node,
+                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief check connectivity between 2 nodes
@@ -57,8 +54,8 @@ class connections_t {
      * \param res a boolean indicating whether node1 and node2 are connected
      * \return provides information whether operation succeeded or not
      */
-    status_t has(const node_uid_t& node1, const node_uid_t& node2,
-                 bool& res) const __attribute__((warn_unused_result));
+    status_t has(const node_uid_t& node1, const node_uid_t& node2, bool& res) const
+        __attribute__((warn_unused_result));
 
     /**
      * \brief get nodes connected to one node
@@ -76,8 +73,7 @@ class connections_t {
      * \param connections accumulator where connected nodes are added
      * \return information whether operation succeeded or not
      */
-    status_t get(const node_uid_t& node, node_t filter,
-                 node_uids_t& connections) const
+    status_t get(const node_uid_t& node, node_t filter, node_uids_t& connections) const
         __attribute__((warn_unused_result));
 
     /**
@@ -85,8 +81,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node1, const node_uid_t& node2,
-                   bool commit = false) __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node1, const node_uid_t& node2, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief remove connections of a given type
@@ -96,8 +92,8 @@ class connections_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node, node_t filter, size_t& removed,
-                   bool commit = false) __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node, node_t filter, size_t& removed, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief remove all connections of a node
@@ -105,8 +101,8 @@ class connections_t {
      * \param removed number of nodes removed during the operation
      * \return information whether operation succeeded or not
      */
-    status_t erase(const node_uid_t& node, std::size_t& removed,
-                   bool commit = false) __attribute__((warn_unused_result));
+    status_t erase(const node_uid_t& node, std::size_t& removed, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief returns the number of connections in the network
@@ -119,6 +115,6 @@ class connections_t {
     network_impl_t& pimpl_;
 };
 
-} // namespace basalt
+}  // namespace basalt
 
-#endif // BASALT_CONNECTIONS_HPP
+#endif  // BASALT_CONNECTIONS_HPP

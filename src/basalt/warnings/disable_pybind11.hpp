@@ -17,6 +17,6 @@
 #pragma GCC diagnostic ignored "-Wdeprecated"
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 
-#endif //! BASALT_DISABLE_PYBIND11_WARNINGS_HPP
+#endif  //! BASALT_DISABLE_PYBIND11_WARNINGS_HPP

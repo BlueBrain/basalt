@@ -16,8 +16,7 @@ namespace basalt {
 /// \brief Undirected Connectivity Graph
 class network_t {
   public:
-    using node_const_iterator_t =
-        std::iterator<std::input_iterator_tag, const node_t>;
+    using node_const_iterator_t = std::iterator<std::input_iterator_tag, const node_t>;
 
     /**
      * \brief load graph if present on disk, initialize it otherwise
@@ -49,7 +48,7 @@ class network_t {
 /// \brief node_id_t constructor helper function
 node_uid_t make_id(node_t type, node_id_t id);
 
-} // namespace basalt
+}  // namespace basalt
 
 /// \brief specialization to gently push a \a node_uid_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id);
@@ -57,4 +56,4 @@ std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id);
 /// \brief specialization to gently push a \a node_uids_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::node_uids_t& ids);
 
-#endif // !BASALT_NETWORK_HPP
+#endif  // !BASALT_NETWORK_HPP

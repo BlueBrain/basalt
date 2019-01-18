@@ -5,6 +5,6 @@
 #pragma clang diagnostic push
 #elif defined(__GNUC__) || defined(__GNUG__)
 #pragma GCC diagnostic push
-#endif // defined(__clang__)
+#endif  // defined(__clang__)
 
-#endif //! BASALT_WARNINGS_PUSH_HPP
+#endif  //! BASALT_WARNINGS_PUSH_HPP

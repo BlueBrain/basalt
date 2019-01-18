@@ -9,8 +9,7 @@
 namespace basalt {
 
 /// \brief Iterator class for nodes
-class node_iterator
-    : public std::iterator<std::input_iterator_tag, const node_uid_t> {
+class node_iterator: public std::iterator<std::input_iterator_tag, const node_uid_t> {
   public:
     node_iterator(const network_impl_t& pimpl, size_t from);
     node_iterator(const node_iterator& rhs);
@@ -26,5 +25,5 @@ class node_iterator
     node_iterator_impl_ptr pimpl_;
 };
 
-} // namespace basalt
-#endif // BASALT_NODE_ITERATOR_HPP
+}  // namespace basalt
+#endif  // BASALT_NODE_ITERATOR_HPP

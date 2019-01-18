@@ -8,11 +8,11 @@
 namespace basalt {
 
 static const status_t ok_{status_t::ok_code, ""};
-static const status_t not_implemented_{status_t::not_implemented_code,
-                                       "operation-not-implemented"};
+static const status_t not_implemented_{status_t::not_implemented_code, "operation-not-implemented"};
 
 status_t::status_t(status_t::Code code_, const std::string& message_)
-    : code(code_), message(message_) {}
+    : code(code_)
+    , message(message_) {}
 
 const status_t& status_t::raise_on_error() const {
     if (code != 0) {
@@ -21,9 +21,13 @@ const status_t& status_t::raise_on_error() const {
     return *this;
 }
 
-const status_t& status_t::ok() { return ok_; }
+const status_t& status_t::ok() {
+    return ok_;
+}
 
-const status_t& status_t::error_not_implemented() { return not_implemented_; }
+const status_t& status_t::error_not_implemented() {
+    return not_implemented_;
+}
 
 status_t status_t::error_missing_node(const node_uid_t& node) {
     std::ostringstream oss;
@@ -38,7 +42,7 @@ status_t status_t::error_invalid_connection(const basalt::node_uid_t& node1,
     return {invalid_connection_code, oss.str()};
 }
 
-} // namespace basalt
+}  // namespace basalt
 
 std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status) {
     return ostr << "code=" << status.code << " message=" << status.message;
