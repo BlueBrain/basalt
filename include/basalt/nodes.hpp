@@ -49,7 +49,10 @@ class nodes_t {
      * \return information whether operation succeeded or not
      */
     template <typename Payload>
-    status_t insert(node_t type, node_id_t id, const Payload& data, node_uid_t& node,
+    status_t insert(node_t type,
+                    node_id_t id,
+                    const Payload& data,
+                    node_uid_t& node,
                     bool commit = false) __attribute__((warn_unused_result));
 
     /**
@@ -63,7 +66,11 @@ class nodes_t {
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    status_t insert(node_t type, node_id_t id, const char* data, std::size_t size, node_uid_t& node,
+    status_t insert(node_t type,
+                    node_id_t id,
+                    const char* data,
+                    std::size_t size,
+                    node_uid_t& node,
                     bool commit = false) __attribute__((warn_unused_result));
 
     /**

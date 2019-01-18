@@ -10,12 +10,18 @@ namespace basalt {
 nodes_t::nodes_t(network_impl_t& pimpl)
     : pimpl_(pimpl) {}
 
-status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id, const char* data,
-                         std::size_t size, basalt::node_uid_t& node, bool commit) {
+status_t nodes_t::insert(basalt::node_t type,
+                         basalt::node_id_t id,
+                         const char* data,
+                         std::size_t size,
+                         basalt::node_uid_t& node,
+                         bool commit) {
     return pimpl_.nodes_insert(type, id, data, size, node, commit);
 }
 
-status_t nodes_t::insert(basalt::node_t type, basalt::node_id_t id, basalt::node_uid_t& node,
+status_t nodes_t::insert(basalt::node_t type,
+                         basalt::node_id_t id,
+                         basalt::node_uid_t& node,
                          bool commit) {
     return pimpl_.nodes_insert(type, id, node, commit);
 }

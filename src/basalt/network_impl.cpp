@@ -139,8 +139,10 @@ status_t network_impl_t::to_status(const rocksdb::Status& status) {
 
 ///// nodes methods
 
-status_t network_impl_t::nodes_insert(basalt::node_t type, basalt::node_id_t id,
-                                      basalt::node_uid_t& node, bool commit) {
+status_t network_impl_t::nodes_insert(basalt::node_t type,
+                                      basalt::node_id_t id,
+                                      basalt::node_uid_t& node,
+                                      bool commit) {
     logger_get()->debug("nodes_insert(type={}, id={}, commit={}", type, id, commit);
     graph::node_key_t key;
     node.first = type;
@@ -150,8 +152,12 @@ status_t network_impl_t::nodes_insert(basalt::node_t type, basalt::node_id_t id,
                                    rocksdb::Slice(key.data(), key.size()), rocksdb::Slice()));
 }
 
-status_t network_impl_t::nodes_insert(basalt::node_t type, basalt::node_id_t id, const char* data,
-                                      std::size_t size, basalt::node_uid_t& node, bool commit) {
+status_t network_impl_t::nodes_insert(basalt::node_t type,
+                                      basalt::node_id_t id,
+                                      const char* data,
+                                      std::size_t size,
+                                      basalt::node_uid_t& node,
+                                      bool commit) {
     logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={}", type, id, size,
                         commit);
     graph::node_key_t key;
@@ -214,8 +220,11 @@ std::shared_ptr<node_iterator_impl> network_impl_t::node_iterator(std::size_t fr
 
 ///// connections methods
 
-status_t network_impl_t::connections_insert(const node_uid_t& node1, const node_uid_t& node2,
-                                            const char* data, std::size_t size, bool commit) {
+status_t network_impl_t::connections_insert(const node_uid_t& node1,
+                                            const node_uid_t& node2,
+                                            const char* data,
+                                            std::size_t size,
+                                            bool commit) {
     logger_get()->debug("connections_connect(node1={}, node2={}, commit={})", node1, node2, commit);
     {  // check presence of both nodes
         bool node_present;
@@ -243,9 +252,11 @@ status_t network_impl_t::connections_insert(const node_uid_t& node1, const node_
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-status_t network_impl_t::connections_insert(const node_uid_t& node, const node_uids_t& nodes,
+status_t network_impl_t::connections_insert(const node_uid_t& node,
+                                            const node_uids_t& nodes,
                                             const std::vector<const char*>& data,
-                                            const std::vector<std::size_t>& sizes, bool commit) {
+                                            const std::vector<std::size_t>& sizes,
+                                            bool commit) {
     logger_get()->debug("connections_connect(node={}, nodes={}, commit={})", node, nodes, commit);
     {  // check presence of both nodes
         bool node_present;
@@ -287,7 +298,8 @@ status_t network_impl_t::connections_insert(const node_uid_t& node, const node_u
 }
 
 status_t network_impl_t::connections_has(const basalt::node_uid_t& node1,
-                                         const basalt::node_uid_t& node2, bool& res) const {
+                                         const basalt::node_uid_t& node2,
+                                         bool& res) const {
     logger_get()->debug("connections_has(node1={}, node2={})", node1, node2);
     graph::connection_key_t key;
     graph::encode(node1, node2, key);
@@ -327,7 +339,8 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_uids_t& co
     return to_status(iter->status());
 }
 
-status_t network_impl_t::connections_get(const node_uid_t& node, node_t filter,
+status_t network_impl_t::connections_get(const node_uid_t& node,
+                                         node_t filter,
                                          node_uids_t& connections) const {
     logger_get()->debug("connections_get(node={}, filter={}, connections={})", node, filter,
                         connections);
@@ -356,7 +369,8 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_t filter,
     return status_t::ok();
 }
 
-status_t network_impl_t::connections_erase(const node_uid_t& node1, const node_uid_t& node2,
+status_t network_impl_t::connections_erase(const node_uid_t& node1,
+                                           const node_uid_t& node2,
                                            bool commit) {
     logger_get()->debug("connections_erase(node1={}, node2={}, commit={})", node1, node2, commit);
 
@@ -370,7 +384,8 @@ status_t network_impl_t::connections_erase(const node_uid_t& node1, const node_u
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-status_t network_impl_t::connections_erase(rocksdb::WriteBatch& batch, const node_uid_t& node,
+status_t network_impl_t::connections_erase(rocksdb::WriteBatch& batch,
+                                           const node_uid_t& node,
                                            size_t& removed) {
     graph::connection_key_prefix_t key;
     graph::encode_connection_prefix(node, key);
@@ -423,7 +438,9 @@ status_t network_impl_t::connections_erase(const node_uid_t& node, size_t& remov
     return status;
 }
 
-status_t network_impl_t::connections_erase(const node_uid_t& node, node_t filter, size_t& removed,
+status_t network_impl_t::connections_erase(const node_uid_t& node,
+                                           node_t filter,
+                                           size_t& removed,
                                            bool commit) {
     logger_get()->debug("connections_erase(node={}, filter={}, commit={})", node, filter, commit);
     graph::connection_key_type_prefix_t key;

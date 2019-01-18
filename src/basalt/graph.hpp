@@ -40,7 +40,8 @@ class graph {
                     reinterpret_cast<const char*>(&node.second), sizeof(node_uid_t::second_type));
     }
 
-    static inline void encode_connection_prefix(const node_uid_t& node, node_t type,
+    static inline void encode_connection_prefix(const node_uid_t& node,
+                                                node_t type,
                                                 connection_key_type_prefix_t& key) {
         key[0] = 'E';
         std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&node.first),
@@ -52,7 +53,8 @@ class graph {
                     reinterpret_cast<const char*>(&type), sizeof(node_uid_t::first_type));
     }
 
-    static inline void encode(const node_uid_t& node1, const node_uid_t& node2,
+    static inline void encode(const node_uid_t& node1,
+                              const node_uid_t& node2,
                               connection_key_t& key) {
         key[0] = 'E';
         std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&node1.first),
@@ -66,12 +68,14 @@ class graph {
                         sizeof(node_uid_t::second_type),
                     reinterpret_cast<const char*>(&node2.second), sizeof(node_uid_t::second_type));
     }
-    static inline void encode(const node_uid_t& node1, const node_uid_t& node2,
+    static inline void encode(const node_uid_t& node1,
+                              const node_uid_t& node2,
                               connection_keys_t& keys) {
         encode(node1, node2, keys[0]);
         encode(node2, node1, keys[1]);
     }
-    static inline void encode_reversed_connection(const char* data, size_t size,
+    static inline void encode_reversed_connection(const char* data,
+                                                  size_t size,
                                                   connection_key_t& key) {
         assert(size == std::tuple_size<connection_key_t>::value);
         key[0] = 'E';
