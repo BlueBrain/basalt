@@ -57,6 +57,13 @@ class network_impl_t {
                                 const std::vector<std::size_t>& sizes,
                                 bool commit);
 
+    status_t connections_insert(const node_uid_t& node,
+                                const node_t type,
+                                const gsl::span<const std::size_t>& nodes,
+                                bool create_nodes,
+                                bool commit);
+
+
     status_t connections_get(const node_uid_t& node, node_uids_t& connections) const;
 
     status_t connections_has(const node_uid_t& node1, const node_uid_t& node2, bool& res) const;
@@ -68,9 +75,10 @@ class network_impl_t {
     status_t connections_erase(const node_uid_t& node, node_t filter, size_t& removed, bool commit);
     status_t connections_erase(const node_uid_t& node, std::size_t& removed, bool commit);
     status_t commit();
+    std::string statistics() const;
 
     static status_t to_status(const rocksdb::Status& status);
-    static void setup_db(const std::string& path);
+    static void setup_db(const rocksdb::Options& options, const std::string& path);
 
   private:
     status_t connections_erase(rocksdb::WriteBatch& batch, const node_uid_t& node, size_t& removed);
@@ -78,6 +86,8 @@ class network_impl_t {
     const std::string& path_;
     nodes_t nodes_;
     connections_t connections_;
+    std::shared_ptr<rocksdb::Statistics> statistics_;
+    std::unique_ptr<rocksdb::Options> options_;
     logger_t logger_;
     db_t db_;
     column_families_t column_families;
