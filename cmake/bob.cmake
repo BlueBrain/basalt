@@ -57,8 +57,11 @@ macro(bob_begin_package)
   endif()
   option(USE_XSDK_DEFAULTS "enable the XDSK v0.3.0 default configuration" OFF)
   bob_cmake_arg(USE_XSDK_DEFAULTS BOOL OFF)
-  # try to force BUILD_TESTING to be OFF by default
-  set(BUILD_TESTING OFF CACHE BOOL "Build and run tests")
+  if(NOT MEMORYCHECK_COMMAND)
+    # try to force BUILD_TESTING to be OFF by default if memory check is not
+    # activated
+    set(BUILD_TESTING OFF CACHE BOOL "Build and run tests")
+  endif()
   include(CTest)
   enable_testing()
   option(BUILD_SHARED_LIBS "Build shared libraries" ON)
