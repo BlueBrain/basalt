@@ -52,18 +52,18 @@ synapse_t::synapse_t(uint32_t pre_gid,
                      bool is_excitatory,
                      const float_point_t& pre,
                      const float_point_t& post,
-                     const std::string& mesh_filename,
-                     const std::string& skeleton_filename,
+                     std::string mesh_filename,
+                     std::string skeleton_filename,
                      float psd_area)
     : pre_gid(pre_gid)
     , post_gid(post_gid)
     , nrn_idx(nrn_idx)
     , astro_idx(std::move(astro_idx))
     , is_excitatory(is_excitatory)
-    , pre(std::move(pre))
-    , post(std::move(post))
-    , mesh_filename(mesh_filename)
-    , skeleton_filename(skeleton_filename)
+    , pre(pre)
+    , post(post)
+    , mesh_filename(std::move(mesh_filename))
+    , skeleton_filename(std::move(skeleton_filename))
     , psd_area(psd_area) {}
 
 std::unique_ptr<synapse_t> synapse_t::create(uint32_t pre_gid,
@@ -105,18 +105,18 @@ astrocyte_t::astrocyte_t(uint32_t astrocyte_id,
                          uint32_t microdomain_id,
                          const float_point_t& soma_center,
                          float soma_radius,
-                         const std::string& name,
-                         const std::string& mtype,
-                         const std::string& morphology_filename,
+                         std::string name,
+                         std::string mtype,
+                         std::string morphology_filename,
                          int_vector_t& synapses_idx,
                          int_vector_t& neurons_idx)
     : astrocyte_id(astrocyte_id)
     , microdomain_id(microdomain_id)
     , soma_center(soma_center)
     , soma_radius(soma_radius)
-    , name(name)
-    , mtype(mtype)
-    , morphology_filename(morphology_filename)
+    , name(std::move(name))
+    , mtype(std::move(mtype))
+    , morphology_filename(std::move(morphology_filename))
     , synapses_idx(std::move(synapses_idx))
     , neurons_idx(std::move(neurons_idx)) {}
 
@@ -165,7 +165,7 @@ microdomain_t::microdomain_t(uint32_t microdomain_id,
                              const float_point_t& centroid,
                              double area,
                              double volume,
-                             const std::string& mesh_filename,
+                             std::string mesh_filename,
                              int_vector_t& neurons_idx,
                              int_vector_t& synapses_idx)
     : microdomain_id(microdomain_id)
@@ -176,7 +176,7 @@ microdomain_t::microdomain_t(uint32_t microdomain_id,
     , centroid(centroid)
     , area(area)
     , volume(volume)
-    , mesh_filename(mesh_filename)
+    , mesh_filename(std::move(mesh_filename))
     , neurons_idx(std::move(neurons_idx))
     , synapses_idx(std::move(synapses_idx)) {}
 

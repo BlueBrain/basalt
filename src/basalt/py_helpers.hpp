@@ -191,7 +191,7 @@ void deserialize_vector(std::istream& iss, std::vector<T>& data) {
 template <typename T>
 void fill_vector(pybind11::array_t<T>& array, std::vector<T>& vector) {
     auto buffer = array.request(false);
-    vector.reserve(buffer.size);
+    vector.reserve(static_cast<std::size_t>(buffer.size));
     auto ptr = reinterpret_cast<typename std::add_pointer<T>::type>(buffer.ptr);
     std::copy(ptr, ptr + buffer.size, std::back_inserter(vector));
 }

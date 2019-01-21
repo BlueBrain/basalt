@@ -26,6 +26,7 @@
 #pragma GCC diagnostic ignored "-Wold-style-cast"
 #pragma GCC diagnostic ignored "-Wzero-as-null-pointer-constant"
 #endif  // defined(__clang__)
+// NOLINTNEXTLINE(clang-diagnostic-ignored-optimization-argument)
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
 #include <pybind11/stl_bind.h>
@@ -40,20 +41,26 @@
 #include "network_impl.hpp"
 
 namespace py = pybind11;
-using namespace pybind11::literals;
+using pybind11::literals::operator""_a;
 
-static const auto basalt_version = []() -> std::string {
-    std::ostringstream oss;
-    oss << BASALT_MAJOR << '.' << BASALT_MINOR << '.' << BASALT_PATCH;
-    return oss.str();
-}();
+static const std::string& basalt_version() {
+    static const auto basalt_version = []() -> std::string {
+        std::ostringstream oss;
+        oss << BASALT_MAJOR << '.' << BASALT_MINOR << '.' << BASALT_PATCH;
+        return oss.str();
+    }();
+    return basalt_version;
+}
 
-static const auto rocksdb_version = []() -> std::string {
-    std::ostringstream oss;
-    const auto version = basalt::rocksdb_version();
-    oss << version[0] << '.' << version[1] << '.' << version[2];
-    return oss.str();
-};
+static const std::string& rocksdb_version() {
+    static const auto rocksdb_version = []() -> std::string {
+        std::ostringstream oss;
+        const auto version = basalt::rocksdb_version();
+        oss << version[0] << '.' << version[1] << '.' << version[2];
+        return oss.str();
+    }();
+    return rocksdb_version;
+}
 
 // See
 // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#making-opaque-types
@@ -64,11 +71,11 @@ PYBIND11_MAKE_OPAQUE(circuit::float_point_t);
 #if defined(__clang__)
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-prototypes"
-#endif  // defined(__clang__)
-PYBIND11_MODULE(_basalt, m) {
+#endif                         // defined(__clang__)
+PYBIND11_MODULE(_basalt, m) {  // NOLINT
     m.doc() = "Basic graph database backed by RocksDB key-value storage";
     m.attr("__rocksdb_version__") = rocksdb_version();
-    m.attr("__version__") = basalt_version;
+    m.attr("__version__") = basalt_version();
 
     // see
     // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#binding-stl-containers
@@ -95,9 +102,12 @@ PYBIND11_MODULE(_basalt, m) {
         .def("__iter__",
              [](const circuit::float_point_t& p) { return py::make_iterator(p.begin(), p.end()); },
              py::keep_alive<0, 1>())
-        .def("__getitem__", [](const circuit::float_point_t& p, int index) { return p[index]; })
-        .def("__setitem__", [](circuit::float_point_t& p, int index,
-                               circuit::float_point_t::value_type value) { p[index] = value; })
+        .def("__getitem__", [](const circuit::float_point_t& p,
+                               int index) { return p[static_cast<std::size_t>(index)]; })
+        .def("__setitem__",
+             [](circuit::float_point_t& p, int index, circuit::float_point_t::value_type value) {
+                 p[static_cast<std::size_t>(index)] = value;
+             })
 
         .def("__repr__",
              [](const circuit::float_point_t& p) {
@@ -251,7 +261,8 @@ PYBIND11_MODULE(_basalt, m) {
                  if (data.ndim() != 1) {
                      throw std::runtime_error("Number of dimensions must be one");
                  }
-                 const auto status = connections.insert(node1, node2, data.data(), data.size(),
+                 const auto status = connections.insert(node1, node2, data.data(),
+                                                        static_cast<std::size_t>(data.size()),
                                                         commit);
                  status.raise_on_error();
              },
@@ -331,7 +342,9 @@ PYBIND11_MODULE(_basalt, m) {
                      throw std::runtime_error("Number of dimensions must be one");
                  }
                  basalt::node_uid_t uid;
-                 const auto status = nodes.insert(type, id, data.data(), data.size(), uid, commit);
+                 const auto status = nodes.insert(type, id, data.data(),
+                                                  static_cast<std::size_t>(data.size()), uid,
+                                                  commit);
                  status.raise_on_error();
                  return uid;
              },

@@ -7,12 +7,9 @@
 
 namespace basalt {
 
-static const status_t ok_{status_t::ok_code, ""};
-static const status_t not_implemented_{status_t::not_implemented_code, "operation-not-implemented"};
-
-status_t::status_t(status_t::Code code_, const std::string& message_)
+status_t::status_t(status_t::Code code_, std::string message_)
     : code(code_)
-    , message(message_) {}
+    , message(std::move(message_)) {}
 
 const status_t& status_t::raise_on_error() const {
     if (code != 0) {
@@ -22,10 +19,13 @@ const status_t& status_t::raise_on_error() const {
 }
 
 const status_t& status_t::ok() {
+    static const status_t ok_{status_t::ok_code, ""};
     return ok_;
 }
 
 const status_t& status_t::error_not_implemented() {
+    static const status_t not_implemented_{status_t::not_implemented_code,
+                                           "operation-not-implemented"};
     return not_implemented_;
 }
 
