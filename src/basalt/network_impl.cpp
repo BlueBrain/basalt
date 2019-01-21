@@ -16,70 +16,90 @@ namespace basalt {
  * \name RocksDB write policies helper
  * \{
  */
-static const rocksdb::ReadOptions default_read_options;
-static const rocksdb::WriteOptions async_write;
-static const rocksdb::WriteOptions sync_write = []() {
-    rocksdb::WriteOptions eax;
-    eax.sync = true;
-    return eax;
-}();
 
-static inline const rocksdb::WriteOptions& write_options(bool commit) {
-    if (commit) {
-        return sync_write;
-    } else {
-        return async_write;
-    }
+inline static const rocksdb::ReadOptions& default_read_options() {
+    static const rocksdb::ReadOptions default_read_options;
+    return default_read_options;
 }
+
+inline static const rocksdb::WriteOptions& write_options(bool commit) {
+    if (commit) {
+        static const rocksdb::WriteOptions sync_write = []() {
+            rocksdb::WriteOptions eax;
+            eax.sync = true;
+            return eax;
+        }();
+        return sync_write;
+    }
+    static const rocksdb::WriteOptions async_write;
+    return async_write;
+}
+
 /**
  * \}
  */
 
-static const rocksdb::Options& db_options = []() {
-    rocksdb::Options options;
-    // FIXME set it on column family level
-    options.prefix_extractor.reset(
-        rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
-    options.create_if_missing = true;
-    return options;
-}();
+inline static const rocksdb::Options& db_options() {
+    static const rocksdb::Options& db_options = []() {
+        rocksdb::Options options;
+        // FIXME set it on column family level
+        options.prefix_extractor.reset(
+            rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
+        options.create_if_missing = true;
+        return options;
+    }();
+    return db_options;
+}
 
-static const auto nodes_cfo = []() {
-    rocksdb::ColumnFamilyOptions options;
-    // optimize node prefix enumeration to look for all nodes of a particular
-    // type
-    options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t)));
-    return options;
-}();
+inline static const rocksdb::ColumnFamilyOptions& nodes_cfo() {
+    static const rocksdb::ColumnFamilyOptions nodes_cfo = []() {
+        rocksdb::ColumnFamilyOptions options;
+        // optimize node prefix enumeration to look for all nodes of a particular
+        // type
+        options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t)));
+        return options;
+    }();
+    return nodes_cfo;
+}
 
-static const auto connections_cfo = []() {
-    rocksdb::ColumnFamilyOptions options;
-    // optimize node prefix enumeration to look for all edges of a particular
-    // node
-    options.prefix_extractor.reset(
-        rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
-    // Enable prefix bloom for mem tables
+inline static const rocksdb::ColumnFamilyOptions& connections_cfo() {
+    static const rocksdb::ColumnFamilyOptions connections_cfo = []() {
+        rocksdb::ColumnFamilyOptions options;
+        // optimize node prefix enumeration to look for all edges of a particular
+        // node
+        options.prefix_extractor.reset(
+            rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t) + sizeof(node_id_t)));
+        // Enable prefix bloom for mem tables
 #if ROCKSDB_MAJOR == 4
-    options.memtable_prefix_bloom_bits = 100000000;
-    options.memtable_prefix_bloom_probes = 6;
+        options.memtable_prefix_bloom_bits = 100000000;
+        options.memtable_prefix_bloom_probes = 6;
 #endif
 
-    // Enable prefix bloom for SST files
-    rocksdb::BlockBasedTableOptions table_options;
-    table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
-    options.table_factory.reset(NewBlockBasedTableFactory(table_options));
+        // Enable prefix bloom for SST files
+        rocksdb::BlockBasedTableOptions table_options;
+        table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
+        options.table_factory.reset(NewBlockBasedTableFactory(table_options));
 
-    return options;
-}();
+        return options;
+    }();
+    return connections_cfo;
+}
 
-static const std::string nodes_cfn = rocksdb::kDefaultColumnFamilyName;
-static const std::string connections_cfn = "connections";
+inline static const std::string& nodes_cfn() {
+    static const std::string nodes_cfn = rocksdb::kDefaultColumnFamilyName;
+    return nodes_cfn;
+}
+
+inline static const std::string& connections_cfn() {
+    static const std::string connections_cfn = "connections";
+    return connections_cfn;
+}
 
 void network_impl_t::setup_db(const std::string& path) {
     std::unique_ptr<rocksdb::DB> db_ptr;
     {  // open db
         rocksdb::DB* db;
-        rocksdb::Status status = rocksdb::DB::Open(db_options, path, &db);
+        rocksdb::Status status = rocksdb::DB::Open(db_options(), path, &db);
         db_ptr.reset(db);
         if (status.code() == rocksdb::Status::kInvalidArgument) {
             return;
@@ -88,19 +108,19 @@ void network_impl_t::setup_db(const std::string& path) {
     }
 
     std::vector<std::string> column_family_names;
-    rocksdb::DB::ListColumnFamilies(db_options, db_ptr->GetName(), &column_family_names);
-    if (std::find(column_family_names.begin(), column_family_names.end(), nodes_cfn) ==
+    rocksdb::DB::ListColumnFamilies(db_options(), db_ptr->GetName(), &column_family_names);
+    if (std::find(column_family_names.begin(), column_family_names.end(), nodes_cfn()) ==
         column_family_names.end()) {
         rocksdb::ColumnFamilyHandle* cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(nodes_cfo, nodes_cfn, &cf)).raise_on_error();
-        delete cf;
+        to_status(db_ptr->CreateColumnFamily(nodes_cfo(), nodes_cfn(), &cf)).raise_on_error();
+        std::unique_ptr<rocksdb::ColumnFamilyHandle> cf_owner(cf);
     }
-    if (std::find(column_family_names.begin(), column_family_names.end(), connections_cfn) ==
+    if (std::find(column_family_names.begin(), column_family_names.end(), connections_cfn()) ==
         column_family_names.end()) {
         rocksdb::ColumnFamilyHandle* cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(connections_cfo, connections_cfn, &cf))
+        to_status(db_ptr->CreateColumnFamily(connections_cfo(), connections_cfn(), &cf))
             .raise_on_error();
-        delete cf;
+        std::unique_ptr<rocksdb::ColumnFamilyHandle> cf_owner(cf);
     }
 }
 
@@ -113,11 +133,12 @@ network_impl_t::network_impl_t(const std::string& path)
     setup_db(path);
 
     std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
-    column_families.emplace_back(nodes_cfn, nodes_cfo);
-    column_families.emplace_back(connections_cfn, connections_cfo);
+    column_families.emplace_back(nodes_cfn(), nodes_cfo());
+    column_families.emplace_back(connections_cfn(), connections_cfo());
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     handles.reserve(2);
-    to_status(rocksdb::DB::Open(db_options, path, column_families, &handles, &db)).raise_on_error();
+    to_status(rocksdb::DB::Open(db_options(), path, column_families, &handles, &db))
+        .raise_on_error();
     nodes.reset(handles[0]);
     connections.reset(handles[1]);
 
@@ -176,13 +197,12 @@ status_t network_impl_t::nodes_has(const basalt::node_uid_t& node, bool& result)
     const rocksdb::Slice slice(key.data(), key.size());
 
     std::string value;
-    const auto& status = db_get()->Get(default_read_options, nodes.get(), slice, &value);
+    const auto& status = db_get()->Get(default_read_options(), nodes.get(), slice, &value);
     if (status.IsNotFound()) {
         result = false;
         return status_t::ok();
-    } else if (status.ok()) {
-        result = true;
     }
+    result = status.ok();
     return to_status(status);
 }
 
@@ -190,7 +210,7 @@ status_t network_impl_t::nodes_get(const basalt::node_uid_t& node, std::string* 
     logger_get()->debug("nodes_get(node={}", node);
     graph::node_key_t key;
     graph::encode(node, key);
-    const auto& status = db_get()->Get(default_read_options, nodes.get(),
+    const auto& status = db_get()->Get(default_read_options(), nodes.get(),
                                        rocksdb::Slice(key.data(), key.size()), value);
     if (status.IsNotFound()) {
         return status_t::error_missing_node(node);
@@ -227,7 +247,7 @@ status_t network_impl_t::connections_insert(const node_uid_t& node1,
                                             bool commit) {
     logger_get()->debug("connections_connect(node1={}, node2={}, commit={})", node1, node2, commit);
     {  // check presence of both nodes
-        bool node_present;
+        bool node_present = false;
         nodes_has(node1, node_present).raise_on_error();
         if (!node_present) {
             return status_t::error_missing_node(node1);
@@ -259,7 +279,7 @@ status_t network_impl_t::connections_insert(const node_uid_t& node,
                                             bool commit) {
     logger_get()->debug("connections_connect(node={}, nodes={}, commit={})", node, nodes, commit);
     {  // check presence of both nodes
-        bool node_present;
+        bool node_present = false;
         nodes_has(node, node_present).raise_on_error();
         if (!node_present) {
             return status_t::error_missing_node(node);
@@ -304,14 +324,13 @@ status_t network_impl_t::connections_has(const basalt::node_uid_t& node1,
     graph::connection_key_t key;
     graph::encode(node1, node2, key);
     std::string value;
-    const auto& status = db_get()->Get(default_read_options, connections.get(),
+    const auto& status = db_get()->Get(default_read_options(), connections.get(),
                                        rocksdb::Slice(key.data(), key.size()), &value);
     if (status.IsNotFound()) {
         res = false;
         return status_t::ok();
-    } else if (status.ok()) {
-        res = true;
     }
+    res = status.ok();
     return to_status(status);
 }
 
@@ -320,11 +339,11 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_uids_t& co
     graph::connection_key_prefix_t key;
     graph::encode_connection_prefix(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
-    auto iter = db_get()->NewIterator(default_read_options, this->connections.get());
+    auto iter = db_get()->NewIterator(default_read_options(), this->connections.get());
     iter->Seek(slice);
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
-        if (std::memcmp(key.data(), conn_key.data(), key.size())) {
+        if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
             /// FIXME TCL prefix enumeration does not work, more keys
             /// are being returned by iterator.
             /// workaround: this test filter keys that do not have proper prefix
@@ -347,14 +366,14 @@ status_t network_impl_t::connections_get(const node_uid_t& node,
     graph::connection_key_type_prefix_t key;
     graph::encode_connection_prefix(node, filter, key);
     const rocksdb::Slice slice(key.data(), key.size());
-    auto iter = db_get()->NewIterator(default_read_options, this->connections.get());
+    auto iter = db_get()->NewIterator(default_read_options(), this->connections.get());
     iter->Seek(slice);
     if (!iter->status().ok()) {
         return to_status(iter->status());
     }
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
-        if (std::memcmp(key.data(), conn_key.data(), key.size())) {
+        if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
             /// FIXME TCL prefix enumeration does not work, more keys
             /// are being returned by iterator.
             /// workaround: this test filter keys that do not have proper prefix
@@ -391,7 +410,7 @@ status_t network_impl_t::connections_erase(rocksdb::WriteBatch& batch,
     graph::encode_connection_prefix(node, key);
     const rocksdb::Slice slice(key.data(), key.size());
 
-    auto iter = db_get()->NewIterator(default_read_options, connections.get());
+    auto iter = db_get()->NewIterator(default_read_options(), connections.get());
     iter->Seek(slice);
 
     // iterate over all connections
@@ -400,7 +419,7 @@ status_t network_impl_t::connections_erase(rocksdb::WriteBatch& batch,
         // remove the key
         auto const& conn_slice = iter->key();
 
-        if (std::memcmp(key.data(), conn_slice.data(), key.size())) {
+        if (std::memcmp(key.data(), conn_slice.data(), key.size()) != 0) {
             /// FIXME TCL prefix enumeration does not work, more
             /// keys are being returned by iterator
             /// workaround: this test filter keys that do not have proper prefix
@@ -445,7 +464,7 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
     logger_get()->debug("connections_erase(node={}, filter={}, commit={})", node, filter, commit);
     graph::connection_key_type_prefix_t key;
     graph::encode_connection_prefix(node, filter, key);
-    auto iter = db_get()->NewIterator(default_read_options);
+    auto iter = db_get()->NewIterator(default_read_options());
     iter->Seek(rocksdb::Slice(key.data(), key.size()));
 
     // iterate over all connections
@@ -453,7 +472,7 @@ status_t network_impl_t::connections_erase(const node_uid_t& node,
     auto connections = 0ul;
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
-        if (std::memcmp(key.data(), conn_key.data(), key.size())) {
+        if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
             /// FIXME TCL prefix enumeration does not work, more
             /// keys are being returned by iterator
             /// workaround: this test filter keys that do not have proper prefix

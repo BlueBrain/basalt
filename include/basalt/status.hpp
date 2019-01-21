@@ -15,7 +15,7 @@ struct status_t {
         invalid_connection_code = -3
     };
 
-    status_t(Code code_, const std::string& message_);
+    status_t(Code code_, std::string message_);
     status_t() = delete;
 
     inline bool operator!() const noexcept { return code != 0; }

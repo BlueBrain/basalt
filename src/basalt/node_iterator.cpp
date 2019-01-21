@@ -25,7 +25,7 @@ node_iterator& node_iterator::operator++() {
     return *this;
 }
 
-node_iterator& node_iterator::operator++(int value) {
+node_iterator& node_iterator::operator++(int value) {  // NOLINT(cert-dcl21-cpp)
     while (value-- > 0) {
         this->operator++();
     }
@@ -36,20 +36,10 @@ bool node_iterator::operator==(const basalt::node_iterator& rhs) const {
     if (pimpl_) {
         if (rhs.pimpl_) {
             return *this->pimpl_ == *rhs.pimpl_;
-        } else {
-            if (pimpl_->end_reached()) {
-                return true;
-            } else {
-                return false;
-            }
         }
-    } else {
-        if (rhs.pimpl_) {
-            return false;
-        } else {
-            return true;
-        }
+        return pimpl_->end_reached();
     }
+    return !rhs.pimpl_;
 }
 
 bool node_iterator::operator!=(const basalt::node_iterator& rhs) const {
