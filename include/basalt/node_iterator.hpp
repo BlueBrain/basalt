@@ -14,7 +14,7 @@ class node_iterator: public std::iterator<std::input_iterator_tag, const node_ui
     node_iterator(const network_impl_t& pimpl, size_t from);
     node_iterator(const node_iterator& rhs);
     node_iterator& operator++();
-    node_iterator& operator++(int);
+    node_iterator& operator++(int);  // NOLINT(cert-dcl21-cpp)
     bool operator==(const node_iterator& rhs) const;
     bool operator!=(const node_iterator& rhs) const;
     const value_type& operator*();

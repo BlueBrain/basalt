@@ -1,4 +1,22 @@
-Checks: 'modernize-*,modernize-use-override,google-*,-google-runtime-references,misc-*,clang-analyzer-*'
+Checks: >
+  boost-*,
+  bugprone-*,
+  cert-*,
+  cppcoreguidelines-*,
+  cppcoreguidelines-*,
+  google-*,
+  hicpp-*,
+  llvm-*,
+  misc-*,
+  modernize-*,
+  mpi-*,
+  performance-*,
+  portability-*,
+  readability-*,
+  -modernize-make-unique,
+  -google-runtime-references,
+  -clang-diagnostic-ignored-optimization-argument
+
 WarningsAsErrors: ''
 HeaderFilterRegex: 'network.hh|network.hxx'
 AnalyzeTemporaryDtors: false

@@ -58,8 +58,8 @@ struct synapse_t {
               bool is_excitatory,
               const float_point_t& pre,
               const float_point_t& post,
-              const std::string& mesh_filename,
-              const std::string& skeleton_filename,
+              std::string mesh_filename,
+              std::string skeleton_filename,
               float psd_area);
 
     uint32_t pre_gid;
@@ -105,9 +105,9 @@ struct astrocyte_t {
                 uint32_t microdomain_id,
                 const float_point_t& soma_center,
                 float soma_radius,
-                const std::string& name,
-                const std::string& mtype,
-                const std::string& morphology_filename,
+                std::string name,
+                std::string mtype,
+                std::string morphology_filename,
                 int_vector_t& synapses_idx,
                 int_vector_t& neurons_idx);
 
@@ -160,7 +160,7 @@ struct microdomain_t {
                   const float_point_t& centroid,
                   double area,
                   double volume,
-                  const std::string& mesh_filename,
+                  std::string mesh_filename,
                   int_vector_t& neurons_idx,
                   int_vector_t& synapses_idx);
 
