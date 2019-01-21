@@ -80,9 +80,13 @@ set(spdlog_include_directory
 if(USE_CLANG_TIDY)
   cmake_minimum_required(VERSION 3.8)
   find_package(ClangTidy REQUIRED)
-  set(CLANG_TIDY_ARGS "-extra-arg=-Wno-unknown-warning-option"
+  set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+  set(CLANG_TIDY_ARGS -extra-arg=-Wno-unknown-warning-option
       CACHE STRING "clang-tidy command options")
-  set(CMAKE_CXX_CLANG_TIDY "${ClangTidy_EXECUTABLE}" ${CLANG_TIDY_ARGS})
+  set(CMAKE_CXX_CLANG_TIDY
+      "${ClangTidy_EXECUTABLE}"
+      -p "${CMAKE_BINARY_DIR}/compile_commands.json"
+      ${CLANG_TIDY_ARGS})
 endif()
 add_subdirectory(src)
 if(NOT Basalt_BUILD_PYTHON_PACKAGE)
