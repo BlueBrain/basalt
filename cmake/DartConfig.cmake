@@ -14,17 +14,13 @@ find_program(MEMORYCHECK_COMMAND valgrind
 
 set(
   MEMORYCHECK_COMMAND_OPTIONS
-  "--tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose"
+  "--tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose --gen-suppressions=all"
   CACHE STRING "Commands passed to valgrind")
 
-
-file(GLOB DartConfig_SUPP_FILES
-          ${CMAKE_CURRENT_SOURCE_DIR}/tests/ci/valgrind/*.supp)
-foreach(supp_file IN LISTS DartConfig_SUPP_FILES)
-  set(DartConfig_SUPP_LIST
-      "${DartConfig_SUPP_LIST} --suppressions=${supp_file}")
+# Look for suppressions files
+file(GLOB dartconfig_supp_files ${CMAKE_SOURCE_DIR}/tests/memorycheck/*.supp)
+foreach(supp_file IN LISTS dartconfig_supp_files)
+  set(MEMORYCHECK_COMMAND_OPTIONS
+      "${MEMORYCHECK_COMMAND_OPTIONS} --suppressions=${supp_file}")
 endforeach()
-set(MEMORYCHECK_COMMAND_OPTIONS
-    "${MEMORYCHECK_COMMAND_OPTIONS} ${DartConfig_SUPP_LIST}")
-unset(DartConfig_SUPP_FILES)
-unset(DartConfig_SUPP_LIST)
+unset(dartconfig_supp_files)

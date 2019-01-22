@@ -104,3 +104,5 @@ to format your CMake changes.
   [`flake8`](http://flake8.pycqa.org) and [`black`](https://github.com/ambv/black).
   Also install [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear)
   *flake8* plugin.
+* Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
+  with the *memcheck* CTest action: `ctest -VV --output-on-failure -T memcheck`
