@@ -86,7 +86,7 @@ script:
       -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
       -DCMAKE_CXX_STANDARD=$CPP \
   - make VERBOSE=1 -j2
-  - ctest -j2 --output-on-failure ${VALGRIND}
+  - ctest -VV -j2 --output-on-failure ${VALGRIND}
   - cd ${TRAVIS_BUILD_DIR}
   - python3 setup.py build test
 
