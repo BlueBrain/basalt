@@ -86,7 +86,8 @@ if(USE_CLANG_TIDY)
       CACHE STRING "clang-tidy command options")
   set(CMAKE_CXX_CLANG_TIDY
       "${ClangTidy_EXECUTABLE}"
-      -p "${CMAKE_BINARY_DIR}/compile_commands.json"
+      -p
+      "${CMAKE_BINARY_DIR}/compile_commands.json"
       ${CLANG_TIDY_ARGS})
 endif()
 add_subdirectory(src)
