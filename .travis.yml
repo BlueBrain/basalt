@@ -88,7 +88,12 @@ script:
   - make VERBOSE=1 -j2
   - ctest -VV -j2 --output-on-failure ${VALGRIND}
   - cd ${TRAVIS_BUILD_DIR}
-  - python3 setup.py build test
+  - python3 setup.py sdist
+  - cd dist
+  - tarball=`echo *.tar.gz`
+  - tar zxf ${tarball}
+  - cd ${tarball%.tar.gz}
+  - python setup.py test
 
 notifications:
   email: false
