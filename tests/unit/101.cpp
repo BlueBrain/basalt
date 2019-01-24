@@ -25,7 +25,6 @@ template <typename Payload>
 inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id, const Payload& payload) {
     node_uid_t nuid;
     const auto result = g.nodes().insert(type, id, payload, nuid);
-    // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.UndefReturn)
     REQUIRE(result);
     return nuid;
 }
@@ -41,13 +40,11 @@ inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id, const 
 inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id) {
     node_uid_t nuid;
     const auto result = g.nodes().insert(type, id, nuid);
-    // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.UndefReturn)
     REQUIRE(result);
     return nuid;
 }
 
 static void check_is_ok(const basalt::status_t& status) {
-    // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.UndefReturn)
     REQUIRE(status);
 }
 
@@ -103,7 +100,6 @@ TEST_CASE("one-node-db", "[graph]") {
     node_uid_t node;
     {
         network_t g(path);
-        // NOLINTNEXTLINE(clang-analyzer-core.uninitialized.UndefReturn)
         REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 0);
         {
             std::string data;
@@ -140,7 +136,6 @@ TEST_CASE("one-node-db", "[graph]") {
 
 TEST_CASE("create simple graph and check entities", "[graph]") {
     using basalt::network_t;
-    // using namespace bbp::in_silico;
     using bbp::in_silico::synapse_t;
 
     network_t g(new_db_path());

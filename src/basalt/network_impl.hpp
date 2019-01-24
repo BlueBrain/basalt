@@ -8,6 +8,7 @@
 
 #include "fwd.hpp"
 #include "graph.hpp"
+#include "gsl.hpp"
 #include "node_iterator_impl.hpp"
 
 namespace basalt {
