@@ -111,16 +111,16 @@ void network_impl_t::setup_db(const std::string& path) {
     rocksdb::DB::ListColumnFamilies(db_options(), db_ptr->GetName(), &column_family_names);
     if (std::find(column_family_names.begin(), column_family_names.end(), nodes_cfn()) ==
         column_family_names.end()) {
-        rocksdb::ColumnFamilyHandle* cf = nullptr;
+        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
         to_status(db_ptr->CreateColumnFamily(nodes_cfo(), nodes_cfn(), &cf)).raise_on_error();
-        std::unique_ptr<rocksdb::ColumnFamilyHandle> cf_owner(cf);
+        delete cf;
     }
     if (std::find(column_family_names.begin(), column_family_names.end(), connections_cfn()) ==
         column_family_names.end()) {
-        rocksdb::ColumnFamilyHandle* cf = nullptr;
+        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
         to_status(db_ptr->CreateColumnFamily(connections_cfo(), connections_cfn(), &cf))
             .raise_on_error();
-        std::unique_ptr<rocksdb::ColumnFamilyHandle> cf_owner(cf);
+        delete cf;
     }
 }
 
