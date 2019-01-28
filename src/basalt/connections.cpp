@@ -8,7 +8,7 @@ connections_t::connections_t(network_impl_t& pimpl)
     : pimpl_(pimpl) {}
 
 status_t connections_t::insert(const node_uid_t& node1, const node_uid_t& node2, bool commit) {
-    return pimpl_.connections_insert(node1, node2, "", 0, commit);
+    return pimpl_.connections_insert(node1, node2, {nullptr, 0}, commit);
 }
 
 status_t connections_t::insert(const node_uid_t& node1,
@@ -16,7 +16,7 @@ status_t connections_t::insert(const node_uid_t& node1,
                                const char* data,
                                std::size_t size,
                                bool commit) {
-    return pimpl_.connections_insert(node1, node2, data, size, commit);
+    return pimpl_.connections_insert(node1, node2, {data, size}, commit);
 }
 
 status_t connections_t::insert(const node_uid_t& node,

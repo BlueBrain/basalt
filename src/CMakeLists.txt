@@ -24,8 +24,10 @@ set(basalt_HEADERS
 configure_file(basalt/version.hpp.in basalt/version.hpp @ONLY)
 configure_file(basalt/settings.hpp.in basalt/settings.hpp @ONLY)
 
-include_directories(SYSTEM ${cereal_include_directory}
-                    ${spdlog_include_directory})
+include_directories(SYSTEM
+                    ${cereal_include_directory}
+                    ${spdlog_include_directory}
+                    ${gsl_include_directory})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt
                     ${CMAKE_CURRENT_BINARY_DIR})
 

@@ -2,6 +2,7 @@
 
 #include "network_impl.hpp"
 
+#include <gsl-lite/gsl-lite.hpp>
 #include <rocksdb/db.h>
 #include <rocksdb/filter_policy.h>
 #include <rocksdb/slice_transform.h>
@@ -175,19 +176,18 @@ status_t network_impl_t::nodes_insert(basalt::node_t type,
 
 status_t network_impl_t::nodes_insert(basalt::node_t type,
                                       basalt::node_id_t id,
-                                      const char* data,
-                                      std::size_t size,
+                                      const gsl::span<const char>& payload,
                                       basalt::node_uid_t& node,
                                       bool commit) {
-    logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={}", type, id, size,
-                        commit);
+    logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={}", type, id,
+                        payload.size(), commit);
     graph::node_key_t key;
     node.first = type;
     node.second = id;
     graph::encode(node, key);
     return to_status(db_get()->Put(write_options(commit), nodes.get(),
                                    rocksdb::Slice(key.data(), key.size()),
-                                   rocksdb::Slice(data, size)));
+                                   rocksdb::Slice(payload.data(), payload.size())));
 }
 
 status_t network_impl_t::nodes_has(const basalt::node_uid_t& node, bool& result) const {
@@ -242,8 +242,7 @@ std::shared_ptr<node_iterator_impl> network_impl_t::node_iterator(std::size_t fr
 
 status_t network_impl_t::connections_insert(const node_uid_t& node1,
                                             const node_uid_t& node2,
-                                            const char* data,
-                                            std::size_t size,
+                                            const gsl::span<const char>& payload,
                                             bool commit) {
     logger_get()->debug("connections_connect(node1={}, node2={}, commit={})", node1, node2, commit);
     {  // check presence of both nodes
@@ -263,7 +262,7 @@ status_t network_impl_t::connections_insert(const node_uid_t& node1,
 
     graph::connection_keys_t keys;
     graph::encode(node1, node2, keys);
-    const rocksdb::Slice data_slice(data, size);
+    const rocksdb::Slice data_slice(payload.data(), payload.size());
     rocksdb::WriteBatch batch;
 
     for (const auto& key: keys) {
