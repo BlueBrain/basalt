@@ -73,6 +73,8 @@ set(catch2_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
 set(cereal_include_directory
     ${PROJECT_SOURCE_DIR}/src/third_party/cereal/include)
+set(gsl_include_directory
+    ${PROJECT_SOURCE_DIR}/src/third_party/gsl-lite/include)
 set(pybind11_project_directory ${PROJECT_SOURCE_DIR}/src/third_party/pybind11)
 set(pybind11_include_directory ${pybind11_project_directory}/include)
 set(spdlog_include_directory

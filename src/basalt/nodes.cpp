@@ -16,7 +16,7 @@ status_t nodes_t::insert(basalt::node_t type,
                          std::size_t size,
                          basalt::node_uid_t& node,
                          bool commit) {
-    return pimpl_.nodes_insert(type, id, data, size, node, commit);
+    return pimpl_.nodes_insert(type, id, {data, size}, node, commit);
 }
 
 status_t nodes_t::insert(basalt::node_t type,
