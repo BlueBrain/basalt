@@ -277,7 +277,9 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
                  if (nodes.ndim() != 1) {
                      throw std::runtime_error("Number of dimensions of array 'nodes' must be one");
                  }
-                 connections.insert(node, type, nodes.data(), nodes.size(), create_nodes, commit)
+                 connections
+                     .insert(node, type, nodes.data(), static_cast<std::size_t>(nodes.size()),
+                             create_nodes, commit)
                      .raise_on_error();
              },
              "Create an edge between a node and a list of other nodes", "node"_a, "type"_a,
