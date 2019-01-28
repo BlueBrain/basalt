@@ -1,6 +1,8 @@
 #ifndef BASALT_NETWORK_PIMPL_HPP
 #define BASALT_NETWORK_PIMPL_HPP
 
+#include <gsl-lite/gsl-lite.hpp>
+
 #include <basalt/connections.hpp>
 #include <basalt/network.hpp>
 #include <basalt/nodes.hpp>
@@ -8,7 +10,6 @@
 
 #include "fwd.hpp"
 #include "graph.hpp"
-#include "gsl.hpp"
 #include "node_iterator_impl.hpp"
 
 namespace basalt {
@@ -32,11 +33,10 @@ class network_impl_t {
     inline const db_t& db_get() const noexcept { return this->db_; }
     inline db_t& db_get() noexcept { return this->db_; }
 
-    status_t nodes_insert(node_t type,
-                          node_id_t id,
-                          const char* data,
-                          std::size_t size,
-                          node_uid_t& node,
+    status_t nodes_insert(basalt::node_t type,
+                          basalt::node_id_t id,
+                          const gsl::span<const char>& payload,
+                          basalt::node_uid_t& node,
                           bool commit);
 
     status_t nodes_insert(node_t type, node_id_t id, node_uid_t& node, bool commit);
@@ -48,8 +48,7 @@ class network_impl_t {
 
     status_t connections_insert(const node_uid_t& node1,
                                 const node_uid_t& node2,
-                                const char* data,
-                                std::size_t size,
+                                const gsl::span<const char>& payload,
                                 bool commit);
 
     status_t connections_insert(const node_uid_t& node,
