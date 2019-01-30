@@ -22,16 +22,32 @@ class network_impl_t {
 
     explicit network_impl_t(const std::string& path);
 
-    inline const logger_t& logger_get() const noexcept { return this->logger_; }
+    inline const logger_t& logger_get() const noexcept {
+        return this->logger_;
+    }
 
-    inline const std::string& path_get() const noexcept { return this->path_; }
-    inline const connections_t& connections_get() const noexcept { return this->connections_; }
-    inline connections_t& connections_get() noexcept { return this->connections_; }
-    inline const nodes_t& nodes_get() const noexcept { return this->nodes_; }
-    inline nodes_t& nodes_get() noexcept { return this->nodes_; }
+    inline const std::string& path_get() const noexcept {
+        return this->path_;
+    }
+    inline const connections_t& connections_get() const noexcept {
+        return this->connections_;
+    }
+    inline connections_t& connections_get() noexcept {
+        return this->connections_;
+    }
+    inline const nodes_t& nodes_get() const noexcept {
+        return this->nodes_;
+    }
+    inline nodes_t& nodes_get() noexcept {
+        return this->nodes_;
+    }
 
-    inline const db_t& db_get() const noexcept { return this->db_; }
-    inline db_t& db_get() noexcept { return this->db_; }
+    inline const db_t& db_get() const noexcept {
+        return this->db_;
+    }
+    inline db_t& db_get() noexcept {
+        return this->db_;
+    }
 
     status_t nodes_insert(basalt::node_t type,
                           basalt::node_id_t id,

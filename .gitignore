@@ -56,7 +56,7 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+*build*/
 develop-eggs/
 dist/
 downloads/
@@ -161,3 +161,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# HPC coding conventions
+.clang-format
+
+# Pre-commit settings
+.pre-commit-config.yaml

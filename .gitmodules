@@ -10,3 +10,6 @@
 [submodule "src/third_party/cereal"]
 	path = src/third_party/cereal
 	url = https://github.com/USCiLab/cereal.git
+[submodule "cmake/hpc-coding-conventions"]
+	path = cmake/hpc-coding-conventions
+	url = https://github.com/BlueBrain/hpc-coding-conventions.git
