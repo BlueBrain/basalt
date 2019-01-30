@@ -147,7 +147,7 @@ network_impl_t::network_impl_t(const std::string& path)
     connections.reset(handles[1]);
 
     db_.reset(db);
-    mkdir(std::string(path + "/logs").c_str(), 0777);
+    mkdir((path + "/logs").c_str(), 0777);
     const std::string logger_name = "basalt[" + path + "]";
     logger_ = spdlog::get(logger_name);
     if (!logger_) {
