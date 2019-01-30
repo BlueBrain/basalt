@@ -32,7 +32,9 @@ struct membuf: std::streambuf {
         auto ptr = reinterpret_cast<char*>(request.ptr);
         this->setg(ptr, ptr, ptr + request.size);
     }
-    membuf(char* base, size_t size) { this->setg(base, base, base + size); }
+    membuf(char* base, size_t size) {
+        this->setg(base, base, base + size);
+    }
 };
 
 struct imemstream: virtual membuf, std::istream {

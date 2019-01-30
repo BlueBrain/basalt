@@ -18,8 +18,12 @@ struct status_t {
     status_t(Code code_, std::string message_);
     status_t() = delete;
 
-    inline bool operator!() const noexcept { return code != 0; }
-    inline explicit operator bool() const noexcept { return code == 0; }
+    inline bool operator!() const noexcept {
+        return code != 0;
+    }
+    inline explicit operator bool() const noexcept {
+        return code == 0;
+    }
     const status_t& raise_on_error() const;
 
     static const status_t& error_not_implemented();
