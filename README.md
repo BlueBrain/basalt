@@ -1,4 +1,4 @@
- Basalt - C++11 Graph Storage library
+# Basalt - C++11 Graph Storage library
 
 Basic graph database backed by RocksDB key-value storage [![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
 
@@ -19,6 +19,7 @@ Python API documentation in available in basalt
 * [CMake](https://cmake.org) build system, version 3.5.1 or higher.
 * [RocksDB](https://rocksdb.org/), a persistent key-value store,
   version version 4.1.1 or higher.
+* [Python 3](https://python.org/)
 
 ## Getting the code
 
@@ -46,7 +47,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
 make all install
 ```
 
-## Python bindings
+## Python 3 bindings
 
 To build and run tests
 
