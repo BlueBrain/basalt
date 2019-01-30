@@ -61,7 +61,7 @@ inline static const rocksdb::ColumnFamilyOptions& nodes_cfo() {
         // optimize node prefix enumeration to look for all nodes of a particular
         // type
         options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(node_t)));
-        options.write_buffer_size = 128u << 20u;     // 128MB
+        options.write_buffer_size = 128u << 20u;      // 128MB
         options.target_file_size_base = 128u << 20u;  // 128MB
         options.max_bytes_for_level_base = options.target_file_size_base * 10;
         return options;
@@ -80,7 +80,7 @@ inline static const rocksdb::ColumnFamilyOptions& connections_cfo() {
         rocksdb::BlockBasedTableOptions table_options{};
         table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
         options.table_factory.reset(NewBlockBasedTableFactory(table_options));
-        options.write_buffer_size = 128u << 20u;       // 128MB
+        options.write_buffer_size = 128u << 20u;      // 128MB
         options.target_file_size_base = 128u << 20u;  // 128MB
         options.max_bytes_for_level_base = options.target_file_size_base * 10;
         return options;
