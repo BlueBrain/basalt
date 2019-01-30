@@ -163,7 +163,7 @@ void fill_vector(pybind11::buffer& buffer, std::vector<std::array<T, N>>& vector
     if (info.ndim != 2) {
         throw std::runtime_error("Incompatible buffer dimension");
     }
-    if (info.shape[1] != N) {
+    if (info.shape[1] != static_cast<ssize_t>(N)) {
         std::ostringstream oss;
         oss << "Invalid dimension 1 size. Expected " << N << " but got " << info.shape[1];
         throw std::runtime_error(oss.str());
