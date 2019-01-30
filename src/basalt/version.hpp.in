@@ -11,6 +11,6 @@ namespace basalt {
 
 std::array<int, 3> rocksdb_version();
 
-} // namespace basalt
+}  // namespace basalt
 
-#endif //BASALT_VERSION_HPP
+#endif  // BASALT_VERSION_HPP

@@ -12,7 +12,7 @@ in a production environment.
 Python API documentation in available in basalt
 [wiki](https://github.com/tristan0x/basalt/wiki/Python-API).
 
-# Build and installation instruction
+# Build and installation instructions
 
 ## Requirements
 
@@ -94,16 +94,19 @@ Contributions are welcome, via GitHub pull-requests and bug tracker.
 
 ## pull-requests
 
+Enable CMake environment variables `Basalt_FORMATTING`
+and `Basalt_PRECOMMIT` to ensure that your change complies
+with the coding conventions of this project.
+
+`cmake -DBasalt_FORMATTING:BOOL=ON -DBasalt_PRECOMMIT:BOOL=ON <path>`
+
 Please make sure to execute `dev/check.sh` before submitting a patch in order to:
-* format C++ code with
-  [`clang-format`](https://clang.llvm.org/docs/ClangFormat.html)
 * run static analysis of C++ code with
   [`clang-tidy`](http://clang.llvm.org/extra/clang-tidy/)
-* format CMake files with [cmake-format](https://github.com/cheshirekow/cmake_format)
-to format your CMake changes.
 * run Python static analysis and code formatting with
   [`flake8`](http://flake8.pycqa.org) and [`black`](https://github.com/ambv/black).
   Also install [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear)
   *flake8* plugin.
-* Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
-  with the *memcheck* CTest action: `ctest -VV --output-on-failure -T memcheck`
+
+Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
+with the *memcheck* CTest action: `ctest -VV --output-on-failure -T memcheck`

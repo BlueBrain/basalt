@@ -17,7 +17,9 @@ class node_iterator_impl {
                                 const std::string& prefix,
                                 std::size_t position);
 
-    inline std::size_t position_get() const { return position_; }
+    inline std::size_t position_get() const {
+        return position_;
+    }
 
     node_iterator_impl& operator++();
     bool operator==(const node_iterator_impl& rhs) const;
