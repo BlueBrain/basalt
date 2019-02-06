@@ -35,7 +35,7 @@ status_t nodes_t::get(const node_uid_t& uid, T& payload) const {
     auto const& status = get(uid, &data);
     if (status) {
         std::istringstream istr;
-        istr.rdbuf()->pubsetbuf(const_cast<char*>(data.c_str()), data.size());
+        istr.rdbuf()->pubsetbuf(const_cast<char*>(data.c_str()), static_cast<long>(data.size()));
         payload.deserialize(istr);
     }
     return status;

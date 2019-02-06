@@ -199,9 +199,6 @@ function(bob_begin_cxx_flags)
     if(${PROJECT_NAME}_CXX_SYMBOLS)
       set(FLAGS "${FLAGS} -g")
     endif()
-    # remove warnings for spdlog ...
-    set(FLAGS "${FLAGS} -Wno-format-nonliteral")
-    set(FLAGS "${FLAGS} -Wno-sign-conversion")
     set(FLAGS "${FLAGS} -Wno-shadow")
     # -----------
     if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
