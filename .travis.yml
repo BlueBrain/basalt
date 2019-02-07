@@ -36,6 +36,16 @@ addons: &clang7
       - ubuntu-toolchain-r-test
       - llvm-toolchain-xenial-7
 
+addons: &clang8
+  apt:
+    packages:
+      - clang-8
+      - librocksdb-dev
+      - python3-setuptools
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-xenial-8
+
 matrix:
   allow_failures:
     - os: osx
@@ -52,11 +62,17 @@ matrix:
       dist: xenial
       addons: *clang6
 
-      # Test clang-7.0: C++11
+      # Test clang-7: C++11
     - env: CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       dist: xenial
       addons: *clang7
+
+      # Test clang-8: C++11
+    - env: CLANG_VERSION=8 CXX_OPTIMIZE=OFF CPP=11
+      os: linux
+      dist: xenial
+      addons: *clang8
 
       # osx
     - env: CXX_OPTIMIZE=OFF CPP=11
