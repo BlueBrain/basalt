@@ -91,7 +91,7 @@ static std::string new_db_path() {
     char db_path[] = "/tmp/basalt-ut-XXXXXX";
     if (mkdtemp(static_cast<char*>(db_path)) == nullptr) {
         throw std::runtime_error(strerror(errno));
-    };
+    }
     return static_cast<char*>(db_path);
 }
 
