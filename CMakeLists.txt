@@ -59,7 +59,6 @@ bob_get_commit()
 bob_get_semver()
 
 find_package(RocksDB 4.1.0 REQUIRED)
-include_directories(${RocksDB_INCLUDE_DIR})
 
 find_package(GoogleBenchmark)
 if(GoogleBenchmark_FOUND)
