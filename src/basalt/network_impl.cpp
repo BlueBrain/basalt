@@ -397,7 +397,7 @@ status_t network_impl_t::connections_get(const node_uid_t& node, node_uids_t& co
             /// are being returned by iterator.
             /// workaround: this test filter keys that do not have proper prefix
             iter->Next();
-            continue;
+            break;
         }
         node_uid_t dest;
         graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);
@@ -427,7 +427,7 @@ status_t network_impl_t::connections_get(const node_uid_t& node,
             /// are being returned by iterator.
             /// workaround: this test filter keys that do not have proper prefix
             iter->Next();
-            continue;
+            break;
         }
         node_uid_t dest;
         graph::decode_connection_dest(conn_key.data(), conn_key.size(), dest);

@@ -1,0 +1,22 @@
+➜  build git:(benchmarks) ✗ ./tests/benchmarks/gbench_basalt
+2019-02-07 16:52:14
+Running ./tests/benchmarks/gbench_basalt
+Run on (8 X 4200 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x4)
+  L1 Instruction 32K (x4)
+  L2 Unified 256K (x4)
+  L3 Unified 8192K (x1)
+Load Average: 0.38, 0.67, 0.65
+***WARNING*** CPU scaling is enabled, the benchmark real time measurements may be noisy and will incur extra overhead.
+--------------------------------------------------------------
+Benchmark                    Time             CPU   Iterations
+--------------------------------------------------------------
+Read_Astr_Neur/1        118901 ns       118898 ns         5922
+Read_Astr_Neur/10       956781 ns       956768 ns          735
+Read_Astr_Neur/100     9498990 ns      9498753 ns           71
+Read_Astr_Neur/1000  146651684 ns    146648974 ns            5
+Read_Astr_Syn/1        2432523 ns      2432504 ns          288
+Read_Astr_Syn/10      17956787 ns     17956527 ns           39
+Read_Astr_Syn/100    186585353 ns    186582542 ns            4
+Read_Astr_Syn/1000  2142434880 ns   2142374625 ns            1

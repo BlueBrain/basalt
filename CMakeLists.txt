@@ -66,6 +66,9 @@ if(GoogleBenchmark_FOUND)
   include_directories(${GoogleBenchmark_INCLUDE_DIR})
 endif()
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
 include_directories(${basalt_include_directory})
 
@@ -95,6 +98,7 @@ endif()
 add_subdirectory(src)
 if(NOT Basalt_BUILD_PYTHON_PACKAGE)
   add_subdirectory(tests/unit)
+  add_subdirectory(tests/benchmarks)
 endif()
 
 bob_end_package()
