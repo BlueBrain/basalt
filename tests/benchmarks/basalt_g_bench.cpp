@@ -153,7 +153,16 @@ static void Read_Astr_Neur(benchmark::State& state) {
     using bbp::in_silico::synapse_t;
 
     // absolute path of basalt-db
-    std::string db_path = "/home/magkanar/basalt_benchmarking/basalt/build/tests/benchmarks/basalt-db_";
+    std::string db_path = "/nvme/";
+    
+    std::string user_path = getenv("USER");
+    db_path.append(user_path);
+    db_path.append("/");
+    
+    std::string job_id_path = getenv("SLURM_JOB_ID");
+    db_path.append(job_id_path);
+
+    db_path.append("/basalt-db_");
 
     // appending the number of max astrocytes read from the .h5 file
     db_path.append(std::to_string(state.range(0)));
@@ -188,7 +197,16 @@ static void Read_Astr_Syn(benchmark::State& state) {
     using bbp::in_silico::synapse_t;
 
     // absolute path of basalt-db
-    std::string db_path = "/home/magkanar/basalt_benchmarking/basalt/build/tests/benchmarks/basalt-db_";
+    std::string db_path = "/nvme/";
+
+    std::string user_path = getenv("USER");
+    db_path.append(user_path);
+    db_path.append("/");
+
+    std::string job_id_path = getenv("SLURM_JOB_ID");
+    db_path.append(job_id_path);
+
+    db_path.append("/basalt-db_");
 
     // appending the number of max astrocytes read from the .h5 file
     db_path.append(std::to_string(state.range(0)));
