@@ -1,8 +1,8 @@
 from enum import Enum
 
-from _basalt import *  # noqa
-from _basalt import Neuron, Synapse, Astrocyte, MicroDomain
-from _basalt import __version__, __rocksdb_version__  # noqa
+from ._basalt import *  # noqa
+from ._basalt import Neuron, Synapse, Astrocyte, MicroDomain
+from ._basalt import __version__, __rocksdb_version__  # noqa
 
 
 class NodeType(Enum):
