@@ -1,0 +1,20 @@
+bash-4.2$ ./gbench_basalt
+2019-02-12 10:31:26
+Running ./gbench_basalt
+Run on (72 X 3700 MHz CPU s)
+CPU Caches:
+  L1 Data 32K (x36)
+  L1 Instruction 32K (x36)
+  L2 Unified 1024K (x36)
+  L3 Unified 25344K (x2)
+-----------------------------------------------------------
+Benchmark                    Time           CPU Iterations
+-----------------------------------------------------------
+Read_Astr_Neur/1        300094 ns     300096 ns       2338
+Read_Astr_Neur/10      2462622 ns    2462635 ns        284
+Read_Astr_Neur/100    24952641 ns   24952771 ns         25
+Read_Astr_Neur/1000  311837675 ns  311839408 ns          2
+Read_Astr_Syn/1        6614447 ns    6614486 ns        105
+Read_Astr_Syn/10      41758779 ns   41749590 ns         17
+Read_Astr_Syn/100    393816170 ns  393818388 ns          2
+Read_Astr_Syn/1000  4250947925 ns 4250973126 ns          1
