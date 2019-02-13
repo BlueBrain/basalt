@@ -1,0 +1,14 @@
+bash-4.2$ ./gbench_basalt --benchmark_min_time=4
+Run on (72 X 3700 MHz CPU s)
+2019-02-13 19:13:00
+-----------------------------------------------------------
+Benchmark                    Time           CPU Iterations
+-----------------------------------------------------------
+Read_Astr_Neur/1        166349 ns     166350 ns      34024
+Read_Astr_Neur/10      1334671 ns    1334645 ns       4254
+Read_Astr_Neur/100    13311813 ns   13311542 ns        415
+Read_Astr_Neur/1000  180432204 ns  180429574 ns         31
+Read_Astr_Syn/1        3532390 ns    3532411 ns       1590
+Read_Astr_Syn/10      24408523 ns   24408219 ns        229
+Read_Astr_Syn/100    232176620 ns  232176104 ns         24
+Read_Astr_Syn/1000  2492266683 ns 2492268327 ns          2
