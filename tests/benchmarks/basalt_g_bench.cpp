@@ -183,7 +183,8 @@ static void Read_Astr_Neur(benchmark::State& state) {
     }
 
     // measured and reported code
-    for (auto _ : state){
+    //for (auto _ : state){	// for google benchmark version >=1.3.0
+    while (state.KeepRunning()){
         for (const auto& astrocyte: astrocytes_set) {
             node_uids_t nodes;
             // reading all neurons that are connected with "astrocyte"
@@ -227,7 +228,8 @@ static void Read_Astr_Syn(benchmark::State& state) {
     }
 
     // measured and reported code
-    for (auto _ : state){
+    //for (auto _ : state){	// for google benchmark version >=1.3.0
+    while (state.KeepRunning()){
         for (const auto& astrocyte: astrocytes_set) {
             node_uids_t nodes;
             // reading all synapses that are connected with "astrocyte"
