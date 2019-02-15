@@ -3,10 +3,11 @@
 This report contains the results of some basalt library benchmarks between a workstation and bb5 nodes using the gpfs and nvme local storage. More precisely, the test measured the time needed for importing a neuroglial connectivity network from an **2GB H5** file to a **basalt database** and the time needed to read all the synapses and neurons from the astrocytes of the imported network. 
 
 The workstation consists of:
-| Component|Model                                      |
-|----------|-------------------------------------------|
-|CPU       |Core i7 7700  @4.2GHz                      |
-|Storage   |SanDisk SSD X400 2.5 7MM 512GB (X4152012)  |
+
+| Component | Model                                      |
+|-----------|--------------------------------------------|
+| CPU       | Core i7 7700  @4.2GHz                      |
+| Storage   | SanDisk SSD X400 2.5 7MM 512GB (X4152012)  |
 
 ## Importing Network 
 The benchmarking of the network was done for four different astrocyte populations. From the same h5 file containing the full network there were loaded 1, 10, 100 and 1000 astrocytes each time and the reading benchmarks were run based on each of these distinct basalt databases.
