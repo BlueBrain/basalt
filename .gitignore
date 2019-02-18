@@ -164,6 +164,8 @@ dmypy.json
 
 # HPC coding conventions
 .clang-format
+.clang-tidy
+.cmake-format.yaml
 
 # Pre-commit settings
 .pre-commit-config.yaml
