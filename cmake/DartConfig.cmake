@@ -9,8 +9,7 @@
 # * ``MEMORYCHECK_COMMAND`` Location of memory checking utility
 # * ``MEMORYCHECK_COMMAND_OPTIONS`` Variable used to pass commands to valgrind
 
-find_program(MEMORYCHECK_COMMAND valgrind
-             DOC "Memory checking utility (valgrind by default)")
+find_program(MEMORYCHECK_COMMAND valgrind DOC "Memory checking utility (valgrind by default)")
 
 set(
   MEMORYCHECK_COMMAND_OPTIONS
@@ -20,7 +19,6 @@ set(
 # Look for suppressions files
 file(GLOB dartconfig_supp_files ${CMAKE_SOURCE_DIR}/tests/memorycheck/*.supp)
 foreach(supp_file IN LISTS dartconfig_supp_files)
-  set(MEMORYCHECK_COMMAND_OPTIONS
-      "${MEMORYCHECK_COMMAND_OPTIONS} --suppressions=${supp_file}")
+  set(MEMORYCHECK_COMMAND_OPTIONS "${MEMORYCHECK_COMMAND_OPTIONS} --suppressions=${supp_file}")
 endforeach()
 unset(dartconfig_supp_files)

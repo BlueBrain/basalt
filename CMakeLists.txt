@@ -16,8 +16,7 @@ bob_input(Basalt_SERIALIZATION
           CEREAL
           STRING
           "Serialization method: ${Basalt_SERIALIZATION_METHODS}")
-set_property(CACHE Basalt_SERIALIZATION
-             PROPERTY STRINGS "${Basalt_SERIALIZATION_METHODS}")
+set_property(CACHE Basalt_SERIALIZATION PROPERTY STRINGS "${Basalt_SERIALIZATION_METHODS}")
 list(FIND Basalt_SERIALIZATION_METHODS ${Basalt_SERIALIZATION} index)
 if(index EQUAL -1)
   message(
@@ -44,17 +43,10 @@ bob_begin_cxx_flags()
 bob_cxx11_flags()
 bob_end_cxx_flags()
 
-set(Basalt_KEY_INTS
-    Basalt_VERSION_MAJOR
-    Basalt_VERSION_MINOR
-    Basalt_VERSION_PATCH)
+set(Basalt_KEY_INTS Basalt_VERSION_MAJOR Basalt_VERSION_MINOR Basalt_VERSION_PATCH)
 
 set(Basalt_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
-set(Basalt_KEY_STRINGS
-    Basalt_SEMVER
-    Basalt_COMMIT
-    Basalt_CXX_FLAGS
-    Basalt_CMAKE_ARGS)
+set(Basalt_KEY_STRINGS Basalt_SEMVER Basalt_COMMIT Basalt_CXX_FLAGS Basalt_CMAKE_ARGS)
 
 bob_get_commit()
 bob_get_semver()
@@ -69,16 +61,12 @@ endif()
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
 include_directories(${basalt_include_directory})
 
-set(catch2_include_directory
-    ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
-set(cereal_include_directory
-    ${PROJECT_SOURCE_DIR}/src/third_party/cereal/include)
-set(gsl_include_directory
-    ${PROJECT_SOURCE_DIR}/src/third_party/gsl-lite/include)
+set(catch2_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/catch2/include)
+set(cereal_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/cereal/include)
+set(gsl_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/gsl-lite/include)
 set(pybind11_project_directory ${PROJECT_SOURCE_DIR}/src/third_party/pybind11)
 set(pybind11_include_directory ${pybind11_project_directory}/include)
-set(spdlog_include_directory
-    ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
+set(spdlog_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
 
 if(USE_CLANG_TIDY)
   cmake_minimum_required(VERSION 3.8)

@@ -31,8 +31,7 @@ include_directories(SYSTEM
                     ${RocksDB_INCLUDE_DIR}
                     ${spdlog_include_directory})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt
-                    ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt ${CMAKE_CURRENT_BINARY_DIR})
 
 add_library(basalt_obj OBJECT ${basalt_SOURCES} ${basalt_HEADERS})
 set_property(TARGET basalt_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
@@ -52,8 +51,5 @@ set(PYBIND11_SOURCES
     basalt/py_helpers.hpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 add_subdirectory(${pybind11_project_directory})
-pybind11_add_module(_basalt
-                    SHARED
-                    ${PYBIND11_SOURCES}
-                    $<TARGET_OBJECTS:basalt_obj>)
+pybind11_add_module(_basalt SHARED ${PYBIND11_SOURCES} $<TARGET_OBJECTS:basalt_obj>)
 target_link_libraries(_basalt PRIVATE ${RocksDB_LIBRARIES})
