@@ -43,10 +43,8 @@ if(RocksDB_INCLUDE_DIR AND EXISTS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h)
                  RocksDB_VERSION_PATCH
                  "${rocksdb_version_str}")
 
-  set(
-    ROCKSDB_VERSION_STRING
-    "${RocksDB_VERSION_MAJOR}.${RocksDB_VERSION_MINOR}.${RocksDB_VERSION_PATCH}"
-    )
+  set(ROCKSDB_VERSION_STRING
+      "${RocksDB_VERSION_MAJOR}.${RocksDB_VERSION_MINOR}.${RocksDB_VERSION_PATCH}")
   unset(rocksdb_version_str)
 endif()
 
