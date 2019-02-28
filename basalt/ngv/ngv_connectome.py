@@ -228,10 +228,6 @@ class NeuroglialConnectivity(H5ContextManager):
     def n_neurons(self):
         return len(self.neuron._offsets) - 1
 
-    @property
-    def n_synapses(self):
-        raise NotImplementedError
-
 
 class NGVConnectome(object):
     def __init__(self, ngv_config):

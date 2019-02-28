@@ -312,13 +312,13 @@ status_t network_impl_t::connections_insert(const node_uid_t& node,
         const auto target = make_id(type, nodes[i]);
         if (create_nodes) {
             graph::encode(target, node_key);
+            const rocksdb::Slice payload{node_payloads[i], node_payloads_sizes[i]};
             batch.Put(this->nodes.get(), rocksdb::Slice(node_key.data(), node_key.size()),
-                      rocksdb::Slice());
+                      payload);
         }
         graph::encode(node, target, keys[i]);
-        const rocksdb::Slice payload{node_payloads[i], node_payloads_sizes[i]};
         for (const auto& key: keys[i]) {
-            batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()), payload);
+            batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()), rocksdb::Slice());
         }
     }
     return to_status(db_get()->Write(write_options(commit), &batch));

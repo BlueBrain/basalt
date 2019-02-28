@@ -26,7 +26,7 @@ def main(argv=None):
     if args.get('ngv'):
         if args.get('neuroglial'):
             if args.get('import'):
-                summary = ngv.import_neuroglial_connectivity(
+                summary = ngv.import_neuroglial(
                     args['<h5-file>'],
                     args['<basalt-path>'],
                     max_astrocytes=int(args.get('--max-astrocytes')),
@@ -36,7 +36,7 @@ def main(argv=None):
                 sys.stdout.write("\n")
         elif args.get('synaptic'):
             if args.get('import'):
-                summary = ngv.import_synaptic_connectivity(
+                summary = ngv.import_synaptic(
                     args['<h5-file>'],
                     args['<basalt-path>'],
                     max_neurons=int(args.get('--max-neurons')),
