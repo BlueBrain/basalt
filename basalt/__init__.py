@@ -5,6 +5,20 @@ from ._basalt import Neuron, Synapse, Astrocyte, MicroDomain
 from ._basalt import __version__, __rocksdb_version__  # noqa
 
 
+__all__ = [
+    "Network",
+    "NodeType",
+    "PayloadHelper",
+    "Nodes",
+    "Connections",
+    "Status",
+    "Neuron",
+    "Synapse",
+    "Astrocyte",
+    "MicroDomain",
+]
+
+
 class NodeType(Enum):
     NEURON = 1
     SYNAPSE = 2

@@ -13,6 +13,10 @@ help:
 
 .PHONY: help Makefile
 
+clean:
+	$(RM) -f doxyoutput/ cpp_api/
+	@$(SPHINXBUILD) -M clean "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
