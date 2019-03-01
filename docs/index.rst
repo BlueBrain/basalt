@@ -11,6 +11,7 @@ Welcome to Basalt's documentation!
    :caption: Contents:
 
    modules.rst
+   cpp_api/library_root
 
 Indices and tables
 ==================
