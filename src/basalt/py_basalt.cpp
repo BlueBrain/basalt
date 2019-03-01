@@ -54,9 +54,9 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     // see
     // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#binding-stl-containers
-    py::bind_vector<circuit::point_vector_t>(m, "FloatPointVector", py::buffer_protocol());
+    py::bind_vector<circuit::point_vector_t>(m, "FloatPointVector", py::module_local());
 
-    py::bind_vector<circuit::int_vector_t>(m, "IntegerPointVector", py::buffer_protocol());
+    py::bind_vector<circuit::int_vector_t>(m, "IntegerPointVector", py::module_local());
 
     py::class_<circuit::float_point_t>(m, "Point")
         .def(py::init<>())
