@@ -90,6 +90,305 @@ basalt-cli –version</dd>
 <div class="section" id="module-basalt">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-basalt" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
+<dt id="basalt.Status">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">Status</code><a class="headerlink" href="#basalt.Status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.Status.code">
+<code class="descname">code</code><a class="headerlink" href="#basalt.Status.code" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Status.message">
+<code class="descname">message</code><a class="headerlink" href="#basalt.Status.message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Status.raise_on_error">
+<code class="descname">raise_on_error</code><span class="sig-paren">(</span><em>self: basalt._basalt.Status</em><span class="sig-paren">)</span> &#x2192; basalt._basalt.Status<a class="headerlink" href="#basalt.Status.raise_on_error" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.Network">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">Network</code><a class="headerlink" href="#basalt.Network" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="method">
+<dt id="basalt.Network.commit">
+<code class="descname">commit</code><span class="sig-paren">(</span><em>self: basalt._basalt.Network</em><span class="sig-paren">)</span> &#x2192; basalt._basalt.Status<a class="headerlink" href="#basalt.Network.commit" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Network.connections">
+<code class="descname">connections</code><a class="headerlink" href="#basalt.Network.connections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Network.nodes">
+<code class="descname">nodes</code><a class="headerlink" href="#basalt.Network.nodes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Network.statistics">
+<code class="descname">statistics</code><span class="sig-paren">(</span><em>self: basalt._basalt.Network</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#basalt.Network.statistics" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.Nodes">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">Nodes</code><a class="headerlink" href="#basalt.Nodes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="method">
+<dt id="basalt.Nodes.erase">
+<code class="descname">erase</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.Nodes.erase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>erase(self: basalt._basalt.Nodes, node: Tuple[int, int], commit: bool=False) -&gt; basalt._basalt.Status</li>
+</ol>
+<p>Remove a node from the graph</p>
+<ol class="arabic simple" start="2">
+<li>erase(self: basalt._basalt.Nodes, type: int, id: int, commit: bool=False) -&gt; basalt._basalt.Status</li>
+</ol>
+<p>Remove a node from the graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.Nodes.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>self: basalt._basalt.Nodes, node: Tuple[int, int]</em><span class="sig-paren">)</span> &#x2192; object<a class="headerlink" href="#basalt.Nodes.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a node from the graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.Nodes.has">
+<code class="descname">has</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.Nodes.has" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>has(self: basalt._basalt.Nodes, type: int, id: int) -&gt; bool</li>
+</ol>
+<p>Check presence of a node in the graph</p>
+<ol class="arabic simple" start="2">
+<li>has(self: basalt._basalt.Nodes, node: Tuple[int, int]) -&gt; bool</li>
+</ol>
+<p>Check presence of a node in the graph</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.Nodes.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.Nodes.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overloaded function.</p>
+<ol class="arabic simple">
+<li>insert(self: basalt._basalt.Nodes, type: int, id: int, commit: bool=False) -&gt; Tuple[int, int]</li>
+</ol>
+<p>insert a node in the graph</p>
+<ol class="arabic simple" start="2">
+<li>insert(self: basalt._basalt.Nodes, node: int, id: int, data: numpy.ndarray[int8], commit: bool=False) -&gt; Tuple[int, int]</li>
+</ol>
+<p>insert a node in the graph</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.Synapse">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">Synapse</code><a class="headerlink" href="#basalt.Synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.Synapse.astro_idx">
+<code class="descname">astro_idx</code><a class="headerlink" href="#basalt.Synapse.astro_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Synapse.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.Synapse, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.Synapse.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.is_excitatory">
+<code class="descname">is_excitatory</code><a class="headerlink" href="#basalt.Synapse.is_excitatory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.mesh_filename">
+<code class="descname">mesh_filename</code><a class="headerlink" href="#basalt.Synapse.mesh_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.nrn_idx">
+<code class="descname">nrn_idx</code><a class="headerlink" href="#basalt.Synapse.nrn_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.post">
+<code class="descname">post</code><a class="headerlink" href="#basalt.Synapse.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.post_gid">
+<code class="descname">post_gid</code><a class="headerlink" href="#basalt.Synapse.post_gid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.pre">
+<code class="descname">pre</code><a class="headerlink" href="#basalt.Synapse.pre" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.pre_gid">
+<code class="descname">pre_gid</code><a class="headerlink" href="#basalt.Synapse.pre_gid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.psd_area">
+<code class="descname">psd_area</code><a class="headerlink" href="#basalt.Synapse.psd_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Synapse.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.Synapse</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.Synapse.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Synapse.skeleton_filename">
+<code class="descname">skeleton_filename</code><a class="headerlink" href="#basalt.Synapse.skeleton_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.Astrocyte">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">Astrocyte</code><a class="headerlink" href="#basalt.Astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.Astrocyte.astrocyte_id">
+<code class="descname">astrocyte_id</code><a class="headerlink" href="#basalt.Astrocyte.astrocyte_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Astrocyte.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.Astrocyte, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.Astrocyte.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.microdomain_id">
+<code class="descname">microdomain_id</code><a class="headerlink" href="#basalt.Astrocyte.microdomain_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.morphology_filename">
+<code class="descname">morphology_filename</code><a class="headerlink" href="#basalt.Astrocyte.morphology_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.mtype">
+<code class="descname">mtype</code><a class="headerlink" href="#basalt.Astrocyte.mtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.name">
+<code class="descname">name</code><a class="headerlink" href="#basalt.Astrocyte.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.neurons_idx">
+<code class="descname">neurons_idx</code><a class="headerlink" href="#basalt.Astrocyte.neurons_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.Astrocyte.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.Astrocyte</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.Astrocyte.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.soma_center">
+<code class="descname">soma_center</code><a class="headerlink" href="#basalt.Astrocyte.soma_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.soma_radius">
+<code class="descname">soma_radius</code><a class="headerlink" href="#basalt.Astrocyte.soma_radius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.Astrocyte.synapses_idx">
+<code class="descname">synapses_idx</code><a class="headerlink" href="#basalt.Astrocyte.synapses_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.MicroDomain">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">MicroDomain</code><a class="headerlink" href="#basalt.MicroDomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.MicroDomain.area">
+<code class="descname">area</code><a class="headerlink" href="#basalt.MicroDomain.area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.astrocyte_id">
+<code class="descname">astrocyte_id</code><a class="headerlink" href="#basalt.MicroDomain.astrocyte_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.centroid">
+<code class="descname">centroid</code><a class="headerlink" href="#basalt.MicroDomain.centroid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.MicroDomain.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.MicroDomain, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.MicroDomain.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.mesh_filename">
+<code class="descname">mesh_filename</code><a class="headerlink" href="#basalt.MicroDomain.mesh_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.microdomain_id">
+<code class="descname">microdomain_id</code><a class="headerlink" href="#basalt.MicroDomain.microdomain_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.neighbors">
+<code class="descname">neighbors</code><a class="headerlink" href="#basalt.MicroDomain.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.neurons_idx">
+<code class="descname">neurons_idx</code><a class="headerlink" href="#basalt.MicroDomain.neurons_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.MicroDomain.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.MicroDomain</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.MicroDomain.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.synapses_idx">
+<code class="descname">synapses_idx</code><a class="headerlink" href="#basalt.MicroDomain.synapses_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.triangles">
+<code class="descname">triangles</code><a class="headerlink" href="#basalt.MicroDomain.triangles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.vertex_coordinates">
+<code class="descname">vertex_coordinates</code><a class="headerlink" href="#basalt.MicroDomain.vertex_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.MicroDomain.volume">
+<code class="descname">volume</code><a class="headerlink" href="#basalt.MicroDomain.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
 <dt id="basalt.NodeType">
 <em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">NodeType</code><a class="reference internal" href="_modules/basalt.html#NodeType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.NodeType" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
