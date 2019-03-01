@@ -79,6 +79,13 @@ class network_impl_t {
                                 bool create_nodes,
                                 bool commit);
 
+    status_t connections_insert(const node_uid_t& node,
+                                const node_t type,
+                                const gsl::span<const std::size_t>& nodes,
+                                const gsl::span<const char* const> node_payloads,
+                                const gsl::span<const std::size_t>& node_payloads_sizes,
+                                bool create_nodes,
+                                bool commit);
 
     status_t connections_get(const node_uid_t& node, node_uids_t& connections) const;
 

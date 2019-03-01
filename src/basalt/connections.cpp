@@ -30,10 +30,22 @@ status_t connections_t::insert(const node_uid_t& node,
 status_t connections_t::insert(const node_uid_t& node,
                                node_t type,
                                const std::size_t* nodes,
-                               size_t count,
+                               size_t num_nodes,
                                bool create_nodes,
                                bool commit) {
-    return pimpl_.connections_insert(node, type, {nodes, count}, create_nodes, commit);
+    return pimpl_.connections_insert(node, type, {nodes, num_nodes}, create_nodes, commit);
+};
+
+status_t connections_t::insert(const node_uid_t& node,
+                               node_t type,
+                               const std::size_t* nodes,
+                               const char* const* node_payloads,
+                               const std::size_t* node_payloads_sizes,
+                               size_t num_nodes,
+                               bool create_nodes,
+                               bool commit) {
+    return pimpl_.connections_insert(node, type, {nodes, num_nodes}, {node_payloads, num_nodes},
+                                     {node_payloads_sizes, num_nodes}, create_nodes, commit);
 };
 
 status_t connections_t::has(const node_uid_t& node1, const node_uid_t& node2, bool& res) const {

@@ -277,6 +277,57 @@ status_t network_impl_t::connections_insert(const node_uid_t& node1,
 status_t network_impl_t::connections_insert(const node_uid_t& node,
                                             const node_t type,
                                             const gsl::span<const std::size_t>& nodes,
+                                            const gsl::span<const char* const> node_payloads,
+                                            const gsl::span<const std::size_t>& node_payloads_sizes,
+                                            bool create_nodes,
+                                            bool commit) {
+    logger_get()->debug(
+        "connections_insert(node={}, type={}, count={}, create_nodes={}, commit={})", node, type,
+        nodes.size(), create_nodes, commit);
+    if (nodes.empty()) {
+        return status_t::ok();
+    }
+    rocksdb::WriteBatch batch;
+    if (!create_nodes) {
+        bool node_present;
+        nodes_has(node, node_present).raise_on_error();
+        if (!node_present) {
+            return status_t::error_missing_node(node);
+        }
+        for (auto to_node_id: nodes) {
+            const auto to_node = make_id(type, to_node_id);
+            nodes_has(to_node, node_present).raise_on_error();
+            if (!node_present) {
+                return status_t::error_missing_node(to_node);
+            }
+        }
+    } else {
+        graph::node_key_t key;
+        graph::encode(node, key);
+        batch.Put(this->nodes.get(), rocksdb::Slice(key.data(), key.size()), rocksdb::Slice());
+    }
+    std::vector<graph::connection_keys_t> keys(nodes.size());
+    graph::node_key_t node_key;
+    for (auto i = 0u; i < keys.size(); ++i) {
+        const auto target = make_id(type, nodes[i]);
+        if (create_nodes) {
+            graph::encode(target, node_key);
+            const rocksdb::Slice payload{node_payloads[i], node_payloads_sizes[i]};
+            batch.Put(this->nodes.get(), rocksdb::Slice(node_key.data(), node_key.size()),
+                      payload);
+        }
+        graph::encode(node, target, keys[i]);
+        for (const auto& key: keys[i]) {
+            batch.Put(connections.get(), rocksdb::Slice(key.data(), key.size()), rocksdb::Slice());
+        }
+    }
+    return to_status(db_get()->Write(write_options(commit), &batch));
+}
+
+
+status_t network_impl_t::connections_insert(const node_uid_t& node,
+                                            const node_t type,
+                                            const gsl::span<const std::size_t>& nodes,
                                             bool create_nodes,
                                             bool commit) {
     logger_get()->debug(

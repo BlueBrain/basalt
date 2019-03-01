@@ -260,6 +260,34 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
              "Create an edge between a node and a list of other nodes", "node"_a, "type"_a,
              "nodes"_a, "commit"_a = false, "create_nodes"_a = false)
 
+        .def("insert",
+             [](basalt::connections_t& connections, const basalt::node_uid_t& node,
+                const basalt::node_t type, py::array_t<uint64_t> nodes, py::list node_payloads,
+                bool commit, bool create_nodes) {
+                 if (nodes.ndim() != 1) {
+                     throw std::runtime_error("Number of dimensions of array 'nodes' must be one");
+                 }
+                 if (static_cast<std::size_t>(nodes.size()) != node_payloads.size()) {
+                     throw std::runtime_error("Number of nodes and node_payloads differ");
+                 }
+                 std::vector<const char*> node_payloads_data;
+                 node_payloads_data.reserve(node_payloads.size());
+                 std::vector<std::size_t> node_payloads_sizes;
+                 node_payloads_sizes.reserve(node_payloads.size());
+                 for (py::handle handle: node_payloads) {
+                     py::array_t<char> node_payload = py::cast<py::array_t<char>>(handle);
+                     node_payloads_data.push_back(node_payload.data());
+                     node_payloads_sizes.push_back(static_cast<std::size_t>(node_payload.size()));
+                 }
+                 connections
+                     .insert(node, type, nodes.data(), node_payloads_data.data(),
+                             node_payloads_sizes.data(), static_cast<std::size_t>(nodes.size()),
+                             create_nodes, commit)
+                     .raise_on_error();
+             },
+             "Create an edge between a node and a list of other nodes", "node"_a, "type"_a,
+             "nodes"_a, "node_payloads"_a, "commit"_a = false, "create_nodes"_a = false)
+
         .def("has",
              [](const basalt::connections_t& connections, const basalt::node_uid_t& node1,
                 const basalt::node_uid_t& node2) {

@@ -61,7 +61,7 @@ class connections_t {
      * \param node source node
      * \param type target nodes type
      * \param nodes target nodes identifiers
-     * \param count number of target nodes
+     * \param num_nodes number of target nodes
      * \param create_nodes whether nodes should be created as well
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
@@ -69,7 +69,28 @@ class connections_t {
     status_t insert(const node_uid_t& node,
                     node_t type,
                     const std::size_t* nodes,
-                    size_t count,
+                    size_t num_nodes,
+                    bool create_nodes = false,
+                    bool commit = false) __attribute__((warn_unused_result));
+
+    /**
+     * \brief Connect a node to several nodes of the same type
+     * \param node source node
+     * \param type target nodes type
+     * \param nodes target nodes identifiers
+     * \param node_payloads payload of every target node
+     * \param node_payloads_sizes payload size of every target node
+     * \param num_nodes number of target nodes
+     * \param create_nodes whether nodes should be created as well
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    status_t insert(const node_uid_t& node,
+                    node_t type,
+                    const std::size_t* nodes,
+                    const char* const* node_payloads,
+                    const std::size_t* node_payloads_sizes,
+                    size_t num_nodes,
                     bool create_nodes = false,
                     bool commit = false) __attribute__((warn_unused_result));
 
