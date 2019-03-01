@@ -75,6 +75,9 @@ class CMakeBuild(build_ext):
         )
 
 
+needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
+maybe_sphinx = ["sphinx==1.8.4", "exhale"] if needs_sphinx else []
+
 setup(
     name='basalt',
     version='0.1.0',
@@ -112,6 +115,7 @@ setup(
         'numpy>=1.13',
         'progress>=1.4',
     ],
+    setup_requires=maybe_sphinx,
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main
