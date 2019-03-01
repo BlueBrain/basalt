@@ -24,8 +24,23 @@ class TestImporter(unittest.TestCase):
         finally:
             shutil.rmtree(path)
 
-    def test_import_connectivity(self):
+    def test_import_neuroglial(self):
         with self.tempdir() as path:
             file = self.h5_file("neuroglial_connectivity")
-            stats = basalt.ngv.import_connectivity(file, path, create_nodes=True)
-            self.assertEqual(stats["h5_dataset"], {"astrocytes": 4, "neurons": 20})
+            stats = basalt.ngv.import_neuroglial(file, path, create_nodes=True)
+            self.assertEqual(stats["dataset"], {"astrocytes": 4, "neurons": 20})
+
+    def test_import_synaptic(self):
+        with self.tempdir() as path:
+            file = self.h5_file("synaptic_connectivity")
+            stats = basalt.ngv.import_synaptic(file, path, create_nodes=True)
+            self.assertEqual(stats["dataset"], {"synapses": 40, "neurons": 20})
+
+    def test_import_gliovascular(self):
+        with self.tempdir() as path:
+            connectivity = self.h5_file("gliovascular_connectivity")
+            data = self.h5_file("gliovascular_data")
+            stats = basalt.ngv.import_gliovascular(
+                connectivity, data, path, create_nodes=True
+            )
+            self.assertEqual(stats["dataset"], {"astrocytes": 4, "endfeet": 8})
