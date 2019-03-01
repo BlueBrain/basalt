@@ -1,0 +1,51 @@
+
+.. _program_listing_file_include_basalt_nodes.hxx:
+
+Program Listing for File nodes.hxx
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_nodes.hxx>` (``include/basalt/nodes.hxx``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BASALT_NETWORK_HXX
+   #define BASALT_NETWORK_HXX
+   
+   #include <sstream>
+   
+   #include <basalt/network.hpp>
+   #include <basalt/status.hpp>
+   
+   namespace basalt {
+   
+   template <typename Payload>
+   status_t nodes_t::insert(node_t type,
+                            node_id_t id,
+                            const Payload& data,
+                            node_uid_t& res,
+                            bool commit) {
+       std::ostringstream oss;
+       data.serialize(oss);
+       // \fixme TCL get buffer beginning and length from ostringstream
+       // to avoid extra std::string copy.
+       const std::string raw(oss.str());
+       return insert(type, id, raw.c_str(), raw.size(), res, commit);
+   }
+   
+   template <typename T>
+   status_t nodes_t::get(const node_uid_t& uid, T& payload) const {
+       std::string data;
+       auto const& status = get(uid, &data);
+       if (status) {
+           std::istringstream istr;
+           istr.rdbuf()->pubsetbuf(const_cast<char*>(data.c_str()), static_cast<long>(data.size()));
+           payload.deserialize(istr);
+       }
+       return status;
+   }
+   
+   }  // namespace basalt
+   
+   #endif  // !BASALT_NETWORK_HXX

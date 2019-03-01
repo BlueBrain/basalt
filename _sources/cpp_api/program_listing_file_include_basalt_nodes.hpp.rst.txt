@@ -1,0 +1,65 @@
+
+.. _program_listing_file_include_basalt_nodes.hpp:
+
+Program Listing for File nodes.hpp
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_nodes.hpp>` (``include/basalt/nodes.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BASALT_NODES_HPP
+   #define BASALT_NODES_HPP
+   
+   #include <basalt/fwd.hpp>
+   #include <basalt/network.hpp>
+   #include <basalt/status.hpp>
+   
+   namespace basalt {
+   
+   class nodes_t {
+     public:
+       explicit nodes_t(network_impl_t& pimpl);
+       node_iterator begin(std::size_t pos = 0) const;
+   
+       node_iterator end() const;
+   
+       status_t count(std::size_t& count) const __attribute__((warn_unused_result));
+   
+       status_t insert(node_t type, node_id_t id, node_uid_t& node, bool commit = false)
+           __attribute__((warn_unused_result));
+   
+       template <typename Payload>
+       status_t insert(node_t type,
+                       node_id_t id,
+                       const Payload& data,
+                       node_uid_t& node,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       status_t insert(node_t type,
+                       node_id_t id,
+                       const char* data,
+                       std::size_t size,
+                       node_uid_t& node,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       template <typename T>
+       status_t get(const node_uid_t& node, T& payload) const __attribute__((warn_unused_result));
+   
+       status_t get(const node_uid_t& node, std::string* value) const
+           __attribute__((warn_unused_result));
+   
+       status_t has(const node_uid_t& node, bool& result) const __attribute__((warn_unused_result));
+   
+       status_t erase(const node_uid_t& node, bool commit = false) __attribute__((warn_unused_result));
+   
+     private:
+       network_impl_t& pimpl_;
+   };
+   }  // namespace basalt
+   
+   #include <basalt/nodes.hxx>
+   
+   #endif  // BASALT_NODES_HPP

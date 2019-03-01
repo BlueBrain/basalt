@@ -1,0 +1,59 @@
+
+.. _file_include_basalt_connections.hpp:
+
+File connections.hpp
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir_include_basalt>` (``include/basalt``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/basalt/connections.hpp``)
+-----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_basalt_connections.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``basalt/fwd.hpp`` (:ref:`file_include_basalt_fwd.hpp`)
+
+- ``basalt/status.hpp`` (:ref:`file_include_basalt_status.hpp`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_basalt_basalt.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_basalt`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classbasalt_1_1connections__t`
+

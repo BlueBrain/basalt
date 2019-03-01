@@ -1,0 +1,13 @@
+.. _exhale_typedef_fwd_8hpp_1a84e74366ed13c96a526b2f03d565a44b:
+
+Typedef basalt::node_t
+======================
+
+- Defined in :ref:`file_include_basalt_fwd.hpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: basalt::node_t

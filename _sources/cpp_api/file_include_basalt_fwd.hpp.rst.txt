@@ -1,0 +1,75 @@
+
+.. _file_include_basalt_fwd.hpp:
+
+File fwd.hpp
+============
+
+|exhale_lsh| :ref:`Parent directory <dir_include_basalt>` (``include/basalt``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/basalt/fwd.hpp``)
+---------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_basalt_fwd.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cstddef``
+
+- ``utility``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_basalt_connections.hpp`
+
+- :ref:`file_include_basalt_network.hpp`
+
+- :ref:`file_include_basalt_node_iterator.hpp`
+
+- :ref:`file_include_basalt_nodes.hpp`
+
+- :ref:`file_include_basalt_status.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_basalt`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_fwd_8hpp_1aab110e42d1d9fcf4b7fff804f71ed7f5`
+
+- :ref:`exhale_typedef_fwd_8hpp_1a84e74366ed13c96a526b2f03d565a44b`
+
+- :ref:`exhale_typedef_fwd_8hpp_1ad4220e0e0bf81fcbd6becf930aaca2ce`
+
+- :ref:`exhale_typedef_fwd_8hpp_1a33518693ab1d12ea0d2b7604e87d1fe2`
+

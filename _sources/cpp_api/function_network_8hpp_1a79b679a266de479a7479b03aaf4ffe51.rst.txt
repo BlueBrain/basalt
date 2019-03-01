@@ -1,0 +1,13 @@
+.. _exhale_function_network_8hpp_1a79b679a266de479a7479b03aaf4ffe51:
+
+Function basalt::make_id
+========================
+
+- Defined in :ref:`file_include_basalt_network.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: basalt::make_id(node_t, node_id_t)

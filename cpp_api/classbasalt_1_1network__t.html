@@ -1,0 +1,196 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Class network_t &#8212; Basalt 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class node_iterator" href="classbasalt_1_1node__iterator.html" />
+    <link rel="prev" title="Class connections_t" href="classbasalt_1_1connections__t.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="class-network-t">
+<span id="exhale-class-classbasalt-1-1network-t"></span><h1>Class network_t<a class="headerlink" href="#class-network-t" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Defined in <a class="reference internal" href="file_include_basalt_network.hpp.html#file-include-basalt-network-hpp"><span class="std std-ref">File network.hpp</span></a></li>
+</ul>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6basalt9network_tE">
+<span id="_CPPv3N6basalt9network_tE"></span><span id="_CPPv2N6basalt9network_tE"></span><span id="basalt::network_t"></span><span class="target" id="classbasalt_1_1network__t"></span><em class="property">class </em><code class="descname">network_t</code><a class="headerlink" href="#_CPPv4N6basalt9network_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Undirected Connectivity Graph. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">connections accessor</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt9network_t11connectionsEv">
+<span id="_CPPv3N6basalt9network_t11connectionsEv"></span><span id="_CPPv2N6basalt9network_t11connectionsEv"></span><span id="basalt::network_t::connections"></span><span class="target" id="classbasalt_1_1network__t_1a41f4ceaca24de2d391f85d849a4323dd"></span><a class="reference internal" href="classbasalt_1_1connections__t.html#_CPPv4N6basalt13connections_tE" title="basalt::connections_t">connections_t</a> &amp;<code class="descname">connections</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt9network_t11connectionsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv4N6basalt9network_t21node_const_iterator_tE">
+<span id="_CPPv3N6basalt9network_t21node_const_iterator_tE"></span><span id="_CPPv2N6basalt9network_t21node_const_iterator_tE"></span><span class="target" id="classbasalt_1_1network__t_1ae71fe2a0f004028d1a62d9d73842bca3"></span><em class="property">using </em><code class="descname">node_const_iterator_t</code> = std::iterator&lt;std::input_iterator_tag, <em class="property">const</em> node_t&gt;<a class="headerlink" href="#_CPPv4N6basalt9network_t21node_const_iterator_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt9network_t9network_tERKNSt6stringE">
+<span id="_CPPv3N6basalt9network_t9network_tERKNSt6stringE"></span><span id="_CPPv2N6basalt9network_t9network_tERKNSt6stringE"></span><span id="basalt::network_t::network_t__ssCR"></span><span class="target" id="classbasalt_1_1network__t_1acf242d503f7ff86e57153899a0bfd091"></span><code class="descname">network_t</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt9network_t9network_tERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>load graph if present on disk, initialize it otherwise </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">path</span></code>: graph location on filesystem </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt9network_tD0Ev">
+<span id="_CPPv3N6basalt9network_tD0Ev"></span><span id="_CPPv2N6basalt9network_tD0Ev"></span><span id="basalt::network_t::~network_t"></span><span class="target" id="classbasalt_1_1network__t_1a5c57772da72def5645c27dbe4a2ad2b8"></span><code class="descname">~network_t</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt9network_tD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt9network_t5nodesEv">
+<span id="_CPPv3N6basalt9network_t5nodesEv"></span><span id="_CPPv2N6basalt9network_t5nodesEv"></span><span id="basalt::network_t::nodes"></span><span class="target" id="classbasalt_1_1network__t_1a7915a22082b55826135b84225ee707ea"></span><a class="reference internal" href="classbasalt_1_1nodes__t.html#_CPPv4N6basalt7nodes_tE" title="basalt::nodes_t">nodes_t</a> &amp;<code class="descname">nodes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt9network_t5nodesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>nodes accessor </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt9network_t6commitEv">
+<span id="_CPPv3N6basalt9network_t6commitEv"></span><span id="_CPPv2N6basalt9network_t6commitEv"></span><span id="basalt::network_t::commit"></span><span class="target" id="classbasalt_1_1network__t_1a0fd3834cdba2f245e11e570324bf8352"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">commit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt9network_t6commitEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Process uncommitted operations. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt9network_t10statisticsEv">
+<span id="_CPPv3NK6basalt9network_t10statisticsEv"></span><span id="_CPPv2NK6basalt9network_t10statisticsEv"></span><span id="basalt::network_t::statisticsC"></span><span class="target" id="classbasalt_1_1network__t_1a8b2e7ddb8745baab268b702cd71c58d8"></span>std::string <code class="descname">statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt9network_t10statisticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Provides human readable string of all database counters. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Basalt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ API</a><ul>
+      <li>Previous: <a href="classbasalt_1_1connections__t.html" title="previous chapter">Class connections_t</a></li>
+      <li>Next: <a href="classbasalt_1_1node__iterator.html" title="next chapter">Class node_iterator</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, BlueBrain HPC Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp_api/classbasalt_1_1network__t.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

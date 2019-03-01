@@ -1,0 +1,361 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Class connections_t &#8212; Basalt 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/collapsible-lists/css/tree_view.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class network_t" href="classbasalt_1_1network__t.html" />
+    <link rel="prev" title="Struct status_t" href="structbasalt_1_1status__t.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="class-connections-t">
+<span id="exhale-class-classbasalt-1-1connections-t"></span><h1>Class connections_t<a class="headerlink" href="#class-connections-t" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Defined in <a class="reference internal" href="file_include_basalt_connections.hpp.html#file-include-basalt-connections-hpp"><span class="std std-ref">File connections.hpp</span></a></li>
+</ul>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6basalt13connections_tE">
+<span id="_CPPv3N6basalt13connections_tE"></span><span id="_CPPv2N6basalt13connections_tE"></span><span id="basalt::connections_t"></span><span class="target" id="classbasalt_1_1connections__t"></span><em class="property">class </em><code class="descname">connections_t</code><a class="headerlink" href="#_CPPv4N6basalt13connections_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t13connections_tER14network_impl_t">
+<span id="_CPPv3N6basalt13connections_t13connections_tER14network_impl_t"></span><span id="_CPPv2N6basalt13connections_t13connections_tER14network_impl_t"></span><span id="basalt::connections_t::connections_t__network_impl_tR"></span><span class="target" id="classbasalt_1_1connections__t_1ae53477db4cc61b99358b3d47554d9a55"></span><code class="descname">connections_t</code><span class="sig-paren">(</span>network_impl_t &amp;<em>pimpl</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t13connections_tER14network_impl_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tb">
+<span id="_CPPv3N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tb"></span><span id="_CPPv2N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tb"></span><span id="basalt::connections_t::insert__node_uid_tCR.node_uid_tCR.b"></span><span class="target" id="classbasalt_1_1connections__t_1a6ab149b13f5a0065ffe0eb155d604fad"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node1</em>, <em class="property">const</em> node_uid_t &amp;<em>node2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create an edge between 2 nodes. Connection can be inserted even if nodes aren’t yet in the graph. It is visible only if both nodes are inserted. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node1</span></code>: first node to connect </li>
+<li><code class="docutils literal notranslate"><span class="pre">node2</span></code>: second node to connect </li>
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tPKcNSt6size_tEb">
+<span id="_CPPv3N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tPKcNSt6size_tEb"></span><span id="_CPPv2N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tPKcNSt6size_tEb"></span><span id="basalt::connections_t::insert__node_uid_tCR.node_uid_tCR.cCP.std::s.b"></span><span class="target" id="classbasalt_1_1connections__t_1a715fbf33fdba4d3bbf72ac7aff8901bf"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node1</em>, <em class="property">const</em> node_uid_t &amp;<em>node2</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK10node_uid_tPKcNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create an edge between 2 nodes. Connection can be inserted even if nodes aren’t yet in the graph. It is visible only if both nodes are inserted. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node1</span></code>: first node to connect </li>
+<li><code class="docutils literal notranslate"><span class="pre">node2</span></code>: second node to connect </li>
+<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: payload </li>
+<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: payload length </li>
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK11node_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb">
+<span id="_CPPv3N6basalt13connections_t6insertERK10node_uid_tRK11node_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="_CPPv2N6basalt13connections_t6insertERK10node_uid_tRK11node_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="basalt::connections_t::insert__node_uid_tCR.node_uids_tCR.std::vector:cCP:CR.std::vector:std::s:CR.b"></span><span class="target" id="classbasalt_1_1connections__t_1a7528fdc2a4d2a760cefe5e251322be18"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, <em class="property">const</em> node_uids_t &amp;<em>nodes</em>, <em class="property">const</em> std::vector&lt;<em class="property">const</em> char *&gt; &amp;<em>data</em> = {}, <em class="property">const</em> std::vector&lt;std::size_t&gt; &amp;<em>sizes</em> = {}, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertERK10node_uid_tRK11node_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Connect a node to several. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertE6node_t9node_id_tPKcNSt6size_tER10node_uid_tb">
+<span id="_CPPv3N6basalt13connections_t6insertE6node_t9node_id_tPKcNSt6size_tER10node_uid_tb"></span><span id="_CPPv2N6basalt13connections_t6insertE6node_t9node_id_tPKcNSt6size_tER10node_uid_tb"></span><span id="basalt::connections_t::insert__node_t.node_id_t.cCP.std::s.node_uid_tR.b"></span><span class="target" id="classbasalt_1_1connections__t_1a1f87e62d0375b6d7067b21686d4147e1"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span>node_t <em>type</em>, node_id_t <em>id</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, node_uid_t &amp;<em>node</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertE6node_t9node_id_tPKcNSt6size_tER10node_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tE6size_tbb">
+<span id="_CPPv3N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tE6size_tbb"></span><span id="_CPPv2N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tE6size_tbb"></span><span id="basalt::connections_t::insert__node_uid_tCR.node_t.std::sCP.s.b.b"></span><span class="target" id="classbasalt_1_1connections__t_1a341d89e50df84ac724482a362287d7d7"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, node_t <em>type</em>, <em class="property">const</em> std::size_t *<em>nodes</em>, size_t <em>num_nodes</em>, bool <em>create_nodes</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tE6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Connect a node to several nodes of the same type. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node</span></code>: source node </li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: target nodes type </li>
+<li><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: target nodes identifiers </li>
+<li><code class="docutils literal notranslate"><span class="pre">num_nodes</span></code>: number of target nodes </li>
+<li><code class="docutils literal notranslate"><span class="pre">create_nodes</span></code>: whether nodes should be created as well </li>
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb">
+<span id="_CPPv3N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="_CPPv2N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="basalt::connections_t::insert__node_uid_tCR.node_t.std::sCP.cCPCP.std::sCP.s.b.b"></span><span class="target" id="classbasalt_1_1connections__t_1a4e7fe358f9deff95e09f3504061da000"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, node_t <em>type</em>, <em class="property">const</em> std::size_t *<em>nodes</em>, <em class="property">const</em> char *<em class="property">const</em> *<em>node_payloads</em>, <em class="property">const</em> std::size_t *<em>node_payloads_sizes</em>, size_t <em>num_nodes</em>, bool <em>create_nodes</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t6insertERK10node_uid_t6node_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Connect a node to several nodes of the same type. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node</span></code>: source node </li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: target nodes type </li>
+<li><code class="docutils literal notranslate"><span class="pre">nodes</span></code>: target nodes identifiers </li>
+<li><code class="docutils literal notranslate"><span class="pre">node_payloads</span></code>: payload of every target node </li>
+<li><code class="docutils literal notranslate"><span class="pre">node_payloads_sizes</span></code>: payload size of every target node </li>
+<li><code class="docutils literal notranslate"><span class="pre">num_nodes</span></code>: number of target nodes </li>
+<li><code class="docutils literal notranslate"><span class="pre">create_nodes</span></code>: whether nodes should be created as well </li>
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt13connections_t3hasERK10node_uid_tRK10node_uid_tRb">
+<span id="_CPPv3NK6basalt13connections_t3hasERK10node_uid_tRK10node_uid_tRb"></span><span id="_CPPv2NK6basalt13connections_t3hasERK10node_uid_tRK10node_uid_tRb"></span><span id="basalt::connections_t::has__node_uid_tCR.node_uid_tCR.bRC"></span><span class="target" id="classbasalt_1_1connections__t_1a892a15d017e4c5e9b3b1ab050722140f"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">has</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node1</em>, <em class="property">const</em> node_uid_t &amp;<em>node2</em>, bool &amp;<em>res</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt13connections_t3hasERK10node_uid_tRK10node_uid_tRb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>check connectivity between 2 nodes </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>provides information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node1</span></code>: </li>
+<li><code class="docutils literal notranslate"><span class="pre">node2</span></code>: </li>
+<li><code class="docutils literal notranslate"><span class="pre">res</span></code>: a boolean indicating whether node1 and node2 are connected </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt13connections_t3getERK10node_uid_tR11node_uids_t">
+<span id="_CPPv3NK6basalt13connections_t3getERK10node_uid_tR11node_uids_t"></span><span id="_CPPv2NK6basalt13connections_t3getERK10node_uid_tR11node_uids_t"></span><span id="basalt::connections_t::get__node_uid_tCR.node_uids_tRC"></span><span class="target" id="classbasalt_1_1connections__t_1a40e3fd68e4b39a0caa4f732da1984f6f"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, node_uids_t &amp;<em>connections</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt13connections_t3getERK10node_uid_tR11node_uids_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get nodes connected to one node </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node</span></code>: </li>
+<li><code class="docutils literal notranslate"><span class="pre">connections</span></code>: accumulator where connected nodes are added. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt13connections_t3getERK10node_uid_t6node_tR11node_uids_t">
+<span id="_CPPv3NK6basalt13connections_t3getERK10node_uid_t6node_tR11node_uids_t"></span><span id="_CPPv2NK6basalt13connections_t3getERK10node_uid_t6node_tR11node_uids_t"></span><span id="basalt::connections_t::get__node_uid_tCR.node_t.node_uids_tRC"></span><span class="target" id="classbasalt_1_1connections__t_1a01a54f24f8e8b937066f5281ede3aad4"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, node_t <em>filter</em>, node_uids_t &amp;<em>connections</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt13connections_t3getERK10node_uid_t6node_tR11node_uids_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get nodes of a specific type connected to one node </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node</span></code>: </li>
+<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: filter connections by their node type </li>
+<li><code class="docutils literal notranslate"><span class="pre">connections</span></code>: accumulator where connected nodes are added </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t5eraseERK10node_uid_tRK10node_uid_tb">
+<span id="_CPPv3N6basalt13connections_t5eraseERK10node_uid_tRK10node_uid_tb"></span><span id="_CPPv2N6basalt13connections_t5eraseERK10node_uid_tRK10node_uid_tb"></span><span id="basalt::connections_t::erase__node_uid_tCR.node_uid_tCR.b"></span><span class="target" id="classbasalt_1_1connections__t_1a2f955c7a40e931536c3d0692cdf7e1cc"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node1</em>, <em class="property">const</em> node_uid_t &amp;<em>node2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t5eraseERK10node_uid_tRK10node_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>remove connection between 2 nodes </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t5eraseERK10node_uid_t6node_tR6size_tb">
+<span id="_CPPv3N6basalt13connections_t5eraseERK10node_uid_t6node_tR6size_tb"></span><span id="_CPPv2N6basalt13connections_t5eraseERK10node_uid_t6node_tR6size_tb"></span><span id="basalt::connections_t::erase__node_uid_tCR.node_t.sR.b"></span><span class="target" id="classbasalt_1_1connections__t_1adb868b91d72ca919932547be214cc4db"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, node_t <em>filter</em>, size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t5eraseERK10node_uid_t6node_tR6size_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>remove connections of a given type </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">node</span></code>: node from which to remove connections </li>
+<li><code class="docutils literal notranslate"><span class="pre">type_filter</span></code>: node type filter </li>
+<li><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of nodes removed during the operation </li>
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt13connections_t5eraseERK10node_uid_tRNSt6size_tEb">
+<span id="_CPPv3N6basalt13connections_t5eraseERK10node_uid_tRNSt6size_tEb"></span><span id="_CPPv2N6basalt13connections_t5eraseERK10node_uid_tRNSt6size_tEb"></span><span id="basalt::connections_t::erase__node_uid_tCR.std::sR.b"></span><span class="target" id="classbasalt_1_1connections__t_1aa614958c5d268c3f69b0c15e01e720a9"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> node_uid_t &amp;<em>node</em>, std::size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt13connections_t5eraseERK10node_uid_tRNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>remove all connections of a node </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<li><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of nodes removed during the operation </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt13connections_t5countERNSt6size_tE">
+<span id="_CPPv3NK6basalt13connections_t5countERNSt6size_tE"></span><span id="_CPPv2NK6basalt13connections_t5countERNSt6size_tE"></span><span id="basalt::connections_t::count__std::sRC"></span><span class="target" id="classbasalt_1_1connections__t_1a39fb5aa48e4d9e5f26751cc3d9748988"></span><a class="reference internal" href="structbasalt_1_1status__t.html#_CPPv4N6basalt8status_tE" title="basalt::status_t">status_t</a> <code class="descname">count</code><span class="sig-paren">(</span>std::size_t &amp;<em>res</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt13connections_t5countERNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>returns the number of connections in the network </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>information whether operation succeeded or not </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">res</span></code>: the number of connections </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Basalt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="library_root.html">C++ API</a><ul>
+      <li>Previous: <a href="structbasalt_1_1status__t.html" title="previous chapter">Struct status_t</a></li>
+      <li>Next: <a href="classbasalt_1_1network__t.html" title="next chapter">Class network_t</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, BlueBrain HPC Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/cpp_api/classbasalt_1_1connections__t.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

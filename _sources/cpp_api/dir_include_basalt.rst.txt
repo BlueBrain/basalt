@@ -1,0 +1,27 @@
+.. _dir_include_basalt:
+
+
+Directory basalt
+================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_include>` (``include``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``include/basalt``
+
+
+Files
+-----
+
+- :ref:`file_include_basalt_basalt.hpp`
+- :ref:`file_include_basalt_connections.hpp`
+- :ref:`file_include_basalt_fwd.hpp`
+- :ref:`file_include_basalt_network.hpp`
+- :ref:`file_include_basalt_node_iterator.hpp`
+- :ref:`file_include_basalt_nodes.hpp`
+- :ref:`file_include_basalt_nodes.hxx`
+- :ref:`file_include_basalt_status.hpp`
+
+

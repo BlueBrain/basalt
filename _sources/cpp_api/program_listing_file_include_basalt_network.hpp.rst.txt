@@ -1,0 +1,54 @@
+
+.. _program_listing_file_include_basalt_network.hpp:
+
+Program Listing for File network.hpp
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_network.hpp>` (``include/basalt/network.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BASALT_NETWORK_HPP
+   #define BASALT_NETWORK_HPP
+   
+   #include <iosfwd>
+   #include <limits>
+   #include <memory>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   #include <basalt/fwd.hpp>
+   #include <basalt/status.hpp>
+   
+   namespace basalt {
+   
+   class network_t {
+     public:
+       using node_const_iterator_t = std::iterator<std::input_iterator_tag, const node_t>;
+   
+       explicit network_t(const std::string& path);
+       ~network_t();
+   
+       nodes_t& nodes();
+   
+       connections_t& connections();
+       status_t commit() __attribute__((warn_unused_result));
+   
+       std::string statistics() const;
+   
+     private:
+       std::unique_ptr<network_impl_t> pimpl_;
+   };
+   
+   node_uid_t make_id(node_t type, node_id_t id);
+   
+   }  // namespace basalt
+   
+   std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id);
+   
+   std::ostream& operator<<(std::ostream& ostr, const basalt::node_uids_t& ids);
+   
+   #endif  // !BASALT_NETWORK_HPP

@@ -1,0 +1,13 @@
+.. _exhale_function_status_8hpp_1a331938ec25f6f5518ba536f2385e9fe6:
+
+Function operator<<(std::ostream&, const basalt::status_t&)
+===========================================================
+
+- Defined in :ref:`file_include_basalt_status.hpp`
+
+
+Function Documentation
+----------------------
+
+
+.. doxygenfunction:: operator<<(std::ostream&, const basalt::status_t&)

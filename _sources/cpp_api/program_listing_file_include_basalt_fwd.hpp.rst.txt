@@ -1,0 +1,35 @@
+
+.. _program_listing_file_include_basalt_fwd.hpp:
+
+Program Listing for File fwd.hpp
+================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_fwd.hpp>` (``include/basalt/fwd.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BASALT_FWD_HPP
+   #define BASALT_FWD_HPP
+   
+   #include <cstddef>
+   #include <utility>
+   #include <vector>
+   
+   namespace basalt {
+   
+   class connections_t;
+   class network_impl_t;
+   class node_iterator_impl;
+   class node_iterator;
+   class nodes_t;
+   
+   using node_t = int;
+   using node_id_t = std::size_t;
+   using node_uid_t = std::pair<node_t, std::size_t>;
+   using node_uids_t = std::vector<node_uid_t>;
+   
+   }  // namespace basalt
+   
+   #endif  // BASALT_FWD_HPP

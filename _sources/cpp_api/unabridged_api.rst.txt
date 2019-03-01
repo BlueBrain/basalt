@@ -1,0 +1,148 @@
+
+Full API
+--------
+
+
+Namespaces
+**********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   namespace_basalt.rst
+
+Classes and Structs
+*******************
+
+
+.. toctree::
+   :maxdepth: 5
+
+   structbasalt_1_1status__t.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classbasalt_1_1connections__t.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classbasalt_1_1network__t.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classbasalt_1_1node__iterator.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   classbasalt_1_1nodes__t.rst
+
+Functions
+*********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   function_network_8hpp_1a79b679a266de479a7479b03aaf4ffe51.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   function_network_8hpp_1a1d694f1caa0a41c11a818785625f3586.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   function_network_8hpp_1a33b465fd6c97e95cc5adae95270e3f87.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   function_status_8hpp_1a331938ec25f6f5518ba536f2385e9fe6.rst
+
+Typedefs
+********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_fwd_8hpp_1aab110e42d1d9fcf4b7fff804f71ed7f5.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_fwd_8hpp_1a84e74366ed13c96a526b2f03d565a44b.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_fwd_8hpp_1ad4220e0e0bf81fcbd6becf930aaca2ce.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_fwd_8hpp_1a33518693ab1d12ea0d2b7604e87d1fe2.rst
+
+Directories
+***********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_include.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_include_basalt.rst
+
+Files
+*****
+
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_basalt.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_connections.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_fwd.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_network.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_node_iterator.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_nodes.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_nodes.hxx.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_include_basalt_status.hpp.rst

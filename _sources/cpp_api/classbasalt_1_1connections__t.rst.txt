@@ -1,0 +1,16 @@
+.. _exhale_class_classbasalt_1_1connections__t:
+
+Class connections_t
+===================
+
+- Defined in :ref:`file_include_basalt_connections.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: basalt::connections_t
+   :members:
+   :protected-members:
+   :undoc-members:

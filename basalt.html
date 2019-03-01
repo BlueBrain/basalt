@@ -1,0 +1,220 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>basalt package &#8212; Basalt 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="basalt.ngv package" href="basalt.ngv.html" />
+    <link rel="prev" title="Python package" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="basalt-package">
+<h1>basalt package<a class="headerlink" href="#basalt-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basalt.ngv.html">basalt.ngv package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basalt.ngv.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basalt.ngv.html#module-basalt.ngv.ngv_connectome">basalt.ngv.ngv_connectome module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basalt.ngv.html#module-basalt.ngv.ngv_data">basalt.ngv.ngv_data module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basalt.ngv.html#module-basalt.ngv">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-basalt.cli">
+<span id="basalt-cli-module"></span><h2>basalt.cli module<a class="headerlink" href="#module-basalt.cli" title="Permalink to this headline">¶</a></h2>
+<p>basalt-cli - CLI utility to deal with a basalt connectivity graph</p>
+<dl class="docutils">
+<dt>Usage:</dt>
+<dd>basalt-cli ngv import neuroglial [–max-astrocytes=&lt;nb&gt;] [–create-nodes] &lt;h5-file&gt; &lt;basalt-path&gt;
+basalt-cli ngv import synaptic [–max-neurons=&lt;nb&gt;] [–create-nodes] &lt;h5-file&gt; &lt;basalt-path&gt;
+basalt-cli ngv import gliovascular [–max-astrocytes=&lt;nb&gt;] [–create-nodes] &lt;h5-connectivity&gt; &lt;h5-data&gt; &lt;basalt-path&gt;
+basalt-cli -h | –help
+basalt-cli –version</dd>
+<dt>Options</dt>
+<dd><table class="first docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group" colspan="2">
+<kbd><span class="option">--max-astrocytes=<var>&lt;nb&gt;</var></span></kbd></td>
+</tr>
+<tr><td>&#160;</td><td>Maximum number of astrocytes to import [default: -1].</td></tr>
+</tbody>
+</table>
+<p class="last">-h –help              Show this screen.
+–version              Show version.</p>
+</dd>
+</dl>
+<dl class="function">
+<dt id="basalt.cli.main">
+<code class="descclassname">basalt.cli.</code><code class="descname">main</code><span class="sig-paren">(</span><em>argv=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/cli.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.cli.main" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-basalt">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-basalt" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="basalt.NodeType">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">NodeType</code><a class="reference internal" href="_modules/basalt.html#NodeType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.NodeType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="basalt.NodeType.ASTROCYTE">
+<code class="descname">ASTROCYTE</code><em class="property"> = 3</em><a class="headerlink" href="#basalt.NodeType.ASTROCYTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.NodeType.MICRODOMAIN">
+<code class="descname">MICRODOMAIN</code><em class="property"> = 4</em><a class="headerlink" href="#basalt.NodeType.MICRODOMAIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.NodeType.NEURON">
+<code class="descname">NEURON</code><em class="property"> = 1</em><a class="headerlink" href="#basalt.NodeType.NEURON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.NodeType.SEGMENT">
+<code class="descname">SEGMENT</code><em class="property"> = 5</em><a class="headerlink" href="#basalt.NodeType.SEGMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.NodeType.SYNAPSE">
+<code class="descname">SYNAPSE</code><em class="property"> = 2</em><a class="headerlink" href="#basalt.NodeType.SYNAPSE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.PayloadHelper">
+<em class="property">class </em><code class="descclassname">basalt.</code><code class="descname">PayloadHelper</code><a class="reference internal" href="_modules/basalt.html#PayloadHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.PayloadHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.PayloadHelper.NODE_TYPE_TO_PAYLOAD_CLASS">
+<code class="descname">NODE_TYPE_TO_PAYLOAD_CLASS</code><em class="property"> = {&lt;NodeType.NEURON: 1&gt;: &lt;class 'basalt._basalt.Neuron'&gt;, &lt;NodeType.SYNAPSE: 2&gt;: &lt;class 'basalt._basalt.Synapse'&gt;, &lt;NodeType.ASTROCYTE: 3&gt;: &lt;class 'basalt._basalt.Astrocyte'&gt;, &lt;NodeType.MICRODOMAIN: 4&gt;: &lt;class 'basalt._basalt.MicroDomain'&gt;}</em><a class="headerlink" href="#basalt.PayloadHelper.NODE_TYPE_TO_PAYLOAD_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="basalt.PayloadHelper.deserialize">
+<em class="property">classmethod </em><code class="descname">deserialize</code><span class="sig-paren">(</span><em>type</em>, <em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt.html#PayloadHelper.deserialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.PayloadHelper.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Basalt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Python package</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">basalt package</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">Python package</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">Python package</a></li>
+      <li>Next: <a href="basalt.ngv.html" title="next chapter">basalt.ngv package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, BlueBrain HPC Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/basalt.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

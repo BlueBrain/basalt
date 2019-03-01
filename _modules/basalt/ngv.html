@@ -1,0 +1,352 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>basalt.ngv &#8212; Basalt 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/collapsible-lists/css/tree_view.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script type="text/javascript" src="../../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+    <script type="text/javascript" src="../../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for basalt.ngv</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">inspect</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">os.path</span> <span class="k">as</span> <span class="nn">osp</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">timeit</span>
+
+<span class="kn">import</span> <span class="nn">humanize</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">progress.bar</span> <span class="k">import</span> <span class="n">ShadyBar</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">ngv_data</span>
+<span class="kn">from</span> <span class="nn">.ngv_connectome</span> <span class="k">import</span> <span class="n">GliovascularConnectivity</span>
+<span class="kn">from</span> <span class="nn">.ngv_connectome</span> <span class="k">import</span> <span class="n">NeuroglialConnectivity</span>
+<span class="kn">from</span> <span class="nn">.ngv_connectome</span> <span class="k">import</span> <span class="n">SynapticConnectivity</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">Network</span><span class="p">,</span> <span class="n">NodeType</span><span class="p">,</span> <span class="n">make_id</span><span class="p">,</span> <span class="n">EdgeAstrocyteSegment</span><span class="p">,</span> <span class="n">Point</span>
+
+
+<span class="n">CONNECTIVITY_H5</span> <span class="o">=</span> <span class="s1">&#39;neuroglial_connectivity.h5&#39;</span>
+
+
+<div class="viewcode-block" id="NodesArities"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.NodesArities">[docs]</a><span class="k">class</span> <span class="nc">NodesArities</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Helper class to compute arities between connected nodes</span>
+
+<span class="sd">    It computes min, mean, max, and total edges between nodes during import of</span>
+<span class="sd">    connectivity HDF5 files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param labels: list of labels, one label representing a edge type</span>
+<span class="sd">        connected to a particular node type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_labels</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span> <span class="o">*</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+<div class="viewcode-block" id="NodesArities.update"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.NodesArities.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">counters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add arities of a particular node type&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">counters</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="sd">&quot;&quot;&quot;Update i-th label with new number of edges&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">counters</span><span class="p">)):</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="n">counters</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span></div>
+
+<div class="viewcode-block" id="NodesArities.report"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.NodesArities.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">label</span><span class="p">,</span>
+                <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">minimum</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span>
+                    <span class="n">maximum</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]),</span>
+                    <span class="n">mean</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span><span class="p">),</span>
+                    <span class="n">total</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_stats</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]),</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_labels</span><span class="p">)</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="progress_if_tty"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.progress_if_tty">[docs]</a><span class="k">def</span> <span class="nf">progress_if_tty</span><span class="p">(</span><span class="n">bar</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">isatty</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">()):</span>
+        <span class="k">return</span> <span class="n">bar</span>
+
+    <span class="k">class</span> <span class="nc">FakeBar</span><span class="p">:</span>
+        <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">pass</span>
+
+        <span class="k">def</span> <span class="nf">finish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">pass</span>
+
+    <span class="k">return</span> <span class="n">FakeBar</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_resolve_path</span><span class="p">(</span><span class="n">h5_file</span><span class="p">):</span>
+    <span class="n">_h5_file</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">h5_file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">osp</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">_h5_file</span><span class="p">):</span>
+        <span class="n">_h5_file</span> <span class="o">=</span> <span class="n">osp</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_h5_file</span><span class="p">,</span> <span class="n">CONNECTIVITY_H5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_h5_file</span>
+
+
+<div class="viewcode-block" id="endfoot_id_to_payload"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.endfoot_id_to_payload">[docs]</a><span class="k">def</span> <span class="nf">endfoot_id_to_payload</span><span class="p">(</span><span class="n">gliovascular_data</span><span class="p">,</span> <span class="n">endfoot_id</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">EdgeAstrocyteSegment</span><span class="p">(</span>
+        <span class="n">astrocyte</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">gliovascular_data</span><span class="o">.</span><span class="n">endfoot_graph_coordinates</span><span class="p">[</span><span class="n">endfoot_id</span><span class="p">]),</span>
+        <span class="n">vasculature</span><span class="o">=</span><span class="n">Point</span><span class="p">(</span><span class="n">gliovascular_data</span><span class="o">.</span><span class="n">endfoot_surface_coordinates</span><span class="p">[</span><span class="n">endfoot_id</span><span class="p">]),</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Importer"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.Importer">[docs]</a><span class="k">class</span> <span class="nc">Importer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">arity_labels</span><span class="p">,</span> <span class="n">progress_kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arities</span> <span class="o">=</span> <span class="n">NodesArities</span><span class="p">(</span><span class="n">arity_labels</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_begin</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bar</span> <span class="o">=</span> <span class="n">progress_if_tty</span><span class="p">(</span><span class="n">ShadyBar</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="o">**</span><span class="n">progress_kwargs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connectivity</span> <span class="o">=</span> <span class="n">connectivity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">schema</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getmembers</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">connectivity</span><span class="o">.</span><span class="vm">__class__</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">o</span><span class="p">:</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="nb">property</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;n_&#39;</span><span class="p">):</span>
+                <span class="n">schema</span><span class="p">[</span><span class="n">name</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span> <span class="o">=</span> <span class="n">prop</span><span class="o">.</span><span class="n">fget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connectivity</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">schema</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">duration_sec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_begin</span>
+
+<div class="viewcode-block" id="Importer.next"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.Importer.next">[docs]</a>    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arities</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bar</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iterations</span> <span class="o">+=</span> <span class="mi">1</span></div>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bar</span><span class="o">.</span><span class="n">finish</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_end</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Importer.report"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.Importer.report">[docs]</a>    <span class="k">def</span> <span class="nf">report</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+            <span class="n">connectivity</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_arities</span><span class="o">.</span><span class="n">report</span><span class="p">(),</span>
+            <span class="n">dataset</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">,</span>
+            <span class="n">duration_seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration_sec</span><span class="p">,</span>
+            <span class="n">duration_str</span><span class="o">=</span><span class="n">humanize</span><span class="o">.</span><span class="n">naturaldelta</span><span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">duration_sec</span><span class="p">)</span>
+            <span class="p">),</span>
+            <span class="n">iterations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">iterations</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_begin</span> <span class="o">=</span> <span class="n">timeit</span><span class="o">.</span><span class="n">default_timer</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+
+<div class="viewcode-block" id="import_gliovascular"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.import_gliovascular">[docs]</a><span class="k">def</span> <span class="nf">import_gliovascular</span><span class="p">(</span>
+    <span class="n">h5_connectivity</span><span class="p">,</span> <span class="n">h5_data</span><span class="p">,</span> <span class="n">basalt_path</span><span class="p">,</span> <span class="n">max_astrocytes</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">create_nodes</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">):</span>
+    <span class="n">_h5_connectivity</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">h5_connectivity</span><span class="p">)</span>
+    <span class="n">_h5_data</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">h5_data</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">basalt_path</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">GliovascularConnectivity</span><span class="p">(</span>
+        <span class="n">_h5_connectivity</span>
+    <span class="p">)</span> <span class="k">as</span> <span class="n">connectivity</span><span class="p">,</span> <span class="n">ngv_data</span><span class="o">.</span><span class="n">GliovascularData</span><span class="p">(</span><span class="n">_h5_data</span><span class="p">)</span> <span class="k">as</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_astrocytes</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">max_astrocytes</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">n_astrocytes</span>
+        <span class="k">with</span> <span class="n">Importer</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Import astrocyte ⇆ vasculature segments&quot;</span><span class="p">,</span>
+            <span class="n">connectivity</span><span class="o">=</span><span class="n">connectivity</span><span class="p">,</span>
+            <span class="n">arity_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;segments per astrocyte&quot;</span><span class="p">],</span>
+            <span class="n">progress_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">max</span><span class="o">=</span><span class="n">max_astrocytes</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(index)d</span><span class="s1">/</span><span class="si">%(max)d</span><span class="s1"> astrocytes&#39;</span>
+            <span class="p">),</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">importer</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">astro_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_astrocytes</span><span class="p">):</span>
+                <span class="n">astro_node</span> <span class="o">=</span> <span class="n">make_id</span><span class="p">(</span><span class="n">NodeType</span><span class="o">.</span><span class="n">ASTROCYTE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">astro_id</span><span class="p">)</span>
+                <span class="n">begin</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">astrocyte</span><span class="o">.</span><span class="n">_offset_slice</span><span class="p">(</span><span class="n">astro_id</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+                <span class="n">conn_data</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">astrocyte</span><span class="o">.</span><span class="n">_connectivity</span><span class="p">[</span><span class="n">begin</span><span class="p">:</span><span class="n">end</span><span class="p">]</span>
+                <span class="n">payloads</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">endfoot_id_to_payload</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">endfoot</span><span class="p">)</span><span class="o">.</span><span class="n">serialize</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">endfoot</span> <span class="ow">in</span> <span class="n">conn_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+                <span class="p">]</span>
+                <span class="n">graph</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">astro_node</span><span class="p">,</span>
+                    <span class="n">NodeType</span><span class="o">.</span><span class="n">SEGMENT</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">conn_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                    <span class="n">payloads</span><span class="p">,</span>
+                    <span class="n">create_nodes</span><span class="o">=</span><span class="n">create_nodes</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">importer</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conn_data</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">importer</span><span class="o">.</span><span class="n">report</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="import_synaptic"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.import_synaptic">[docs]</a><span class="k">def</span> <span class="nf">import_synaptic</span><span class="p">(</span><span class="n">h5_file</span><span class="p">,</span> <span class="n">basalt_path</span><span class="p">,</span> <span class="n">max_neurons</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">create_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">_h5_file</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">h5_file</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">basalt_path</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">SynapticConnectivity</span><span class="p">(</span><span class="n">_h5_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">connectivity</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_neurons</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">max_neurons</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">n_neurons</span>
+        <span class="k">with</span> <span class="n">Importer</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Importing synapse ⇆ afferent neuron&quot;</span><span class="p">,</span>
+            <span class="n">connectivity</span><span class="o">=</span><span class="n">connectivity</span><span class="p">,</span>
+            <span class="n">arity_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;synapse per neuron&quot;</span><span class="p">],</span>
+            <span class="n">progress_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">max</span><span class="o">=</span><span class="n">max_neurons</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(index)d</span><span class="s1">/</span><span class="si">%(max)d</span><span class="s1"> neurons&#39;</span><span class="p">),</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">importer</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">neuron_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_neurons</span><span class="p">):</span>
+                <span class="n">neuron_node</span> <span class="o">=</span> <span class="n">make_id</span><span class="p">(</span><span class="n">NodeType</span><span class="o">.</span><span class="n">NEURON</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">neuron_id</span><span class="p">)</span>
+                <span class="n">synapse_ids</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">afferent_neuron</span><span class="o">.</span><span class="n">to_synapse</span><span class="p">(</span><span class="n">neuron_id</span><span class="p">)</span>
+                <span class="n">graph</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">neuron_node</span><span class="p">,</span>
+                    <span class="n">NodeType</span><span class="o">.</span><span class="n">SYNAPSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">synapse_ids</span><span class="p">,</span>
+                    <span class="n">create_nodes</span><span class="o">=</span><span class="n">create_nodes</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">importer</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">synapse_ids</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">importer</span><span class="o">.</span><span class="n">report</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="import_neuroglial"><a class="viewcode-back" href="../../basalt.ngv.html#basalt.ngv.import_neuroglial">[docs]</a><span class="k">def</span> <span class="nf">import_neuroglial</span><span class="p">(</span><span class="n">h5_file</span><span class="p">,</span> <span class="n">basalt_path</span><span class="p">,</span> <span class="n">max_astrocytes</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">create_nodes</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">_h5_file</span> <span class="o">=</span> <span class="n">_resolve_path</span><span class="p">(</span><span class="n">h5_file</span><span class="p">)</span>
+    <span class="n">graph</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="n">basalt_path</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">NeuroglialConnectivity</span><span class="p">(</span><span class="n">_h5_file</span><span class="p">)</span> <span class="k">as</span> <span class="n">connectivity</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">max_astrocytes</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">max_astrocytes</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">n_astrocytes</span>
+        <span class="k">with</span> <span class="n">Importer</span><span class="p">(</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Importing astrocyte ⇆ (synapses, neurons)&quot;</span><span class="p">,</span>
+            <span class="n">connectivity</span><span class="o">=</span><span class="n">connectivity</span><span class="p">,</span>
+            <span class="n">arity_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;synapses per astrocyte&quot;</span><span class="p">,</span> <span class="s2">&quot;neurons per astrocyte&quot;</span><span class="p">],</span>
+            <span class="n">progress_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span>
+                <span class="nb">max</span><span class="o">=</span><span class="n">max_astrocytes</span><span class="p">,</span> <span class="n">suffix</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%(index)d</span><span class="s1">/</span><span class="si">%(max)d</span><span class="s1"> astrocytes&#39;</span>
+            <span class="p">),</span>
+        <span class="p">)</span> <span class="k">as</span> <span class="n">importer</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">astro_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_astrocytes</span><span class="p">):</span>
+                <span class="n">astro_node</span> <span class="o">=</span> <span class="n">make_id</span><span class="p">(</span><span class="n">NodeType</span><span class="o">.</span><span class="n">ASTROCYTE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">astro_id</span><span class="p">)</span>
+                <span class="n">synapse_ids</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">astrocyte</span><span class="o">.</span><span class="n">to_synapse</span><span class="p">(</span><span class="n">astro_id</span><span class="p">)</span>
+                <span class="n">graph</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">astro_node</span><span class="p">,</span>
+                    <span class="n">NodeType</span><span class="o">.</span><span class="n">SYNAPSE</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                    <span class="n">synapse_ids</span><span class="p">,</span>
+                    <span class="n">create_nodes</span><span class="o">=</span><span class="n">create_nodes</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">synapse_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">synapse_ids</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">synapse_ids</span>
+
+                <span class="n">neuron_ids</span> <span class="o">=</span> <span class="n">connectivity</span><span class="o">.</span><span class="n">astrocyte</span><span class="o">.</span><span class="n">to_neuron</span><span class="p">(</span><span class="n">astro_id</span><span class="p">)</span>
+                <span class="n">graph</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">astro_node</span><span class="p">,</span> <span class="n">NodeType</span><span class="o">.</span><span class="n">NEURON</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">neuron_ids</span><span class="p">,</span> <span class="n">create_nodes</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">)</span>
+                <span class="n">neuron_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">neuron_ids</span><span class="p">)</span>
+                <span class="k">del</span> <span class="n">neuron_ids</span>
+                <span class="n">importer</span><span class="o">.</span><span class="n">next</span><span class="p">(</span><span class="n">synapse_count</span><span class="p">,</span> <span class="n">neuron_count</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">importer</span><span class="o">.</span><span class="n">report</span><span class="p">()</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Basalt</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  <li><a href="../basalt.html">basalt</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, BlueBrain HPC Team.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

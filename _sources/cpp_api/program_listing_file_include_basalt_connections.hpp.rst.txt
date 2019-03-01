@@ -1,0 +1,88 @@
+
+.. _program_listing_file_include_basalt_connections.hpp:
+
+Program Listing for File connections.hpp
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_connections.hpp>` (``include/basalt/connections.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BASALT_CONNECTIONS_HPP
+   #define BASALT_CONNECTIONS_HPP
+   
+   #include <basalt/fwd.hpp>
+   #include <basalt/status.hpp>
+   
+   namespace basalt {
+   
+   class connections_t {
+     public:
+       explicit connections_t(network_impl_t& pimpl);
+       status_t insert(const node_uid_t& node1, const node_uid_t& node2, bool commit = false)
+           __attribute__((warn_unused_result));
+   
+       status_t insert(const node_uid_t& node1,
+                       const node_uid_t& node2,
+                       const char* data,
+                       std::size_t size,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       status_t insert(const node_uid_t& node,
+                       const node_uids_t& nodes,
+                       const std::vector<const char*>& data = {},
+                       const std::vector<std::size_t>& sizes = {},
+                       bool commit = false);
+   
+       status_t insert(node_t type,
+                       node_id_t id,
+                       const char* data,
+                       std::size_t size,
+                       node_uid_t& node,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       status_t insert(const node_uid_t& node,
+                       node_t type,
+                       const std::size_t* nodes,
+                       size_t num_nodes,
+                       bool create_nodes = false,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       status_t insert(const node_uid_t& node,
+                       node_t type,
+                       const std::size_t* nodes,
+                       const char* const* node_payloads,
+                       const std::size_t* node_payloads_sizes,
+                       size_t num_nodes,
+                       bool create_nodes = false,
+                       bool commit = false) __attribute__((warn_unused_result));
+   
+       status_t has(const node_uid_t& node1, const node_uid_t& node2, bool& res) const
+           __attribute__((warn_unused_result));
+   
+       status_t get(const node_uid_t& node, node_uids_t& connections) const
+           __attribute__((warn_unused_result));
+   
+       status_t get(const node_uid_t& node, node_t filter, node_uids_t& connections) const
+           __attribute__((warn_unused_result));
+   
+       status_t erase(const node_uid_t& node1, const node_uid_t& node2, bool commit = false)
+           __attribute__((warn_unused_result));
+   
+       status_t erase(const node_uid_t& node, node_t filter, size_t& removed, bool commit = false)
+           __attribute__((warn_unused_result));
+   
+       status_t erase(const node_uid_t& node, std::size_t& removed, bool commit = false)
+           __attribute__((warn_unused_result));
+   
+       status_t count(std::size_t& res) const __attribute__((warn_unused_result));
+   
+     private:
+       network_impl_t& pimpl_;
+   };
+   
+   }  // namespace basalt
+   
+   #endif  // BASALT_CONNECTIONS_HPP

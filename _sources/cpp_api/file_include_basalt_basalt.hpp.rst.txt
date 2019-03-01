@@ -1,0 +1,43 @@
+
+.. _file_include_basalt_basalt.hpp:
+
+File basalt.hpp
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir_include_basalt>` (``include/basalt``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/basalt/basalt.hpp``)
+------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_basalt_basalt.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``basalt/connections.hpp`` (:ref:`file_include_basalt_connections.hpp`)
+
+- ``basalt/network.hpp`` (:ref:`file_include_basalt_network.hpp`)
+
+- ``basalt/node_iterator.hpp`` (:ref:`file_include_basalt_node_iterator.hpp`)
+
+- ``basalt/nodes.hpp`` (:ref:`file_include_basalt_nodes.hpp`)
+
+
+
+
+

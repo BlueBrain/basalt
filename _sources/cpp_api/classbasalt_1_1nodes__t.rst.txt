@@ -1,0 +1,16 @@
+.. _exhale_class_classbasalt_1_1nodes__t:
+
+Class nodes_t
+=============
+
+- Defined in :ref:`file_include_basalt_nodes.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: basalt::nodes_t
+   :members:
+   :protected-members:
+   :undoc-members:

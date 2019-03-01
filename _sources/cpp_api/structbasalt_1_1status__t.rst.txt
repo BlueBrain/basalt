@@ -1,0 +1,16 @@
+.. _exhale_struct_structbasalt_1_1status__t:
+
+Struct status_t
+===============
+
+- Defined in :ref:`file_include_basalt_status.hpp`
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: basalt::status_t
+   :members:
+   :protected-members:
+   :undoc-members:
