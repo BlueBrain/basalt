@@ -15,6 +15,7 @@
 import os
 import sys
 sys.path.insert(0, os.path.abspath('..'))
+import basalt
 
 
 # -- Project information -----------------------------------------------------
@@ -24,9 +25,9 @@ copyright = '2019, BlueBrain HPC Team'
 author = 'BlueBrain HPC Team'
 
 # The short X.Y version
-version = ''
+version = basalt.__version__
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+release = basalt.__version__
 
 
 # -- General configuration ---------------------------------------------------
