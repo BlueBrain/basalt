@@ -22,17 +22,10 @@ status_t nodes_t::insert(node_t type,
     return insert(type, id, raw.c_str(), raw.size(), res, commit);
 }
 
-/**
- * \brief Retrieve a node from the graph
- * \tparam T node payload type
- * \param uid node unique identifier
- * \param payload object updated if node is present
- * \return information whether operation succeeded or not
- */
 template <typename T>
-status_t nodes_t::get(const node_uid_t& uid, T& payload) const {
+status_t nodes_t::get(const node_uid_t& node, T& payload) const {
     std::string data;
-    auto const& status = get(uid, &data);
+    auto const& status = get(node, &data);
     if (status) {
         std::istringstream istr;
         istr.rdbuf()->pubsetbuf(const_cast<char*>(data.c_str()), static_cast<long>(data.size()));
