@@ -7,8 +7,15 @@
 
 namespace basalt {
 
+/**
+ * \brief Manipulate graph vertices
+ */
 class nodes_t {
   public:
+    /**
+     * Build a \a nodes_t
+     * \param pimpl Pointer to implementation
+     */
     explicit nodes_t(network_impl_t& pimpl);
     /**
      * \brief Iterate over nodes

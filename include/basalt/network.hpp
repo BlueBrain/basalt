@@ -16,6 +16,7 @@ namespace basalt {
 /// \brief Undirected Connectivity Graph
 class network_t {
   public:
+    /** \brief iterator over vertices */
     using node_const_iterator_t = std::iterator<std::input_iterator_tag, const node_t>;
 
     /**
@@ -25,18 +26,17 @@ class network_t {
     explicit network_t(const std::string& path);
     ~network_t();
 
-    /// \brief nodes accessor
-    nodes_t& nodes();
-
     /** \name connections accessor
-     ** \{
-     */
+     ** \{ */
+    /** \brief edges accessor */
     connections_t& connections();
+
+    /** \brief vertices accessor */
+    nodes_t& nodes();
     /** \} */
 
     /**
      * \brief Process uncommitted operations
-     * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
     status_t commit() __attribute__((warn_unused_result));

@@ -6,9 +6,17 @@
 
 namespace basalt {
 
+/**
+ * Manipulate graph edges
+ */
 class connections_t {
   public:
+    /**
+     * \brief Construct a \a connections_t
+     * \param pimpl Pointer to implementation
+     */
     explicit connections_t(network_impl_t& pimpl);
+
     /**
      * \brief Create an edge between 2 nodes.
      * Connection can be inserted even if nodes aren't yet in the graph.
@@ -40,6 +48,10 @@ class connections_t {
 
     /**
      * \brief Connect a node to several
+     * \param node identifier of the node to connect to others
+     * \param nodes identifiers of nodes to connect to \a node
+     * \param data payloads of every creates edges
+     * \param sizes payload sizes
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
@@ -48,13 +60,6 @@ class connections_t {
                     const std::vector<const char*>& data = {},
                     const std::vector<std::size_t>& sizes = {},
                     bool commit = false);
-
-    status_t insert(node_t type,
-                    node_id_t id,
-                    const char* data,
-                    std::size_t size,
-                    node_uid_t& node,
-                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Connect a node to several nodes of the same type
@@ -115,8 +120,8 @@ class connections_t {
 
     /**
      * \brief get nodes of a specific type connected to one node
-     * \param node
-     * \param type filter connections by their node type
+     * \param node one end of the vertices to look
+     * \param filter type of target nodes
      * \param connections accumulator where connected nodes are added
      * \return information whether operation succeeded or not
      */
@@ -125,6 +130,8 @@ class connections_t {
 
     /**
      * \brief remove connection between 2 nodes
+     * \param node1 one end of the edge to remove
+     * \param node2 other end of the edge to remove
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
@@ -134,7 +141,7 @@ class connections_t {
     /**
      * \brief remove connections of a given type
      * \param node node from which to remove connections
-     * \param type_filter node type filter
+     * \param filter type of target nodes
      * \param removed number of nodes removed during the operation
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
@@ -144,19 +151,13 @@ class connections_t {
 
     /**
      * \brief remove all connections of a node
+     * \param node one end of the connections to remove
      * \param commit whether uncommitted operations should be flushed or not
      * \param removed number of nodes removed during the operation
      * \return information whether operation succeeded or not
      */
     status_t erase(const node_uid_t& node, std::size_t& removed, bool commit = false)
         __attribute__((warn_unused_result));
-
-    /**
-     * \brief returns the number of connections in the network
-     * \param res the number of connections
-     * \return information whether operation succeeded or not
-     */
-    status_t count(std::size_t& res) const __attribute__((warn_unused_result));
 
   private:
     network_impl_t& pimpl_;
