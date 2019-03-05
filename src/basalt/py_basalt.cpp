@@ -37,6 +37,16 @@ static const std::string& rocksdb_version() {
     return rocksdb_version;
 }
 
+static const char* status_raise_on_error = R"(Ensure status is ok
+
+Raises:
+    RuntimeException: if status is not ok.
+
+Returns:
+    This instance
+
+)";
+
 // See
 // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#making-opaque-types
 PYBIND11_MAKE_OPAQUE(circuit::point_vector_t);
@@ -211,16 +221,18 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
     m.def("make_id", &basalt::make_id, "node_id_t constructor helper function");
 
     py::class_<basalt::status_t>(m, "Status")
-        .def_readonly("code", &basalt::status_t::code)
-        .def_readonly("message", &basalt::status_t::message)
-        .def("raise_on_error", &basalt::status_t::raise_on_error);
+        .def_readonly("code", &basalt::status_t::code, "status code")
+        .def_readonly("message", &basalt::status_t::message, "status description for humans")
+        .def("raise_on_error", &basalt::status_t::raise_on_error, status_raise_on_error);
 
     py::class_<basalt::network_t>(m, "Network")
         .def(py::init<const std::string&>())
-        .def_property_readonly("nodes", &basalt::network_t::nodes)
-        .def_property_readonly("connections", &basalt::network_t::connections)
-        .def("commit", &basalt::network_t::commit)
-        .def("statistics", &basalt::network_t::statistics);
+        .def_property_readonly("nodes", &basalt::network_t::nodes,
+                               "get wrapper object around vertices")
+        .def_property_readonly("connections", &basalt::network_t::connections,
+                               "get wrapper object around edges")
+        .def("commit", &basalt::network_t::commit, "apply pending changes")
+        .def("statistics", &basalt::network_t::statistics, "Returns database statistics usage");
 
     py::class_<basalt::connections_t>(m, "Connections")
         .def("insert",
