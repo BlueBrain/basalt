@@ -23,12 +23,15 @@ class graph {
     /** \name Key encoding functions
      *  \{
      */
-    static inline void encode(const node_uid_t& node, node_key_t& key) {
+    static inline void encode(const node_t type, const node_id_t id, node_key_t& key) {
         key[0] = 'N';
-        std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&node.first),
-                    sizeof(node_uid_t::first_type));
-        std::memcpy(key.data() + 1 + sizeof(node_uid_t::first_type),
-                    reinterpret_cast<const char*>(&node.second), sizeof(node_uid_t::second_type));
+        std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&type), sizeof(decltype(type)));
+        std::memcpy(key.data() + 1 + sizeof(decltype(type)), reinterpret_cast<const char*>(&id),
+                    sizeof(decltype(id)));
+    }
+
+    static inline void encode(const node_uid_t& node, node_key_t& key) {
+        encode(node.first, node.second, key);
     }
 
     static inline void encode_connection_prefix(const node_uid_t& node,

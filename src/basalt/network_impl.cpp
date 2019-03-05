@@ -164,10 +164,7 @@ status_t network_impl_t::to_status(const rocksdb::Status& status) {
 
 ///// nodes methods
 
-status_t network_impl_t::nodes_insert(basalt::node_t type,
-                                      basalt::node_id_t id,
-                                      basalt::node_uid_t& node,
-                                      bool commit) {
+status_t network_impl_t::nodes_insert(node_t type, node_id_t id, node_uid_t& node, bool commit) {
     logger_get()->debug("nodes_insert(type={}, id={}, commit={})", type, id, commit);
     graph::node_key_t key;
     node.first = type;
@@ -177,10 +174,10 @@ status_t network_impl_t::nodes_insert(basalt::node_t type,
                                    rocksdb::Slice(key.data(), key.size()), rocksdb::Slice()));
 }
 
-status_t network_impl_t::nodes_insert(basalt::node_t type,
-                                      basalt::node_id_t id,
+status_t network_impl_t::nodes_insert(node_t type,
+                                      node_id_t id,
                                       const gsl::span<const char>& payload,
-                                      basalt::node_uid_t& node,
+                                      node_uid_t& node,
                                       bool commit) {
     logger_get()->debug("nodes_insert(type={}, id={}, data_size={}, commit={})", type, id,
                         payload.size(), commit);
@@ -193,7 +190,34 @@ status_t network_impl_t::nodes_insert(basalt::node_t type,
                                    rocksdb::Slice(payload.data(), payload.size())));
 }
 
-status_t network_impl_t::nodes_has(const basalt::node_uid_t& node, bool& result) const {
+status_t network_impl_t::nodes_insert(const gsl::span<const node_t> types,
+                                      const gsl::span<const node_id_t> ids,
+                                      const gsl::span<const char* const> payloads,
+                                      const gsl::span<const std::size_t> payloads_sizes,
+                                      bool commit) {
+    logger_get()->debug("nodes_insert(nodes={}, payloads={}, commit={}", types.length(),
+                        payloads.length() != 0);
+    graph::node_key_t key;
+    rocksdb::WriteBatch batch;
+
+    if (payloads.empty()) {
+        const rocksdb::Slice empty_payload;
+        for (auto i = 0u; i < types.length(); ++i) {
+            graph::encode(types[i], ids[i], key);
+            batch.Put(nodes.get(), rocksdb::Slice(key.data(), key.size()), empty_payload);
+        }
+    } else {
+        for (auto i = 0u; i < types.length(); ++i) {
+            graph::encode(types[i], ids[i], key);
+            batch.Put(nodes.get(), rocksdb::Slice(key.data(), key.size()),
+                      rocksdb::Slice(payloads[i], payloads_sizes[i]));
+        }
+    }
+    return to_status(db_get()->Write(write_options(commit), &batch));
+}
+
+
+status_t network_impl_t::nodes_has(const node_uid_t& node, bool& result) const {
     logger_get()->debug("nodes_has(node={})", node);
     graph::node_key_t key;
     graph::encode(node, key);
@@ -209,7 +233,7 @@ status_t network_impl_t::nodes_has(const basalt::node_uid_t& node, bool& result)
     return to_status(status);
 }
 
-status_t network_impl_t::nodes_get(const basalt::node_uid_t& node, std::string* value) {
+status_t network_impl_t::nodes_get(const node_uid_t& node, std::string* value) {
     logger_get()->debug("nodes_get(node={})", node);
     graph::node_key_t key;
     graph::encode(node, key);
@@ -313,8 +337,7 @@ status_t network_impl_t::connections_insert(const node_uid_t& node,
         if (create_nodes) {
             graph::encode(target, node_key);
             const rocksdb::Slice payload{node_payloads[i], node_payloads_sizes[i]};
-            batch.Put(this->nodes.get(), rocksdb::Slice(node_key.data(), node_key.size()),
-                      payload);
+            batch.Put(this->nodes.get(), rocksdb::Slice(node_key.data(), node_key.size()), payload);
         }
         graph::encode(node, target, keys[i]);
         for (const auto& key: keys[i]) {
@@ -323,7 +346,6 @@ status_t network_impl_t::connections_insert(const node_uid_t& node,
     }
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
-
 
 status_t network_impl_t::connections_insert(const node_uid_t& node,
                                             const node_t type,
@@ -417,8 +439,8 @@ status_t network_impl_t::connections_insert(const node_uid_t& node,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-status_t network_impl_t::connections_has(const basalt::node_uid_t& node1,
-                                         const basalt::node_uid_t& node2,
+status_t network_impl_t::connections_has(const node_uid_t& node1,
+                                         const node_uid_t& node2,
                                          bool& res) const {
     logger_get()->debug("connections_has(node1={}, node2={})", node1, node2);
     graph::connection_key_t key;

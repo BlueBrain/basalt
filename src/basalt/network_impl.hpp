@@ -56,6 +56,11 @@ class network_impl_t {
                           bool commit);
 
     status_t nodes_insert(node_t type, node_id_t id, node_uid_t& node, bool commit);
+    status_t nodes_insert(const gsl::span<const node_t> types,
+                          const gsl::span<const node_id_t> ids,
+                          const gsl::span<const char* const> payloads,
+                          const gsl::span<const std::size_t> payloads_sizes,
+                          bool commit);
 
     status_t nodes_has(const node_uid_t& node, bool& result) const;
     status_t nodes_erase(const node_uid_t& node, bool commit);
