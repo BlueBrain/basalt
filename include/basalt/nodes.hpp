@@ -72,6 +72,24 @@ class nodes_t {
                     std::size_t size,
                     node_uid_t& node,
                     bool commit = false) __attribute__((warn_unused_result));
+    /**
+     * \brief Insert a list of nodes all at once
+     * \param types array of node types
+     * \param ids array of node identifiers
+     * \param payloads array of serialized data, \a nullptr if
+     * none of the nodes have a payload
+     * \param payloads_sizes size of every payloads, \a nullptr
+     * if none of the node have a payload
+     * \param num_nodes number of nodes to insert
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    status_t insert(const node_t* types,
+                    const node_id_t* ids,
+                    const char* const* payloads,
+                    const std::size_t* payloads_sizes,
+                    size_t num_nodes,
+                    bool commit = false) __attribute__((warn_unused_result));
 
     /**
      * \brief Retrieve a node from the graph

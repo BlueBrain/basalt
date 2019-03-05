@@ -1,6 +1,5 @@
 from builtins import map, range
 import logging
-import os
 
 import h5py
 import numpy as np
