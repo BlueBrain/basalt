@@ -370,6 +370,48 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
              },
              "insert a node in the graph", "node"_a, "id"_a, "data"_a, "commit"_a = false)
 
+        .def("insert",
+             [](basalt::nodes_t& instance, py::array_t<int32_t> types, py::array_t<uint64_t> nodes,
+                py::list payloads, bool commit = false) {
+                 if (nodes.ndim() != 1) {
+                     throw std::runtime_error("Number of dimensions of array 'nodes' must be one");
+                 }
+                 if (types.ndim() != 1) {
+                     throw std::runtime_error("Number of dimensions of array 'types' must be one");
+                 }
+                 if (nodes.size() != types.size()) {
+                     throw std::runtime_error("Number of types and nodes differ");
+                 }
+                 if (payloads.size() != 0) {
+                     if (static_cast<std::size_t>(nodes.size()) != payloads.size()) {
+                         throw std::runtime_error("Number of nodes and payloads differ");
+                     }
+                 }
+                 std::vector<const char*> node_payloads_data;
+                 node_payloads_data.reserve(payloads.size());
+                 std::vector<std::size_t> node_payloads_sizes;
+                 node_payloads_sizes.reserve(payloads.size());
+                 for (py::handle handle: payloads) {
+                     py::array_t<char> node_payload = py::cast<py::array_t<char>>(handle);
+                     node_payloads_data.push_back(node_payload.data());
+                     node_payloads_sizes.push_back(static_cast<std::size_t>(node_payload.size()));
+                 }
+                 if (node_payloads_data.empty()) {
+                     instance
+                         .insert(types.data(), nodes.data(), nullptr, nullptr,
+                                 static_cast<std::size_t>(nodes.size()), commit)
+                         .raise_on_error();
+                 } else {
+                     instance
+                         .insert(types.data(), nodes.data(), node_payloads_data.data(),
+                                 node_payloads_sizes.data(), static_cast<std::size_t>(nodes.size()),
+                                 commit)
+                         .raise_on_error();
+                 }
+             },
+             "insert several nodes in the graph", "types"_a, "nodes"_a, "payloads"_a,
+             "commit"_a = false)
+
         .def("get",
              [](basalt::nodes_t& nodes, basalt::node_uid_t node) -> py::object {
                  std::string data;

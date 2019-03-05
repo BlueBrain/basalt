@@ -26,6 +26,20 @@ status_t nodes_t::insert(basalt::node_t type,
     return pimpl_.nodes_insert(type, id, node, commit);
 }
 
+status_t nodes_t::insert(const node_t* types,
+                         const node_id_t* ids,
+                         const char* const* payloads,
+                         const std::size_t* payloads_sizes,
+                         size_t num_nodes,
+                         bool commit) {
+    if (payloads == nullptr) {
+        return pimpl_.nodes_insert({types, num_nodes}, {ids, num_nodes}, {}, {}, commit);
+    }
+    return pimpl_.nodes_insert({types, num_nodes}, {ids, num_nodes}, {payloads, num_nodes},
+                               {payloads_sizes, num_nodes}, commit);
+}
+
+
 status_t nodes_t::has(const node_uid_t& node, bool& result) const {
     return pimpl_.nodes_has(node, result);
 }
