@@ -1,6 +1,6 @@
 /**
  * \file src/basalt/circuit_payloads.cpp
- * Provides definition of classes used as payload for node
+ * Provides definition of classes used as payload for vertex
  * and edges of biological circuit made of neurons, synapses,
  * astrocytes, and segments.
  */

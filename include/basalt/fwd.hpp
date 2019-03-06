@@ -7,15 +7,16 @@
 namespace basalt {
 
 /// Forward declarations
-class connections_t;
-class network_impl_t;
-class node_iterator_impl;
-class node_iterator;
-class nodes_t;
+class Edges;
+class GraphImpl;
+class VertexIteratorImpl;
+class VertexIterator;
+class Vertices;
 
-using node_t = int;
-using node_id_t = std::size_t;
-using node_uid_t = std::pair<node_t, std::size_t>;
-using node_uids_t = std::vector<node_uid_t>;
+using vertex_t = int;
+using vertex_id_t = std::size_t;
+/** \brief a vertex is made of a type and an identifier */
+using vertex_uid_t = std::pair<vertex_t, std::size_t>;
+using vertex_uids_t = std::vector<vertex_uid_t>;
 
 }  // namespace basalt

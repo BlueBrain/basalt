@@ -2,17 +2,17 @@
 
 #include <type_traits>
 
-#include <basalt/node_iterator.hpp>
+#include <basalt/vertex_iterator.hpp>
 
 #include "fwd.hpp"
 
 namespace basalt {
 
-class node_iterator_impl {
+class VertexIteratorImpl {
   public:
-    using value_type = node_iterator::value_type;
-    explicit node_iterator_impl(const db_t& db,
-                                rocksdb::ColumnFamilyHandle* nodes,
+    using value_type = VertexIterator::value_type;
+    explicit VertexIteratorImpl(const db_t& db,
+                                rocksdb::ColumnFamilyHandle* vertices,
                                 const std::string& prefix,
                                 std::size_t position);
 
@@ -20,9 +20,9 @@ class node_iterator_impl {
         return position_;
     }
 
-    node_iterator_impl& operator++();
-    bool operator==(const node_iterator_impl& rhs) const;
-    bool operator!=(const node_iterator_impl& rhs) const;
+    VertexIteratorImpl& operator++();
+    bool operator==(const VertexIteratorImpl& rhs) const;
+    bool operator!=(const VertexIteratorImpl& rhs) const;
     const value_type& operator*();
 
     bool end_reached() const;

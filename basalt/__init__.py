@@ -6,11 +6,11 @@ from ._basalt import __version__, __rocksdb_version__  # noqa
 
 
 __all__ = [
-    "Network",
-    "NodeType",
+    "Graph",
+    "VertexType",
     "PayloadHelper",
-    "Nodes",
-    "Connections",
+    "Vertices",
+    "Edges",
     "Status",
     "Neuron",
     "Synapse",
@@ -19,7 +19,7 @@ __all__ = [
 ]
 
 
-class NodeType(Enum):
+class VertexType(Enum):
     NEURON = 1
     SYNAPSE = 2
     ASTROCYTE = 3
@@ -28,19 +28,19 @@ class NodeType(Enum):
 
 
 class PayloadHelper:
-    NODE_TYPE_TO_PAYLOAD_CLASS = {
-        NodeType.NEURON: Neuron,
-        NodeType.SYNAPSE: Synapse,
-        NodeType.ASTROCYTE: Astrocyte,
-        NodeType.MICRODOMAIN: MicroDomain,
+    VERTEX_TYPE_TO_PAYLOAD_CLASS = {
+        VertexType.NEURON: Neuron,
+        VertexType.SYNAPSE: Synapse,
+        VertexType.ASTROCYTE: Astrocyte,
+        VertexType.MICRODOMAIN: MicroDomain,
     }
 
     @classmethod
     def deserialize(cls, type, payload):
         if isinstance(type, tuple):
-            type = NodeType(type[0])
-        if not isinstance(type, NodeType):
-            type = NodeType(type)
-        obj = cls.NODE_TYPE_TO_PAYLOAD_CLASS[type]()
+            type = VertexType(type[0])
+        if not isinstance(type, VertexType):
+            type = VertexType(type)
+        obj = cls.VERTEX_TYPE_TO_PAYLOAD_CLASS[type]()
         obj.deserialize(payload)
         return obj
