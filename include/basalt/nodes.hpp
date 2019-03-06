@@ -1,5 +1,4 @@
-#ifndef BASALT_NODES_HPP
-#define BASALT_NODES_HPP
+#pragma once
 
 #include <basalt/fwd.hpp>
 #include <basalt/network.hpp>
@@ -139,5 +138,3 @@ class nodes_t {
 }  // namespace basalt
 
 #include <basalt/nodes.hxx>
-
-#endif  // BASALT_NODES_HPP

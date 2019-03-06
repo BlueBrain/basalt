@@ -1,5 +1,4 @@
-#ifndef BASALT_NODE_ITERATOR_HPP
-#define BASALT_NODE_ITERATOR_HPP
+#pragma once
 
 #include <iterator>
 #include <memory>
@@ -62,5 +61,3 @@ class node_iterator: public std::iterator<std::input_iterator_tag, const node_ui
 };
 
 }  // namespace basalt
-
-#endif  // BASALT_NODE_ITERATOR_HPP

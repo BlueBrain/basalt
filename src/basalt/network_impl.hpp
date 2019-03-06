@@ -1,5 +1,4 @@
-#ifndef BASALT_NETWORK_PIMPL_HPP
-#define BASALT_NETWORK_PIMPL_HPP
+#pragma once
 
 #include <gsl-lite/gsl-lite.hpp>
 
@@ -124,5 +123,3 @@ class network_impl_t {
 };
 
 }  // namespace basalt
-
-#endif  // BASALT_NETWORK_PIMPL_HPP

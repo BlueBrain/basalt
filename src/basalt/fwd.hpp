@@ -1,5 +1,4 @@
-#ifndef BASALT_IMPL_FWD_HPP
-#define BASALT_IMPL_FWD_HPP
+#pragma once
 
 #include <memory>
 
@@ -26,5 +25,3 @@ namespace basalt {
 
 using db_t = std::unique_ptr<rocksdb::DB>;
 }
-
-#endif  // BASALT_IMPL_FWD_HPP
