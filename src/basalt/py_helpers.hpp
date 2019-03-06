@@ -1,10 +1,9 @@
+#pragma once
+
 /**
  * \file src/basalt/py_helpers.hpp
  * Provides utility functions to Python/C++ object conversions
  */
-
-#ifndef BASALT_PY_HELPERS_HPP
-#define BASALT_PY_HELPERS_HPP
 
 #include <array>
 #include <ostream>
@@ -276,5 +275,3 @@ std::istream& operator>>(std::istream& istr, std::array<T, N>& array) {
 }
 
 }  // namespace std
-
-#endif  // BASALT_PY_HELPERS_HPP

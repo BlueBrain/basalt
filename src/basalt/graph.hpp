@@ -1,5 +1,4 @@
-#ifndef BASALT_TOPOLOGY_HPP
-#define BASALT_TOPOLOGY_HPP
+#pragma once
 
 #include <array>
 #include <cassert>
@@ -119,5 +118,3 @@ class graph {
 };
 
 }  // namespace basalt
-
-#endif  // BASALT_TOPOLOGY_HPP

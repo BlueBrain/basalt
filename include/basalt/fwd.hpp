@@ -1,5 +1,4 @@
-#ifndef BASALT_FWD_HPP
-#define BASALT_FWD_HPP
+#pragma once
 
 #include <cstddef>
 #include <utility>
@@ -20,5 +19,3 @@ using node_uid_t = std::pair<node_t, std::size_t>;
 using node_uids_t = std::vector<node_uid_t>;
 
 }  // namespace basalt
-
-#endif  // BASALT_FWD_HPP

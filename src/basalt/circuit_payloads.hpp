@@ -1,12 +1,11 @@
+#pragma once
+
 /**
  * \file src/basalt/circuit_payloads.hpp
  * Provides declaration of classes used as payload for node
  * and edges of biological circuit made of neurons, synapses,
  * astrocytes, and segments.
  */
-
-#ifndef BASALT_CIRCUIT_PAYLOADS_HPP
-#define BASALT_CIRCUIT_PAYLOADS_HPP
 
 #include "py_helpers.hpp"
 
@@ -290,5 +289,3 @@ void serialize(Archive& ar, edge_astrocyte_segment_t& a) {
  */
 
 }  // namespace circuit
-
-#endif  // BASALT_CIRCUIT_PAYLOADS_HPP

@@ -1,5 +1,4 @@
-#ifndef BASALT_NODE_ITERATOR_IMPL_HPP
-#define BASALT_NODE_ITERATOR_IMPL_HPP
+#pragma once
 
 #include <type_traits>
 
@@ -35,5 +34,3 @@ class node_iterator_impl {
 };
 
 }  // namespace basalt
-
-#endif  // BASALT_NODE_ITERATOR_IMPL_HPP

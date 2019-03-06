@@ -1,5 +1,4 @@
-#ifndef BASALT_VERSION_HPP
-#define BASALT_VERSION_HPP
+#pragma once
 
 #include <array>
 
@@ -12,5 +11,3 @@ namespace basalt {
 std::array<int, 3> rocksdb_version();
 
 }  // namespace basalt
-
-#endif  // BASALT_VERSION_HPP

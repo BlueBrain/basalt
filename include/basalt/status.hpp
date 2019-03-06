@@ -1,5 +1,4 @@
-#ifndef BASALT_STATUS_HPP
-#define BASALT_STATUS_HPP
+#pragma once
 
 #include <iosfwd>
 #include <string>
@@ -95,5 +94,3 @@ struct status_t {
 
 /// \brief specialization to gently push a \a status_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status);
-
-#endif  // BASALT_STATUS_HPP
