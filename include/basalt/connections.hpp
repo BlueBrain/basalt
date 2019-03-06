@@ -1,5 +1,4 @@
-#ifndef BASALT_CONNECTIONS_HPP
-#define BASALT_CONNECTIONS_HPP
+#pragma once
 
 #include <basalt/fwd.hpp>
 #include <basalt/status.hpp>
@@ -164,5 +163,3 @@ class connections_t {
 };
 
 }  // namespace basalt
-
-#endif  // BASALT_CONNECTIONS_HPP

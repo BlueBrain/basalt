@@ -1,5 +1,4 @@
-#ifndef BASALT_NETWORK_HXX
-#define BASALT_NETWORK_HXX
+#pragma once
 
 #include <sstream>
 
@@ -35,5 +34,3 @@ status_t nodes_t::get(const node_uid_t& node, T& payload) const {
 }
 
 }  // namespace basalt
-
-#endif  // !BASALT_NETWORK_HXX

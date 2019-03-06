@@ -1,5 +1,4 @@
-#ifndef BASALT_NETWORK_HPP
-#define BASALT_NETWORK_HPP
+#pragma once
 
 #include <iosfwd>
 #include <limits>
@@ -60,5 +59,3 @@ std::ostream& operator<<(std::ostream& ostr, const basalt::node_uid_t& id);
 
 /// \brief specialization to gently push a \a node_uids_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::node_uids_t& ids);
-
-#endif  // !BASALT_NETWORK_HPP
