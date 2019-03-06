@@ -14,6 +14,7 @@
 #
 import os
 import sys
+import textwrap
 sys.path.insert(0, os.path.abspath('..'))
 import basalt
 
@@ -50,6 +51,25 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
 ]
+
+doctest_global_setup = textwrap.dedent("""\
+    import tempfile
+
+    import numpy as np
+
+    import basalt
+    from basalt import VertexType
+
+    tmpdir = tempfile.mkdtemp()
+    graph = basalt.Graph(tmpdir)
+""")
+
+doctest_global_cleanup = textwrap.dedent("""\
+    import shutil
+
+    del graph
+    shutil.rmtree(tmpdir)
+""")
 
 # Setup the breathe extension
 breathe_projects = {

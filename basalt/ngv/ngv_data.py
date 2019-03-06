@@ -1,9 +1,8 @@
-from builtins import map, range
 import logging
+from builtins import map, range
 
 import h5py
 import numpy as np
-
 
 L = logging.getLogger(__name__)
 

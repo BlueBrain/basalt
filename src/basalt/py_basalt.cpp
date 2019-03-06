@@ -40,15 +40,107 @@ static const std::string& rocksdb_version() {
     return rocksdb_version;
 }
 
-static const char* status_raise_on_error = R"(Ensure status is ok
+/** \brief docstring of Python symbols */
+namespace docstring {
 
-Raises:
-    RuntimeException: if status is not ok.
+static const char* status = R"(
+    Provide result of one or several graph operations
 
-Returns:
-    This instance
+    Attributes:
+        code(int): operation status code, 0 means success.
+        message(str): optional message
+
+    To use:
+    >>> status = basalt.Status(code=42)
+    >>> status.code
+    42
+    >>> if status:
+    ...   print('ok')
+    ... else:
+    ...   print('oops')
+    ...
+    oops
+
+    A message for humans can be also specified
+    >>> status = basalt.Status(code=42, message="the answer to every question")
+    >>> status.message
+    the answer to every question
 
 )";
+
+static const char* make_id = R"(
+    Helper function to create vertex identifier
+
+    Args:
+        type(int): vertex type
+        id(int): vertex identifier
+
+    Returns:
+        A tuple of 2 elements providing the type and id
+
+    >>> basalt.make_id(42, 43)
+    (42, 43)
+
+)";
+
+static const char* status_raise_on_error = R"(
+    Ensure status is ok
+
+    Raises:
+        RuntimeException: whenever status code is different than 0
+
+    Returns:
+        This instance
+
+    >>> basalt.Status(code=0, message="all good").raise_on_error()
+    Status(code=0, message="all good")
+    >>> basalt.Status(code=42, message="actually...").raise_on_error()
+    Traceback (most recent call last):
+        ...
+    RuntimeError: actually...
+)";
+
+static const char* graph = R"(
+    Undirected Connectivity Graph
+
+)";
+
+static const char* graph_init = R"(
+    Construct a graph object
+
+    Args:
+        path(str): path to rocksdb database on filesystem.
+        Database is will be created if path does not exist.
+
+)";
+
+static const char* graph_commit = R"(
+    Flush pending changes on disk
+
+    Raises:
+        RuntimeException: uppon error
+
+    >>> graph.vertices.add((VertexType.NEURON.value, 42))
+    >>> graph.commit()
+)";
+
+static const char* graph_edges = R"(
+    Get wrapper around the edges of the graph
+
+    Returns:
+        instance of :py:class:`Edges`
+
+)";
+
+static const char* graph_vertices = R"(
+    Get wrapper around the vertices of the graph
+
+    Returns:
+        instance of :py:class:`Vertices`
+
+)";
+
+}  // namespace docstring
 
 
 #if defined(__clang__)
@@ -60,20 +152,36 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
     m.attr("__rocksdb_version__") = rocksdb_version();
     m.attr("__version__") = basalt_version();
 
-    m.def("make_id", &basalt::make_id, "vertex_id_t constructor helper function");
+    m.def("make_id", &basalt::make_id, "type"_a, "id"_a, docstring::make_id);
 
-    py::class_<basalt::Status>(m, "Status")
-        .def_readonly("code", &basalt::Status::code, "status code")
+    py::class_<basalt::Status>(m, "Status", docstring::status)
+        .def(py::init([](int code, const std::string& message) {
+                 return basalt::Status(static_cast<basalt::Status::Code>(code), message);
+             }),
+             "code"_a, "message"_a = std::string())
+        .def_property_readonly("code",
+                               [](const basalt::Status& status) {
+                                   return static_cast<int>(status.code);
+                               },
+                               "status code")
         .def_readonly("message", &basalt::Status::message, "status description for humans")
-        .def("raise_on_error", &basalt::Status::raise_on_error, status_raise_on_error);
+        .def("raise_on_error", &basalt::Status::raise_on_error, docstring::status_raise_on_error)
+        .def("__bool__",
+             [](const basalt::Status& status) -> bool { return static_cast<bool>(status); })
+        .def("__repr__", [](const basalt::Status& status) {
+            std::ostringstream oss;
+            oss << "Status(code=" << status.code << ", message=\"" << status.message << "\")";
+            return oss.str();
+        });
 
-    py::class_<basalt::Graph>(m, "Graph")
-        .def(py::init<const std::string&>())
+    py::class_<basalt::Graph>(m, "Graph", docstring::graph)
+        .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
         .def_property_readonly("vertices", &basalt::Graph::vertices,
                                "get wrapper object around vertices")
-        .def_property_readonly("edges", &basalt::Graph::edges, "get wrapper object around edges")
-        .def("commit", &basalt::Graph::commit, "apply pending changes")
-        .def("statistics", &basalt::Graph::statistics, "Returns database statistics usage");
+        .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
+        .def("commit", [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
+             docstring::graph_commit)
+        .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
 
     basalt::register_circuit_payloads_bindings(m);
     basalt::register_graph_edges(m);

@@ -57,3 +57,6 @@ std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uid_t& id);
 
 /// \brief specialization to gently push a \a vertex_uids_t to an output stream
 std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uids_t& ids);
+
+/// \brief specialization to gently push a \a edge_uid_t to an output stream
+std::ostream& operator<<(std::ostream& ostr, const basalt::edge_uid_t& id);

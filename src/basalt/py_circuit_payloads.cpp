@@ -20,9 +20,10 @@ PYBIND11_MAKE_OPAQUE(circuit::float_point_t);
 
 namespace basalt {
 
-void register_circuit_payloads_bindings(py::module& m) {
+void register_circuit_payloads_bindings(py::module& basalt) {
     // see
     // https://pybind11.readthedocs.io/en/stable/advanced/cast/stl.html#binding-stl-containers
+    py::module m = basalt.def_submodule("ngv");
     py::bind_vector<circuit::point_vector_t>(m, "FloatPointVector", py::module_local());
 
     py::bind_vector<circuit::int_vector_t>(m, "IntegerPointVector", py::module_local());
@@ -31,7 +32,7 @@ void register_circuit_payloads_bindings(py::module& m) {
         .def(py::init<>())
         .def(py::init([](circuit::float_point_t::value_type x, circuit::float_point_t::value_type y,
                          circuit::float_point_t::value_type z) {
-            return circuit::float_point_t{x, y, z};
+            return circuit::float_point_t{{x, y, z}};
         }))
         .def(py::init([](const std::list<circuit::float_point_t::value_type>& list) {
             circuit::float_point_t eax;
@@ -88,8 +89,8 @@ void register_circuit_payloads_bindings(py::module& m) {
         .def(py::init<>())
         .def(py::init(&circuit::synapse_t::create), "pre_gid"_a = 0, "post_gid"_a = 0,
              "nrn_idx"_a = 0, "astro_idx"_a = py::array_t<uint32_t>(0), "is_excitatory"_a = false,
-             "pre"_a = circuit::float_point_t({0., 0., 0.}),
-             "post"_a = circuit::float_point_t({0., 0., 0.}), "mesh_filename"_a = "",
+             "pre"_a = circuit::float_point_t({{0., 0., 0.}}),
+             "post"_a = circuit::float_point_t({{0., 0., 0.}}), "mesh_filename"_a = "",
              "skeleton_filename"_a = "", "psd_area"_a = 0.)
         .def("serialize", &basalt::serialize<circuit::synapse_t>)
         .def("deserialize", &basalt::deserialize<circuit::synapse_t>)
@@ -108,7 +109,7 @@ void register_circuit_payloads_bindings(py::module& m) {
     py::class_<circuit::astrocyte_t>(m, "Astrocyte")
         .def(py::init<>())
         .def(py::init(&circuit::astrocyte_t::create), "astrocyte_id"_a = 0, "microdomain_id"_a = 0,
-             "soma_center"_a = circuit::float_point_t({0., 0., 0.}), "soma_radius"_a = 0.,
+             "soma_center"_a = circuit::float_point_t({{0., 0., 0.}}), "soma_radius"_a = 0.,
              "name"_a = "", "mtype"_a = "", "morphology_filename"_a = "",
              "synapses_idx"_a = py::array_t<uint32_t>(0),
              "neurons_idx"_a = py::array_t<uint32_t>(0))
@@ -130,7 +131,7 @@ void register_circuit_payloads_bindings(py::module& m) {
              "astrocyte_id"_a = 0, "neighbors"_a = py::array_t<uint32_t>(0),
              "vertex_coordinates"_a = py::array_t<float>(0),
              "triangles"_a = py::array_t<uint32_t>(0),
-             "centroid"_a = circuit::float_point_t({0., 0., 0.}), "area"_a = 0., "volume"_a = 0.,
+             "centroid"_a = circuit::float_point_t({{0., 0., 0.}}), "area"_a = 0., "volume"_a = 0.,
              "mesh_filename"_a = "", "neurons_idx"_a = py::array_t<uint32_t>(0),
              "synapses_idx"_a = py::array_t<uint32_t>(0))
         .def("serialize", &basalt::serialize<circuit::microdomain_t>)
@@ -170,8 +171,8 @@ void register_circuit_payloads_bindings(py::module& m) {
     py::class_<circuit::edge_astrocyte_segment_t>(m, "EdgeAstrocyteSegment")
         .def(py::init<>())
         .def(py::init<>(&circuit::edge_astrocyte_segment_t::create),
-             "astrocyte"_a = circuit::float_point_t({0., 0., 0.}),
-             "vasculature"_a = circuit::float_point_t({0., 0., 0.}))
+             "astrocyte"_a = circuit::float_point_t({{0., 0., 0.}}),
+             "vasculature"_a = circuit::float_point_t({{0., 0., 0.}}))
         .def("serialize", &basalt::serialize<circuit::edge_astrocyte_segment_t>)
         .def("deserialize", &basalt::deserialize<circuit::edge_astrocyte_segment_t>)
         .def_readwrite("astrocyte", &circuit::edge_astrocyte_segment_t::astrocyte)

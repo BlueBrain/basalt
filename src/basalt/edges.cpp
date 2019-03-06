@@ -57,6 +57,10 @@ Status Edges::get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
     return pimpl_.edges_get(vertex, edges);
 }
 
+Status Edges::get(const edge_uid_t& edge, std::string* value) const {
+    return pimpl_.edges_get(edge, value);
+}
+
 Status Edges::get(const vertex_uid_t& vertex, vertex_t filter, vertex_uids_t& edges) const {
     return pimpl_.edges_get(vertex, filter, edges);
 }
@@ -72,5 +76,14 @@ Status Edges::erase(const vertex_uid_t& vertex, vertex_t filter, size_t& removed
 Status Edges::erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit) {
     return pimpl_.edges_erase(vertex, removed, commit);
 }
+
+Status Edges::clear(bool commit) {
+    return pimpl_.edges_clear(commit);
+}
+
+Status Edges::count(std::size_t& count) const {
+    return pimpl_.edges_count(count);
+}
+
 
 }  // namespace basalt

@@ -48,13 +48,11 @@ class GraphImpl {
         return this->db_;
     }
 
-    Status vertices_insert(basalt::vertex_t type,
-                           basalt::vertex_id_t id,
+    Status vertices_insert(const basalt::vertex_uid_t& vertex,
                            const gsl::span<const char>& payload,
-                           basalt::vertex_uid_t& vertex,
                            bool commit);
 
-    Status vertices_insert(vertex_t type, vertex_id_t id, vertex_uid_t& vertex, bool commit);
+    Status vertices_insert(const vertex_uid_t& vertex, bool commit);
     Status vertices_insert(const gsl::span<const vertex_t> types,
                            const gsl::span<const vertex_id_t> ids,
                            const gsl::span<const char* const> payloads,
@@ -63,8 +61,11 @@ class GraphImpl {
 
     Status vertices_has(const vertex_uid_t& vertex, bool& result) const;
     Status vertices_erase(const vertex_uid_t& vertex, bool commit);
+    Status vertices_count(std::size_t& count) const;
+    Status vertices_count(vertex_t type, std::size_t& count) const;
     Status vertices_get(const basalt::vertex_uid_t& vertex, std::string* value);
     std::shared_ptr<VertexIteratorImpl> VertexIterator(std::size_t from) const;
+    Status vertices_clear(bool commit) __attribute__((warn_unused_result));
 
     Status edges_insert(const vertex_uid_t& vertex1,
                         const vertex_uid_t& vertex2,
@@ -92,6 +93,8 @@ class GraphImpl {
                         bool commit);
 
     Status edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) const;
+    Status edges_get(const edge_uid_t& edge, std::string* value) const
+        __attribute__((warn_unused_result));
 
     Status edges_has(const vertex_uid_t& vertex1, const vertex_uid_t& vertex2, bool& result) const;
 
@@ -101,6 +104,10 @@ class GraphImpl {
 
     Status edges_erase(const vertex_uid_t& vertex, vertex_t filter, size_t& removed, bool commit);
     Status edges_erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit);
+    Status edges_count(std::size_t& count) const;
+    Status edges_clear(bool commit) __attribute__((warn_unused_result));
+
+
     Status commit();
     std::string statistics() const;
 
@@ -109,6 +116,8 @@ class GraphImpl {
 
   private:
     Status edges_erase(rocksdb::WriteBatch& batch, const vertex_uid_t& vertex, size_t& removed);
+    void clear(rocksdb::WriteBatch& batch,
+               const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle);
 
     const std::string& path_;
     Vertices vertices_;
