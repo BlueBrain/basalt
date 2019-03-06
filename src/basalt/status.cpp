@@ -2,48 +2,47 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <basalt/network.hpp>
+#include <basalt/graph.hpp>
 #include <basalt/status.hpp>
 
 namespace basalt {
 
-status_t::status_t(status_t::Code code_, std::string message_)
+Status::Status(Status::Code code_, std::string message_)
     : code(code_)
     , message(std::move(message_)) {}
 
-const status_t& status_t::raise_on_error() const {
+const Status& Status::raise_on_error() const {
     if (code != 0) {
         throw std::runtime_error(message);
     }
     return *this;
 }
 
-const status_t& status_t::ok() {
-    static const status_t ok_{status_t::ok_code, ""};
+const Status& Status::ok() {
+    static const Status ok_{Status::ok_code, ""};
     return ok_;
 }
 
-const status_t& status_t::error_not_implemented() {
-    static const status_t not_implemented_{status_t::not_implemented_code,
-                                           "operation-not-implemented"};
+const Status& Status::error_not_implemented() {
+    static const Status not_implemented_{Status::not_implemented_code, "operation-not-implemented"};
     return not_implemented_;
 }
 
-status_t status_t::error_missing_node(const node_uid_t& node) {
+Status Status::error_missing_vertex(const vertex_uid_t& vertex) {
     std::ostringstream oss;
-    oss << "Missing node " << node;
-    return {missing_node_code, oss.str()};
+    oss << "Missing vertex " << vertex;
+    return {missing_vertex_code, oss.str()};
 }
 
-status_t status_t::error_invalid_connection(const basalt::node_uid_t& node1,
-                                            const basalt::node_uid_t& node2) {
+Status Status::error_invalid_edge(const basalt::vertex_uid_t& vertex1,
+                                  const basalt::vertex_uid_t& vertex2) {
     std::ostringstream oss;
-    oss << "Invalid connection " << node1 << ' ' << node2;
-    return {invalid_connection_code, oss.str()};
+    oss << "Invalid edge " << vertex1 << ' ' << vertex2;
+    return {invalid_edge_code, oss.str()};
 }
 
 }  // namespace basalt
 
-std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status) {
+std::ostream& operator<<(std::ostream& ostr, const basalt::Status& status) {
     return ostr << "code=" << status.code << " message=" << status.message;
 }

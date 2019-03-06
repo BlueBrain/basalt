@@ -1,6 +1,6 @@
 #pragma once
 
-#include <basalt/connections.hpp>
-#include <basalt/network.hpp>
-#include <basalt/node_iterator.hpp>
-#include <basalt/nodes.hpp>
+#include <basalt/edges.hpp>
+#include <basalt/graph.hpp>
+#include <basalt/vertex_iterator.hpp>
+#include <basalt/vertices.hpp>

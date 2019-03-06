@@ -1,25 +1,26 @@
 # pure C++ shared library
 set(basalt_SOURCES
-    basalt/connections.cpp
-    basalt/graph.hpp
-    basalt/network.cpp
-    basalt/network_impl.cpp
-    basalt/network_impl.hpp
-    basalt/nodes.cpp
-    basalt/node_iterator_impl.hpp
-    basalt/node_iterator_impl.cpp
-    basalt/node_iterator.cpp
-    basalt/status.cpp
+    basalt/edges.cpp
+    basalt/graph.cpp
+    basalt/graph_impl.cpp
+    basalt/graph_impl.hpp
+    basalt/graph_kv.hpp
     basalt/settings.hpp
-    basalt/version.cpp)
+    basalt/status.cpp
+    basalt/version.cpp
+    basalt/vertex_iterator_impl.cpp
+    basalt/vertex_iterator_impl.hpp
+    basalt/vertices.cpp
+    basalt/vertex_iterator.cpp)
 set(basalt_HEADERS
-    ${basalt_include_directory}/basalt/connections.hpp
+    ${basalt_include_directory}/basalt/basalt.hpp
+    ${basalt_include_directory}/basalt/edges.hpp
     ${basalt_include_directory}/basalt/fwd.hpp
-    ${basalt_include_directory}/basalt/network.hpp
-    ${basalt_include_directory}/basalt/nodes.hxx
-    ${basalt_include_directory}/basalt/node_iterator.hpp
-    ${basalt_include_directory}/basalt/nodes.hpp
-    ${CMAKE_CURRENT_BINARY_DIR}/basalt/version.hpp)
+    ${basalt_include_directory}/basalt/graph.hpp
+    ${CMAKE_CURRENT_BINARY_DIR}/basalt/version.hpp
+    ${basalt_include_directory}/basalt/vertices.hpp
+    ${basalt_include_directory}/basalt/vertices.ipp
+    ${basalt_include_directory}/basalt/vertex_iterator.hpp)
 
 configure_file(basalt/version.hpp.in basalt/version.hpp @ONLY)
 configure_file(basalt/settings.hpp.in basalt/settings.hpp @ONLY)
@@ -48,6 +49,12 @@ set(PYBIND11_SOURCES
     basalt/circuit_payloads.hpp
     basalt/circuit_payloads.cpp
     basalt/py_basalt.cpp
+    basalt/py_circuit_payloads.hpp
+    basalt/py_circuit_payloads.cpp
+    basalt/py_graph_edges.hpp
+    basalt/py_graph_edges.cpp
+    basalt/py_graph_vertices.hpp
+    basalt/py_graph_vertices.cpp
     basalt/py_helpers.hpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 add_subdirectory(${pybind11_project_directory})

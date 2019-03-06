@@ -10,15 +10,15 @@ namespace basalt {
 /**
  * Result of one or several graph operations
  */
-struct status_t {
+struct Status {
     /**
      * Operation status code
      */
     enum Code {
         ok_code = 0,
         not_implemented_code = -1,
-        missing_node_code = -2,
-        invalid_connection_code = -3
+        missing_vertex_code = -2,
+        invalid_edge_code = -3
     };
 
 
@@ -32,8 +32,8 @@ struct status_t {
      * \param code status code
      * \param message message for humans
      */
-    status_t(Code code, std::string message);
-    status_t() = delete;
+    Status(Code code, std::string message);
+    Status() = delete;
     /** \} */
 
     /**
@@ -55,34 +55,34 @@ struct status_t {
      * Throw \a std::runtime_error if status is not \a ok_code.
      * \return this instance if member does not throw
      */
-    const status_t& raise_on_error() const;
+    const Status& raise_on_error() const;
 
     /**
-     * \brief Create a Status
+     * \brief Construct a \a Status
      * \return A status representing a not implemented state
      */
-    static const status_t& error_not_implemented();
+    static const Status& error_not_implemented();
 
     /**
-     * \brief Create a Status
-     * \param node Node missing
-     * \return A status representing a missing node
+     * \brief Construct a \a Status
+     * \param vertex Vertex missing
+     * \return A status representing a missing vertex
      */
-    static status_t error_missing_node(const node_uid_t& node);
+    static Status error_missing_vertex(const vertex_uid_t& vertex);
 
     /**
-     * \brief Create a Status
-     * \param node1 one end of an edge
-     * \param node2 other end of the edge
-     * \return A status representing a invalid connection between 2 nodes
+     * \brief Construct a \a Status
+     * \param vertex1 one end of an edge
+     * \param vertex2 other end of the edge
+     * \return A status representing a invalid edge between 2 vertices
      */
-    static status_t error_invalid_connection(const node_uid_t& node1, const node_uid_t& node2);
+    static Status error_invalid_edge(const vertex_uid_t& vertex1, const vertex_uid_t& vertex2);
 
     /**
      * \brief Create Status
      * \return A status representing a situation where everything is alright.
      */
-    static const status_t& ok();
+    static const Status& ok();
 
     /// status code
     const Code code;
@@ -92,5 +92,5 @@ struct status_t {
 
 }  // namespace basalt
 
-/// \brief specialization to gently push a \a status_t to an output stream
-std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status);
+/// \brief specialization to gently push a \a Status to an output stream
+std::ostream& operator<<(std::ostream& ostr, const basalt::Status& status);
