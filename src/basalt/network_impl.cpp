@@ -196,7 +196,7 @@ status_t network_impl_t::nodes_insert(const gsl::span<const node_t> types,
                                       const gsl::span<const std::size_t> payloads_sizes,
                                       bool commit) {
     logger_get()->debug("nodes_insert(nodes={}, payloads={}, commit={}", types.length(),
-                        payloads.length() != 0);
+                        payloads.length() != 0, commit);
     graph::node_key_t key;
     rocksdb::WriteBatch batch;
 

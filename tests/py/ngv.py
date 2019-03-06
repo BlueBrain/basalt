@@ -50,4 +50,4 @@ class TestImporter(unittest.TestCase):
         with self.tempdir() as path:
             data = self.h5_file("microdomain_structure")
             stats = basalt.ngv.import_microdomain(data, path, create_nodes=True)
-            self.assertEquals(stats["dataset"], {"microdomains": 4})
+            self.assertEqual(stats["dataset"], {"microdomains": 4})
