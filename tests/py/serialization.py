@@ -2,28 +2,28 @@ import unittest
 
 import numpy as np
 
-import basalt
+import basalt.ngv as ngv
 
 
 class Point(unittest.TestCase):
     def test_creation(self):
-        p = basalt.Point()
+        p = ngv.Point()
         self.assertEqual(p.x, 0.0)
         self.assertEqual(p.y, 0.0)
         self.assertEqual(p.y, 0.0)
 
-        p = basalt.Point(3.0, 4.0, 5.0)
+        p = ngv.Point(3.0, 4.0, 5.0)
         self.assertEqual(p.x, 3.0)
         self.assertEqual(p.y, 4.0)
         self.assertEqual(p.z, 5.0)
 
-        p = basalt.Point([3.0, 4.0, 5.0])
+        p = ngv.Point([3.0, 4.0, 5.0])
         self.assertEqual(p.x, 3.0)
         self.assertEqual(p.y, 4.0)
         self.assertEqual(p.z, 5.0)
 
     def test_bracket_operators(self):
-        p = basalt.Point(3.0, 4.0, 5.0)
+        p = ngv.Point(3.0, 4.0, 5.0)
         self.assertEqual(p[0], 3.0)
         self.assertEqual(p[1], 4.0)
         self.assertEqual(p[2], 5.0)
@@ -32,7 +32,7 @@ class Point(unittest.TestCase):
         self.assertEqual(p[1], 6.0)
 
     def test_properties(self):
-        p = basalt.Point(3.0, 4.0, 5.0)
+        p = ngv.Point(3.0, 4.0, 5.0)
         self.assertEqual(p.x, 3.0)
         self.assertEqual(p.y, 4.0)
         self.assertEqual(p.z, 5.0)
@@ -44,7 +44,7 @@ class Point(unittest.TestCase):
 class Neuron(unittest.TestCase):
     @staticmethod
     def create_object():
-        n = basalt.Neuron()
+        n = ngv.Neuron()
         n.gid = 42
         n.astro_idx.append(43)
         n.astro_idx.append(44)
@@ -52,14 +52,14 @@ class Neuron(unittest.TestCase):
         n.syn_idx.append(46)
         n.syn_idx.append(47)
         n.syn_idx.append(48)
-        return [n, basalt.Neuron(42, np.array([43, 44, 45]), np.array([46, 47, 48]))]
+        return [n, ngv.Neuron(42, np.array([43, 44, 45]), np.array([46, 47, 48]))]
 
     def test_creation(self):
-        n = basalt.Neuron(gid=42)
+        n = ngv.Neuron(gid=42)
         self.assertEqual(list(n.astro_idx), [])
         self.assertEqual(list(n.syn_idx), [])
 
-        n = basalt.Neuron(gid=42, syn_idx=[42])
+        n = ngv.Neuron(gid=42, syn_idx=[42])
         self.assertEqual(list(n.astro_idx), [])
         self.assertEqual(list(n.syn_idx), [42])
 
@@ -73,7 +73,7 @@ class Neuron(unittest.TestCase):
     def test_serialization(self):
         n, _ = Neuron.create_object()
         raw = n.serialize()
-        n2 = basalt.Neuron()
+        n2 = ngv.Neuron()
         n2.deserialize(raw)
         self.check_object(n2)
 
@@ -86,14 +86,14 @@ class Neuron(unittest.TestCase):
 class Synapse(unittest.TestCase):
     @staticmethod
     def create_object():
-        return basalt.Synapse(
+        return ngv.Synapse(
             pre_gid=42,
             post_gid=43,
             nrn_idx=44,
             astro_idx=np.array([45, 46, 47]),
             is_excitatory=True,
-            pre=basalt.Point(48.0, 49.0, 50.0),
-            post=basalt.Point(51.0, 52.0, 53.0),
+            pre=ngv.Point(48.0, 49.0, 50.0),
+            post=ngv.Point(51.0, 52.0, 53.0),
             mesh_filename="mesh_filename",
             skeleton_filename="skeleton_filename",
             psd_area=54.0,
@@ -112,7 +112,7 @@ class Synapse(unittest.TestCase):
         self.assertEqual(obj.psd_area, 54.0)
 
     def test_creation(self):
-        s = basalt.Synapse()
+        s = ngv.Synapse()
         self.assertEqual(s.pre_gid, 0)
 
         s = Synapse.create_object()
@@ -122,7 +122,7 @@ class Synapse(unittest.TestCase):
         obj = Synapse.create_object()
         raw = obj.serialize()
 
-        obj = basalt.Synapse()
+        obj = ngv.Synapse()
         obj.deserialize(raw)
         self.check_object(obj)
 
@@ -130,13 +130,13 @@ class Synapse(unittest.TestCase):
 class MicroDomain(unittest.TestCase):
     @staticmethod
     def create_object():
-        return basalt.MicroDomain(
+        return ngv.MicroDomain(
             microdomain_id=0,
             astrocyte_id=1,
             neighbors=np.array([2, 3, 4]),
             vertex_coordinates=np.array([[5.0, 6.0, 7.0], [8.0, 9.0, 10.0]]),
             triangles=np.array([[11, 12, 13], [14, 15, 16]]),
-            centroid=basalt.Point(17.0, 18.0, 19.0),
+            centroid=ngv.Point(17.0, 18.0, 19.0),
             area=20.0,
             volume=21.0,
             mesh_filename="mesh_filename",
@@ -161,15 +161,15 @@ class MicroDomain(unittest.TestCase):
         self.assertEqual(list(obj.synapses_idx), [25, 26, 27])
 
     def test_creation(self):
-        m = basalt.MicroDomain()
+        m = ngv.MicroDomain()
         self.assertEqual(m.microdomain_id, 0)
 
-        m = basalt.MicroDomain(microdomain_id=42)
+        m = ngv.MicroDomain(microdomain_id=42)
         self.assertEqual(m.microdomain_id, 42)
 
         m = MicroDomain.create_object()
         raw = m.serialize()
-        m = basalt.MicroDomain()
+        m = ngv.MicroDomain()
         m.deserialize(raw)
         self.check_object(m)
 
@@ -177,10 +177,10 @@ class MicroDomain(unittest.TestCase):
 class Astrocyte(unittest.TestCase):
     @staticmethod
     def create_object():
-        return basalt.Astrocyte(
+        return ngv.Astrocyte(
             astrocyte_id=42,
             microdomain_id=43,
-            soma_center=basalt.Point(44.0, 45.0, 46.0),
+            soma_center=ngv.Point(44.0, 45.0, 46.0),
             soma_radius=47.0,
             name="name",
             mtype="mtype",
@@ -201,7 +201,7 @@ class Astrocyte(unittest.TestCase):
         self.assertEqual(list(a.neurons_idx), [51, 52, 53])
 
     def test_creation(self):
-        a = basalt.Astrocyte()
+        a = ngv.Astrocyte()
         self.assertEqual(a.astrocyte_id, 0)
         self.assertEqual(a.microdomain_id, 0)
         self.assertEqual(a.name, "")
@@ -212,7 +212,7 @@ class Astrocyte(unittest.TestCase):
         self.check_object(a)
 
     def test_assign_properties(self):
-        a = basalt.Astrocyte(astrocyte_id=42, name="astro")
+        a = ngv.Astrocyte(astrocyte_id=42, name="astro")
 
         self.assertEqual(a.astrocyte_id, 42)
         a.astrocyte_id += 1
@@ -225,7 +225,7 @@ class Astrocyte(unittest.TestCase):
     def test_serialization(self):
         a = self.create_object()
         raw = a.serialize()
-        a2 = basalt.Astrocyte()
+        a2 = ngv.Astrocyte()
         a2.deserialize(raw)
         self.check_object(a2)
 
@@ -233,7 +233,7 @@ class Astrocyte(unittest.TestCase):
 class Segment(unittest.TestCase):
     @staticmethod
     def create_object():
-        return basalt.Segment(
+        return ngv.Segment(
             section_id=42,
             segment_id=43,
             type=44,
@@ -261,10 +261,10 @@ class Segment(unittest.TestCase):
         self.assertEqual(obj.r2, 52.0)
 
     def test_creation(self):
-        s = basalt.Segment()
+        s = ngv.Segment()
         self.assertEqual(s.section_id, 0)
 
-        s = basalt.Segment(section_id=42)
+        s = ngv.Segment(section_id=42)
         self.assertEqual(s.section_id, 42)
         self.assertEqual(s.segment_id, 0)
 
@@ -274,7 +274,7 @@ class Segment(unittest.TestCase):
     def serialization(self):
         obj = Segment.create_object()
         raw = obj.serialize()
-        obj = basalt.Segment()
+        obj = ngv.Segment()
         obj.deserialize(raw)
         self.check_object(obj)
 
@@ -282,9 +282,9 @@ class Segment(unittest.TestCase):
 class EdgeAstrocyteSegment(unittest.TestCase):
     @staticmethod
     def create_object():
-        return basalt.EdgeAstrocyteSegment(
-            astrocyte=basalt.Point(42.0, 43.0, 44.0),
-            vasculature=basalt.Point(45.0, 46.0, 47.0),
+        return ngv.EdgeAstrocyteSegment(
+            astrocyte=ngv.Point(42.0, 43.0, 44.0),
+            vasculature=ngv.Point(45.0, 46.0, 47.0),
         )
 
     def check_object(self, obj):
@@ -292,7 +292,7 @@ class EdgeAstrocyteSegment(unittest.TestCase):
         self.assertEqual(list(obj.vasculature), [45.0, 46.0, 47.0])
 
     def test_creation(self):
-        obj = basalt.EdgeAstrocyteSegment()
+        obj = ngv.EdgeAstrocyteSegment()
         self.assertEqual(list(obj.astrocyte), 3 * [0.0])
         self.assertEqual(list(obj.vasculature), 3 * [0.0])
 
@@ -302,7 +302,7 @@ class EdgeAstrocyteSegment(unittest.TestCase):
     def test_serialization(self):
         obj = EdgeAstrocyteSegment.create_object()
         raw = obj.serialize()
-        obj = basalt.EdgeAstrocyteSegment()
+        obj = ngv.EdgeAstrocyteSegment()
         obj.deserialize(raw)
         self.check_object(obj)
 

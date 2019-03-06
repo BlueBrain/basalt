@@ -1,3 +1,4 @@
+import inspect
 import os
 import platform
 import re
@@ -7,6 +8,26 @@ import sys
 from setuptools import find_packages, setup, Extension
 from setuptools.command.build_ext import build_ext
 from distutils.version import LooseVersion
+
+
+class lazy_dict(dict):
+    """When the value associated to a key is a function, then returns
+    the function call instead of the function.
+    """
+
+    def __getitem__(self, item):
+        value = dict.__getitem__(self, item)
+        if inspect.isfunction(value):
+            return value()
+        return value
+
+
+def get_sphinx_command():
+    """Lazy load of Sphinx distutils command class
+    """
+    from sphinx.setup_command import BuildDoc
+
+    return BuildDoc
 
 
 class CMakeExtension(Extension):
@@ -75,8 +96,8 @@ class CMakeBuild(build_ext):
         )
 
 
-needs_sphinx = {'build_sphinx', 'upload_docs'}.intersection(sys.argv)
-maybe_sphinx = ["sphinx==1.8.4", "exhale"] if needs_sphinx else []
+needs_sphinx = {'build_sphinx', 'upload_docs', 'doctest'}.intersection(sys.argv)
+maybe_sphinx = ["sphinx<2", "exhale"] if needs_sphinx else []
 
 setup(
     name='basalt',
@@ -105,14 +126,16 @@ setup(
     long_description='',
     packages=['basalt', 'basalt.ngv'],
     ext_modules=[CMakeExtension('basalt')],
-    cmdclass=dict(build_ext=CMakeBuild),
+    cmdclass=lazy_dict(
+        build_ext=CMakeBuild,
+        doctest=get_sphinx_command),
     zip_safe=False,
     install_requires=[
         'cached-property>=1.5.1',
         'docopt>=0.6.2',
         'h5py>=2.7.1',
         'humanize>=0.5.1',
-        'numpy>=1.13',
+        'numpy<1.16',
         'progress>=1.4',
     ],
     setup_requires=maybe_sphinx,

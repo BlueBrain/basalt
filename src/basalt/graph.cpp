@@ -49,3 +49,7 @@ std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uids_t& ids) {
     }
     return ostr << ']';
 }
+
+std::ostream& operator<<(std::ostream& ostr, const basalt::edge_uid_t& id) {
+    return ostr << id.first << "->" << id.second;
+}
