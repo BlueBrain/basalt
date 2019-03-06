@@ -7,6 +7,7 @@
 #include <basalt/basalt.hpp>
 
 using basalt::Graph;
+using basalt::make_id;
 using basalt::vertex_id_t;
 using basalt::vertex_t;
 using basalt::vertex_uid_t;
@@ -26,10 +27,10 @@ inline vertex_uid_t checked_insert(Graph& g,
                                    vertex_t type,
                                    vertex_id_t id,
                                    const Payload& payload) {
-    vertex_uid_t nuid;
-    const auto result = g.vertices().insert(type, id, payload, nuid);
+    const auto uid = make_id(type, id);
+    const auto result = g.vertices().insert(uid, payload);
     REQUIRE(result);
-    return nuid;
+    return uid;
 }
 
 /**
@@ -41,10 +42,10 @@ inline vertex_uid_t checked_insert(Graph& g,
  * \return vertex unique identifier
  */
 inline vertex_uid_t checked_insert(Graph& g, vertex_t type, vertex_id_t id) {
-    vertex_uid_t nuid;
-    const auto result = g.vertices().insert(type, id, nuid);
+    auto uid = make_id(type, id);
+    const auto result = g.vertices().insert(uid);
     REQUIRE(result);
-    return nuid;
+    return uid;
 }
 
 static void check_is_ok(const basalt::Status& status) {
@@ -100,7 +101,7 @@ static std::string new_db_path() {
 
 TEST_CASE("one-vertex-db", "[GraphKV]") {
     const auto path = new_db_path();
-    vertex_uid_t vertex;
+    const auto vertex = make_id(42, 3);
     {
         Graph g(path);
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 0);
@@ -110,10 +111,8 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
             REQUIRE(data.empty());
         }
 
-        g.vertices().insert(42, 3, vertex).raise_on_error();
+        g.vertices().insert(vertex).raise_on_error();
     }
-    REQUIRE(vertex.first == 42);
-    REQUIRE(vertex.second == 3);
     {
         Graph g(path);
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 1);
@@ -206,9 +205,12 @@ TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
         REQUIRE(vertices_set.size() == 4);
     }
 
-    // iterator over second of vertices
+    // test count of vertices
     auto count = 0lu;
-    REQUIRE_THROWS_AS(g.vertices().count(count).raise_on_error(), std::runtime_error);
+    g.vertices().count(count).raise_on_error();
+    REQUIRE(count == 4);
+
+    // iterator over second half of vertices
     const auto vertices_end = g.vertices().end();
     for (auto vertex = g.vertices().begin(count / 2); vertex != vertices_end; ++vertex) {
         std::cout << *vertex << std::endl;

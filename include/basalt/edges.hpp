@@ -98,6 +98,15 @@ class Edges {
                   bool commit = false) __attribute__((warn_unused_result));
 
     /**
+     * \brief Retrieve an edge payload
+     * \param edge unique identifier to retrieve
+     * \param value payload object updated if the edge exists and has an associated payload
+     * \return information whether operation succeeded or not
+     */
+    Status get(const edge_uid_t& edge, std::string* value) const
+        __attribute__((warn_unused_result));
+
+    /**
      * \brief check connectivity between 2 vertices
      * \param vertex1 first end of the edge to look for
      * \param vertex2 second end of the edge to look for
@@ -156,6 +165,20 @@ class Edges {
      */
     Status erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit = false)
         __attribute__((warn_unused_result));
+
+    /**
+     * \param count non-const reference updated by this member function
+     * with the number of edges in the graph
+     * \return information whether operation succeeded or not
+     */
+    Status count(std::size_t& count) const __attribute__((warn_unused_result));
+
+    /**
+     * \brief Remove all edges of the graph along. Vertices are kept intact.
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    Status clear(bool commit) __attribute__((warn_unused_result));
 
   private:
     GraphImpl& pimpl_;

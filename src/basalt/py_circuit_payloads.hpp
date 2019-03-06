@@ -8,5 +8,5 @@
 #include <pybind11/pybind11.h>
 
 namespace basalt {
-void register_circuit_payloads_bindings(pybind11::module& m);
+void register_circuit_payloads_bindings(pybind11::module& basalt);
 }

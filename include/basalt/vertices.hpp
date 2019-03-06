@@ -29,54 +29,61 @@ class Vertices {
     VertexIterator end() const;
 
     /**
-     * \return number of vertices in the graph, and operation status.
+     * \brief get number of vertices in the graph
+     * \param count non-const reference updated by this member function
+     * with the number of vertices in the graph
+     * \return information whether operation succeeded or not
      */
     Status count(std::size_t& count) const __attribute__((warn_unused_result));
 
     /**
-     * \brief Insert a vertex in the graph
-     * \param type the vertex type
-     * \param id the vertex identifier
-     * \param vertex unique vertex identifier returned to caller
+     * \brief get number of vertices of a certain type in the graph
+     * \param type type of vertex
+     * \param count non-const reference updated by this member function
+     * \return information whether operation succeeded or not
+     */
+    Status count(vertex_t type, std::size_t& count) const __attribute__((warn_unused_result));
+
+    /**
+     * \brief Remove all vertices of the graph along with their edges
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    Status insert(vertex_t type, vertex_id_t id, vertex_uid_t& vertex, bool commit = false)
+    Status clear(bool commit) __attribute__((warn_unused_result));
+
+    /**
+     * \brief Insert a vertex in the graph
+     * \param vertex the vertex unique identifier to insert
+     * \param commit whether uncommitted operations should be flushed or not
+     * \return information whether operation succeeded or not
+     */
+    Status insert(const vertex_uid_t& vertex, bool commit = false)
         __attribute__((warn_unused_result));
 
     /**
      * \brief Insert a vertex in the graph.
      * \tparam T vertex payload type
-     * \param type vertex type
-     * \param id vertex identifier
+     * \param vertex the vertex unique identifier to insert
      * \param data vertex payload
-     * \param vertex unique vertex identifier returned to caller
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
     template <typename Payload>
-    Status insert(vertex_t type,
-                  vertex_id_t id,
-                  const Payload& data,
-                  vertex_uid_t& vertex,
-                  bool commit = false) __attribute__((warn_unused_result));
+    Status insert(const vertex_uid_t& vertex, const Payload& data, bool commit = false)
+        __attribute__((warn_unused_result));
 
     /**
      * \brief Insert a vertex in the graph.
      * \tparam T vertex payload type
-     * \param type vertex type
-     * \param id vertex identifier
+     * \param vertex vertex unique identifier to insert
      * \param data vertex payload
      * \param size payload length
-     * \param vertex unique vertex identifier returned to caller
      * \param commit whether uncommitted operations should be flushed or not
      * \return information whether operation succeeded or not
      */
-    Status insert(vertex_t type,
-                  vertex_id_t id,
+    Status insert(const vertex_uid_t& vertex,
                   const char* data,
                   std::size_t size,
-                  vertex_uid_t& vertex,
                   bool commit = false) __attribute__((warn_unused_result));
     /**
      * \brief Insert a list of vertices all at once
@@ -108,9 +115,9 @@ class Vertices {
     Status get(const vertex_uid_t& vertex, T& payload) const __attribute__((warn_unused_result));
 
     /**
-     * \brief Retrieve a vertex from the graph
+     * \brief Retrieve a vertex payload
      * \param vertex the vertex to retrieve
-     * \param value payload object updated if not is present
+     * \param value payload object updated if vertex exists and has an associated payload
      * \return information whether operation succeeded or not
      */
     Status get(const vertex_uid_t& vertex, std::string* value) const

@@ -10,20 +10,15 @@ namespace basalt {
 Vertices::Vertices(GraphImpl& pimpl)
     : pimpl_(pimpl) {}
 
-Status Vertices::insert(basalt::vertex_t type,
-                        basalt::vertex_id_t id,
+Status Vertices::insert(const basalt::vertex_uid_t& vertex,
                         const char* data,
                         std::size_t size,
-                        basalt::vertex_uid_t& vertex,
                         bool commit) {
-    return pimpl_.vertices_insert(type, id, {data, size}, vertex, commit);
+    return pimpl_.vertices_insert(vertex, {data, size}, commit);
 }
 
-Status Vertices::insert(basalt::vertex_t type,
-                        basalt::vertex_id_t id,
-                        basalt::vertex_uid_t& vertex,
-                        bool commit) {
-    return pimpl_.vertices_insert(type, id, vertex, commit);
+Status Vertices::insert(const basalt::vertex_uid_t& vertex, bool commit) {
+    return pimpl_.vertices_insert(vertex, commit);
 }
 
 Status Vertices::insert(const vertex_t* types,
@@ -39,7 +34,6 @@ Status Vertices::insert(const vertex_t* types,
                                   {payloads, num_vertices}, {payloads_sizes, num_vertices}, commit);
 }
 
-
 Status Vertices::has(const vertex_uid_t& vertex, bool& result) const {
     return pimpl_.vertices_has(vertex, result);
 }
@@ -53,8 +47,11 @@ Status Vertices::erase(const vertex_uid_t& vertex, bool commit) {
 }
 
 Status Vertices::count(std::size_t& count) const {
-    count = 0;
-    return Status::error_not_implemented();
+    return pimpl_.vertices_count(count);
+}
+
+Status Vertices::count(vertex_t type, std::size_t& count) const {
+    return pimpl_.vertices_count(type, count);
 }
 
 VertexIterator Vertices::begin(size_t position) const {
@@ -63,6 +60,10 @@ VertexIterator Vertices::begin(size_t position) const {
 
 VertexIterator Vertices::end() const {
     return VertexIterator(pimpl_, std::numeric_limits<std::size_t>::max());
+}
+
+Status Vertices::clear(bool commit) {
+    return pimpl_.vertices_clear(commit);
 }
 
 }  // namespace basalt

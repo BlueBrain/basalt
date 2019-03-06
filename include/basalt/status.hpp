@@ -18,7 +18,8 @@ struct Status {
         ok_code = 0,
         not_implemented_code = -1,
         missing_vertex_code = -2,
-        invalid_edge_code = -3
+        invalid_edge_code = -3,
+        missing_edge_code = -4,
     };
 
 
@@ -38,21 +39,21 @@ struct Status {
 
     /**
      * Negation operator
-     * \return true if status is not \a ok_code, false otherwise
+     * \return true if status is not \a Code::ok_code, false otherwise
      */
     inline bool operator!() const noexcept {
         return code != 0;
     }
     /**
      * Implicit conversion operator
-     * \return true if status is \a ok_code, false otherwise
+     * \return true if status is \a Code::ok_code, false otherwise
      */
     inline explicit operator bool() const noexcept {
         return code == 0;
     }
 
     /**
-     * Throw \a std::runtime_error if status is not \a ok_code.
+     * \exception std::runtime_error whenever status is not \a Code::ok_code.
      * \return this instance if member does not throw
      */
     const Status& raise_on_error() const;
@@ -65,10 +66,17 @@ struct Status {
 
     /**
      * \brief Construct a \a Status
-     * \param vertex Vertex missing
+     * \param vertex The missing vertex
      * \return A status representing a missing vertex
      */
     static Status error_missing_vertex(const vertex_uid_t& vertex);
+
+    /**
+     * \brief Construct a \a Status
+     * \param edge The missing edge
+     * \return A \a Status representing the missing edge
+     */
+    static Status error_missing_edge(const edge_uid_t& edge);
 
     /**
      * \brief Construct a \a Status

@@ -34,6 +34,12 @@ Status Status::error_missing_vertex(const vertex_uid_t& vertex) {
     return {missing_vertex_code, oss.str()};
 }
 
+Status Status::error_missing_edge(const edge_uid_t& edge) {
+    std::ostringstream oss;
+    oss << "Missing edge " << edge;
+    return {missing_edge_code, oss.str()};
+}
+
 Status Status::error_invalid_edge(const basalt::vertex_uid_t& vertex1,
                                   const basalt::vertex_uid_t& vertex2) {
     std::ostringstream oss;

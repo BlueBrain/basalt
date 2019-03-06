@@ -18,8 +18,7 @@ import sys
 
 from docopt import docopt
 
-from . import __version__
-from . import ngv
+from . import __version__, ngv
 
 
 def main(argv=None):
