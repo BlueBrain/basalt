@@ -2,7 +2,7 @@
 
 /**
  * \file src/basalt/circuit_payloads.hpp
- * Provides declaration of classes used as payload for node
+ * Provides declaration of classes used as payload for vertex
  * and edges of biological circuit made of neurons, synapses,
  * astrocytes, and segments.
  */
@@ -17,12 +17,12 @@ using int_point_t = std::array<uint32_t, 3>;
 using int_vector_t = std::vector<uint32_t>;
 
 /**
- * \name Node and edge payloads
+ * \name Vertex and edge payloads
  * \{
  */
 
 /**
- * \brief Payload description of a node of type Neuron
+ * \brief Payload description of a vertex of type Neuron
  */
 struct neuron_t {
     neuron_t() = default;
@@ -46,7 +46,7 @@ void serialize(Archive& ar, neuron_t& neuron) {
 }
 
 /**
- * \brief Payload description of a node of type Synapse
+ * \brief Payload description of a vertex of type Synapse
  */
 struct synapse_t {
     synapse_t() = default;
@@ -96,7 +96,7 @@ void serialize(Archive& ar, synapse_t& s) {
 }
 
 /**
- * \brief Payload description of a node of type Astrocyte
+ * \brief Payload description of a vertex of type Astrocyte
  */
 struct astrocyte_t {
     astrocyte_t() = default;
@@ -144,7 +144,7 @@ void serialize(Archive& ar, astrocyte_t& a) {
 }
 
 /**
- * \brief Payload description of a node of type MicroDomain
+ * \brief Payload description of a vertex of type MicroDomain
  */
 struct microdomain_t {
     using vertex_coordinates_t = std::vector<std::array<float, 3>>;
@@ -211,7 +211,7 @@ void serialize(Archive& ar, microdomain_t& m) {
 }
 
 /**
- * \brief Payload description of a node of type Segment
+ * \brief Payload description of a vertex of type Segment
  */
 struct segment_t {
     segment_t() = default;

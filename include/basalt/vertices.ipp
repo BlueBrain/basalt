@@ -2,17 +2,17 @@
 
 #include <sstream>
 
-#include <basalt/network.hpp>
+#include <basalt/graph.hpp>
 #include <basalt/status.hpp>
 
 namespace basalt {
 
 template <typename Payload>
-status_t nodes_t::insert(node_t type,
-                         node_id_t id,
-                         const Payload& data,
-                         node_uid_t& res,
-                         bool commit) {
+Status Vertices::insert(vertex_t type,
+                        vertex_id_t id,
+                        const Payload& data,
+                        vertex_uid_t& res,
+                        bool commit) {
     std::ostringstream oss;
     data.serialize(oss);
     // \fixme TCL get buffer beginning and length from ostringstream
@@ -22,9 +22,9 @@ status_t nodes_t::insert(node_t type,
 }
 
 template <typename T>
-status_t nodes_t::get(const node_uid_t& node, T& payload) const {
+Status Vertices::get(const vertex_uid_t& vertex, T& payload) const {
     std::string data;
-    auto const& status = get(node, &data);
+    auto const& status = get(vertex, &data);
     if (status) {
         std::istringstream istr;
         istr.rdbuf()->pubsetbuf(const_cast<char*>(data.c_str()), static_cast<long>(data.size()));

@@ -6,52 +6,55 @@
 
 #include <basalt/basalt.hpp>
 
-using basalt::network_t;
-using basalt::node_id_t;
-using basalt::node_t;
-using basalt::node_uid_t;
-using basalt::node_uids_t;
+using basalt::Graph;
+using basalt::vertex_id_t;
+using basalt::vertex_t;
+using basalt::vertex_uid_t;
+using basalt::vertex_uids_t;
 
 /**
- * \brief Helper function adding a node to a graph and checking operation
+ * \brief Helper function adding a vertex to a graph and checking operation
  * succeeded
  * \param g graph
- * \param type node type
- * \param id node identifier
- * \param payload node content
- * \return node unique identifier
+ * \param type vertex type
+ * \param id vertex identifier
+ * \param payload vertex content
+ * \return vertex unique identifier
  */
 template <typename Payload>
-inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id, const Payload& payload) {
-    node_uid_t nuid;
-    const auto result = g.nodes().insert(type, id, payload, nuid);
+inline vertex_uid_t checked_insert(Graph& g,
+                                   vertex_t type,
+                                   vertex_id_t id,
+                                   const Payload& payload) {
+    vertex_uid_t nuid;
+    const auto result = g.vertices().insert(type, id, payload, nuid);
     REQUIRE(result);
     return nuid;
 }
 
 /**
- * \brief Helper function adding a node to a graph and checking operation
+ * \brief Helper function adding a vertex to a graph and checking operation
  * succeeded
  * \param g graph
- * \param type node type
- * \param id node identifier
- * \return node unique identifier
+ * \param type vertex type
+ * \param id vertex identifier
+ * \return vertex unique identifier
  */
-inline node_uid_t checked_insert(network_t& g, node_t type, node_id_t id) {
-    node_uid_t nuid;
-    const auto result = g.nodes().insert(type, id, nuid);
+inline vertex_uid_t checked_insert(Graph& g, vertex_t type, vertex_id_t id) {
+    vertex_uid_t nuid;
+    const auto result = g.vertices().insert(type, id, nuid);
     REQUIRE(result);
     return nuid;
 }
 
-static void check_is_ok(const basalt::status_t& status) {
+static void check_is_ok(const basalt::Status& status) {
     REQUIRE(status);
 }
 
 namespace bbp {
 namespace in_silico {
 
-/** \name node payloads
+/** \name vertex payloads
  ** \{
  */
 
@@ -84,8 +87,8 @@ struct synapse_t {
 }  // namespace in_silico
 }  // namespace bbp
 
-/// \brief different types of node
-enum node_type { synapse, segment, astrocyte };
+/// \brief different types of vertex
+enum vertex_type { synapse, segment, astrocyte };
 
 static std::string new_db_path() {
     char db_path[] = "/tmp/basalt-ut-XXXXXX";
@@ -95,119 +98,119 @@ static std::string new_db_path() {
     return static_cast<char*>(db_path);
 }
 
-TEST_CASE("one-node-db", "[graph]") {
+TEST_CASE("one-vertex-db", "[GraphKV]") {
     const auto path = new_db_path();
-    node_uid_t node;
+    vertex_uid_t vertex;
     {
-        network_t g(path);
-        REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 0);
+        Graph g(path);
+        REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 0);
         {
             std::string data;
-            REQUIRE(g.nodes().get(node, &data).code == basalt::status_t::missing_node_code);
+            REQUIRE(g.vertices().get(vertex, &data).code == basalt::Status::missing_vertex_code);
             REQUIRE(data.empty());
         }
 
-        g.nodes().insert(42, 3, node).raise_on_error();
+        g.vertices().insert(42, 3, vertex).raise_on_error();
     }
-    REQUIRE(node.first == 42);
-    REQUIRE(node.second == 3);
+    REQUIRE(vertex.first == 42);
+    REQUIRE(vertex.second == 3);
     {
-        network_t g(path);
-        REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 1);
+        Graph g(path);
+        REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 1);
         {
             std::string data;
-            g.nodes().get(node, &data).raise_on_error();
+            g.vertices().get(vertex, &data).raise_on_error();
             REQUIRE(data.empty());
         }
         {
             bool exists = false;
-            g.nodes().has(node, exists).raise_on_error();
+            g.vertices().has(vertex, exists).raise_on_error();
             REQUIRE(exists);
         }
     }
     {
-        // try to remove an inexistant node
-        network_t g(path);
-        REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 1);
-        g.nodes().erase(node).raise_on_error();
-        REQUIRE(std::distance(g.nodes().begin(), g.nodes().end()) == 0);
+        // try to remove an inexistant vertex
+        Graph g(path);
+        REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 1);
+        g.vertices().erase(vertex).raise_on_error();
+        REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 0);
     }
 }
 
-TEST_CASE("create simple graph and check entities", "[graph]") {
-    using basalt::network_t;
+TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
+    using basalt::Graph;
     using bbp::in_silico::synapse_t;
 
-    network_t g(new_db_path());
+    Graph g(new_db_path());
 
     // add synapses with id 0 and 1
-    const auto s0 = checked_insert(g, node_type::synapse, 0,
+    const auto s0 = checked_insert(g, vertex_type::synapse, 0,
                                    synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-    const auto s1 = checked_insert(g, node_type::synapse, 1,
+    const auto s1 = checked_insert(g, vertex_type::synapse, 1,
                                    synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
 
     // add astrocytes
-    const auto a0 = checked_insert(g, node_type::astrocyte, 0);
-    const auto a1 = checked_insert(g, node_type::astrocyte, 1);
+    const auto a0 = checked_insert(g, vertex_type::astrocyte, 0);
+    const auto a1 = checked_insert(g, vertex_type::astrocyte, 1);
 
     check_is_ok(g.commit());
 
     {
-        std::set<basalt::node_uid_t> all_nodes;
-        for (auto const& node: g.nodes()) {
-            all_nodes.insert(node);
+        std::set<basalt::vertex_uid_t> all_vertices;
+        for (auto const& vertex: g.vertices()) {
+            all_vertices.insert(vertex);
         }
-        REQUIRE(all_nodes.size() == 4);
+        REQUIRE(all_vertices.size() == 4);
     }
 
     // connect the 2 synapses together
-    check_is_ok(g.connections().insert(s0, s1));
+    check_is_ok(g.edges().insert(s0, s1));
 
     // connect synapse 0 to the 2 astrocytes
-    check_is_ok(g.connections().insert(s0, {a0, a1}));
+    check_is_ok(g.edges().insert(s0, {a0, a1}));
 
     // connect 2 astrocyte segments
-    check_is_ok(g.connections().insert(a0, a1));
+    check_is_ok(g.edges().insert(a0, a1));
 
-    node_uids_t nodes;
-    // get all nodes_t connected to synapse 0
-    check_is_ok(g.connections().get(s0, nodes));
-    REQUIRE(nodes.size() == 3);
-    for (auto const& node: nodes) {
-        std::cout << s0 << " ↔ " << node << std::endl;
+    vertex_uids_t vertices;
+    // get all Vertices connected to synapse 0
+    check_is_ok(g.edges().get(s0, vertices));
+    REQUIRE(vertices.size() == 3);
+    for (auto const& vertex: vertices) {
+        std::cout << s0 << " ↔ " << vertex << std::endl;
         // (S:0) ↔ (S:1)
         // (S:0) ↔ (A:0)
         // (S:0) ↔ (A:1)
     }
 
-    nodes.clear();
+    vertices.clear();
     // only get astrocytes connected to synapse 0
-    check_is_ok(g.connections().get(s0, node_type::astrocyte, nodes));
-    REQUIRE(nodes.size() == 2);
-    for (auto const& astrocyte: nodes) {
+    check_is_ok(g.edges().get(s0, vertex_type::astrocyte, vertices));
+    REQUIRE(vertices.size() == 2);
+    for (auto const& astrocyte: vertices) {
         std::cout << s0 << " ↔ " << astrocyte << std::endl;
         // (S:0) ↔ (A:0)
         // (S:0) ↔ (A:1)
     }
 
     {
-        // iterate over all nodes
-        std::set<node_uid_t> nodes_set;
+        // iterate over all vertices
+        std::set<vertex_uid_t> vertices_set;
         int count = 0;
-        for (const auto& node: g.nodes()) {
-            std::cout << node << std::endl;
+        for (const auto& vertex: g.vertices()) {
+            std::cout << vertex << std::endl;
             ++count;
-            nodes_set.insert(node);
+            vertices_set.insert(vertex);
         }
         REQUIRE(count == 4);
-        REQUIRE(nodes_set.size() == 4);
+        REQUIRE(vertices_set.size() == 4);
     }
 
-    // iterator over second of nodes
+    // iterator over second of vertices
     auto count = 0lu;
-    REQUIRE_THROWS_AS(g.nodes().count(count).raise_on_error(), std::runtime_error);
-    const auto nodes_end = g.nodes().end();
-    for (auto node = g.nodes().begin(count / 2); node != nodes_end; ++node) {
-        std::cout << *node << std::endl;
+    REQUIRE_THROWS_AS(g.vertices().count(count).raise_on_error(), std::runtime_error);
+    const auto vertices_end = g.vertices().end();
+    for (auto vertex = g.vertices().begin(count / 2); vertex != vertices_end; ++vertex) {
+        std::cout << *vertex << std::endl;
     }
 }
