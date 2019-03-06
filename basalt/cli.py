@@ -1,17 +1,17 @@
 """basalt-cli - CLI utility to deal with a basalt NGV graph
 
 Usage:
-  basalt-cli ngv import neuroglial [--max-astrocytes=<nb>] [--create-nodes] <h5-file> <basalt-path>
-  basalt-cli ngv import synaptic [--max-neurons=<nb>] [--create-nodes] <h5-file> <basalt-path>
-  basalt-cli ngv import gliovascular [--max-astrocytes=<nb>] [--create-nodes] <h5-connectivity> <h5-data> <basalt-path>
-  basalt-cli ngv import microdomain [--max-astrocytes=<nb>] [--create-nodes] <h5-data> <basalt-path>
+  basalt-cli ngv import neuroglial [--max=<nb>] [--create-nodes] <h5-file> <basalt-path>
+  basalt-cli ngv import synaptic [--max=<nb>] [--create-nodes] <h5-file> <basalt-path>
+  basalt-cli ngv import gliovascular [--max=<nb>] [--create-nodes] <h5-connectivity> <h5-data> <basalt-path>
+  basalt-cli ngv import microdomain [--max=<nb>] [--create-nodes] <h5-data> <basalt-path>
   basalt-cli -h | --help
   basalt-cli --version
 
 Options
-  --max-astrocytes=<nb>  Maximum number of astrocytes to import [default: -1].
-  -h --help              Show this screen.
-  --version              Show version.
+  --max=<nb> Maximum number of items to import [default: -1].
+  -h --help  Show this screen.
+  --version  Show version.
 """
 import json
 import sys
@@ -30,7 +30,7 @@ def main(argv=None):
                 summary = ngv.import_neuroglial(
                     args['<h5-file>'],
                     args['<basalt-path>'],
-                    max_astrocytes=int(args.get('--max-astrocytes')),
+                    max_=int(args.get('--max')),
                     create_nodes=args.get('--create-nodes'),
                 )
                 json.dump(summary, sys.stdout, indent=2)
@@ -40,7 +40,7 @@ def main(argv=None):
                 summary = ngv.import_synaptic(
                     args['<h5-file>'],
                     args['<basalt-path>'],
-                    max_neurons=int(args.get('--max-neurons')),
+                    max_=int(args.get('--max')),
                     create_nodes=args.get('--create-nodes'),
                 )
                 json.dump(summary, sys.stdout, indent=2)
@@ -51,7 +51,7 @@ def main(argv=None):
                     args['<h5-connectivity>'],
                     args['<h5-data>'],
                     args['<basalt-path>'],
-                    max_astrocytes=int(args.get('--max-astrocytes')),
+                    max_=int(args.get('--max')),
                     create_nodes=args.get('--create-nodes'),
                 )
                 json.dump(summary, sys.stdout, indent=2)
@@ -61,7 +61,7 @@ def main(argv=None):
                 summary = ngv.import_microdomain(
                     args['<h5-data>'],
                     args['<basalt-path>'],
-                    max_astrocytes=int(args.get('--max-astrocytes')),
+                    max_=int(args.get('--max')),
                     create_nodes=args.get('--create-nodes'),
                 )
                 json.dump(summary, sys.stdout, indent=2)

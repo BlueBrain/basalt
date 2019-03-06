@@ -167,7 +167,7 @@ class Importer:
 
 
 def import_gliovascular(
-    h5_connectivity, h5_data, basalt_path, max_astrocytes=-1, create_nodes=False
+    h5_connectivity, h5_data, basalt_path, max_=-1, create_nodes=False
 ):
     _h5_connectivity = _resolve_path(h5_connectivity)
     _h5_data = _resolve_path(h5_data)
@@ -176,17 +176,17 @@ def import_gliovascular(
     with GliovascularConnectivity(
         _h5_connectivity
     ) as connectivity, ngv_data.GliovascularData(_h5_data) as data:
-        if max_astrocytes < 0:
-            max_astrocytes = connectivity.n_astrocytes
+        if max_ < 0:
+            max_ = connectivity.n_astrocytes
         with Importer(
             title="Import astrocyte ⇆ vasculature segments",
             connectivity=connectivity,
             arity_labels=["segments per astrocyte"],
             progress_kwargs=dict(
-                max=max_astrocytes, suffix='%(index)d/%(max)d astrocytes'
+                max=max_, suffix='%(index)d/%(max)d astrocytes'
             ),
         ) as importer:
-            for astro_id in range(max_astrocytes):
+            for astro_id in range(max_):
                 astro_node = make_id(NodeType.ASTROCYTE.value, astro_id)
                 begin, end = connectivity.astrocyte._offset_slice(astro_id, None)
                 conn_data = connectivity.astrocyte._connectivity[begin:end]
@@ -205,20 +205,20 @@ def import_gliovascular(
         return importer.report()
 
 
-def import_synaptic(h5_file, basalt_path, max_neurons=-1, create_nodes=False):
+def import_synaptic(h5_file, basalt_path, max_=-1, create_nodes=False):
     _h5_file = _resolve_path(h5_file)
     graph = Network(basalt_path)
 
     with SynapticConnectivity(_h5_file) as connectivity:
-        if max_neurons < 0:
-            max_neurons = connectivity.n_neurons
+        if max_ < 0:
+            max_ = connectivity.n_neurons
         with Importer(
             title="Importing synapse ⇆ afferent neuron",
             connectivity=connectivity,
             arity_labels=["synapse per neuron"],
-            progress_kwargs=dict(max=max_neurons, suffix='%(index)d/%(max)d neurons'),
+            progress_kwargs=dict(max=max_, suffix='%(index)d/%(max)d neurons'),
         ) as importer:
-            for neuron_id in range(max_neurons):
+            for neuron_id in range(max_):
                 neuron_node = make_id(NodeType.NEURON.value, neuron_id)
                 synapse_ids = connectivity.afferent_neuron.to_synapse(neuron_id)
                 graph.connections.insert(
@@ -231,22 +231,22 @@ def import_synaptic(h5_file, basalt_path, max_neurons=-1, create_nodes=False):
         return importer.report()
 
 
-def import_neuroglial(h5_file, basalt_path, max_astrocytes=-1, create_nodes=False):
+def import_neuroglial(h5_file, basalt_path, max_=-1, create_nodes=False):
     _h5_file = _resolve_path(h5_file)
     graph = Network(basalt_path)
 
     with NeuroglialConnectivity(_h5_file) as connectivity:
-        if max_astrocytes < 0:
-            max_astrocytes = connectivity.n_astrocytes
+        if max_ < 0:
+            max_ = connectivity.n_astrocytes
         with Importer(
             title="Importing astrocyte ⇆ (synapses, neurons)",
             connectivity=connectivity,
             arity_labels=["synapses per astrocyte", "neurons per astrocyte"],
             progress_kwargs=dict(
-                max=max_astrocytes, suffix='%(index)d/%(max)d astrocytes'
+                max=max_, suffix='%(index)d/%(max)d astrocytes'
             ),
         ) as importer:
-            for astro_id in range(max_astrocytes):
+            for astro_id in range(max_):
                 astro_node = make_id(NodeType.ASTROCYTE.value, astro_id)
                 synapse_ids = connectivity.astrocyte.to_synapse(astro_id)
                 graph.connections.insert(
@@ -268,7 +268,7 @@ def import_neuroglial(h5_file, basalt_path, max_astrocytes=-1, create_nodes=Fals
         return importer.report()
 
 
-def import_microdomain(h5_file, basalt_path, max_astrocytes=-1, create_nodes=False):
+def import_microdomain(h5_file, basalt_path, max_=-1, create_nodes=False):
     """Import microdomain structure in HDF5 file in a basalt graph
 
     Import microdomains subgraph and attach every microdomain to its
@@ -277,9 +277,10 @@ def import_microdomain(h5_file, basalt_path, max_astrocytes=-1, create_nodes=Fal
     Args:
         h5_file: path to HDF5 file
         basalt_path: path to basalt graph
-        max_astrocytes: limit number of microdomains to import. If negative,
+        max_: limit number of microdomains to import. If negative,
             then microdomains of every astrocytes are imported.
         create_nodes: if True then also creates astrocyte vertices
+            connected to the microdomains
 
     Returns:
         A dict providing import information and statistics
@@ -289,19 +290,19 @@ def import_microdomain(h5_file, basalt_path, max_astrocytes=-1, create_nodes=Fal
     graph = Network(basalt_path)
 
     with ngv_data.MicrodomainTesselation(_h5_file) as microdomain:
-        if max_astrocytes < 0:
-            max_astrocytes = microdomain.n_microdomains
+        if max_ < 0:
+            max_ = microdomain.n_microdomains
         with Importer(
             title="Importing microdomain subgraph",
             connectivity=microdomain,
             arity_labels=["microdomains per microdomain"],
             progress_kwargs=dict(
-                max=max_astrocytes, suffix="%(index)d/%(max)d microdomains"
+                max=max_, suffix="%(index)d/%(max)d microdomains"
             ),
         ) as importer:
             micro_domain_edges = []
             micro_domain_payloads = []
-            for astro_id in range(max_astrocytes):
+            for astro_id in range(max_):
                 # append microdomains connected to the `astro_id` one
                 micro_domain_edges.append(microdomain.domain_neighbors(astro_id))
                 # create microdomain payload and serialize it
@@ -310,15 +311,15 @@ def import_microdomain(h5_file, basalt_path, max_astrocytes=-1, create_nodes=Fal
                 )
             # insert all microdomain vertices all at once
             graph.nodes.insert(
-                np.full(max_astrocytes, NodeType.MICRODOMAIN.value, dtype=np.int32),
-                np.arange(max_astrocytes, dtype=np.uint64),
+                np.full(max_, NodeType.MICRODOMAIN.value, dtype=np.int32),
+                np.arange(max_, dtype=np.uint64),
                 micro_domain_payloads,
             )
             if create_nodes:
                 # insert astrocyte vertices as well
                 graph.nodes.insert(
-                    np.full(max_astrocytes, NodeType.ASTROCYTE.value, dtype=np.int32),
-                    np.arange(max_astrocytes, dtype=np.uint64),
+                    np.full(max_, NodeType.ASTROCYTE.value, dtype=np.int32),
+                    np.arange(max_, dtype=np.uint64),
                     [],
                 )
             for astro_id, edges in enumerate(micro_domain_edges):
