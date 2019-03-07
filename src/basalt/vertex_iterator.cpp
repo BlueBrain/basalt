@@ -13,7 +13,7 @@ VertexIterator::VertexIterator(const basalt::GraphImpl& pimpl, size_t from) {
         pimpl_ = VertexIteratorImpl_ptr(nullptr);
     } else {
         pimpl_ = pimpl.VertexIterator(from);
-        std::advance(*this, from);
+        std::advance(*this, static_cast<VertexIterator::difference_type>(from));
     }
 }
 
