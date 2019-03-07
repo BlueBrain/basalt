@@ -117,9 +117,9 @@ class GraphImpl {
     std::unique_ptr<rocksdb::Options> options_;
     logger_t logger_;
     db_t db_;
-    column_families_t column_families;
-    std::unique_ptr<rocksdb::ColumnFamilyHandle> vertices;
-    std::unique_ptr<rocksdb::ColumnFamilyHandle> edges;
+    column_families_t column_families_;
+    std::unique_ptr<rocksdb::ColumnFamilyHandle> vertices_column_;
+    std::unique_ptr<rocksdb::ColumnFamilyHandle> edges_column_;
 };
 
 }  // namespace basalt

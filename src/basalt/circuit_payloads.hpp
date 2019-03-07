@@ -26,7 +26,7 @@ using int_vector_t = std::vector<uint32_t>;
  */
 struct neuron_t {
     neuron_t() = default;
-    neuron_t(uint32_t gid, int_vector_t& astro_idx, int_vector_t& syn_idx);
+    neuron_t(uint32_t t_gid, int_vector_t& t_astro_idx, int_vector_t& t_syn_idx);
 
     uint32_t gid;
     int_vector_t astro_idx;
