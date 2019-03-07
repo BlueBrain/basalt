@@ -43,8 +43,8 @@ void register_graph_vertices(py::module& m) {
              "insert a vertex in the graph", "vertex"_a, "id"_a, "data"_a, "commit"_a = false)
 
         .def("insert",
-             [](basalt::Vertices& instance, py::array_t<int32_t> types,
-                py::array_t<uint64_t> vertices, py::list payloads, bool commit = false) {
+             [](basalt::Vertices& instance, py::array_t<basalt::vertex_t> types,
+                py::array_t<basalt::vertex_id_t> vertices, py::list payloads, bool commit = false) {
                  if (vertices.ndim() != 1) {
                      throw std::runtime_error(
                          "Number of dimensions of array 'vertices' must be one");

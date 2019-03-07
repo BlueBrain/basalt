@@ -35,7 +35,7 @@ void register_graph_edges(py::module& m) {
 
         .def("insert",
              [](basalt::Edges& edges, const basalt::vertex_uid_t& vertex,
-                const basalt::vertex_t type, py::array_t<uint64_t> vertices, bool commit,
+                const basalt::vertex_t type, py::array_t<basalt::vertex_id_t> vertices, bool commit,
                 bool create_vertices) {
                  if (vertices.ndim() != 1) {
                      throw std::runtime_error(
@@ -51,7 +51,7 @@ void register_graph_edges(py::module& m) {
 
         .def("insert",
              [](basalt::Edges& edges, const basalt::vertex_uid_t& vertex,
-                const basalt::vertex_t type, py::array_t<uint64_t> vertices,
+                const basalt::vertex_t type, py::array_t<basalt::vertex_id_t> vertices,
                 py::list vertex_payloads, bool commit, bool create_vertices) {
                  if (vertices.ndim() != 1) {
                      throw std::runtime_error(
