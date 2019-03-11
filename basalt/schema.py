@@ -198,39 +198,38 @@ def vertex(name, type, serialization=None):
     return _register
 
 
+@directive(dicts='edges_types')
+def edge(lhs, rhs, serialization=None):
+    def _register(metagraph):
+        metagraph.edges_types.setdefault(lhs, set()).add((rhs, serialization))
+        metagraph.edges_types.setdefault(rhs, set()).add((lhs, serialization))
+
+    return _register
+
+
 class VerticesWrapper:
-    def __init__(self, g, type, serialization):
+    def __init__(self, g, type, vertex_cls):
         self.g = g
         self.type = type.value
-        if serialization == 'pickle':
-            self._serialize = lambda data: pickle.dumps(data)
-            self._deserialize = lambda data: pickle.loads(data)
-        elif getattr(serialization, "__module__", None) == 'basalt._basalt.ngv':
-            self._serialize = lambda data: data.serialize()
-
-            def _deserialize(data):
-                obj = serialization()
-                obj.deserialize(data)
-                return obj
-            self._deserialize = _deserialize
-        elif serialization is None:
-            self._serialize = lambda data: data
-            self._deserialize = lambda data: data
-        else:
-            raise ValueError("Unexpected 'payload_cls' value")
+        self._vertex_cls = vertex_cls
 
     def add(self, id, data=None, **kwargs):
         if data is not None:
-            data = self._serialize(data)
-            return self.g.vertices.add((self.type, id), data, **kwargs)
+            data = self._vertex_cls.serialize(data)
+            self.g.vertices.add((self.type, id), data, **kwargs)
         else:
-            return self.g.vertices.add((self.type, id), **kwargs)
+            self.g.vertices.add((self.type, id), **kwargs)
+        return self._vertex_cls(id)
 
     def get(self, id):
-        return self._deserialize(self.g.vertices.get((self.type, id)))
+        data = self.g.vertices.get((self.type, id))
+        if data is not None:
+            data = self._vertex_cls.deserialize(data)
+        return data
 
     def __getitem__(self, id):
-        return self._deserialize(self.g.vertices[(self.type, id)])
+        data = self.g.vertices[(self.type, id)]
+        return self._vertex_cls(id, data)
 
     def discard(self, id):
         return self.g.vertices.discard((self.type, id))
@@ -253,11 +252,149 @@ class VerticesWrapper:
         raise NotImplementedError
 
 
+def build_vertex_cls(
+    name, type, graph, types_to_name, edges_types, vertices_cls, serializers
+):
+    class Vertex:
+        def __init__(self, id, data=None):
+            assert id is not None
+            assert isinstance(id, int)
+            self._id = id
+            self._data = data
+            if self._data is not None:
+                self._data = self.deserialize(self._data)
+
+        @property
+        def id(self):
+            return self._id
+
+        @property
+        def type(self):
+            return type
+
+        @property
+        def data(self):
+            if self._data is None:
+                self._data = graph.vertices.get((type.value, self.id))
+                if self._data is not None:
+                    self._data = self.deserialize(self._data)
+            return self._data
+
+        @classmethod
+        def serialize(cls, data):
+            return serializers[type][0](data)
+
+        @classmethod
+        def deserialize(cls, data):
+            return serializers[type][1](data)
+
+        def connect(self, node, *args, **kwargs):
+            return self._connect(node.type, node.id, *args, **kwargs)
+
+        def _edges(self, type):
+            for vertex_id in graph.edges.get((self.type.value, self.id), type.value):
+                yield vertices_cls[type](vertex_id[1])
+
+        def _connect(self, type, id, data=None, **kwargs):
+            if data is not None:
+                data = serializers[(self.type, type)][0](data)
+                graph.edges.add(
+                    (self.type.value, self.id), (type.value, id), data=data, **kwargs
+                )
+            else:
+                graph.edges.add((self.type.value, self.id), (type.value, id), **kwargs)
+            return self
+
+        def _disconnect(self, type, id):
+            graph.edges.discard(((self.type.value, self.id), (type.value, id)))
+            return self
+
+        def __getitem__(self, vertex):
+            data = graph.edges.get(
+                ((self.type.value, self.id), (vertex.type.value, vertex.id))
+            )
+            if data is not None:
+                data = serializers[(self.type, vertex.type)][1](data)
+            return data
+
+    def _connect(type):
+        @functools.wraps(Vertex._connect)
+        def _func(slf, id, *args, **kwargs):
+            return slf._connect(type, id, *args, **kwargs)
+
+        return _func
+
+    def _disconnect(type):
+        @functools.wraps(Vertex._disconnect)
+        def _func(slf, id, *args, **kwargs):
+            return slf._disconnect(type, id, *args, **kwargs)
+
+        return _func
+
+    for edge_type in edges_types:
+        edge_name = types_to_name[edge_type]
+        setattr(Vertex, edge_name, property(lambda self: self._edges(edge_type)))
+        setattr(Vertex, 'connect_' + edge_name, _connect(edge_type))
+        setattr(Vertex, 'disconnect_' + edge_name, _disconnect(edge_type))
+    return Vertex
+
+
 class MetaGraph(with_metaclass(DirectiveMeta)):
     def __init__(self, *args, **kwargs):
         self.g = Graph(*args, **kwargs)
-        for name, data in self.vertex_types.items():
-            setattr(self, name, VerticesWrapper(self.g, *data))
+        vertices_cls = dict()
+
+        def serialization_methods(serialization):
+            if serialization == 'pickle':
+                serialize = pickle.dumps
+                deserialize = pickle.loads
+            elif getattr(serialization, "__module__", None) == 'basalt._basalt.ngv':
+
+                def _serialize(data):
+                    return data.serialize()
+
+                def _deserialize(data):
+                    obj = serialization()
+                    obj.deserialize(data)
+                    return obj
+
+                serialize = _serialize
+                deserialize = _deserialize
+            elif serialization is None:
+
+                def identity(e):
+                    return e
+
+                serialize = identity
+                deserialize = identity
+            else:
+                raise ValueError("Unexpected 'payload_cls' value")
+            return serialize, deserialize
+
+        serializers = dict()
+        for type, method in self.vertex_types.values():
+            serializers[type] = serialization_methods(method)
+        for lhs, others in self.edges_types.items():
+            for rhs, method in others:
+                serializers[(lhs, rhs)] = serialization_methods(method)
+
+        types_to_name = dict(
+            (type, name) for name, (type, _) in self.vertex_types.items()
+        )
+
+        for name, (type, _) in self.vertex_types.items():
+            vertex_cls = build_vertex_cls(
+                name,
+                type,
+                self.g,
+                types_to_name,
+                [info[0] for info in self.edges_types.get(type, [])],
+                vertices_cls,
+                serializers,
+            )
+            vertices_cls[type] = vertex_cls
+
+            setattr(self, name, VerticesWrapper(self.g, type, vertex_cls))
 
     @property
     def vertices(self):
@@ -266,3 +403,9 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
     @property
     def edges(self):
         return self.g.edges
+
+    def commit(self):
+        return self.g.commit()
+
+    def statistics(self):
+        return self.g.statistics()
