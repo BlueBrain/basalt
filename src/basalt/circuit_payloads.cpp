@@ -43,6 +43,13 @@ void neuron_t::deserialize_sstream(pybind11::array_t<char>& data) {
     basalt::deserialize_vector(iss, syn_idx);
 }
 
+bool neuron_t::operator==(const neuron_t& rhs) const {
+    return gid == rhs.gid && astro_idx == rhs.astro_idx && syn_idx == rhs.syn_idx;
+}
+bool neuron_t::operator!=(const neuron_t& rhs) const {
+    return !(rhs == *this);
+}
+
 // synapse_t
 
 synapse_t::synapse_t(uint32_t t_pre_gid,
@@ -99,6 +106,17 @@ void synapse_t::deserialize_sstream(pybind11::array_t<char>& data) {
     iss >> is_excitatory >> pre >> post >> mesh_filename >> skeleton_filename >> psd_area;
 }
 
+bool synapse_t::operator==(const synapse_t& rhs) const {
+    return pre_gid == rhs.pre_gid && post_gid == rhs.post_gid && nrn_idx == rhs.nrn_idx &&
+           astro_idx == rhs.astro_idx && is_excitatory == rhs.is_excitatory && pre == rhs.pre &&
+           post == rhs.post && mesh_filename == rhs.mesh_filename &&
+           skeleton_filename == rhs.skeleton_filename && psd_area == rhs.psd_area;
+}
+
+bool synapse_t::operator!=(const synapse_t& rhs) const {
+    return !(rhs == *this);
+}
+
 // astrocyte_t
 
 astrocyte_t::astrocyte_t(uint32_t t_astrocyte_id,
@@ -153,6 +171,17 @@ void astrocyte_t::deserialize_sstream(pybind11::array_t<char>& data) {
         morphology_filename;
     basalt::deserialize_vector(iss, synapses_idx);
     basalt::deserialize_vector(iss, neurons_idx);
+}
+
+bool astrocyte_t::operator==(const astrocyte_t& rhs) const {
+    return astrocyte_id == rhs.astrocyte_id && microdomain_id == rhs.microdomain_id &&
+           soma_center == rhs.soma_center && soma_radius == rhs.soma_radius && name == rhs.name &&
+           mtype == rhs.mtype && morphology_filename == rhs.morphology_filename &&
+           synapses_idx == rhs.synapses_idx && neurons_idx == rhs.neurons_idx;
+}
+
+bool astrocyte_t::operator!=(const astrocyte_t& rhs) const {
+    return !(rhs == *this);
 }
 
 // microdomain_t
@@ -232,6 +261,18 @@ void microdomain_t::deserialize_sstream(pybind11::array_t<char>& data) {
     basalt::deserialize_vector(iss, synapses_idx);
 }
 
+bool microdomain_t::operator==(const microdomain_t& rhs) const {
+    return microdomain_id == rhs.microdomain_id && astrocyte_id == rhs.astrocyte_id &&
+           neighbors == rhs.neighbors && vertex_coordinates == rhs.vertex_coordinates &&
+           triangles == rhs.triangles && centroid == rhs.centroid && area == rhs.area &&
+           volume == rhs.volume && mesh_filename == rhs.mesh_filename &&
+           neurons_idx == rhs.neurons_idx && synapses_idx == rhs.synapses_idx;
+}
+
+bool microdomain_t::operator!=(const microdomain_t& rhs) const {
+    return !(rhs == *this);
+}
+
 // segment_t
 
 segment_t::segment_t(uint32_t t_section_id,
@@ -283,6 +324,15 @@ void segment_t::deserialize_sstream(pybind11::array_t<char>& data) {
     basalt::imemstream iss(data);
     iss >> section_id >> segment_id >> type >> x1 >> y1 >> z1 >> r1 >> x2 >> y2 >> z2 >> r2;
 }
+bool segment_t::operator!=(const segment_t& rhs) const {
+    return !(rhs == *this);
+}
+
+bool segment_t::operator==(const segment_t& rhs) const {
+    return section_id == rhs.section_id && segment_id == rhs.segment_id && type == rhs.type &&
+           x1 == rhs.x1 && y1 == rhs.y1 && z1 == rhs.z1 && r1 == rhs.r1 && x2 == rhs.x2 &&
+           y2 == rhs.y2 && z2 == rhs.z2 && r2 == rhs.r2;
+}
 
 // edge_astrocyte_segment_t
 
@@ -307,6 +357,14 @@ pybind11::array edge_astrocyte_segment_t::serialize_sstream() const {
 void edge_astrocyte_segment_t::deserialize_sstream(pybind11::array_t<char>& data) {
     basalt::imemstream iss(data);
     iss >> astrocyte >> vasculature;
+}
+
+bool edge_astrocyte_segment_t::operator==(const edge_astrocyte_segment_t& rhs) const {
+    return astrocyte == rhs.astrocyte && vasculature == rhs.vasculature;
+}
+
+bool edge_astrocyte_segment_t::operator!=(const edge_astrocyte_segment_t& rhs) const {
+    return !(rhs == *this);
 }
 
 }  // namespace circuit

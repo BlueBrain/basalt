@@ -1,8 +1,8 @@
 from enum import Enum
 
-from basalt.schema import MetaGraph, vertex
+from basalt.schema import MetaGraph, edge, vertex
 
-from . import Astrocyte, MicroDomain, Neuron, Synapse
+from . import Astrocyte, EdgeAstrocyteSegment, MicroDomain, Neuron, Segment, Synapse
 
 __all__ = ["NGVGraph", "PayloadHelper", "VertexType"]
 
@@ -21,6 +21,7 @@ class PayloadHelper:
         VertexType.SYNAPSE: Synapse,
         VertexType.ASTROCYTE: Astrocyte,
         VertexType.MICRODOMAIN: MicroDomain,
+        VertexType.SEGMENT: Segment,
     }
 
     @classmethod
@@ -39,3 +40,11 @@ class NGVGraph(MetaGraph):
     vertex("synapses", VertexType.SYNAPSE, Synapse)
     vertex("neurons", VertexType.NEURON, Neuron)
     vertex("microdomains", VertexType.MICRODOMAIN, MicroDomain)
+    vertex("segments", VertexType.SEGMENT, Segment)
+
+    edge(VertexType.ASTROCYTE, VertexType.SEGMENT, EdgeAstrocyteSegment)
+    edge(VertexType.ASTROCYTE, VertexType.NEURON)
+    edge(VertexType.ASTROCYTE, VertexType.SYNAPSE)
+    edge(VertexType.ASTROCYTE, VertexType.MICRODOMAIN)
+    edge(VertexType.MICRODOMAIN, VertexType.MICRODOMAIN)
+    edge(VertexType.NEURON, VertexType.SYNAPSE)

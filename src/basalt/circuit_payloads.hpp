@@ -32,6 +32,9 @@ struct neuron_t {
     int_vector_t astro_idx;
     int_vector_t syn_idx;
 
+    bool operator==(const neuron_t& rhs) const;
+    bool operator!=(const neuron_t& rhs) const;
+
     static std::unique_ptr<neuron_t> create(uint32_t gid,
                                             pybind11::array_t<uint32_t>& astro_idx,
                                             pybind11::array_t<uint32_t>& syn_idx);
@@ -73,6 +76,9 @@ struct synapse_t {
     std::string skeleton_filename;
 
     float psd_area;
+
+    bool operator==(const synapse_t& rhs) const;
+    bool operator!=(const synapse_t& rhs) const;
 
     static std::unique_ptr<synapse_t> create(uint32_t pre_gid,
                                              uint32_t post_gid,
@@ -122,6 +128,9 @@ struct astrocyte_t {
 
     int_vector_t synapses_idx;
     int_vector_t neurons_idx;
+
+    bool operator==(const astrocyte_t& rhs) const;
+    bool operator!=(const astrocyte_t& rhs) const;
 
     static std::unique_ptr<astrocyte_t> create(uint32_t astrocyte_id,
                                                uint32_t microdomain_id,
@@ -188,6 +197,9 @@ struct microdomain_t {
     int_vector_t neurons_idx;
     int_vector_t synapses_idx;
 
+    bool operator==(const microdomain_t& rhs) const;
+    bool operator!=(const microdomain_t& rhs) const;
+
     static std::unique_ptr<microdomain_t> create(uint32_t microdomain_id,
                                                  uint32_t astrocyte_id,
                                                  pybind11::array_t<uint32_t>& neighbors,
@@ -239,6 +251,9 @@ struct segment_t {
     float z2;
     float r2;
 
+    bool operator==(const segment_t& rhs) const;
+    bool operator!=(const segment_t& rhs) const;
+
     static std::unique_ptr<segment_t> create(uint32_t section_id,
                                              uint32_t segment_id,
                                              uint8_t type,
@@ -271,6 +286,9 @@ struct edge_astrocyte_segment_t {
 
     // endfoot ending point on vasculature surface
     float_point_t vasculature;
+
+    bool operator==(const edge_astrocyte_segment_t& rhs) const;
+    bool operator!=(const edge_astrocyte_segment_t& rhs) const;
 
     static std::unique_ptr<edge_astrocyte_segment_t> create(const float_point_t& astrocyte,
                                                             const float_point_t& vasculature);

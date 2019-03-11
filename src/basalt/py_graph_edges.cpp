@@ -290,7 +290,7 @@ void register_graph_edges(py::module& m) {
                  std::string data;
                  const auto& status = edges.get(edge, &data);
                  if (status.code == basalt::Status::missing_edge_code) {
-                     return py::none();
+                     throw py::key_error();
                  }
                  status.raise_on_error();
                  if (data.empty()) {

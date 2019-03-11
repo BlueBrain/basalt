@@ -79,6 +79,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
         .def(py::init<>())
         .def(py::init(&circuit::neuron_t::create), "gid"_a,
              "astro_idx"_a = py::array_t<uint32_t>(0), "syn_idx"_a = py::array_t<uint32_t>(0))
+        .def("__eq__", &circuit::neuron_t::operator==)
         .def("serialize", &basalt::serialize<circuit::neuron_t>)
         .def("deserialize", &basalt::deserialize<circuit::neuron_t>)
         .def_readwrite("gid", &circuit::neuron_t::gid)
@@ -92,6 +93,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
              "pre"_a = circuit::float_point_t({{0., 0., 0.}}),
              "post"_a = circuit::float_point_t({{0., 0., 0.}}), "mesh_filename"_a = "",
              "skeleton_filename"_a = "", "psd_area"_a = 0.)
+        .def("__eq__", &circuit::synapse_t::operator==)
         .def("serialize", &basalt::serialize<circuit::synapse_t>)
         .def("deserialize", &basalt::deserialize<circuit::synapse_t>)
         .def_readwrite("pre", &circuit::synapse_t::pre)
@@ -113,6 +115,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
              "name"_a = "", "mtype"_a = "", "morphology_filename"_a = "",
              "synapses_idx"_a = py::array_t<uint32_t>(0),
              "neurons_idx"_a = py::array_t<uint32_t>(0))
+        .def("__eq__", &circuit::astrocyte_t::operator==)
         .def("serialize", &basalt::serialize<circuit::astrocyte_t>)
         .def("deserialize", &basalt::deserialize<circuit::astrocyte_t>)
         .def_readwrite("astrocyte_id", &circuit::astrocyte_t::astrocyte_id)
@@ -134,6 +137,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
              "centroid"_a = circuit::float_point_t({{0., 0., 0.}}), "area"_a = 0., "volume"_a = 0.,
              "mesh_filename"_a = "", "neurons_idx"_a = py::array_t<uint32_t>(0),
              "synapses_idx"_a = py::array_t<uint32_t>(0))
+        .def("__eq__", &circuit::microdomain_t::operator==)
         .def("serialize", &basalt::serialize<circuit::microdomain_t>)
         .def("deserialize", &basalt::deserialize<circuit::microdomain_t>)
 
@@ -154,6 +158,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
         .def(py::init<>(&circuit::segment_t::create), "section_id"_a = 0, "segment_id"_a = 0,
              "type"_a = 0, "x1"_a = 0., "y1"_a = 0., "z1"_a = 0., "r1"_a = 0., "x2"_a = 0.,
              "y2"_a = 0., "z2"_a = 0., "r2"_a = 0.)
+        .def("__eq__", &circuit::segment_t::operator==)
         .def("serialize", &basalt::serialize<circuit::segment_t>)
         .def("deserialize", &basalt::deserialize<circuit::segment_t>)
         .def_readwrite("section_id", &circuit::segment_t::section_id)
@@ -173,6 +178,7 @@ void register_circuit_payloads_bindings(py::module& basalt) {
         .def(py::init<>(&circuit::edge_astrocyte_segment_t::create),
              "astrocyte"_a = circuit::float_point_t({{0., 0., 0.}}),
              "vasculature"_a = circuit::float_point_t({{0., 0., 0.}}))
+        .def("__eq__", &circuit::edge_astrocyte_segment_t::operator==)
         .def("serialize", &basalt::serialize<circuit::edge_astrocyte_segment_t>)
         .def("deserialize", &basalt::deserialize<circuit::edge_astrocyte_segment_t>)
         .def_readwrite("astrocyte", &circuit::edge_astrocyte_segment_t::astrocyte)
