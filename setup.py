@@ -126,9 +126,7 @@ setup(
     long_description='',
     packages=['basalt', 'basalt.ngv'],
     ext_modules=[CMakeExtension('basalt')],
-    cmdclass=lazy_dict(
-        build_ext=CMakeBuild,
-        doctest=get_sphinx_command),
+    cmdclass=lazy_dict(build_ext=CMakeBuild, doctest=get_sphinx_command),
     zip_safe=False,
     install_requires=[
         'cached-property>=1.5.1',

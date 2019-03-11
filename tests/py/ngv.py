@@ -58,13 +58,13 @@ def ngv_graph(func):
     @functools.wraps(func)
     def _func(*args):
         path = tempfile.mkdtemp()
-        print('-> NGVGraph')
         graph = ngv.NGVGraph(path)
         try:
             func(*args, graph)
         finally:
             del graph
             shutil.rmtree(path)
+
     return _func
 
 
@@ -116,3 +116,37 @@ class TestNGVGraph(unittest.TestCase):
         self.assertEqual(a.morphology_filename, "morphology_filename")
         self.assertEqual(list(a.synapses_idx), [48, 49, 50])
         self.assertEqual(list(a.neurons_idx), [51, 52, 53])
+
+    @ngv_graph
+    def test_edges_api(self, g):
+        a1 = g.astrocytes.add(1)
+        n2 = g.neurons.add(2)
+
+        # create edge from vertex
+        a1.connect(n2)
+
+        for neuron in a1.neurons:
+            self.assertEqual(neuron.data, None)
+            self.assertEqual(neuron.id, 2)
+
+        g.synapses.add(3)
+        # create edge from identifier
+        a1.connect_synapses(3)
+
+        for astrocyte in g.synapses[3].astrocytes:
+            self.assertEqual(astrocyte.data, None)
+            self.assertEqual(astrocyte.id, 1)
+
+        self.assertFalse(any(a1.disconnect_synapses(3).synapses))
+
+    @ngv_graph
+    def test_edges_payload_api(self, g):
+        segment = g.segments.add(1)
+        payload = ngv.EdgeAstrocyteSegment(
+            astrocyte=ngv.Point(42.0, 43.0, 44.0),
+            vasculature=ngv.Point(45.0, 46.0, 47.0),
+        )
+        # attach a payload on an edge between a segment and an astrocyte
+        astrocyte = g.astrocytes.add(1).connect(segment, payload)
+
+        self.assertEqual(astrocyte[segment], payload)
