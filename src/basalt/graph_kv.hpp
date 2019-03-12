@@ -79,7 +79,9 @@ class GraphKV {
         encode(vertex1, vertex2, keys[0]);
         encode(vertex2, vertex1, keys[1]);
     }
-    static inline void encode_reversed_edge(const char* data, size_t size, edge_key_t& key) {
+    static inline void encode_reversed_edge(const char* data,
+                                            [[gnu::unused]] size_t size,
+                                            edge_key_t& key) {
         assert(size == std::tuple_size<edge_key_t>::value);
         key[0] = 'E';
         std::memcpy(key.data() + 1,
@@ -96,7 +98,9 @@ class GraphKV {
     /** \name Key decoding functions
      * \{
      */
-    static inline void decode_edge_dest(const char* data, size_t size, vertex_uid_t& vertex) {
+    static inline void decode_edge_dest(const char* data,
+                                        [[gnu::unused]] size_t size,
+                                        vertex_uid_t& vertex) {
         assert(size == std::tuple_size<edge_key_t>::value);
         assert(data[0] == 'E');
         std::memcpy(reinterpret_cast<char*>(&vertex.first),
@@ -107,7 +111,10 @@ class GraphKV {
                         sizeof(vertex_uid_t::second_type),
                     sizeof(vertex_uid_t::second_type));
     }
-    static inline void decode_vertex(const char* data, size_t size, vertex_uid_t& vertex) {
+
+    static inline void decode_vertex(const char* data,
+                                     [[gnu::unused]] size_t size,
+                                     vertex_uid_t& vertex) {
         assert(size == 1 + sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
         assert(data[0] == 'N');
         std::memcpy(reinterpret_cast<char*>(&vertex.first), data + 1,
