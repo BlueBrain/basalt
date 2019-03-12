@@ -63,10 +63,11 @@ class CMakeBuild(build_ext):
             '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=' + extdir,
             '-DPYTHON_EXECUTABLE=' + sys.executable,
             '-DBasalt_USE_pybind11:BOOL=True',
+            '-DBasalt_ARCH=native',
             '-DCMAKE_BUILD_TYPE=',
         ]
 
-        optimize = 'ON' if self.debug else 'OFF'
+        optimize = 'OFF' if self.debug else 'ON'
         build_args = ['--config', optimize, '--target', '_basalt']
 
         if platform.system() == "Windows":
@@ -80,7 +81,7 @@ class CMakeBuild(build_ext):
             build_args += ['--', '/m']
         else:
             cmake_args += ['-DBasalt_CXX_OPTIMIZE:BOOL=' + optimize]
-            build_args += ['--', '-j2']
+            build_args += ['--', '-j{}'.format(max(1, os.cpu_count() - 1))]
 
         env = os.environ.copy()
         env['CXXFLAGS'] = '{} -DVERSION_INFO=\\"{}\\"'.format(
