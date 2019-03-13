@@ -171,3 +171,5 @@ dmypy.json
 
 # Pre-commit settings
 .pre-commit-config.yaml
+
+basalt/docs
