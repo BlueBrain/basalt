@@ -43,6 +43,7 @@ release = basalt.__version__
 extensions = [
     'breathe',
     'exhale',
+    'm2r',
     'sphinx.ext.autodoc',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
@@ -58,7 +59,7 @@ doctest_global_setup = textwrap.dedent("""\
     import numpy as np
 
     import basalt
-    from basalt import VertexType
+    from basalt.ngv import VertexType
 
     tmpdir = tempfile.mkdtemp()
     graph = basalt.Graph(tmpdir)
@@ -98,8 +99,7 @@ templates_path = ['_templates']
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-# source_suffix = ['.rst', '.md']
-source_suffix = '.rst'
+source_suffix = ['.rst', '.md']
 
 # The master toctree document.
 master_doc = 'index'
@@ -125,7 +125,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the

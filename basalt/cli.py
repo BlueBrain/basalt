@@ -27,41 +27,41 @@ def main(argv=None):
         if args.get('neuroglial'):
             if args.get('import'):
                 summary = ngv.import_neuroglial(
-                    args['<h5-file>'],
-                    args['<basalt-path>'],
-                    max_=int(args.get('--max')),
-                    create_vertices=args.get('--create-vertices'),
+                    args["<h5-file>"],
+                    args["<basalt-path>"],
+                    max_=int(args.get("--max")),
+                    create_vertices=args.get("--create-vertices"),
                 )
                 json.dump(summary, sys.stdout, indent=2)
                 sys.stdout.write("\n")
-        elif args.get('synaptic'):
-            if args.get('import'):
+        elif args.get("synaptic"):
+            if args.get("import"):
                 summary = ngv.import_synaptic(
-                    args['<h5-file>'],
-                    args['<basalt-path>'],
-                    max_=int(args.get('--max')),
-                    create_vertices=args.get('--create-vertices'),
+                    args["<h5-file>"],
+                    args["<basalt-path>"],
+                    max_=int(args.get("--max")),
+                    create_vertices=args.get("--create-vertices"),
                 )
                 json.dump(summary, sys.stdout, indent=2)
                 sys.stdout.write("\n")
-        elif args.get('gliovascular'):
-            if args.get('import'):
+        elif args.get("gliovascular"):
+            if args.get("import"):
                 summary = ngv.import_gliovascular(
-                    args['<h5-connectivity>'],
-                    args['<h5-data>'],
-                    args['<basalt-path>'],
-                    max_=int(args.get('--max')),
-                    create_vertices=args.get('--create-vertices'),
+                    args["<h5-connectivity>"],
+                    args["<h5-data>"],
+                    args["<basalt-path>"],
+                    max_=int(args.get("--max")),
+                    create_vertices=args.get("--create-vertices"),
                 )
                 json.dump(summary, sys.stdout, indent=2)
                 sys.stdout.write("\n")
-        elif args.get('microdomain'):
-            if args.get('import'):
+        elif args.get("microdomain"):
+            if args.get("import"):
                 summary = ngv.import_microdomain(
-                    args['<h5-data>'],
-                    args['<basalt-path>'],
-                    max_=int(args.get('--max')),
-                    create_vertices=args.get('--create-vertices'),
+                    args["<h5-data>"],
+                    args["<basalt-path>"],
+                    max_=int(args.get("--max")),
+                    create_vertices=args.get("--create-vertices"),
                 )
                 json.dump(summary, sys.stdout, indent=2)
                 sys.stdout.write("\n")

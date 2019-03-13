@@ -50,7 +50,8 @@ static const char* status = R"(
         code(int): operation status code, 0 means success.
         message(str): optional message
 
-    To use:
+    To use it:
+
     >>> status = basalt.Status(code=42)
     >>> status.code
     42
@@ -162,9 +163,8 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
         .def_property_readonly("code",
                                [](const basalt::Status& status) {
                                    return static_cast<int>(status.code);
-                               },
-                               "status code")
-        .def_readonly("message", &basalt::Status::message, "status description for humans")
+                               })
+        .def_readonly("message", &basalt::Status::message)
         .def("raise_on_error", &basalt::Status::raise_on_error, docstring::status_raise_on_error)
         .def("__bool__",
              [](const basalt::Status& status) -> bool { return static_cast<bool>(status); })

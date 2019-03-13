@@ -2,11 +2,12 @@ import collections
 import functools
 import pickle
 
+import numpy as np
 from six import string_types, with_metaclass
 
 from basalt import Graph
 
-__all__ = ["vertex", "MetaGraph"]
+__all__ = ["vertex", "edge", "MetaGraph"]
 
 
 def dedupe(sequence):
@@ -40,39 +41,42 @@ class DirectiveMeta(type):
         # commands:
         # 1. in the order they were defined
         # 2. following the MRO
-        attr_dict['_directives_to_be_executed'] = []
+        attr_dict["_directives_to_be_executed"] = []
         for base in reversed(bases):
             try:
                 directive_from_base = base._directives_to_be_executed
-                attr_dict['_directives_to_be_executed'].extend(directive_from_base)
+                attr_dict["_directives_to_be_executed"].extend(directive_from_base)
             except AttributeError:
                 # The base class didn't have the required attribute.
                 # Continue searching
                 pass
 
         # De-duplicates directives from base classes
-        attr_dict['_directives_to_be_executed'] = [
-            x for x in dedupe(attr_dict['_directives_to_be_executed'])
+        attr_dict["_directives_to_be_executed"] = [
+            x for x in dedupe(attr_dict["_directives_to_be_executed"])
         ]
 
         # Move things to be executed from module scope (where they
         # are collected first) to class scope
         if DirectiveMeta._directives_to_be_executed:
-            attr_dict['_directives_to_be_executed'].extend(
+            attr_dict["_directives_to_be_executed"].extend(
                 DirectiveMeta._directives_to_be_executed
             )
             DirectiveMeta._directives_to_be_executed = []
 
-        return super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
+        graph_cls = super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
+        pouet = property(fget=lambda slf: "pouet", doc="Pouet property!")
+        setattr(graph_cls, "pouet", pouet)
+        return graph_cls
 
     def __init__(cls, name, bases, attr_dict):
         # The class is being created: if it is a package we must ensure
         # that the directives are called on the class to set it up
-        if 'spack.pkg' in cls.__module__:
+        if "spack.pkg" in cls.__module__:
             # Package name as taken
             # from llnl.util.lang.get_calling_module_name
-            pkg_name = cls.__module__.split('.')[-1]
-            setattr(cls, 'name', pkg_name)
+            pkg_name = cls.__module__.split(".")[-1]
+            setattr(cls, "name", pkg_name)
 
         # Ensure the presence of the dictionaries associated
         # with the directives
@@ -190,16 +194,38 @@ class DirectiveMeta(type):
 directive = DirectiveMeta.directive
 
 
-@directive(dicts='vertex_types')
+@directive(dicts="vertex_types")
 def vertex(name, type, serialization=None):
+    """Declare a vertex type
+
+    Args:
+        name(str): vertex name
+        type(enum): enum value
+        serialization: it can take several values:
+
+            * ``"pickle"``: whenever an object will be attached to a vertex of this type,
+              the pickle module will be used to serialize/deserialize it.
+
+            * ``None`` (default): payload specified when creating a vertex if passed as is to
+            the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
+    """
+
     def _register(metagraph):
         metagraph.vertex_types[name] = (type, serialization)
 
     return _register
 
 
-@directive(dicts='edges_types')
+@directive(dicts="edges_types")
 def edge(lhs, rhs, serialization=None):
+    """Directive to declare an edge between 2 type of vertices
+
+    Args:
+        lhs(enum value): vertex type at one end of the edge
+        rhs(enum value): vertex type at the other end of the edge
+        serialization: optional serialization method. see :func:`vertex`
+    """
+
     def _register(metagraph):
         metagraph.edges_types.setdefault(lhs, set()).add((rhs, serialization))
         metagraph.edges_types.setdefault(rhs, set()).add((lhs, serialization))
@@ -334,21 +360,34 @@ def build_vertex_cls(
     for edge_type in edges_types:
         edge_name = types_to_name[edge_type]
         setattr(Vertex, edge_name, property(lambda self: self._edges(edge_type)))
-        setattr(Vertex, 'connect_' + edge_name, _connect(edge_type))
-        setattr(Vertex, 'disconnect_' + edge_name, _disconnect(edge_type))
+        setattr(Vertex, "connect_" + edge_name, _connect(edge_type))
+        setattr(Vertex, "disconnect_" + edge_name, _disconnect(edge_type))
     return Vertex
 
 
 class MetaGraph(with_metaclass(DirectiveMeta)):
-    def __init__(self, *args, **kwargs):
-        self.g = Graph(*args, **kwargs)
+    def __init__(self, arg, *args, **kwargs):
+        if isinstance(arg, Graph):
+            self.g = arg
+        else:
+            self.g = Graph(arg, *args, **kwargs)
         vertices_cls = dict()
 
         def serialization_methods(serialization):
-            if serialization == 'pickle':
-                serialize = pickle.dumps
-                deserialize = pickle.loads
-            elif getattr(serialization, "__module__", None) == 'basalt._basalt.ngv':
+            def compose(*functions):
+                return functools.reduce(
+                    lambda f, g: lambda x: f(g(x)), functions, lambda x: x
+                )
+
+            if serialization == "pickle":
+
+                def _serialize(obj):
+                    bytes = pickle.dumps(obj)
+                    return np.ndarray((len(bytes),), dtype=np.byte, buffer=bytes)
+
+                serialize = _serialize
+                deserialize = compose(pickle.loads, np.ndarray.tostring)
+            elif getattr(serialization, "__module__", None) == "basalt._basalt.ngv":
 
                 def _serialize(data):
                     return data.serialize()
@@ -398,14 +437,18 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
     @property
     def vertices(self):
+        """See :func:`basalt.Graph.vertices`"""
         return self.g.vertices
 
     @property
     def edges(self):
+        """See :func:`basalt.Graph.edges`"""
         return self.g.edges
 
     def commit(self):
+        """See :func:`basalt.Graph.commit`"""
         return self.g.commit()
 
     def statistics(self):
+        """See :func:`basalt.Graph.statistics`"""
         return self.g.statistics()
