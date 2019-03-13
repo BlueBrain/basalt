@@ -98,7 +98,7 @@ class CMakeBuild(build_ext):
 
 
 needs_sphinx = {'build_sphinx', 'upload_docs', 'doctest'}.intersection(sys.argv)
-maybe_sphinx = ["sphinx<2", "exhale"] if needs_sphinx else []
+maybe_sphinx = ["sphinx<2", "exhale", "m2r", "sphinx-rtd-theme"] if needs_sphinx else []
 
 setup(
     name='basalt',

@@ -84,6 +84,9 @@ static const char* get_data = R"(
         `None` is edge does not exist or does not have an associated payload.
         a `np.array(dtype=np.byte)` array otherwise.
 
+    Raises:
+        KeyError: if edge does not exist
+
     >>> graph.vertices.clear()
     >>> v1, v2 = [(0, 1), (0, 2)]
     >>> graph.vertices.add(v1)
@@ -91,8 +94,10 @@ static const char* get_data = R"(
     >>> graph.edges.add(v1, v2, np.arange(10, dtype=np.byte))
     >>> graph.edges.get((v1, v2))
     array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=int8)
-    >>> graph.edges.get((v1, (0, 3))) is None
-    True
+    >>> graph.edges.get((v1, (0, 3)))
+    Traceback (most recent call last):
+      File "<stdin>", line 1, in <module>
+    KeyError:
 
 )";
 
