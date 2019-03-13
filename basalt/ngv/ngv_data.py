@@ -9,7 +9,7 @@ L = logging.getLogger(__name__)
 
 class H5ContextManager(object):
     def __init__(self, filepath):
-        self._fd = h5py.File(filepath, 'r')
+        self._fd = h5py.File(filepath, "r")
 
     def close(self):
         self._fd.close()
@@ -25,11 +25,11 @@ class CellData(H5ContextManager):
     def __init__(self, filepath):
         super(CellData, self).__init__(filepath)
 
-        self.astrocyte_positions = self._fd['/positions']
-        self.astrocyte_radii = self._fd['/radii']
+        self.astrocyte_positions = self._fd["/positions"]
+        self.astrocyte_radii = self._fd["/radii"]
 
-        self.astrocyte_gids = self._fd['/ids']
-        self.astrocyte_names = self._fd['/names']
+        self.astrocyte_gids = self._fd["/ids"]
+        self.astrocyte_names = self._fd["/names"]
 
     @property
     def astrocyte_point_data(self):
@@ -52,12 +52,12 @@ class MicrodomainTesselation(H5ContextManager):
             "domain_data": slice(0, 1),
         }
 
-        self._offsets = self._fd['/offsets']
-        self._connectivity = self._fd['/connectivity']
+        self._offsets = self._fd["/offsets"]
+        self._connectivity = self._fd["/connectivity"]
 
-        self._raw_points = self._fd['/Data/points']
-        self._raw_triangles = self._fd['/Data/triangles']
-        self._raw_neighbors = self._fd['/Data/neighbors']
+        self._raw_points = self._fd["/Data/points"]
+        self._raw_triangles = self._fd["/Data/triangles"]
+        self._raw_neighbors = self._fd["/Data/neighbors"]
 
     def __iter__(self):
         for i in range(self.n_microdomains):
@@ -74,15 +74,15 @@ class MicrodomainTesselation(H5ContextManager):
         )
 
     def domain_neighbors(self, astrocyte_index):
-        beg, end = self._offset_slice(astrocyte_index, self._offset_t['neighbors'])
+        beg, end = self._offset_slice(astrocyte_index, self._offset_t["neighbors"])
         return self._raw_neighbors[beg:end]
 
     def domain_points(self, astrocyte_index):
-        beg, end = self._offset_slice(astrocyte_index, self._offset_t['points'])
+        beg, end = self._offset_slice(astrocyte_index, self._offset_t["points"])
         return self._raw_points[beg:end]
 
     def domain_triangles(self, astrocyte_index):
-        beg, end = self._offset_slice(astrocyte_index, self._offset_t['triangles'])
+        beg, end = self._offset_slice(astrocyte_index, self._offset_t["triangles"])
         return self._raw_triangles[beg:end]
 
     def domain_object(self, astrocyte_index):
@@ -106,9 +106,9 @@ class GliovascularData(H5ContextManager):
     def __init__(self, filepath):
         super(GliovascularData, self).__init__(filepath)
 
-        self.endfoot_graph_coordinates = self._fd['/endfoot_graph_coordinates']
+        self.endfoot_graph_coordinates = self._fd["/endfoot_graph_coordinates"]
 
-        self.endfoot_surface_coordinates = self._fd['/endfoot_surface_coordinates']
+        self.endfoot_surface_coordinates = self._fd["/endfoot_surface_coordinates"]
 
 
 class NeuroglialData(H5ContextManager):
@@ -118,7 +118,7 @@ class NeuroglialData(H5ContextManager):
 class SynapticData(H5ContextManager):
     @property
     def synapse_coordinates(self):
-        return self._fd['/synapse_coordinates']
+        return self._fd["/synapse_coordinates"]
 
     @property
     def n_synapses(self):

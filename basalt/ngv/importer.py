@@ -138,7 +138,7 @@ class Importer:
         for name, prop in inspect.getmembers(
             self.connectivity.__class__, lambda o: isinstance(o, property)
         ):
-            if name.startswith('n_'):
+            if name.startswith("n_"):
                 schema[name[2:]] = prop.fget(self.connectivity)
         return schema
 
@@ -187,7 +187,7 @@ def import_gliovascular(
             title="Import astrocyte ⇆ vasculature segments",
             connectivity=connectivity,
             arity_labels=["segments per astrocyte"],
-            progress_kwargs=dict(max=max_, suffix='%(index)d/%(max)d astrocytes'),
+            progress_kwargs=dict(max=max_, suffix="%(index)d/%(max)d astrocytes"),
         ) as importer:
             for astro_id in range(max_):
                 astro_node = make_id(VertexType.ASTROCYTE.value, astro_id)
@@ -219,7 +219,7 @@ def import_synaptic(h5_file, basalt_path, max_=-1, create_vertices=False):
             title="Importing synapse ⇆ afferent neuron",
             connectivity=connectivity,
             arity_labels=["synapse per neuron"],
-            progress_kwargs=dict(max=max_, suffix='%(index)d/%(max)d neurons'),
+            progress_kwargs=dict(max=max_, suffix="%(index)d/%(max)d neurons"),
         ) as importer:
             for neuron_id in range(max_):
                 neuron_node = make_id(VertexType.NEURON.value, neuron_id)
@@ -245,7 +245,7 @@ def import_neuroglial(h5_file, basalt_path, max_=-1, create_vertices=False):
             title="Importing astrocyte ⇆ (synapses, neurons)",
             connectivity=connectivity,
             arity_labels=["synapses per astrocyte", "neurons per astrocyte"],
-            progress_kwargs=dict(max=max_, suffix='%(index)d/%(max)d astrocytes'),
+            progress_kwargs=dict(max=max_, suffix="%(index)d/%(max)d astrocytes"),
         ) as importer:
             for astro_id in range(max_):
                 astro_node = make_id(VertexType.ASTROCYTE.value, astro_id)

@@ -1,16 +1,32 @@
 # Basalt - C++11 Graph Storage library
 
-Basic graph database backed by RocksDB key-value storage [![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
+Basic graph database backed by RocksDB key-value storage
+
+[![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
 
 # Development stage
 
 This library is still under active development, and is not meant to be used
 in a production environment.
 
-# Documentation
+# Usage on BlueBrain 5
 
-Python API documentation in available in basalt
-[wiki](https://github.com/tristan0x/basalt/wiki/Python-API).
+Basalt is currently released as a Nix module on BB5 supercomputer:
+
+```bash
+$ module purge
+$ module load nix/py36/basalt
+$ python3
+Python 3.6.3 (default, Oct  3 2017, 07:47:49)
+[GCC 6.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import basalt
+>>> basalt.__version__
+'0.2.0'
+>>> basalt.__rocksdb_version__
+'5.17.2'
+>>>
+```
 
 # Build and installation instructions
 
@@ -74,13 +90,14 @@ To install:
 * `tests/py/` directory: unit-tests of the Python package
 * `cmake/` directory: Additional CMake scripts
 * `dev/` directory: development utilities
+* `docs` directory: source code of Sphinx documentation
 
 # Embedded third-parties
 
 External libraries are including either by copy/paste or git submodules
 in `src/third_party` directory.
 
-* [Catch2]((https://github.com/catchorg/Catch2)):
+* [Catch2](https://github.com/catchorg/Catch2):
   modern, C++-native, header-only, test framework for unit-tests, TDD
   and BDD unit-test library.
 * [fmt](https://github.com/fmtlib/fmt): A modern formatting library
@@ -102,10 +119,10 @@ with the coding conventions of this project.
 
 Please make sure to execute `dev/check.sh` before submitting a patch in order to:
 * run static analysis of C++ code with
-  [`clang-tidy`](http://clang.llvm.org/extra/clang-tidy/)
+  [clang-tidy](http://clang.llvm.org/extra/clang-tidy/)
 * run Python static analysis and code formatting with
-  [`flake8`](http://flake8.pycqa.org) and [`black`](https://github.com/ambv/black).
-  Also install [`flake8-bugbear`](https://github.com/PyCQA/flake8-bugbear)
+  [flake8](http://flake8.pycqa.org) and [black](https://github.com/ambv/black).
+  Also install [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear)
   *flake8* plugin.
 
 Valgrind memory checker is run on unit-tests by Travis. You can execute it locally

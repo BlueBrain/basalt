@@ -3,12 +3,28 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Basalt's documentation!
-==================================
+Basalt --- Graph Storage library
+================================
+
+.. only: not latex
+
+    Contents:
+
+.. toctree::
+   :maxdepth: 1
+
+   readme
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Contents
+
+   contents/graphs
+   contents/ngv
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Reference
 
    modules.rst
    cpp_api/library_root

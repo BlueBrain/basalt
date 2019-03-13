@@ -8,7 +8,7 @@ L = logging.getLogger(__name__)
 
 class H5ContextManager(object):
     def __init__(self, filepath):
-        self._fd = h5py.File(filepath, 'r')
+        self._fd = h5py.File(filepath, "r")
 
     def close(self):
         self._fd.close()
@@ -23,7 +23,7 @@ class H5ContextManager(object):
 class SynapticConnectivity(H5ContextManager):
     class _SynapseEntry(object):
         def __init__(self, fd):
-            self._afferent_neuron = fd['/Synapse/Afferent Neuron']
+            self._afferent_neuron = fd["/Synapse/Afferent Neuron"]
 
         def to_afferent_neuron(self, synapse_index):
             return self._afferent_neuron[synapse_index]
@@ -34,7 +34,7 @@ class SynapticConnectivity(H5ContextManager):
 
     class _AfferentNeuronEntry(object):
         def __init__(self, fd):
-            self._offsets = fd['/Afferent Neuron/offsets']
+            self._offsets = fd["/Afferent Neuron/offsets"]
 
         def _offset_slice(self, neuron_index):
             return self._offsets[neuron_index], self._offsets[neuron_index + 1]
@@ -62,12 +62,12 @@ class GliovascularConnectivity(H5ContextManager):
     class _AstrocyteEntry(object):
         def __init__(self, fd):
 
-            self._target_t = {'endfoot': 0, 'vasculature_segment': 1}
+            self._target_t = {"endfoot": 0, "vasculature_segment": 1}
 
-            self._offset_t = {'endfoot': 0}
+            self._offset_t = {"endfoot": 0}
 
-            self._connectivity = fd['/Astrocyte/connectivity']
-            self._offsets = fd['/Astrocyte/offsets']
+            self._connectivity = fd["/Astrocyte/connectivity"]
+            self._offsets = fd["/Astrocyte/offsets"]
 
         def _offset_slice(self, astrocyte_index, offset_type):
             # right now the array is 1d because there is only
@@ -75,42 +75,42 @@ class GliovascularConnectivity(H5ContextManager):
             return self._offsets[astrocyte_index], self._offsets[astrocyte_index + 1]
 
         def to_endfoot(self, astrocyte_index):
-            beg, end = self._offset_slice(astrocyte_index, self._offset_t['endfoot'])
-            return self._connectivity[beg:end, self._target_t['endfoot']]
+            beg, end = self._offset_slice(astrocyte_index, self._offset_t["endfoot"])
+            return self._connectivity[beg:end, self._target_t["endfoot"]]
 
         def to_vasculature_segment(self, astrocyte_index):
-            beg, end = self._offset_slice(astrocyte_index, self._offset_t['endfoot'])
-            return self._connectivity[beg:end, self._target_t['vasculature_segment']]
+            beg, end = self._offset_slice(astrocyte_index, self._offset_t["endfoot"])
+            return self._connectivity[beg:end, self._target_t["vasculature_segment"]]
 
     class _EndfootEntry(object):
         def __init__(self, fd):
 
-            self._target_t = {'astrocyte': 0, 'vasculature_segment': 1}
+            self._target_t = {"astrocyte": 0, "vasculature_segment": 1}
 
-            self._connectivity = fd['/Endfoot/connectivity']
+            self._connectivity = fd["/Endfoot/connectivity"]
 
         def to_astrocyte(self, endfoot_index):
-            return self._connectivity[endfoot_index, self._target_t['astrocyte']]
+            return self._connectivity[endfoot_index, self._target_t["astrocyte"]]
 
         @property
         def to_astrocyte_map(self):
-            return self._connectivity[:, self._target_t['astrocyte']]
+            return self._connectivity[:, self._target_t["astrocyte"]]
 
         def to_vasculature_segment(self, endfoot_index):
             return self._connectivity[
-                endfoot_index, self._target_t['vasculature_segment']
+                endfoot_index, self._target_t["vasculature_segment"]
             ]
 
     class _VasculatureSegmentEntry(object):
         def __init__(self, fd):
 
-            self._target_t = {'endfoot': 0, 'astrocyte': 1}
+            self._target_t = {"endfoot": 0, "astrocyte": 1}
 
-            vasculature_group = fd['/Vasculature Segment']
-            self._connectivity = vasculature_group['connectivity']
+            vasculature_group = fd["/Vasculature Segment"]
+            self._connectivity = vasculature_group["connectivity"]
 
-            self._min_index = self._connectivity.attrs['min_index']
-            self._max_index = self._connectivity.attrs['max_index']
+            self._min_index = self._connectivity.attrs["min_index"]
+            self._max_index = self._connectivity.attrs["max_index"]
 
         def _is_index_valid(self, segment_index):
             return self._min_index <= segment_index < self._max_index
@@ -118,7 +118,7 @@ class GliovascularConnectivity(H5ContextManager):
         def to_endfoot(self, segment_index):
             return (
                 self._connectivity[
-                    segment_index - self._min_index, self._target_t['endfoot']
+                    segment_index - self._min_index, self._target_t["endfoot"]
                 ]
                 if self._is_index_valid(segment_index)
                 else -1
@@ -127,7 +127,7 @@ class GliovascularConnectivity(H5ContextManager):
         def to_astrocyte(self, segment_index):
             return (
                 self._connectivity[
-                    segment_index - self._min_index, self._target_t['astrocyte']
+                    segment_index - self._min_index, self._target_t["astrocyte"]
                 ]
                 if self._is_index_valid(segment_index)
                 else -1
@@ -159,8 +159,8 @@ class NeuroglialConnectivity(H5ContextManager):
     class _NeuronEntry(object):
         def __init__(self, fd):
 
-            self._offsets = fd['/Neuron/offsets']
-            self._astrocyte = fd['/Neuron/astrocyte']
+            self._offsets = fd["/Neuron/offsets"]
+            self._astrocyte = fd["/Neuron/astrocyte"]
 
         def _offset_slice(self, neuron_index):
             return self._offsets[neuron_index], self._offsets[neuron_index + 1]
@@ -193,11 +193,11 @@ class NeuroglialConnectivity(H5ContextManager):
     class _AstrocyteEntry(object):
         def __init__(self, fd):
 
-            self._offset_t = {'synapse': 0, 'neuron': 1}
+            self._offset_t = {"synapse": 0, "neuron": 1}
 
-            self._offsets = fd['/Astrocyte/offsets']
-            self._synapse = fd['/Astrocyte/synapse']
-            self._neuron = fd['/Astrocyte/neuron']
+            self._offsets = fd["/Astrocyte/offsets"]
+            self._synapse = fd["/Astrocyte/synapse"]
+            self._neuron = fd["/Astrocyte/neuron"]
 
         def _offset_slice(self, astrocyte_index, offset_type):
             return (
@@ -206,11 +206,11 @@ class NeuroglialConnectivity(H5ContextManager):
             )
 
         def to_synapse(self, astrocyte_index):
-            beg, end = self._offset_slice(astrocyte_index, self._offset_t['synapse'])
+            beg, end = self._offset_slice(astrocyte_index, self._offset_t["synapse"])
             return self._synapse[beg:end]
 
         def to_neuron(self, astrocyte_index):
-            beg, end = self._offset_slice(astrocyte_index, self._offset_t['neuron'])
+            beg, end = self._offset_slice(astrocyte_index, self._offset_t["neuron"])
             return self._neuron[beg:end]
 
     def __init__(self, filepath):
@@ -233,13 +233,13 @@ class NGVConnectome(object):
     def __init__(self, ngv_config):
 
         self._snc = SynapticConnectivity(
-            ngv_config.output_paths('synaptic_connectivity')
+            ngv_config.output_paths("synaptic_connectivity")
         )
         self._ngc = NeuroglialConnectivity(
-            ngv_config.output_paths('neuroglial_connectivity')
+            ngv_config.output_paths("neuroglial_connectivity")
         )
         self._gvc = GliovascularConnectivity(
-            ngv_config.output_paths('gliovascular_connectivity')
+            ngv_config.output_paths("gliovascular_connectivity")
         )
 
     def close(self):
