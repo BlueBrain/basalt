@@ -5,15 +5,26 @@ Usage:
   basalt-cli ngv import synaptic [--max=<nb>] [--create-vertices] <h5-file> <basalt-path>
   basalt-cli ngv import gliovascular [--max=<nb>] [--create-vertices] <h5-connectivity> <h5-data> <basalt-path>
   basalt-cli ngv import microdomain [--max=<nb>] [--create-vertices] <h5-data> <basalt-path>
+  basalt-cli doc [--bind=<ADDRESS>] [<port>]
   basalt-cli -h | --help
   basalt-cli --version
 
 Options
   --max=<nb>  Maximum number of items to import [default: -1].
+  -b --bind=<ADDRESS>   Specify alternate bind address [default: all interfaces]
+  port        Specify alternate port [default: 8000]
+  --no-browser Don't open the notebook in a browser after startup.
+
   -h --help   Show this screen.
   --version   Show version.
+
+Actions
+  doc  start a webserver locally to browse documentation
 """
+import http.server
+import functools
 import json
+import os.path as osp
 import sys
 
 from docopt import docopt
@@ -22,10 +33,21 @@ from . import __version__, ngv
 
 
 def main(argv=None):
-    args = docopt(__doc__, version='basalt ' + __version__, argv=argv)
-    if args.get('ngv'):
-        if args.get('neuroglial'):
-            if args.get('import'):
+    args = docopt(__doc__, version="basalt " + __version__, argv=argv)
+    if args.get("doc"):
+        port = args.get("<port>") or 8000
+        bind = args["--bind"]
+        if bind == "all interfaces":
+            bind = ""
+        doc_dir = osp.join(osp.dirname(__file__), "docs", "html")
+        handler_class = functools.partial(
+            http.server.SimpleHTTPRequestHandler, directory=doc_dir
+        )
+        http.server.test(HandlerClass=handler_class, port=port, bind=bind)
+
+    elif args.get("ngv"):
+        if args.get("neuroglial"):
+            if args.get("import"):
                 summary = ngv.import_neuroglial(
                     args["<h5-file>"],
                     args["<basalt-path>"],

@@ -5,8 +5,9 @@ import re
 import subprocess
 import sys
 
-from setuptools import find_packages, setup, Extension
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
+from setuptools.command.install import install
 from distutils.version import LooseVersion
 
 
@@ -97,8 +98,13 @@ class CMakeBuild(build_ext):
         )
 
 
-needs_sphinx = {'build_sphinx', 'upload_docs', 'doctest'}.intersection(sys.argv)
-maybe_sphinx = ["sphinx<2", "exhale", "m2r", "sphinx-rtd-theme"] if needs_sphinx else []
+class BasaltInstall(install):
+    def run(self):
+        if not self.skip_build:
+            self.run_command('build')
+        self.run_command('install_doc')
+        super().run()
+
 
 setup(
     name='basalt',
@@ -127,7 +133,13 @@ setup(
     long_description='',
     packages=['basalt', 'basalt.ngv'],
     ext_modules=[CMakeExtension('basalt')],
-    cmdclass=lazy_dict(build_ext=CMakeBuild, doctest=get_sphinx_command),
+    cmdclass=lazy_dict(
+        build_ext=CMakeBuild,
+        install=BasaltInstall,
+        install_doc=get_sphinx_command,
+        doctest=get_sphinx_command,
+    ),
+    package_data={'basalt': ['doc/html/**/*']},
     zip_safe=False,
     install_requires=[
         'cached-property>=1.5.1',
@@ -137,7 +149,7 @@ setup(
         'numpy<1.16',
         'progress>=1.4',
     ],
-    setup_requires=maybe_sphinx,
+    setup_requires=["sphinx<2", "exhale", "m2r", "sphinx-rtd-theme"],
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main
