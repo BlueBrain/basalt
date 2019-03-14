@@ -58,7 +58,7 @@ def ngv_graph(func):
     @functools.wraps(func)
     def _func(*args):
         path = tempfile.mkdtemp()
-        graph = ngv.NGVGraph(path)
+        graph = ngv.NGVGraph(path=path)
         try:
             func(*args, graph)
         finally:
@@ -123,7 +123,7 @@ class TestNGVGraph(unittest.TestCase):
         n2 = g.neurons.add(2)
 
         # create edge from vertex
-        a1.connect(n2)
+        a1.add(n2)
 
         for neuron in a1.neurons:
             self.assertEqual(neuron.data, None)
@@ -131,13 +131,13 @@ class TestNGVGraph(unittest.TestCase):
 
         g.synapses.add(3)
         # create edge from identifier
-        a1.connect_synapses(3)
+        a1.add_synapse(3)
 
         for astrocyte in g.synapses[3].astrocytes:
             self.assertEqual(astrocyte.data, None)
             self.assertEqual(astrocyte.id, 1)
 
-        self.assertFalse(any(a1.disconnect_synapses(3).synapses))
+        self.assertFalse(any(a1.discard_synapse(3).synapses))
 
     @ngv_graph
     def test_edges_payload_api(self, g):
@@ -147,6 +147,6 @@ class TestNGVGraph(unittest.TestCase):
             vasculature=ngv.Point(45.0, 46.0, 47.0),
         )
         # attach a payload on an edge between a segment and an astrocyte
-        astrocyte = g.astrocytes.add(1).connect(segment, payload)
+        astrocyte = g.astrocytes.add(1).add(segment, payload)
 
         self.assertEqual(astrocyte[segment], payload)

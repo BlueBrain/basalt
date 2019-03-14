@@ -21,15 +21,12 @@ Options
 Actions
   doc  start a webserver locally to browse documentation
 """
-import http.server
-import functools
 import json
-import os.path as osp
 import sys
 
 from docopt import docopt
 
-from . import __version__, ngv
+from . import __version__, ngv, serve_doc
 
 
 def main(argv=None):
@@ -39,12 +36,7 @@ def main(argv=None):
         bind = args["--bind"]
         if bind == "all interfaces":
             bind = ""
-        doc_dir = osp.join(osp.dirname(__file__), "docs", "html")
-        handler_class = functools.partial(
-            http.server.SimpleHTTPRequestHandler, directory=doc_dir
-        )
-        http.server.test(HandlerClass=handler_class, port=port, bind=bind)
-
+        serve_doc(bind, port)
     elif args.get("ngv"):
         if args.get("neuroglial"):
             if args.get("import"):

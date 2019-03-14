@@ -1,11 +1,13 @@
 import collections
 import functools
-import pickle
+import sys
 
-import numpy as np
+
+from cached_property import cached_property
 from six import string_types, with_metaclass
 
 from basalt import Graph
+from .serialization import serialization_method
 
 __all__ = ["vertex", "edge", "MetaGraph"]
 
@@ -64,10 +66,23 @@ class DirectiveMeta(type):
             )
             DirectiveMeta._directives_to_be_executed = []
 
-        graph_cls = super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
-        pouet = property(fget=lambda slf: "pouet", doc="Pouet property!")
-        setattr(graph_cls, "pouet", pouet)
-        return graph_cls
+        # Ignore any directives executed *within* top-level
+        # directives by clearing out the queue they're appended to
+        DirectiveMeta._directives_to_be_executed = []
+
+        new_cls = super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
+        if new_cls.__name__ != "MetaGraph":
+            # Ensure the presence of the dictionaries associated
+            # with the directives
+            for d in DirectiveMeta._directive_names:
+                setattr(new_cls, d, {})
+
+            # Lazily execute directives
+            for directive in new_cls._directives_to_be_executed:
+                directive(new_cls)
+
+            new_cls._generate_methods()
+        return new_cls
 
     def __init__(cls, name, bases, attr_dict):
         # The class is being created: if it is a package we must ensure
@@ -77,19 +92,6 @@ class DirectiveMeta(type):
             # from llnl.util.lang.get_calling_module_name
             pkg_name = cls.__module__.split(".")[-1]
             setattr(cls, "name", pkg_name)
-
-        # Ensure the presence of the dictionaries associated
-        # with the directives
-        for d in DirectiveMeta._directive_names:
-            setattr(cls, d, {})
-
-        # Lazily execute directives
-        for directive in cls._directives_to_be_executed:
-            directive(cls)
-
-        # Ignore any directives executed *within* top-level
-        # directives by clearing out the queue they're appended to
-        DirectiveMeta._directives_to_be_executed = []
 
         super(DirectiveMeta, cls).__init__(name, bases, attr_dict)
 
@@ -131,6 +133,7 @@ class DirectiveMeta(type):
         This is just a modular way to add storage attributes to the
         Package class, and it's how Spack gets information from the
         packages to the core.
+
 
         """
         global __all__
@@ -195,7 +198,7 @@ directive = DirectiveMeta.directive
 
 
 @directive(dicts="vertex_types")
-def vertex(name, type, serialization=None):
+def vertex(name, type, serialization=None, plural=None):
     """Declare a vertex type
 
     Args:
@@ -207,11 +210,14 @@ def vertex(name, type, serialization=None):
               the pickle module will be used to serialize/deserialize it.
 
             * ``None`` (default): payload specified when creating a vertex if passed as is to
-            the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
+              the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
+
+        plural(string): overwrite default plural (name + 's')
+
     """
 
     def _register(metagraph):
-        metagraph.vertex_types[name] = (type, serialization)
+        metagraph.vertex_types[name] = (type, serialization, plural)
 
     return _register
 
@@ -234,10 +240,17 @@ def edge(lhs, rhs, serialization=None):
 
 
 class VerticesWrapper:
-    def __init__(self, g, type, vertex_cls):
+    """Wrapper class for all vertices of a certain type"""
+
+    def __init__(self, g, vertex_info):
+        """
+        Args:
+            g(:class:`basalt.graph`): instance of graph
+            vertex_info(VertexInfo): details about the wrapped vertex
+        """
         self.g = g
-        self.type = type.value
-        self._vertex_cls = vertex_cls
+        self.type = vertex_info.type.value
+        self._vertex_cls = vertex_info.cls
 
     def add(self, id, data=None, **kwargs):
         if data is not None:
@@ -245,7 +258,7 @@ class VerticesWrapper:
             self.g.vertices.add((self.type, id), data, **kwargs)
         else:
             self.g.vertices.add((self.type, id), **kwargs)
-        return self._vertex_cls(id)
+        return self._vertex_cls(self.g, id)
 
     def get(self, id):
         data = self.g.vertices.get((self.type, id))
@@ -255,7 +268,7 @@ class VerticesWrapper:
 
     def __getitem__(self, id):
         data = self.g.vertices[(self.type, id)]
-        return self._vertex_cls(id, data)
+        return self._vertex_cls(self.g, id, data)
 
     def discard(self, id):
         return self.g.vertices.discard((self.type, id))
@@ -278,162 +291,263 @@ class VerticesWrapper:
         raise NotImplementedError
 
 
-def build_vertex_cls(
-    name, type, graph, types_to_name, edges_types, vertices_cls, serializers
+class VertexInfo(
+    collections.namedtuple("VertexInfo", ["name", "plural", "type", "connections"])
 ):
-    class Vertex:
-        def __init__(self, id, data=None):
-            assert id is not None
-            assert isinstance(id, int)
-            self._id = id
-            self._data = data
-            if self._data is not None:
-                self._data = self.deserialize(self._data)
+    """Hold information about a vertex type
 
-        @property
-        def id(self):
-            return self._id
+    Attributes:
+        name: vertex name
+        plural: name to mention several of them
+        type: vertex enum type
+        connections: enum value of connected vertices
+        cls: Wrapper class
+    """
 
-        @property
-        def type(self):
-            return type
+    @property
+    def cls(self):
+        return self.__cls
 
-        @property
-        def data(self):
-            if self._data is None:
-                self._data = graph.vertices.get((type.value, self.id))
-                if self._data is not None:
-                    self._data = self.deserialize(self._data)
-            return self._data
-
-        @classmethod
-        def serialize(cls, data):
-            return serializers[type][0](data)
-
-        @classmethod
-        def deserialize(cls, data):
-            return serializers[type][1](data)
-
-        def connect(self, node, *args, **kwargs):
-            return self._connect(node.type, node.id, *args, **kwargs)
-
-        def _edges(self, type):
-            for vertex_id in graph.edges.get((self.type.value, self.id), type.value):
-                yield vertices_cls[type](vertex_id[1])
-
-        def _connect(self, type, id, data=None, **kwargs):
-            if data is not None:
-                data = serializers[(self.type, type)][0](data)
-                graph.edges.add(
-                    (self.type.value, self.id), (type.value, id), data=data, **kwargs
-                )
-            else:
-                graph.edges.add((self.type.value, self.id), (type.value, id), **kwargs)
-            return self
-
-        def _disconnect(self, type, id):
-            graph.edges.discard(((self.type.value, self.id), (type.value, id)))
-            return self
-
-        def __getitem__(self, vertex):
-            data = graph.edges.get(
-                ((self.type.value, self.id), (vertex.type.value, vertex.id))
-            )
-            if data is not None:
-                data = serializers[(self.type, vertex.type)][1](data)
-            return data
-
-    def _connect(type):
-        @functools.wraps(Vertex._connect)
-        def _func(slf, id, *args, **kwargs):
-            return slf._connect(type, id, *args, **kwargs)
-
-        return _func
-
-    def _disconnect(type):
-        @functools.wraps(Vertex._disconnect)
-        def _func(slf, id, *args, **kwargs):
-            return slf._disconnect(type, id, *args, **kwargs)
-
-        return _func
-
-    for edge_type in edges_types:
-        edge_name = types_to_name[edge_type]
-        setattr(Vertex, edge_name, property(lambda self: self._edges(edge_type)))
-        setattr(Vertex, "connect_" + edge_name, _connect(edge_type))
-        setattr(Vertex, "disconnect_" + edge_name, _disconnect(edge_type))
-    return Vertex
+    @cls.setter
+    def cls(self, cls):
+        self.__cls = cls
 
 
 class MetaGraph(with_metaclass(DirectiveMeta)):
-    def __init__(self, arg, *args, **kwargs):
-        if isinstance(arg, Graph):
-            self.g = arg
-        else:
-            self.g = Graph(arg, *args, **kwargs)
-        vertices_cls = dict()
-
-        def serialization_methods(serialization):
-            def compose(*functions):
-                return functools.reduce(
-                    lambda f, g: lambda x: f(g(x)), functions, lambda x: x
-                )
-
-            if serialization == "pickle":
-
-                def _serialize(obj):
-                    bytes = pickle.dumps(obj)
-                    return np.ndarray((len(bytes),), dtype=np.byte, buffer=bytes)
-
-                serialize = _serialize
-                deserialize = compose(pickle.loads, np.ndarray.tostring)
-            elif getattr(serialization, "__module__", None) == "basalt._basalt.ngv":
-
-                def _serialize(data):
-                    return data.serialize()
-
-                def _deserialize(data):
-                    obj = serialization()
-                    obj.deserialize(data)
-                    return obj
-
-                serialize = _serialize
-                deserialize = _deserialize
-            elif serialization is None:
-
-                def identity(e):
-                    return e
-
-                serialize = identity
-                deserialize = identity
-            else:
-                raise ValueError("Unexpected 'payload_cls' value")
-            return serialize, deserialize
-
-        serializers = dict()
-        for type, method in self.vertex_types.values():
-            serializers[type] = serialization_methods(method)
-        for lhs, others in self.edges_types.items():
-            for rhs, method in others:
-                serializers[(lhs, rhs)] = serialization_methods(method)
-
-        types_to_name = dict(
-            (type, name) for name, (type, _) in self.vertex_types.items()
-        )
-
-        for name, (type, _) in self.vertex_types.items():
-            vertex_cls = build_vertex_cls(
+    @classmethod
+    def _generate_methods(cls):
+        """Shape MetaGraph child class according to the :func:`vertex` and :func:`edge`
+        directives.
+        """
+        cls._data_serializers = cls._create_data_serializers()
+        cls._vertices = {
+            type: VertexInfo(
                 name,
+                plural if plural else name + "s",
                 type,
-                self.g,
-                types_to_name,
-                [info[0] for info in self.edges_types.get(type, [])],
-                vertices_cls,
-                serializers,
+                (e[0] for e in cls.edges_types.get(type, [])),
             )
-            vertices_cls[type] = vertex_cls
+            for name, (type, _, plural) in cls.vertex_types.items()
+        }
 
-            setattr(self, name, VerticesWrapper(self.g, type, vertex_cls))
+        for info in cls._vertices.values():
+            info.cls = cls._create_vertex_class(info)
+            cls._register_vertex_class(info.cls)
+            cls._add_vertex_property(info)
+
+    @classmethod
+    def _add_vertex_property(cls, info):
+        """Add a property at class top-level to access the wrapper of the specified vertex"""
+
+        def create_property():
+            def getter(self):
+                return VerticesWrapper(self.g, info)
+
+            getter.__doc__ = "Manipulate vertices of type " + info.name
+            return cached_property(getter)
+
+        setattr(cls, info.plural, create_property())
+
+    @classmethod
+    def _register_vertex_class(cls, a_cls):
+        """Register the given class in the module of the graph it is related"""
+        cls_module = sys.modules[cls.__module__]
+        # add vertex class to the module of graph class
+        setattr(cls_module, a_cls.__name__, a_cls)
+        # register class in __all__ of the module, if any
+        if getattr(cls_module, "__all__", None):
+            cls_module.__all__.append(a_cls.__name__)
+
+    @classmethod
+    def _create_data_serializers(cls):
+        """Build a dict mapping every type of vertices and edges
+        to the proper serialization methods. For example
+
+        {<VertexType.Foo: 3>: basalt.serialization.PickleSerialization,
+         <VertexType.Bar: 2>: basalt.serialization.NoneSerialization,
+         (<VertexType.Foo: 3>, <VertexType.Bar: 2>): basalt.serialization.PickleSerialization,
+         (<VertexType.Bar: 2>, <VertexType.Foo: 3>): basalt.serialization.PickleSerialization}
+
+        """
+        eax = dict()
+        for type, method, _ in cls.vertex_types.values():
+            eax[type] = serialization_method(method)
+        for lhs, others in cls.edges_types.items():
+            for rhs, method in others:
+                eax[(lhs, rhs)] = serialization_method(method)
+        return eax
+
+    @classmethod
+    def _create_vertex_class(cls, info):
+        """Create a Vertex class dedicated to a certain vertex type
+
+        Args:
+            info(VertexInfo): details about the specified vertex type
+        """
+
+        class Vertex:
+            def __init__(self, graph, id, data=None):
+                assert id is not None
+                assert isinstance(id, int)
+                self._graph = graph
+                self._id = id
+                self._data = data
+                if self._data is not None:
+                    self._data = self.deserialize(self._data)
+
+            @property
+            def id(self):
+                """get vertex identifier"""
+                return self._id
+
+            @property
+            def type(self):
+                """get vertex enum type"""
+                return info.type
+
+            @property
+            def data(self):
+                """get payload attached, if any
+
+                Returns:
+                    The deserialized payload is any, ``None`` otherwise
+                """
+                if self._data is None:
+                    self._data = self._graph.vertices.get((info.type.value, self.id))
+                    if self._data is not None:
+                        self._data = self.deserialize(self._data)
+                return self._data
+
+            @classmethod
+            def serialize(vcls, data):
+                return cls._data_serializers[info.type].serialize(data)
+
+            @classmethod
+            def deserialize(vcls, data):
+                return cls._data_serializers[info.type].deserialize(data)
+
+            def add(self, vertex, *args, **kwargs):
+                """Connect a vertex to this one
+
+                Args:
+                    vertex(VertexWrapper): vertex object to connect
+
+                Returns:
+                    This instance
+                """
+                return self._add(vertex.type, vertex.id, *args, **kwargs)
+
+            def discard(self, vertex):
+                """Remove connection with given vertex
+
+                Args:
+                    vertex(VertexWrapper): vertex object to unlink
+                """
+                return self._discard(vertex.type, vertex.id)
+
+            def _edges(self, type):
+                for vertex_id in self._graph.edges.get(
+                    (self.type.value, self.id), type.value
+                ):
+                    yield cls._vertices[type].cls(self._graph, vertex_id[1])
+
+            def _add(self, type, id, data=None, **kwargs):
+                if data is not None:
+                    data = cls._data_serializers[(self.type, type)].serialize(data)
+                    self._graph.edges.add(
+                        (self.type.value, self.id),
+                        (type.value, id),
+                        data=data,
+                        **kwargs
+                    )
+                else:
+                    self._graph.edges.add(
+                        (self.type.value, self.id), (type.value, id), **kwargs
+                    )
+                return self
+
+            def _discard(self, type, id):
+                self._graph.edges.discard(
+                    ((self.type.value, self.id), (type.value, id))
+                )
+                return self
+
+            def __getitem__(self, vertex):
+                data = self._graph.edges.get(
+                    ((self.type.value, self.id), (vertex.type.value, vertex.id))
+                )
+                if data is not None:
+                    data = cls._data_serializers[(self.type, vertex.type)].deserialize(
+                        data
+                    )
+                return data
+
+        def _add(type_info):
+            def _func(slf, id, *args, **kwargs):
+                """Connect another {0}
+
+                Args:
+                    id(int): {0} identifier
+                """
+                return slf._add(type_info.type, id, *args, **kwargs)
+
+            _func.__doc__ = _func.__doc__.format(type_info.name)
+            return _func
+
+        def _discard(type_info):
+            def _func(slf, id, *args, **kwargs):
+                """Disconnect another {0}
+
+                Args:
+                    id(int): {0} identifier
+                """
+                return slf._discard(type_info.type, id, *args, **kwargs)
+
+            _func.__doc__ = _func.__doc__.format(type_info.name)
+            return _func
+
+        def _iterator(type_info):
+            return property(
+                fget=lambda self: self._edges(type_info.type),
+                doc="Get iterable over connected " + type_info.name,
+            )
+
+        new_type = type(info.name.capitalize() + "Vertex", (Vertex, object), {})
+
+        for vertex_type in info.connections:
+            other_info = cls._vertices[vertex_type]
+            setattr(new_type, other_info.plural, _iterator(other_info))
+            setattr(new_type, "add_" + other_info.name, _add(other_info))
+            setattr(new_type, "discard_" + other_info.name, _discard(other_info))
+        return new_type
+
+    @classmethod
+    def from_path(cls, path, **kwargs):
+        """Create a new graph instance
+
+        Args:
+            path(str): the path to basalt database on filesystem.
+                The database is created if path does not exists
+
+            kwargs: additional arguments given to the :class:`basalt.Graph` constructor
+        """
+        return cls(path=path, **kwargs)
+
+    @classmethod
+    def from_graph(cls, graph):
+        """Create a new graph instance
+
+        Args:
+            graph(basalt.Graph): low-level graph instance
+        """
+        return cls(graph=graph)
+
+    def __init__(self, graph=None, path=None, **kwargs):
+        if graph is not None:
+            self.g = graph
+        else:
+            assert path is not None
+            self.g = Graph(path, **kwargs)
 
     @property
     def vertices(self):
