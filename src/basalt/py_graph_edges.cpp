@@ -21,14 +21,18 @@ static const char* edges_class = R"(
     Optionally, a byte-array can be attached to an edge.
 
     Both vertices must exist prior creation of an edge:
-    >>> graph.clear()
+
+    >>> graph.vertices.clear()
     >>> v1, v2 = [(0, 1), (0, 2)]
     >>> graph.vertices.add(v1)
     >>> graph.edges.add(v1, v2)
-    ...
+    Traceback (most recent call last):
+      ...
+    RuntimeError: Missing vertex (0:2)
 
     Both ends of an edge must exist first:
-    >>> graph.clear()
+
+    >>> graph.vertices.clear()
     >>> graph.vertices.add(v1)
     >>> graph.vertices.add(v2)
     >>> graph.edges.add(v1, v2)
@@ -37,8 +41,11 @@ static const char* edges_class = R"(
 
     Graph is undirected, meaning that the 2 possible
     uids represents the same edge:
-    >>> (v1, v2) in graph.vertices
-    >>> (v2, v1) in graph.vertices
+
+    >>> (v1, v2) in graph.edges
+    True
+    >>> (v2, v1) in graph.edges
+    True
 
 )";
 

@@ -36,11 +36,11 @@ class PayloadHelper:
 
 
 class NGVGraph(MetaGraph):
-    vertex("astrocytes", VertexType.ASTROCYTE, Astrocyte)
-    vertex("synapses", VertexType.SYNAPSE, Synapse)
-    vertex("neurons", VertexType.NEURON, Neuron)
-    vertex("microdomains", VertexType.MICRODOMAIN, MicroDomain)
-    vertex("segments", VertexType.SEGMENT, Segment)
+    vertex("astrocyte", VertexType.ASTROCYTE, Astrocyte)
+    vertex("synapse", VertexType.SYNAPSE, Synapse)
+    vertex("neuron", VertexType.NEURON, Neuron)
+    vertex("microdomain", VertexType.MICRODOMAIN, MicroDomain)
+    vertex("segment", VertexType.SEGMENT, Segment)
 
     edge(VertexType.ASTROCYTE, VertexType.SEGMENT, EdgeAstrocyteSegment)
     edge(VertexType.ASTROCYTE, VertexType.NEURON)

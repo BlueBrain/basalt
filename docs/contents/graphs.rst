@@ -52,9 +52,9 @@ This API allows one to define a Python graph class from its topology. For instan
     ...     CATEGORY = 3
     >>>
     >>> class Skills(MetaGraph):
-    ...     vertex("persons", Vertex.PERSON, "pickle")
-    ...     vertex("skills", Vertex.SKILL, "pickle")
-    ...     vertex("categories", Vertex.CATEGORY, "pickle")
+    ...     vertex("person", Vertex.PERSON, "pickle")
+    ...     vertex("skill", Vertex.SKILL, "pickle")
+    ...     vertex("category", Vertex.CATEGORY, "pickle", "categories")
     ...
     ...     edge(Vertex.PERSON, Vertex.SKILL)
     ...     edge(Vertex.SKILL, Vertex.CATEGORY)
@@ -89,13 +89,13 @@ or from a filesystem path.
     >>> # Java identifier 0 does not conflict with
     >>> # Alice identifier because they have different types
     >>> g.skills.add(0, "Java")
-    <basalt.schema.build_vertex...
+    <basalt.schema.SkillVertex...
     >>>
-    >>> alice.connect(cpp)
-    <basalt.schema.build_vertex...
+    >>> alice.add(cpp)
+    <basalt.schema.PersonVertex...
     >>> # or connect both from cpp identifier
-    >>> alice.connect_skills(42)
-    <basalt.schema.build_vertex...
+    >>> alice.add_skill(42)
+    <basalt.schema.PersonVertex...
     >>>
     >>> for skill in alice.skills:
     ...   print(skill.id, skill.data)
