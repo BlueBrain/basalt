@@ -63,9 +63,10 @@ static const char* status = R"(
     oops
 
     A message for humans can be also specified
+
     >>> status = basalt.Status(code=42, message="the answer to every question")
     >>> status.message
-    the answer to every question
+    'the answer to every question'
 
 )";
 
@@ -99,6 +100,7 @@ static const char* status_raise_on_error = R"(
     Traceback (most recent call last):
         ...
     RuntimeError: actually...
+
 )";
 
 static const char* graph = R"(

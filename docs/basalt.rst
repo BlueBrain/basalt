@@ -12,7 +12,7 @@ Submodules
 ----------
 
 basalt.schema module
------------------
+--------------------
 
 .. automodule:: basalt.schema
     :members:

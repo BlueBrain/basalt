@@ -25,7 +25,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 '0.2.0'
 >>> basalt.__rocksdb_version__
 '5.17.2'
->>>
+>>> basalt.serve_doc()
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 
 # Build and installation instructions
@@ -42,7 +43,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 This repository grabs few third-party libraries as *git submodules*.
 To clone them when you clone basalt, use `git clone --recursive` option.
 
-If you have already cloned basalt, you can get submodules with command:
+If you have already cloned basalt, you can get the submodules with command:
 `git submodule update --recursive --init`
 
 ## C++ Library
