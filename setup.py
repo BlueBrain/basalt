@@ -169,7 +169,7 @@ setup(
         "docopt>=0.6.2",
         "h5py>=2.7.1",
         "humanize>=0.5.1",
-        "numpy<1.16",
+        "numpy>=1.13",
         "progress>=1.4",
     ],
     setup_requires=["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"],
