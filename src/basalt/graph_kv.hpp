@@ -80,8 +80,9 @@ class GraphKV {
         encode(vertex2, vertex1, keys[1]);
     }
     static inline void encode_reversed_edge(const char* data,
-                                            [[gnu::unused]] size_t size,
+                                            size_t size,
                                             edge_key_t& key) {
+        static_cast<void>(size);
         assert(size == std::tuple_size<edge_key_t>::value);
         key[0] = 'E';
         std::memcpy(key.data() + 1,
@@ -99,8 +100,9 @@ class GraphKV {
      * \{
      */
     static inline void decode_edge_dest(const char* data,
-                                        [[gnu::unused]] size_t size,
+                                        size_t size,
                                         vertex_uid_t& vertex) {
+        static_cast<void>(size);
         assert(size == std::tuple_size<edge_key_t>::value);
         assert(data[0] == 'E');
         std::memcpy(reinterpret_cast<char*>(&vertex.first),
@@ -113,8 +115,9 @@ class GraphKV {
     }
 
     static inline void decode_vertex(const char* data,
-                                     [[gnu::unused]] size_t size,
+                                     size_t size,
                                      vertex_uid_t& vertex) {
+        static_cast<void>(size);
         assert(size == 1 + sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
         assert(data[0] == 'N');
         std::memcpy(reinterpret_cast<char*>(&vertex.first), data + 1,
