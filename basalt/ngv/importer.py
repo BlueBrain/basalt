@@ -1,3 +1,4 @@
+# encoding: utf-8
 import datetime
 import inspect
 import os
@@ -70,7 +71,15 @@ class VerticesArities:
         )
 
 
-def progress_if_tty(bar):
+def _progress_if_tty(bar):
+    """Disable progress bar if not connected to a TTY
+
+    Args:
+        bar(progress.bar.Bar): the progress bar to return
+    Returns:
+        the given ``bar`` if standard output refers to a terminal,
+        a no-op bar otherwise
+    """
     if os.isatty(sys.stdout.fileno()):
         return bar
 
@@ -89,7 +98,7 @@ def _resolve_path(h5_file):
     return _h5_file
 
 
-def endfoot_id_to_payload(gliovascular, endfoot_id):
+def _endfoot_id_to_payload(gliovascular, endfoot_id):
     """Create payload of the edgepayload from HDF5 file for a given astrocyte
 
     Args:
@@ -106,7 +115,7 @@ def endfoot_id_to_payload(gliovascular, endfoot_id):
     )
 
 
-def astro_id_to_microdomain(microdomain, astro_id):
+def _astro_id_to_microdomain(microdomain, astro_id):
     """Create microdomain payload from HDF5 file for a given astrocyte
 
     Args:
@@ -124,11 +133,13 @@ def astro_id_to_microdomain(microdomain, astro_id):
 
 
 class Importer:
+    """Common class to read and import an HDF5 file into basalt"""
+
     def __init__(self, title, connectivity, arity_labels, progress_kwargs):
         self._arities = VerticesArities(arity_labels)
         self._begin = None
         self._end = None
-        self._bar = progress_if_tty(ShadyBar(title, **progress_kwargs))
+        self._bar = _progress_if_tty(ShadyBar(title, **progress_kwargs))
         self.iterations = 0
         self.connectivity = connectivity
 
@@ -194,7 +205,7 @@ def import_gliovascular(
                 begin, end = connectivity.astrocyte._offset_slice(astro_id, None)
                 conn_data = connectivity.astrocyte._connectivity[begin:end]
                 payloads = [
-                    endfoot_id_to_payload(data, endfoot).serialize()
+                    _endfoot_id_to_payload(data, endfoot).serialize()
                     for endfoot in conn_data[:, 0]
                 ]
                 graph.edges.add(
@@ -309,7 +320,7 @@ def import_microdomain(h5_file, basalt_path, max_=-1, create_vertices=False):
                 micro_domain_edges.append(microdomain.domain_neighbors(astro_id))
                 # create microdomain payload and serialize it
                 micro_domain_payloads.append(
-                    astro_id_to_microdomain(microdomain, astro_id).serialize()
+                    _astro_id_to_microdomain(microdomain, astro_id).serialize()
                 )
             # insert all microdomain vertices all at once
             graph.vertices.add(
