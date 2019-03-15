@@ -45,6 +45,7 @@ extensions = [
     'exhale',
     'm2r',
     'sphinx.ext.autodoc',
+    'sphinx.ext.coverage',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
     'sphinx.ext.imgmath',
