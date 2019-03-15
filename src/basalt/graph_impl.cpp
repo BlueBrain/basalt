@@ -535,11 +535,7 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) co
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
         if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
-            /// FIXME TCL prefix enumeration does not work, more keys
-            /// are being returned by iterator.
-            /// workaround: this test filter keys that do not have proper prefix
-            iter->Next();
-            continue;
+            break;
         }
         vertex_uid_t dest;
         GraphKV::decode_edge_dest(conn_key.data(), conn_key.size(), dest);
@@ -564,11 +560,7 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex,
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
         if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
-            /// FIXME TCL prefix enumeration does not work, more keys
-            /// are being returned by iterator.
-            /// workaround: this test filter keys that do not have proper prefix
-            iter->Next();
-            continue;
+            break;
         }
         vertex_uid_t dest;
         GraphKV::decode_edge_dest(conn_key.data(), conn_key.size(), dest);
@@ -610,11 +602,7 @@ Status GraphImpl::edges_erase(rocksdb::WriteBatch& batch,
         auto const& conn_slice = iter->key();
 
         if (std::memcmp(key.data(), conn_slice.data(), key.size()) != 0) {
-            /// FIXME TCL prefix enumeration does not work, more
-            /// keys are being returned by iterator
-            /// workaround: this test filter keys that do not have proper prefix
-            iter->Next();
-            continue;
+            break;
         }
         batch.Delete(this->edges_column_.get(), conn_slice);
 
@@ -663,11 +651,7 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex,
     while (iter->Valid()) {
         auto const& conn_key = iter->key();
         if (std::memcmp(key.data(), conn_key.data(), key.size()) != 0) {
-            /// FIXME TCL prefix enumeration does not work, more
-            /// keys are being returned by iterator
-            /// workaround: this test filter keys that do not have proper prefix
-            iter->Next();
-            continue;
+            break;
         }
         batch.Delete(conn_key);
 
