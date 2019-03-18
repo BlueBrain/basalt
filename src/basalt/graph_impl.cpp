@@ -690,17 +690,10 @@ void GraphImpl::clear(rocksdb::WriteBatch& batch,
     auto iter = db_get()->NewIterator(default_read_options(), handle.get());
     iter->SeekToFirst();
     if (iter->Valid()) {
-#if ROCKSDB_MAJOR >= 5
-        const auto& first = iter->key();
-        iter->SeekToLast();
-        const auto& last = iter->key();
-        batch.DeleteRange(handle.get(), first, last);
-#else
         while (iter->Valid()) {
             batch.Delete(handle.get(), iter->key());
             iter->Next();
         }
-#endif
     }
 }
 
