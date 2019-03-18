@@ -130,7 +130,7 @@ class BasaltTest(test):
 
 setup(
     name="basalt",
-    version="0.2.0",
+    version="0.2.1",
     author="Blue Brain Project",
     author_email="bbp-ou-hpc@groupes.epfl.ch",
     classifiers=[
