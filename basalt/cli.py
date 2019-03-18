@@ -33,6 +33,7 @@ def main(argv=None):
     args = docopt(__doc__, version="basalt " + __version__, argv=argv)
     if args.get("doc"):
         port = args.get("<port>") or 8000
+        port = int(port)
         bind = args["--bind"]
         if bind == "all interfaces":
             bind = ""

@@ -1,5 +1,6 @@
 import http.server
 import functools
+import os
 import os.path as osp
 
 from ._basalt import Status, Vertices, Edges, Graph, make_id
@@ -18,6 +19,11 @@ def serve_doc(bind="", port=8000):
     """
     doc_dir = osp.join(osp.dirname(__file__), "docs", "html")
     handler_class = functools.partial(
-        http.server.SimpleHTTPRequestHandler, directory=doc_dir
+        http.server.SimpleHTTPRequestHandler
     )
-    http.server.test(HandlerClass=handler_class, port=port, bind=bind)
+    cwd = os.getcwd()
+    try:
+        os.chdir(doc_dir)
+        http.server.test(HandlerClass=handler_class, port=port, bind=bind)
+    finally:
+        os.chdir(cwd)
