@@ -139,7 +139,7 @@ install_requirements = [
 
 setup(
     name="basalt",
-    version="0.2.2",
+    version="0.2.3",
     author="Blue Brain Project",
     author_email="bbp-ou-hpc@groupes.epfl.ch",
     classifiers=[
