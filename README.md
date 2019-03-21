@@ -15,14 +15,15 @@ Basalt is currently released as a Nix module on BB5 supercomputer:
 
 ```bash
 $ module purge
-$ module load nix/py36/basalt
+$ . /gpfs/bbp.cscs.ch/apps/hpc/jenkins/config/modules.sh
+$ module load py-basalt/0.2.2/python3
 $ python3
 Python 3.6.3 (default, Oct  3 2017, 07:47:49)
 [GCC 6.4.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import basalt
 >>> basalt.__version__
-'0.2.0'
+'0.2.2'
 >>> basalt.__rocksdb_version__
 '5.17.2'
 >>> basalt.serve_doc()
