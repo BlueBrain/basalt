@@ -171,7 +171,7 @@ setup(
         install_doc=get_sphinx_command,  # build and copy sphinx documentation in ./basalt/doc
         doctest=get_sphinx_command,  # execute code snippets in documentation
     ),
-    package_data={"basalt": ["doc/html/**/*"]},
+    package_data={"basalt": ["docs/html/**/*"]},
     zip_safe=False,
     install_requires=install_requirements,
     setup_requires=["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
