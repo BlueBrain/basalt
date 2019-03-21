@@ -1,46 +1,741 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>basalt.ngv package &#8212; Basalt 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/collapsible-lists/css/tree_view.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-    <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>basalt.ngv package &mdash; Basalt 0.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="C++ API" href="cpp_api/library_root.html" />
-    <link rel="prev" title="basalt package" href="basalt.html" />
+    <link rel="prev" title="basalt package" href="basalt.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contents/graphs.html">Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Python package</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="basalt.html">basalt package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="basalt.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">basalt.ngv package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="basalt.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basalt.html#module-basalt.schema">basalt.schema module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basalt.html#module-basalt">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="modules.html">Python package</a> &raquo;</li>
+        
+          <li><a href="basalt.html">basalt package</a> &raquo;</li>
+        
+      <li>basalt.ngv package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/basalt.ngv.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="basalt-ngv-package">
 <h1>basalt.ngv package<a class="headerlink" href="#basalt-ngv-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-basalt.ngv.graph">
+<span id="basalt-ngv-graph-module"></span><h2>basalt.ngv.graph module<a class="headerlink" href="#module-basalt.ngv.graph" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="basalt.ngv.graph.NGVGraph">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">NGVGraph</code><span class="sig-paren">(</span><em>graph=None</em>, <em>path=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/graph.html#NGVGraph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.graph.NGVGraph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="basalt.html#basalt.schema.MetaGraph" title="basalt.schema.MetaGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.MetaGraph</span></code></a></p>
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.astrocytes">
+<code class="descname">astrocytes</code><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.astrocytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manipulate vertices of type astrocyte</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.edges_types">
+<code class="descname">edges_types</code><em class="property"> = {&lt;VertexType.ASTROCYTE: 3&gt;: {(&lt;VertexType.MICRODOMAIN: 4&gt;, None), (&lt;VertexType.SEGMENT: 5&gt;, &lt;class 'basalt._basalt.ngv.EdgeAstrocyteSegment'&gt;), (&lt;VertexType.NEURON: 1&gt;, None), (&lt;VertexType.SYNAPSE: 2&gt;, None)}, &lt;VertexType.SEGMENT: 5&gt;: {(&lt;VertexType.ASTROCYTE: 3&gt;, &lt;class 'basalt._basalt.ngv.EdgeAstrocyteSegment'&gt;)}, &lt;VertexType.NEURON: 1&gt;: {(&lt;VertexType.ASTROCYTE: 3&gt;, None), (&lt;VertexType.SYNAPSE: 2&gt;, None)}, &lt;VertexType.SYNAPSE: 2&gt;: {(&lt;VertexType.ASTROCYTE: 3&gt;, None), (&lt;VertexType.NEURON: 1&gt;, None)}, &lt;VertexType.MICRODOMAIN: 4&gt;: {(&lt;VertexType.MICRODOMAIN: 4&gt;, None), (&lt;VertexType.ASTROCYTE: 3&gt;, None)}}</em><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.edges_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.microdomains">
+<code class="descname">microdomains</code><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.microdomains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manipulate vertices of type microdomain</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.neurons">
+<code class="descname">neurons</code><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.neurons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manipulate vertices of type neuron</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.segments">
+<code class="descname">segments</code><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manipulate vertices of type segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.synapses">
+<code class="descname">synapses</code><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.synapses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Manipulate vertices of type synapse</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NGVGraph.vertex_types">
+<code class="descname">vertex_types</code><em class="property"> = {'astrocyte': (&lt;VertexType.ASTROCYTE: 3&gt;, &lt;class 'basalt._basalt.ngv.Astrocyte'&gt;, None), 'microdomain': (&lt;VertexType.MICRODOMAIN: 4&gt;, &lt;class 'basalt._basalt.ngv.MicroDomain'&gt;, None), 'neuron': (&lt;VertexType.NEURON: 1&gt;, &lt;class 'basalt._basalt.ngv.Neuron'&gt;, None), 'segment': (&lt;VertexType.SEGMENT: 5&gt;, &lt;class 'basalt._basalt.ngv.Segment'&gt;, None), 'synapse': (&lt;VertexType.SYNAPSE: 2&gt;, &lt;class 'basalt._basalt.ngv.Synapse'&gt;, None)}</em><a class="headerlink" href="#basalt.ngv.graph.NGVGraph.vertex_types" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.PayloadHelper">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">PayloadHelper</code><a class="reference internal" href="_modules/basalt/ngv/graph.html#PayloadHelper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.graph.PayloadHelper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.graph.PayloadHelper.VERTEX_TYPE_TO_PAYLOAD_CLASS">
+<code class="descname">VERTEX_TYPE_TO_PAYLOAD_CLASS</code><em class="property"> = {&lt;VertexType.NEURON: 1&gt;: &lt;class 'basalt._basalt.ngv.Neuron'&gt;, &lt;VertexType.SYNAPSE: 2&gt;: &lt;class 'basalt._basalt.ngv.Synapse'&gt;, &lt;VertexType.ASTROCYTE: 3&gt;: &lt;class 'basalt._basalt.ngv.Astrocyte'&gt;, &lt;VertexType.MICRODOMAIN: 4&gt;: &lt;class 'basalt._basalt.ngv.MicroDomain'&gt;, &lt;VertexType.SEGMENT: 5&gt;: &lt;class 'basalt._basalt.ngv.Segment'&gt;}</em><a class="headerlink" href="#basalt.ngv.graph.PayloadHelper.VERTEX_TYPE_TO_PAYLOAD_CLASS" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="basalt.ngv.graph.PayloadHelper.deserialize">
+<em class="property">classmethod </em><code class="descname">deserialize</code><span class="sig-paren">(</span><em>type</em>, <em>payload</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/graph.html#PayloadHelper.deserialize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.graph.PayloadHelper.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.VertexType">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">VertexType</code><a class="reference internal" href="_modules/basalt/ngv/graph.html#VertexType"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.graph.VertexType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="attribute">
+<dt id="basalt.ngv.graph.VertexType.ASTROCYTE">
+<code class="descname">ASTROCYTE</code><em class="property"> = 3</em><a class="headerlink" href="#basalt.ngv.graph.VertexType.ASTROCYTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.VertexType.MICRODOMAIN">
+<code class="descname">MICRODOMAIN</code><em class="property"> = 4</em><a class="headerlink" href="#basalt.ngv.graph.VertexType.MICRODOMAIN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.VertexType.NEURON">
+<code class="descname">NEURON</code><em class="property"> = 1</em><a class="headerlink" href="#basalt.ngv.graph.VertexType.NEURON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.VertexType.SEGMENT">
+<code class="descname">SEGMENT</code><em class="property"> = 5</em><a class="headerlink" href="#basalt.ngv.graph.VertexType.SEGMENT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.VertexType.SYNAPSE">
+<code class="descname">SYNAPSE</code><em class="property"> = 2</em><a class="headerlink" href="#basalt.ngv.graph.VertexType.SYNAPSE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.AstrocyteVertex">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">AstrocyteVertex</code><span class="sig-paren">(</span><em>graph</em>, <em>id</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.Vertex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.add_microdomain">
+<code class="descname">add_microdomain</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.add_microdomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another microdomain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – microdomain identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.add_neuron">
+<code class="descname">add_neuron</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.add_neuron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another neuron</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – neuron identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.add_segment">
+<code class="descname">add_segment</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.add_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another segment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – segment identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.add_synapse">
+<code class="descname">add_synapse</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.add_synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another synapse</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – synapse identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.discard_microdomain">
+<code class="descname">discard_microdomain</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.discard_microdomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another microdomain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – microdomain identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.discard_neuron">
+<code class="descname">discard_neuron</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.discard_neuron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another neuron</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – neuron identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.discard_segment">
+<code class="descname">discard_segment</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.discard_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another segment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – segment identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.AstrocyteVertex.discard_synapse">
+<code class="descname">discard_synapse</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.discard_synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another synapse</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – synapse identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.AstrocyteVertex.microdomains">
+<code class="descname">microdomains</code><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.microdomains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected microdomain</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.AstrocyteVertex.neurons">
+<code class="descname">neurons</code><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.neurons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected neuron</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.AstrocyteVertex.segments">
+<code class="descname">segments</code><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected segment</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.AstrocyteVertex.synapses">
+<code class="descname">synapses</code><a class="headerlink" href="#basalt.ngv.graph.AstrocyteVertex.synapses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected synapse</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.SynapseVertex">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">SynapseVertex</code><span class="sig-paren">(</span><em>graph</em>, <em>id</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.Vertex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="basalt.ngv.graph.SynapseVertex.add_astrocyte">
+<code class="descname">add_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.add_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.SynapseVertex.add_neuron">
+<code class="descname">add_neuron</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.add_neuron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another neuron</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – neuron identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.SynapseVertex.astrocytes">
+<code class="descname">astrocytes</code><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.astrocytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected astrocyte</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.SynapseVertex.discard_astrocyte">
+<code class="descname">discard_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.discard_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.SynapseVertex.discard_neuron">
+<code class="descname">discard_neuron</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.discard_neuron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another neuron</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – neuron identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.SynapseVertex.neurons">
+<code class="descname">neurons</code><a class="headerlink" href="#basalt.ngv.graph.SynapseVertex.neurons" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected neuron</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.NeuronVertex">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">NeuronVertex</code><span class="sig-paren">(</span><em>graph</em>, <em>id</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.Vertex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="basalt.ngv.graph.NeuronVertex.add_astrocyte">
+<code class="descname">add_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.add_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.NeuronVertex.add_synapse">
+<code class="descname">add_synapse</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.add_synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another synapse</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – synapse identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NeuronVertex.astrocytes">
+<code class="descname">astrocytes</code><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.astrocytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected astrocyte</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.NeuronVertex.discard_astrocyte">
+<code class="descname">discard_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.discard_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.NeuronVertex.discard_synapse">
+<code class="descname">discard_synapse</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.discard_synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another synapse</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – synapse identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.NeuronVertex.synapses">
+<code class="descname">synapses</code><a class="headerlink" href="#basalt.ngv.graph.NeuronVertex.synapses" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected synapse</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.MicrodomainVertex">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">MicrodomainVertex</code><span class="sig-paren">(</span><em>graph</em>, <em>id</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.Vertex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="basalt.ngv.graph.MicrodomainVertex.add_astrocyte">
+<code class="descname">add_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.add_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.MicrodomainVertex.add_microdomain">
+<code class="descname">add_microdomain</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.add_microdomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another microdomain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – microdomain identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.MicrodomainVertex.astrocytes">
+<code class="descname">astrocytes</code><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.astrocytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected astrocyte</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.MicrodomainVertex.discard_astrocyte">
+<code class="descname">discard_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.discard_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.MicrodomainVertex.discard_microdomain">
+<code class="descname">discard_microdomain</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.discard_microdomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another microdomain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – microdomain identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.MicrodomainVertex.microdomains">
+<code class="descname">microdomains</code><a class="headerlink" href="#basalt.ngv.graph.MicrodomainVertex.microdomains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected microdomain</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.graph.SegmentVertex">
+<em class="property">class </em><code class="descclassname">basalt.ngv.graph.</code><code class="descname">SegmentVertex</code><span class="sig-paren">(</span><em>graph</em>, <em>id</em>, <em>data=None</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SegmentVertex" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.Vertex</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="basalt.ngv.graph.SegmentVertex.add_astrocyte">
+<code class="descname">add_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SegmentVertex.add_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.graph.SegmentVertex.astrocytes">
+<code class="descname">astrocytes</code><a class="headerlink" href="#basalt.ngv.graph.SegmentVertex.astrocytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get iterable over connected astrocyte</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.graph.SegmentVertex.discard_astrocyte">
+<code class="descname">discard_astrocyte</code><span class="sig-paren">(</span><em>id</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#basalt.ngv.graph.SegmentVertex.discard_astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect another astrocyte</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>id</strong> (<em>int</em>) – astrocyte identifier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-basalt.ngv.importer">
+<span id="basalt-ngv-importer-module"></span><h2>basalt.ngv.importer module<a class="headerlink" href="#module-basalt.ngv.importer" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="basalt.ngv.importer.import_gliovascular">
+<code class="descclassname">basalt.ngv.importer.</code><code class="descname">import_gliovascular</code><span class="sig-paren">(</span><em>h5_connectivity</em>, <em>h5_data</em>, <em>basalt_path</em>, <em>max_=-1</em>, <em>create_vertices=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/importer.html#import_gliovascular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.importer.import_gliovascular" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="basalt.ngv.importer.import_microdomain">
+<code class="descclassname">basalt.ngv.importer.</code><code class="descname">import_microdomain</code><span class="sig-paren">(</span><em>h5_file</em>, <em>basalt_path</em>, <em>max_=-1</em>, <em>create_vertices=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/importer.html#import_microdomain"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.importer.import_microdomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import microdomain structure in HDF5 file in a basalt graph</p>
+<p>Import microdomains subgraph and attach every microdomain to its
+associated astrocyte.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>h5_file</strong> – path to HDF5 file</li>
+<li><strong>basalt_path</strong> – path to basalt graph</li>
+<li><strong>max</strong> – limit number of microdomains to import. If negative,
+then microdomains of every astrocytes are imported.</li>
+<li><strong>create_vertices</strong> – if True then also creates astrocyte vertices
+connected to the microdomains</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dict providing import information and statistics</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="basalt.ngv.importer.import_neuroglial">
+<code class="descclassname">basalt.ngv.importer.</code><code class="descname">import_neuroglial</code><span class="sig-paren">(</span><em>h5_file</em>, <em>basalt_path</em>, <em>max_=-1</em>, <em>create_vertices=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/importer.html#import_neuroglial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.importer.import_neuroglial" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="basalt.ngv.importer.import_synaptic">
+<code class="descclassname">basalt.ngv.importer.</code><code class="descname">import_synaptic</code><span class="sig-paren">(</span><em>h5_file</em>, <em>basalt_path</em>, <em>max_=-1</em>, <em>create_vertices=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv/importer.html#import_synaptic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.importer.import_synaptic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-basalt.ngv.ngv_connectome">
 <span id="basalt-ngv-ngv-connectome-module"></span><h2>basalt.ngv.ngv_connectome module<a class="headerlink" href="#module-basalt.ngv.ngv_connectome" title="Permalink to this headline">¶</a></h2>
@@ -277,156 +972,402 @@
 <div class="section" id="module-basalt.ngv">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-basalt.ngv" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="basalt.ngv.Importer">
-<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Importer</code><span class="sig-paren">(</span><em>title</em>, <em>connectivity</em>, <em>arity_labels</em>, <em>progress_kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#Importer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.Importer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dt id="basalt.ngv.Astrocyte">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Astrocyte</code><a class="headerlink" href="#basalt.ngv.Astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
 <dl class="attribute">
-<dt id="basalt.ngv.Importer.dataset">
-<code class="descname">dataset</code><a class="headerlink" href="#basalt.ngv.Importer.dataset" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="basalt.ngv.Importer.duration_sec">
-<code class="descname">duration_sec</code><a class="headerlink" href="#basalt.ngv.Importer.duration_sec" title="Permalink to this definition">¶</a></dt>
+<dt id="basalt.ngv.Astrocyte.astrocyte_id">
+<code class="descname">astrocyte_id</code><a class="headerlink" href="#basalt.ngv.Astrocyte.astrocyte_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="basalt.ngv.Importer.next">
-<code class="descname">next</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#Importer.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.Importer.next" title="Permalink to this definition">¶</a></dt>
+<dt id="basalt.ngv.Astrocyte.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Astrocyte, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.Astrocyte.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.microdomain_id">
+<code class="descname">microdomain_id</code><a class="headerlink" href="#basalt.ngv.Astrocyte.microdomain_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.morphology_filename">
+<code class="descname">morphology_filename</code><a class="headerlink" href="#basalt.ngv.Astrocyte.morphology_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.mtype">
+<code class="descname">mtype</code><a class="headerlink" href="#basalt.ngv.Astrocyte.mtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.name">
+<code class="descname">name</code><a class="headerlink" href="#basalt.ngv.Astrocyte.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.neurons_idx">
+<code class="descname">neurons_idx</code><a class="headerlink" href="#basalt.ngv.Astrocyte.neurons_idx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="basalt.ngv.Importer.report">
-<code class="descname">report</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#Importer.report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.Importer.report" title="Permalink to this definition">¶</a></dt>
+<dt id="basalt.ngv.Astrocyte.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Astrocyte</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.Astrocyte.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.soma_center">
+<code class="descname">soma_center</code><a class="headerlink" href="#basalt.ngv.Astrocyte.soma_center" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.soma_radius">
+<code class="descname">soma_radius</code><a class="headerlink" href="#basalt.ngv.Astrocyte.soma_radius" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Astrocyte.synapses_idx">
+<code class="descname">synapses_idx</code><a class="headerlink" href="#basalt.ngv.Astrocyte.synapses_idx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
-<dt id="basalt.ngv.NodesArities">
-<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">NodesArities</code><span class="sig-paren">(</span><em>labels</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#NodesArities"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.NodesArities" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Helper class to compute arities between connected nodes</p>
-<p>It computes min, mean, max, and total edges between nodes during import of
-connectivity HDF5 files.</p>
+<dt id="basalt.ngv.Segment">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Segment</code><a class="headerlink" href="#basalt.ngv.Segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
 <dl class="method">
-<dt id="basalt.ngv.NodesArities.report">
-<code class="descname">report</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#NodesArities.report"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.NodesArities.report" title="Permalink to this definition">¶</a></dt>
+<dt id="basalt.ngv.Segment.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Segment, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.Segment.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.r1">
+<code class="descname">r1</code><a class="headerlink" href="#basalt.ngv.Segment.r1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.r2">
+<code class="descname">r2</code><a class="headerlink" href="#basalt.ngv.Segment.r2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.section_id">
+<code class="descname">section_id</code><a class="headerlink" href="#basalt.ngv.Segment.section_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.segment_id">
+<code class="descname">segment_id</code><a class="headerlink" href="#basalt.ngv.Segment.segment_id" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
-<dt id="basalt.ngv.NodesArities.update">
-<code class="descname">update</code><span class="sig-paren">(</span><em>*counters</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#NodesArities.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.NodesArities.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add arities of a particular node type</p>
+<dt id="basalt.ngv.Segment.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Segment</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.Segment.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.type">
+<code class="descname">type</code><a class="headerlink" href="#basalt.ngv.Segment.type" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.x1">
+<code class="descname">x1</code><a class="headerlink" href="#basalt.ngv.Segment.x1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.x2">
+<code class="descname">x2</code><a class="headerlink" href="#basalt.ngv.Segment.x2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.y1">
+<code class="descname">y1</code><a class="headerlink" href="#basalt.ngv.Segment.y1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.y2">
+<code class="descname">y2</code><a class="headerlink" href="#basalt.ngv.Segment.y2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.z1">
+<code class="descname">z1</code><a class="headerlink" href="#basalt.ngv.Segment.z1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Segment.z2">
+<code class="descname">z2</code><a class="headerlink" href="#basalt.ngv.Segment.z2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
+<dl class="class">
+<dt id="basalt.ngv.MicroDomain">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">MicroDomain</code><a class="headerlink" href="#basalt.ngv.MicroDomain" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.area">
+<code class="descname">area</code><a class="headerlink" href="#basalt.ngv.MicroDomain.area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.astrocyte_id">
+<code class="descname">astrocyte_id</code><a class="headerlink" href="#basalt.ngv.MicroDomain.astrocyte_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.centroid">
+<code class="descname">centroid</code><a class="headerlink" href="#basalt.ngv.MicroDomain.centroid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.MicroDomain.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.MicroDomain, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.MicroDomain.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.mesh_filename">
+<code class="descname">mesh_filename</code><a class="headerlink" href="#basalt.ngv.MicroDomain.mesh_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.microdomain_id">
+<code class="descname">microdomain_id</code><a class="headerlink" href="#basalt.ngv.MicroDomain.microdomain_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.neighbors">
+<code class="descname">neighbors</code><a class="headerlink" href="#basalt.ngv.MicroDomain.neighbors" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.neurons_idx">
+<code class="descname">neurons_idx</code><a class="headerlink" href="#basalt.ngv.MicroDomain.neurons_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.MicroDomain.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.MicroDomain</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.MicroDomain.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.synapses_idx">
+<code class="descname">synapses_idx</code><a class="headerlink" href="#basalt.ngv.MicroDomain.synapses_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.triangles">
+<code class="descname">triangles</code><a class="headerlink" href="#basalt.ngv.MicroDomain.triangles" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.vertex_coordinates">
+<code class="descname">vertex_coordinates</code><a class="headerlink" href="#basalt.ngv.MicroDomain.vertex_coordinates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.MicroDomain.volume">
+<code class="descname">volume</code><a class="headerlink" href="#basalt.ngv.MicroDomain.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
-<dl class="function">
-<dt id="basalt.ngv.endfoot_id_to_payload">
-<code class="descclassname">basalt.ngv.</code><code class="descname">endfoot_id_to_payload</code><span class="sig-paren">(</span><em>gliovascular_data</em>, <em>endfoot_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#endfoot_id_to_payload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.endfoot_id_to_payload" title="Permalink to this definition">¶</a></dt>
+<dl class="class">
+<dt id="basalt.ngv.Neuron">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Neuron</code><a class="headerlink" href="#basalt.ngv.Neuron" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.Neuron.astro_idx">
+<code class="descname">astro_idx</code><a class="headerlink" href="#basalt.ngv.Neuron.astro_idx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="basalt.ngv.import_gliovascular">
-<code class="descclassname">basalt.ngv.</code><code class="descname">import_gliovascular</code><span class="sig-paren">(</span><em>h5_connectivity</em>, <em>h5_data</em>, <em>basalt_path</em>, <em>max_astrocytes=-1</em>, <em>create_nodes=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#import_gliovascular"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.import_gliovascular" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="basalt.ngv.Neuron.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Neuron, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.Neuron.deserialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="basalt.ngv.import_neuroglial">
-<code class="descclassname">basalt.ngv.</code><code class="descname">import_neuroglial</code><span class="sig-paren">(</span><em>h5_file</em>, <em>basalt_path</em>, <em>max_astrocytes=-1</em>, <em>create_nodes=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#import_neuroglial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.import_neuroglial" title="Permalink to this definition">¶</a></dt>
+<dl class="attribute">
+<dt id="basalt.ngv.Neuron.gid">
+<code class="descname">gid</code><a class="headerlink" href="#basalt.ngv.Neuron.gid" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="basalt.ngv.import_synaptic">
-<code class="descclassname">basalt.ngv.</code><code class="descname">import_synaptic</code><span class="sig-paren">(</span><em>h5_file</em>, <em>basalt_path</em>, <em>max_neurons=-1</em>, <em>create_nodes=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#import_synaptic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.import_synaptic" title="Permalink to this definition">¶</a></dt>
+<dl class="method">
+<dt id="basalt.ngv.Neuron.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Neuron</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.Neuron.serialize" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
-<dt id="basalt.ngv.progress_if_tty">
-<code class="descclassname">basalt.ngv.</code><code class="descname">progress_if_tty</code><span class="sig-paren">(</span><em>bar</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/basalt/ngv.html#progress_if_tty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#basalt.ngv.progress_if_tty" title="Permalink to this definition">¶</a></dt>
+<dl class="attribute">
+<dt id="basalt.ngv.Neuron.syn_idx">
+<code class="descname">syn_idx</code><a class="headerlink" href="#basalt.ngv.Neuron.syn_idx" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.Point">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Point</code><a class="headerlink" href="#basalt.ngv.Point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.Point.x">
+<code class="descname">x</code><a class="headerlink" href="#basalt.ngv.Point.x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Point.y">
+<code class="descname">y</code><a class="headerlink" href="#basalt.ngv.Point.y" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Point.z">
+<code class="descname">z</code><a class="headerlink" href="#basalt.ngv.Point.z" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.Synapse">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">Synapse</code><a class="headerlink" href="#basalt.ngv.Synapse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.astro_idx">
+<code class="descname">astro_idx</code><a class="headerlink" href="#basalt.ngv.Synapse.astro_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.Synapse.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Synapse, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.Synapse.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.is_excitatory">
+<code class="descname">is_excitatory</code><a class="headerlink" href="#basalt.ngv.Synapse.is_excitatory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.mesh_filename">
+<code class="descname">mesh_filename</code><a class="headerlink" href="#basalt.ngv.Synapse.mesh_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.nrn_idx">
+<code class="descname">nrn_idx</code><a class="headerlink" href="#basalt.ngv.Synapse.nrn_idx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.post">
+<code class="descname">post</code><a class="headerlink" href="#basalt.ngv.Synapse.post" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.post_gid">
+<code class="descname">post_gid</code><a class="headerlink" href="#basalt.ngv.Synapse.post_gid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.pre">
+<code class="descname">pre</code><a class="headerlink" href="#basalt.ngv.Synapse.pre" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.pre_gid">
+<code class="descname">pre_gid</code><a class="headerlink" href="#basalt.ngv.Synapse.pre_gid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.psd_area">
+<code class="descname">psd_area</code><a class="headerlink" href="#basalt.ngv.Synapse.psd_area" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.Synapse.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.Synapse</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.Synapse.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.Synapse.skeleton_filename">
+<code class="descname">skeleton_filename</code><a class="headerlink" href="#basalt.ngv.Synapse.skeleton_filename" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="basalt.ngv.EdgeAstrocyteSegment">
+<em class="property">class </em><code class="descclassname">basalt.ngv.</code><code class="descname">EdgeAstrocyteSegment</code><a class="headerlink" href="#basalt.ngv.EdgeAstrocyteSegment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">pybind11_builtins.pybind11_object</span></code></p>
+<dl class="attribute">
+<dt id="basalt.ngv.EdgeAstrocyteSegment.astrocyte">
+<code class="descname">astrocyte</code><a class="headerlink" href="#basalt.ngv.EdgeAstrocyteSegment.astrocyte" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.EdgeAstrocyteSegment.deserialize">
+<code class="descname">deserialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.EdgeAstrocyteSegment, arg0: numpy.ndarray[int8]</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#basalt.ngv.EdgeAstrocyteSegment.deserialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="basalt.ngv.EdgeAstrocyteSegment.serialize">
+<code class="descname">serialize</code><span class="sig-paren">(</span><em>self: basalt._basalt.ngv.EdgeAstrocyteSegment</em><span class="sig-paren">)</span> &#x2192; numpy.ndarray[int8]<a class="headerlink" href="#basalt.ngv.EdgeAstrocyteSegment.serialize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="basalt.ngv.EdgeAstrocyteSegment.vasculature">
+<code class="descname">vasculature</code><a class="headerlink" href="#basalt.ngv.EdgeAstrocyteSegment.vasculature" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
 
 </div>
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Basalt</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">Python package</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="basalt.html">basalt package</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="cpp_api/library_root.html">C++ API</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-  <li><a href="modules.html">Python package</a><ul>
-  <li><a href="basalt.html">basalt package</a><ul>
-      <li>Previous: <a href="basalt.html" title="previous chapter">basalt package</a></li>
-      <li>Next: <a href="cpp_api/library_root.html" title="next chapter">C++ API</a></li>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cpp_api/library_root.html" class="btn btn-neutral float-right" title="C++ API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="basalt.html" class="btn btn-neutral float-left" title="basalt package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
 
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2019, BlueBrain HPC Team.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/basalt.ngv.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

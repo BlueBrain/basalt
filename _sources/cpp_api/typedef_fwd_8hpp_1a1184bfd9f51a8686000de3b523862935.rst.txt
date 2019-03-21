@@ -1,0 +1,13 @@
+.. _exhale_typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935:
+
+Typedef basalt::vertex_uid_t
+============================
+
+- Defined in :ref:`file_include_basalt_fwd.hpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: basalt::vertex_uid_t

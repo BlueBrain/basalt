@@ -10,8 +10,7 @@ Program Listing for File status.hpp
 
 .. code-block:: cpp
 
-   #ifndef BASALT_STATUS_HPP
-   #define BASALT_STATUS_HPP
+   #pragma once
    
    #include <iosfwd>
    #include <string>
@@ -19,29 +18,37 @@ Program Listing for File status.hpp
    #include <basalt/fwd.hpp>
    
    namespace basalt {
-   struct status_t {
+   
+   struct Status {
        enum Code {
            ok_code = 0,
            not_implemented_code = -1,
-           missing_node_code = -2,
-           invalid_connection_code = -3
+           missing_vertex_code = -2,
+           invalid_edge_code = -3,
+           missing_edge_code = -4,
        };
    
-       status_t(Code code_, std::string message_);
-       status_t() = delete;
    
+       Status(Code code, std::string message);
+       Status() = delete;
        inline bool operator!() const noexcept {
            return code != 0;
        }
        inline explicit operator bool() const noexcept {
            return code == 0;
        }
-       const status_t& raise_on_error() const;
    
-       static const status_t& error_not_implemented();
-       static status_t error_missing_node(const node_uid_t& node);
-       static status_t error_invalid_connection(const node_uid_t& node1, const node_uid_t& node2);
-       static const status_t& ok();
+       const Status& raise_on_error() const;
+   
+       static const Status& error_not_implemented();
+   
+       static Status error_missing_vertex(const vertex_uid_t& vertex);
+   
+       static Status error_missing_edge(const edge_uid_t& edge);
+   
+       static Status error_invalid_edge(const vertex_uid_t& vertex1, const vertex_uid_t& vertex2);
+   
+       static const Status& ok();
    
        const Code code;
        const std::string message;
@@ -49,6 +56,4 @@ Program Listing for File status.hpp
    
    }  // namespace basalt
    
-   std::ostream& operator<<(std::ostream& ostr, const basalt::status_t& status);
-   
-   #endif  // BASALT_STATUS_HPP
+   std::ostream& operator<<(std::ostream& ostr, const basalt::Status& status);

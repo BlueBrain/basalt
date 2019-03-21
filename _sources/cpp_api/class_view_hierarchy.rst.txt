@@ -8,7 +8,7 @@ Class Hierarchy
    <ul class="treeView" id="class-treeView">
      <li>
        <ul class="collapsibleList">
-         <li class="lastChild">Namespace <a href="namespace_basalt.html#namespace-basalt">basalt</a><ul><li>Struct <a href="structbasalt_1_1status__t.html#exhale-struct-structbasalt-1-1status-t">status_t</a></li><li>Class <a href="classbasalt_1_1connections__t.html#exhale-class-classbasalt-1-1connections-t">connections_t</a></li><li>Class <a href="classbasalt_1_1network__t.html#exhale-class-classbasalt-1-1network-t">network_t</a></li><li>Class <a href="classbasalt_1_1node__iterator.html#exhale-class-classbasalt-1-1node-iterator">node_iterator</a></li><li class="lastChild">Class <a href="classbasalt_1_1nodes__t.html#exhale-class-classbasalt-1-1nodes-t">nodes_t</a></li></ul></li>
+         <li class="lastChild">Namespace <a href="namespace_basalt.html#namespace-basalt">basalt</a><ul><li>Struct <a href="structbasalt_1_1Status.html#exhale-struct-structbasalt-1-1Status">Status</a></li><li>Class <a href="classbasalt_1_1Edges.html#exhale-class-classbasalt-1-1Edges">Edges</a></li><li>Class <a href="classbasalt_1_1Graph.html#exhale-class-classbasalt-1-1Graph">Graph</a></li><li>Class <a href="classbasalt_1_1VertexIterator.html#exhale-class-classbasalt-1-1VertexIterator">VertexIterator</a></li><li class="lastChild">Class <a href="classbasalt_1_1Vertices.html#exhale-class-classbasalt-1-1Vertices">Vertices</a></li></ul></li>
        </ul>
      </li><!-- only tree view element -->
    </ul><!-- /treeView class-treeView -->

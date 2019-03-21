@@ -11,12 +11,13 @@ Subpackages
 Submodules
 ----------
 
-basalt.cli module
------------------
+basalt.schema module
+--------------------
 
-.. automodule:: basalt.cli
+.. automodule:: basalt.schema
     :members:
     :undoc-members:
+    :inherited-members:
     :show-inheritance:
 
 

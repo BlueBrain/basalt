@@ -1,0 +1,16 @@
+.. _exhale_class_classbasalt_1_1Vertices:
+
+Class Vertices
+==============
+
+- Defined in :ref:`file_include_basalt_vertices.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: basalt::Vertices
+   :members:
+   :protected-members:
+   :undoc-members:

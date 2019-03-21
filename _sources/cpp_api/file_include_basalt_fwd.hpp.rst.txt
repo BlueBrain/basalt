@@ -41,15 +41,15 @@ Included By
 -----------
 
 
-- :ref:`file_include_basalt_connections.hpp`
+- :ref:`file_include_basalt_edges.hpp`
 
-- :ref:`file_include_basalt_network.hpp`
-
-- :ref:`file_include_basalt_node_iterator.hpp`
-
-- :ref:`file_include_basalt_nodes.hpp`
+- :ref:`file_include_basalt_graph.hpp`
 
 - :ref:`file_include_basalt_status.hpp`
+
+- :ref:`file_include_basalt_vertex_iterator.hpp`
+
+- :ref:`file_include_basalt_vertices.hpp`
 
 
 
@@ -65,11 +65,13 @@ Typedefs
 --------
 
 
-- :ref:`exhale_typedef_fwd_8hpp_1aab110e42d1d9fcf4b7fff804f71ed7f5`
+- :ref:`exhale_typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc`
 
-- :ref:`exhale_typedef_fwd_8hpp_1a84e74366ed13c96a526b2f03d565a44b`
+- :ref:`exhale_typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17`
 
-- :ref:`exhale_typedef_fwd_8hpp_1ad4220e0e0bf81fcbd6becf930aaca2ce`
+- :ref:`exhale_typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e`
 
-- :ref:`exhale_typedef_fwd_8hpp_1a33518693ab1d12ea0d2b7604e87d1fe2`
+- :ref:`exhale_typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935`
+
+- :ref:`exhale_typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85`
 

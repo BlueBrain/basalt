@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Struct Status &mdash; Basalt 0.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class Edges" href="classbasalt_1_1Edges.html" />
+    <link rel="prev" title="Namespace basalt" href="namespace_basalt.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API</a> &raquo;</li>
+        
+      <li>Struct Status</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp_api/structbasalt_1_1Status.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="struct-status">
+<span id="exhale-struct-structbasalt-1-1status"></span><h1>Struct Status<a class="headerlink" href="#struct-status" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Defined in <a class="reference internal" href="file_include_basalt_status.hpp.html#file-include-basalt-status-hpp"><span class="std std-ref">File status.hpp</span></a></li>
+</ul>
+<div class="section" id="struct-documentation">
+<h2>Struct Documentation<a class="headerlink" href="#struct-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6basalt6StatusE">
+<span id="_CPPv3N6basalt6StatusE"></span><span id="_CPPv2N6basalt6StatusE"></span><span id="basalt::Status"></span><span class="target" id="structbasalt_1_1Status"></span><em class="property">struct </em><code class="descname">Status</code><a class="headerlink" href="#_CPPv4N6basalt6StatusE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Result of one or several graph operations </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Ctors and dtors.</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status6StatusE4CodeNSt6stringE">
+<span id="_CPPv3N6basalt6Status6StatusE4CodeNSt6stringE"></span><span id="_CPPv2N6basalt6Status6StatusE4CodeNSt6stringE"></span><span id="basalt::Status::Status__Code.ss"></span><span class="target" id="structbasalt_1_1Status_1a82c73016fc16254f7c99ec73feae3bb3"></span><code class="descname">Status</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N6basalt6Status4CodeE" title="basalt::Status::Code">Code</a> <em>code</em>, std::string <em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status6StatusE4CodeNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a>. </p>
+<p><dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">code</span></code>: status code </li>
+<li><code class="docutils literal notranslate"><span class="pre">message</span></code>: message for humans </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status6StatusEv">
+<span id="_CPPv3N6basalt6Status6StatusEv"></span><span id="_CPPv2N6basalt6Status6StatusEv"></span><span id="basalt::Status::Status"></span><span class="target" id="structbasalt_1_1Status_1a82f15f8433250259ae340f9aa68aaf72"></span><code class="descname">Status</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status6StatusEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N6basalt6Status4CodeE">
+<span id="_CPPv3N6basalt6Status4CodeE"></span><span id="_CPPv2N6basalt6Status4CodeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39"></span><em class="property">enum </em><code class="descname">Code</code><a class="headerlink" href="#_CPPv4N6basalt6Status4CodeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Operation status code </p>
+<p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N6basalt6Status7ok_codeE">
+<span id="_CPPv3N6basalt6Status7ok_codeE"></span><span id="_CPPv2N6basalt6Status7ok_codeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39a3c816d5e036ab6a142b8aebc0b355390"></span><code class="descname">ok_code</code> = 0<a class="headerlink" href="#_CPPv4N6basalt6Status7ok_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N6basalt6Status20not_implemented_codeE">
+<span id="_CPPv3N6basalt6Status20not_implemented_codeE"></span><span id="_CPPv2N6basalt6Status20not_implemented_codeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39a6dc347f56359336ea91738e740913e3a"></span><code class="descname">not_implemented_code</code> = -1<a class="headerlink" href="#_CPPv4N6basalt6Status20not_implemented_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N6basalt6Status19missing_vertex_codeE">
+<span id="_CPPv3N6basalt6Status19missing_vertex_codeE"></span><span id="_CPPv2N6basalt6Status19missing_vertex_codeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39ab4ad95e7fb6b8a30d2d187d5ad69ddc5"></span><code class="descname">missing_vertex_code</code> = -2<a class="headerlink" href="#_CPPv4N6basalt6Status19missing_vertex_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N6basalt6Status17invalid_edge_codeE">
+<span id="_CPPv3N6basalt6Status17invalid_edge_codeE"></span><span id="_CPPv2N6basalt6Status17invalid_edge_codeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39aff8a928e9749fb468668a0decb8c6abd"></span><code class="descname">invalid_edge_code</code> = -3<a class="headerlink" href="#_CPPv4N6basalt6Status17invalid_edge_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N6basalt6Status17missing_edge_codeE">
+<span id="_CPPv3N6basalt6Status17missing_edge_codeE"></span><span id="_CPPv2N6basalt6Status17missing_edge_codeE"></span><span class="target" id="structbasalt_1_1Status_1a58fc1f11e7123d9bc3dcf931a8489e39af5ee3c54fbc9fe9b082d37683cf55425"></span><code class="descname">missing_edge_code</code> = -4<a class="headerlink" href="#_CPPv4N6basalt6Status17missing_edge_codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4NK6basalt6StatusntEv">
+<span id="_CPPv3NK6basalt6StatusntEv"></span><span id="_CPPv2NK6basalt6StatusntEv"></span><span id="basalt::Status::not-operatorC"></span><span class="target" id="structbasalt_1_1Status_1ab26f8525fd3aa6c17754193bbf8443ab"></span>bool <code class="descname">operator!</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt6StatusntEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Negation operator <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>true if status is not <em>Code::ok_code</em>, false otherwise </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt6StatuscvbEv">
+<span id="_CPPv3NK6basalt6StatuscvbEv"></span><span id="_CPPv2NK6basalt6StatuscvbEv"></span><span id="basalt::Status::castto-b-operatorC"></span><span class="target" id="structbasalt_1_1Status_1a0394b5a99393c228371831e9f102bdc1"></span><code class="descname">operator bool</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt6StatuscvbEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Implicit conversion operator <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>true if status is <em>Code::ok_code</em>, false otherwise </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt6Status14raise_on_errorEv">
+<span id="_CPPv3NK6basalt6Status14raise_on_errorEv"></span><span id="_CPPv2NK6basalt6Status14raise_on_errorEv"></span><span id="basalt::Status::raise_on_errorC"></span><span class="target" id="structbasalt_1_1Status_1a8700e1a3a20f55b2ea590bec7cdf69ee"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> &amp;<code class="descname">raise_on_error</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt6Status14raise_on_errorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>this instance if member does not throw </dd>
+<dt><strong>Exceptions</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">std::runtime_error</span></code>: whenever status is not <em>Code::ok_code</em>. </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N6basalt6Status4codeE">
+<span id="_CPPv3N6basalt6Status4codeE"></span><span id="_CPPv2N6basalt6Status4codeE"></span><span id="basalt::Status::code__CodeC"></span><span class="target" id="structbasalt_1_1Status_1a0cc9814031a0e51b65fd9457d0b9cf5b"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt6Status4CodeE" title="basalt::Status::Code">Code</a> <code class="descname">code</code><a class="headerlink" href="#_CPPv4N6basalt6Status4codeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>status code </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N6basalt6Status7messageE">
+<span id="_CPPv3N6basalt6Status7messageE"></span><span id="_CPPv2N6basalt6Status7messageE"></span><span id="basalt::Status::message__ssC"></span><span class="target" id="structbasalt_1_1Status_1a2ff44a68b1fe1010124b1ce736dd0f19"></span><em class="property">const</em> std::string <code class="descname">message</code><a class="headerlink" href="#_CPPv4N6basalt6Status7messageE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>status message for humans </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status21error_not_implementedEv">
+<span id="_CPPv3N6basalt6Status21error_not_implementedEv"></span><span id="_CPPv2N6basalt6Status21error_not_implementedEv"></span><span id="basalt::Status::error_not_implemented"></span><span class="target" id="structbasalt_1_1Status_1a21e2806da1c17ae09b9e203d7e0481fc"></span><em class="property">static</em> <em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> &amp;<code class="descname">error_not_implemented</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status21error_not_implementedEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <em><a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a></em>. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A status representing a not implemented state </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status20error_missing_vertexERK12vertex_uid_t">
+<span id="_CPPv3N6basalt6Status20error_missing_vertexERK12vertex_uid_t"></span><span id="_CPPv2N6basalt6Status20error_missing_vertexERK12vertex_uid_t"></span><span id="basalt::Status::error_missing_vertex__vertex_uid_tCR"></span><span class="target" id="structbasalt_1_1Status_1a7c86e5e8268084e712e26387163086f7"></span><em class="property">static</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">error_missing_vertex</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status20error_missing_vertexERK12vertex_uid_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <em><a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a></em>. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A status representing a missing vertex </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: The missing vertex </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status18error_missing_edgeERK10edge_uid_t">
+<span id="_CPPv3N6basalt6Status18error_missing_edgeERK10edge_uid_t"></span><span id="_CPPv2N6basalt6Status18error_missing_edgeERK10edge_uid_t"></span><span id="basalt::Status::error_missing_edge__edge_uid_tCR"></span><span class="target" id="structbasalt_1_1Status_1ae5c024e1da215345c722d1ffc31e718d"></span><em class="property">static</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">error_missing_edge</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#_CPPv4N6basalt10edge_uid_tE" title="basalt::edge_uid_t">edge_uid_t</a> &amp;<em>edge</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status18error_missing_edgeERK10edge_uid_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <em><a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a></em>. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A <em><a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a></em> representing the missing edge </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">edge</span></code>: The missing edge </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status18error_invalid_edgeERK12vertex_uid_tRK12vertex_uid_t">
+<span id="_CPPv3N6basalt6Status18error_invalid_edgeERK12vertex_uid_tRK12vertex_uid_t"></span><span id="_CPPv2N6basalt6Status18error_invalid_edgeERK12vertex_uid_tRK12vertex_uid_t"></span><span id="basalt::Status::error_invalid_edge__vertex_uid_tCR.vertex_uid_tCR"></span><span class="target" id="structbasalt_1_1Status_1ab118428fe7c6a7e90cd3743bcf7086b0"></span><em class="property">static</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">error_invalid_edge</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status18error_invalid_edgeERK12vertex_uid_tRK12vertex_uid_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Construct a <em><a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a></em>. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A status representing a invalid edge between 2 vertices </dd>
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of an edge </li>
+<li><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: other end of the edge </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt6Status2okEv">
+<span id="_CPPv3N6basalt6Status2okEv"></span><span id="_CPPv2N6basalt6Status2okEv"></span><span id="basalt::Status::ok"></span><span class="target" id="structbasalt_1_1Status_1a65ac5514cc4987bba4cd352601cf595a"></span><em class="property">static</em> <em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> &amp;<code class="descname">ok</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt6Status2okEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create <a class="reference internal" href="#structbasalt_1_1Status"><span class="std std-ref">Status</span></a>. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>A status representing a situation where everything is alright. </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classbasalt_1_1Edges.html" class="btn btn-neutral float-right" title="Class Edges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="namespace_basalt.html" class="btn btn-neutral float-left" title="Namespace basalt" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

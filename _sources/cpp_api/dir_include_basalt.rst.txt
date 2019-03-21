@@ -16,12 +16,12 @@ Files
 -----
 
 - :ref:`file_include_basalt_basalt.hpp`
-- :ref:`file_include_basalt_connections.hpp`
+- :ref:`file_include_basalt_edges.hpp`
 - :ref:`file_include_basalt_fwd.hpp`
-- :ref:`file_include_basalt_network.hpp`
-- :ref:`file_include_basalt_node_iterator.hpp`
-- :ref:`file_include_basalt_nodes.hpp`
-- :ref:`file_include_basalt_nodes.hxx`
+- :ref:`file_include_basalt_graph.hpp`
 - :ref:`file_include_basalt_status.hpp`
+- :ref:`file_include_basalt_vertex_iterator.hpp`
+- :ref:`file_include_basalt_vertices.hpp`
+- :ref:`file_include_basalt_vertices.ipp`
 
 

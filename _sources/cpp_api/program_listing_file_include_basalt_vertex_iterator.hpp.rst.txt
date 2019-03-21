@@ -1,0 +1,44 @@
+
+.. _program_listing_file_include_basalt_vertex_iterator.hpp:
+
+Program Listing for File vertex_iterator.hpp
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_vertex_iterator.hpp>` (``include/basalt/vertex_iterator.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <iterator>
+   #include <memory>
+   
+   #include <basalt/fwd.hpp>
+   
+   namespace basalt {
+   
+   class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex_uid_t> {
+     public:
+       VertexIterator(const GraphImpl& pimpl, size_t from);
+   
+       VertexIterator(const VertexIterator& rhs);
+   
+       VertexIterator& operator++();
+   
+       VertexIterator& operator++(int);  // NOLINT(cert-dcl21-cpp)
+   
+       bool operator==(const VertexIterator& rhs) const;
+   
+       bool operator!=(const VertexIterator& rhs) const;
+   
+       const value_type& operator*();
+   
+       using VertexIteratorImpl_ptr = std::shared_ptr<VertexIteratorImpl>;
+   
+     private:
+       VertexIteratorImpl_ptr pimpl_;
+   };
+   
+   }  // namespace basalt

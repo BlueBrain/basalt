@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class VertexIterator &mdash; Basalt 0.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class Vertices" href="classbasalt_1_1Vertices.html" />
+    <link rel="prev" title="Class Graph" href="classbasalt_1_1Graph.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API</a> &raquo;</li>
+        
+      <li>Class VertexIterator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp_api/classbasalt_1_1VertexIterator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-vertexiterator">
+<span id="exhale-class-classbasalt-1-1vertexiterator"></span><h1>Class VertexIterator<a class="headerlink" href="#class-vertexiterator" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Defined in <a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#file-include-basalt-vertex-iterator-hpp"><span class="std std-ref">File vertex_iterator.hpp</span></a></li>
+</ul>
+<div class="section" id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">std::iterator&lt;</span> <span class="pre">std::input_iterator_tag,</span> <span class="pre">const</span> <span class="pre">vertex_uid_t</span> <span class="pre">&gt;</span></code></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6basalt14VertexIteratorE">
+<span id="_CPPv3N6basalt14VertexIteratorE"></span><span id="_CPPv2N6basalt14VertexIteratorE"></span><span id="basalt::VertexIterator"></span><span class="target" id="classbasalt_1_1VertexIterator"></span><em class="property">class </em><code class="descname">VertexIterator</code> : <em class="property">public</em> std::iterator&lt;std::input_iterator_tag, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a>&gt;<a class="headerlink" href="#_CPPv4N6basalt14VertexIteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Iterator class for vertices. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Unnamed Group</p>
+<dl class="type">
+<dt id="_CPPv4N6basalt14VertexIterator22VertexIteratorImpl_ptrE">
+<span id="_CPPv3N6basalt14VertexIterator22VertexIteratorImpl_ptrE"></span><span id="_CPPv2N6basalt14VertexIterator22VertexIteratorImpl_ptrE"></span><span class="target" id="classbasalt_1_1VertexIterator_1ad65aa5570cd0583ce7350c7ff506d03d"></span><em class="property">using </em><code class="descname">VertexIteratorImpl_ptr</code> = std::shared_ptr&lt;VertexIteratorImpl&gt;<a class="headerlink" href="#_CPPv4N6basalt14VertexIterator22VertexIteratorImpl_ptrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt14VertexIterator14VertexIteratorERK9GraphImpl6size_t">
+<span id="_CPPv3N6basalt14VertexIterator14VertexIteratorERK9GraphImpl6size_t"></span><span id="_CPPv2N6basalt14VertexIterator14VertexIteratorERK9GraphImpl6size_t"></span><span id="basalt::VertexIterator::VertexIterator__GraphImplCR.s"></span><span class="target" id="classbasalt_1_1VertexIterator_1a8d750a1f8ca585fe778277afd33c797a"></span><code class="descname">VertexIterator</code><span class="sig-paren">(</span><em class="property">const</em> GraphImpl &amp;<em>pimpl</em>, size_t <em>from</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt14VertexIterator14VertexIteratorERK9GraphImpl6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Ctors and dtors. </p>
+<p>Create an iterator over vertices <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </li>
+<li><code class="docutils literal notranslate"><span class="pre">from</span></code>: Move iterator at specified index </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt14VertexIterator14VertexIteratorERK14VertexIterator">
+<span id="_CPPv3N6basalt14VertexIterator14VertexIteratorERK14VertexIterator"></span><span id="_CPPv2N6basalt14VertexIterator14VertexIteratorERK14VertexIterator"></span><span id="basalt::VertexIterator::VertexIterator__VertexIteratorCR"></span><span class="target" id="classbasalt_1_1VertexIterator_1a10adba440cc86b98aa5d299271b44acf"></span><code class="descname">VertexIterator</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt14VertexIterator14VertexIteratorERK9GraphImpl6size_t" title="basalt::VertexIterator::VertexIterator">VertexIterator</a> &amp;<em>rhs</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt14VertexIterator14VertexIteratorERK14VertexIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Create an iterator over vertices <dl class="docutils">
+<dt><strong>Parameters</strong></dt>
+<dd><ul class="breatheparameterlist first last simple">
+<li><code class="docutils literal notranslate"><span class="pre">rhs</span></code>: Other iterator </li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt14VertexIteratorppEv">
+<span id="_CPPv3N6basalt14VertexIteratorppEv"></span><span id="_CPPv2N6basalt14VertexIteratorppEv"></span><span id="basalt::VertexIterator::inc-operator"></span><span class="target" id="classbasalt_1_1VertexIterator_1a2cc22c42f7d46b898dcc33717bb13f12"></span><a class="reference internal" href="#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> &amp;<code class="descname">operator++</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt14VertexIteratorppEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Move iterator to next element. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>this instance </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt14VertexIteratorppEi">
+<span id="_CPPv3N6basalt14VertexIteratorppEi"></span><span id="_CPPv2N6basalt14VertexIteratorppEi"></span><span id="basalt::VertexIterator::inc-operator__i"></span><span class="target" id="classbasalt_1_1VertexIterator_1a004946b76a144aaa9ce660176be1c279"></span><a class="reference internal" href="#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> &amp;<code class="descname">operator++</code><span class="sig-paren">(</span>int<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt14VertexIteratorppEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Advance the iterator by specified element positions. </p>
+<p><dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>this instance </dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt14VertexIteratoreqERK14VertexIterator">
+<span id="_CPPv3NK6basalt14VertexIteratoreqERK14VertexIterator"></span><span id="_CPPv2NK6basalt14VertexIteratoreqERK14VertexIterator"></span><span id="basalt::VertexIterator::eq-operator__VertexIteratorCRC"></span><span class="target" id="classbasalt_1_1VertexIterator_1a3334cb69cfbcf534c2fe968ca4af8b0a"></span>bool <code class="descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt14VertexIteratoreqERK14VertexIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>compare 2 vertices iterators. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt14VertexIteratorneERK14VertexIterator">
+<span id="_CPPv3NK6basalt14VertexIteratorneERK14VertexIterator"></span><span id="_CPPv2NK6basalt14VertexIteratorneERK14VertexIterator"></span><span id="basalt::VertexIterator::neq-operator__VertexIteratorCRC"></span><span class="target" id="classbasalt_1_1VertexIterator_1a2d4527b4ce590453e3898f210c60fc46"></span>bool <code class="descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> &amp;<em>rhs</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt14VertexIteratorneERK14VertexIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>compare 2 vertices iterators. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt14VertexIteratormlEv">
+<span id="_CPPv3N6basalt14VertexIteratormlEv"></span><span id="_CPPv2N6basalt14VertexIteratormlEv"></span><span id="basalt::VertexIterator::mul-operator"></span><span class="target" id="classbasalt_1_1VertexIterator_1ac43e43aba43e26c6ca10dce691bc9758"></span><em class="property">const</em> value_type &amp;<code class="descname">operator*</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt14VertexIteratormlEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get vertex at the current iterator position <dl class="docutils">
+<dt><strong>Return</strong></dt>
+<dd>constant reference to element </dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classbasalt_1_1Vertices.html" class="btn btn-neutral float-right" title="Class Vertices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="classbasalt_1_1Graph.html" class="btn btn-neutral float-left" title="Class Graph" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+
+.. _file_include_basalt_vertex_iterator.hpp:
+
+File vertex_iterator.hpp
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir_include_basalt>` (``include/basalt``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``include/basalt/vertex_iterator.hpp``)
+---------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_include_basalt_vertex_iterator.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``basalt/fwd.hpp`` (:ref:`file_include_basalt_fwd.hpp`)
+
+- ``iterator`` (:ref:`file_include_basalt_vertex_iterator.hpp`)
+
+- ``memory``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_include_basalt_basalt.hpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_basalt`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classbasalt_1_1VertexIterator`
+

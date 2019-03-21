@@ -41,13 +41,13 @@ Included By
 -----------
 
 
-- :ref:`file_include_basalt_connections.hpp`
+- :ref:`file_include_basalt_edges.hpp`
 
-- :ref:`file_include_basalt_network.hpp`
+- :ref:`file_include_basalt_graph.hpp`
 
-- :ref:`file_include_basalt_nodes.hpp`
+- :ref:`file_include_basalt_vertices.hpp`
 
-- :ref:`file_include_basalt_nodes.hxx`
+- :ref:`file_include_basalt_vertices.ipp`
 
 
 
@@ -63,12 +63,12 @@ Classes
 -------
 
 
-- :ref:`exhale_struct_structbasalt_1_1status__t`
+- :ref:`exhale_struct_structbasalt_1_1Status`
 
 
 Functions
 ---------
 
 
-- :ref:`exhale_function_status_8hpp_1a331938ec25f6f5518ba536f2385e9fe6`
+- :ref:`exhale_function_status_8hpp_1ac68f335887b2d98d11fc97b6cc543014`
 

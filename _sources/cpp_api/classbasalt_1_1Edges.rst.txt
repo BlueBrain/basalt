@@ -1,0 +1,16 @@
+.. _exhale_class_classbasalt_1_1Edges:
+
+Class Edges
+===========
+
+- Defined in :ref:`file_include_basalt_edges.hpp`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: basalt::Edges
+   :members:
+   :protected-members:
+   :undoc-members:

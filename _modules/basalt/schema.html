@@ -1,0 +1,781 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>basalt.schema &mdash; Basalt 0.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="../../_static/language_data.js"></script>
+        <script type="text/javascript" src="../../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/graphs.html">Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../basalt.html">basalt</a> &raquo;</li>
+        
+      <li>basalt.schema</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for basalt.schema</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="kn">from</span> <span class="nn">cached_property</span> <span class="k">import</span> <span class="n">cached_property</span>
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">string_types</span><span class="p">,</span> <span class="n">with_metaclass</span>
+
+<span class="kn">from</span> <span class="nn">basalt</span> <span class="k">import</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">.serialization</span> <span class="k">import</span> <span class="n">serialization_method</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;vertex&quot;</span><span class="p">,</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span> <span class="s2">&quot;MetaGraph&quot;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">dedupe</span><span class="p">(</span><span class="n">sequence</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Yields a stable de-duplication of an hashable sequence</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        sequence: hashable sequence to be de-duplicated</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        stable de-duplication of the sequence</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sequence</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">seen</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">x</span>
+            <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">DirectiveMeta</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Flushes the directives that were temporarily stored in the staging</span>
+<span class="sd">    area into the package.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Set of all known directives</span>
+    <span class="n">_directive_names</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">_directives_to_be_executed</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+        <span class="c1"># Initialize the attribute containing the list of directives</span>
+        <span class="c1"># to be executed. Here we go reversed because we want to execute</span>
+        <span class="c1"># commands:</span>
+        <span class="c1"># 1. in the order they were defined</span>
+        <span class="c1"># 2. following the MRO</span>
+        <span class="n">attr_dict</span><span class="p">[</span><span class="s2">&quot;_directives_to_be_executed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">bases</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">directive_from_base</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">_directives_to_be_executed</span>
+                <span class="n">attr_dict</span><span class="p">[</span><span class="s2">&quot;_directives_to_be_executed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">directive_from_base</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="c1"># The base class didn&#39;t have the required attribute.</span>
+                <span class="c1"># Continue searching</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># De-duplicates directives from base classes</span>
+        <span class="n">attr_dict</span><span class="p">[</span><span class="s2">&quot;_directives_to_be_executed&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">dedupe</span><span class="p">(</span><span class="n">attr_dict</span><span class="p">[</span><span class="s2">&quot;_directives_to_be_executed&quot;</span><span class="p">])</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Move things to be executed from module scope (where they</span>
+        <span class="c1"># are collected first) to class scope</span>
+        <span class="k">if</span> <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span><span class="p">:</span>
+            <span class="n">attr_dict</span><span class="p">[</span><span class="s2">&quot;_directives_to_be_executed&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span>
+            <span class="p">)</span>
+            <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Ignore any directives executed *within* top-level</span>
+        <span class="c1"># directives by clearing out the queue they&#39;re appended to</span>
+        <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">new_cls</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">DirectiveMeta</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_cls</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="s2">&quot;MetaGraph&quot;</span><span class="p">:</span>
+            <span class="c1"># Ensure the presence of the dictionaries associated</span>
+            <span class="c1"># with the directives</span>
+            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directive_names</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">new_cls</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="p">{})</span>
+
+            <span class="c1"># Lazily execute directives</span>
+            <span class="k">for</span> <span class="n">directive</span> <span class="ow">in</span> <span class="n">new_cls</span><span class="o">.</span><span class="n">_directives_to_be_executed</span><span class="p">:</span>
+                <span class="n">directive</span><span class="p">(</span><span class="n">new_cls</span><span class="p">)</span>
+
+            <span class="n">new_cls</span><span class="o">.</span><span class="n">_generate_methods</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_cls</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+        <span class="c1"># The class is being created: if it is a package we must ensure</span>
+        <span class="c1"># that the directives are called on the class to set it up</span>
+        <span class="k">if</span> <span class="s2">&quot;spack.pkg&quot;</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">:</span>
+            <span class="c1"># Package name as taken</span>
+            <span class="c1"># from llnl.util.lang.get_calling_module_name</span>
+            <span class="n">pkg_name</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">)</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">DirectiveMeta</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">bases</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">directive</span><span class="p">(</span><span class="n">dicts</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Decorator for Spack directives.</span>
+
+<span class="sd">        Spack directives allow you to modify a package while it is being</span>
+<span class="sd">        defined, e.g. to add version or dependency information.  Directives</span>
+<span class="sd">        are one of the key pieces of Spack&#39;s package &quot;language&quot;, which is</span>
+<span class="sd">        embedded in python.</span>
+
+<span class="sd">        Here&#39;s an example directive:</span>
+
+<span class="sd">            @directive(dicts=&#39;versions&#39;)</span>
+<span class="sd">            version(pkg, ...):</span>
+<span class="sd">                ...</span>
+
+<span class="sd">        This directive allows you write:</span>
+
+<span class="sd">            class Foo(Package):</span>
+<span class="sd">                version(...)</span>
+
+<span class="sd">        The ``@directive`` decorator handles a couple things for you:</span>
+
+<span class="sd">          1. Adds the class scope (pkg) as an initial parameter when</span>
+<span class="sd">             called, like a class method would.  This allows you to modify</span>
+<span class="sd">             a package from within a directive, while the package is still</span>
+<span class="sd">             being defined.</span>
+
+<span class="sd">          2. It automatically adds a dictionary called &quot;versions&quot; to the</span>
+<span class="sd">             package so that you can refer to pkg.versions.</span>
+
+<span class="sd">        The ``(dicts=&#39;versions&#39;)`` part ensures that ALL packages in Spack</span>
+<span class="sd">        will have a ``versions`` attribute after they&#39;re constructed, and</span>
+<span class="sd">        that if no directive actually modified it, it will just be an</span>
+<span class="sd">        empty dict.</span>
+
+<span class="sd">        This is just a modular way to add storage attributes to the</span>
+<span class="sd">        Package class, and it&#39;s how Spack gets information from the</span>
+<span class="sd">        packages to the core.</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">global</span> <span class="n">__all__</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dicts</span><span class="p">,</span> <span class="n">string_types</span><span class="p">):</span>
+            <span class="n">dicts</span> <span class="o">=</span> <span class="p">(</span><span class="n">dicts</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dicts</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;dicts arg must be list, tuple, or string. Found </span><span class="si">{0}</span><span class="s2">&quot;</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">dicts</span><span class="p">)))</span>
+        <span class="c1"># Add the dictionary names if not already there</span>
+        <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directive_names</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="n">dicts</span><span class="p">)</span>
+
+        <span class="c1"># This decorator just returns the directive functions</span>
+        <span class="k">def</span> <span class="nf">_decorator</span><span class="p">(</span><span class="n">decorated_function</span><span class="p">):</span>
+            <span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">decorated_function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+            <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">decorated_function</span><span class="p">)</span>
+            <span class="k">def</span> <span class="nf">_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="c1"># If any of the arguments are executors returned by a</span>
+                <span class="c1"># directive passed as an argument, don&#39;t execute them</span>
+                <span class="c1"># lazily. Instead, let the called directive handle them.</span>
+                <span class="c1"># This allows nested directive calls in packages.  The</span>
+                <span class="c1"># caller can return the directive if it should be queued.</span>
+                <span class="k">def</span> <span class="nf">remove_directives</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+                    <span class="n">directives</span> <span class="o">=</span> <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+                        <span class="c1"># Descend into args that are lists or tuples</span>
+                        <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arg</span><span class="p">:</span>
+                            <span class="n">remove_directives</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="c1"># Remove directives args from the exec queue</span>
+                        <span class="n">remove</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">directives</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">is</span> <span class="n">arg</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">remove</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                            <span class="n">directives</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">remove</span><span class="p">)</span>
+
+                <span class="c1"># Nasty, but it&#39;s the best way I can think of to avoid</span>
+                <span class="c1"># side effects if directive results are passed as args</span>
+                <span class="n">remove_directives</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+                <span class="n">remove_directives</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+                <span class="c1"># A directive returns either something that is callable on a</span>
+                <span class="c1"># package or a sequence of them</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">decorated_function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+                <span class="c1"># ...so if it is not a sequence make it so</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="n">result</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">Sequence</span><span class="p">):</span>
+                    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">values</span><span class="p">,)</span>
+
+                <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">_directives_to_be_executed</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+                <span class="c1"># wrapped function returns same result as original so</span>
+                <span class="c1"># that we can nest directives</span>
+                <span class="k">return</span> <span class="n">result</span>
+
+            <span class="k">return</span> <span class="n">_wrapper</span>
+
+        <span class="k">return</span> <span class="n">_decorator</span>
+
+
+<span class="n">directive</span> <span class="o">=</span> <span class="n">DirectiveMeta</span><span class="o">.</span><span class="n">directive</span>
+
+
+<div class="viewcode-block" id="vertex"><a class="viewcode-back" href="../../basalt.html#basalt.schema.vertex">[docs]</a><span class="nd">@directive</span><span class="p">(</span><span class="n">dicts</span><span class="o">=</span><span class="s2">&quot;vertex_types&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">vertex</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">serialization</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Declare a vertex type</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        name(str): vertex name</span>
+<span class="sd">        type(enum): enum value</span>
+<span class="sd">        serialization: it can take several values:</span>
+
+<span class="sd">            * ``&quot;pickle&quot;``: whenever an object will be attached to a vertex of this type,</span>
+<span class="sd">              the pickle module will be used to serialize/deserialize it.</span>
+
+<span class="sd">            * ``None`` (default): payload specified when creating a vertex if passed as is to</span>
+<span class="sd">              the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``</span>
+
+<span class="sd">        plural(string): overwrite default plural (name + &#39;s&#39;)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_register</span><span class="p">(</span><span class="n">metagraph</span><span class="p">):</span>
+        <span class="n">metagraph</span><span class="o">.</span><span class="n">vertex_types</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">serialization</span><span class="p">,</span> <span class="n">plural</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">_register</span></div>
+
+
+<div class="viewcode-block" id="edge"><a class="viewcode-back" href="../../basalt.html#basalt.schema.edge">[docs]</a><span class="nd">@directive</span><span class="p">(</span><span class="n">dicts</span><span class="o">=</span><span class="s2">&quot;edges_types&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">edge</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">serialization</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Directive to declare an edge between 2 type of vertices</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        lhs(enum value): vertex type at one end of the edge</span>
+<span class="sd">        rhs(enum value): vertex type at the other end of the edge</span>
+<span class="sd">        serialization: optional serialization method. see :func:`vertex`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_register</span><span class="p">(</span><span class="n">metagraph</span><span class="p">):</span>
+        <span class="n">metagraph</span><span class="o">.</span><span class="n">edges_types</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">lhs</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">rhs</span><span class="p">,</span> <span class="n">serialization</span><span class="p">))</span>
+        <span class="n">metagraph</span><span class="o">.</span><span class="n">edges_types</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">rhs</span><span class="p">,</span> <span class="nb">set</span><span class="p">())</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">lhs</span><span class="p">,</span> <span class="n">serialization</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">_register</span></div>
+
+
+<span class="k">class</span> <span class="nc">VerticesWrapper</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper class for all vertices of a certain type&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">vertex_info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Args:</span>
+<span class="sd">            g(:class:`basalt.graph`): instance of graph</span>
+<span class="sd">            vertex_info(VertexInfo): details about the wrapped vertex</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">g</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">type</span> <span class="o">=</span> <span class="n">vertex_info</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cls</span> <span class="o">=</span> <span class="n">vertex_info</span><span class="o">.</span><span class="n">cls</span>
+
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cls</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">),</span> <span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cls</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vertex_cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">discard</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">remove</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span>
+
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">vertex</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">vertex</span>
+
+    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<span class="k">class</span> <span class="nc">VertexInfo</span><span class="p">(</span>
+    <span class="n">collections</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;VertexInfo&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;plural&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;connections&quot;</span><span class="p">])</span>
+<span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Hold information about a vertex type</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        name: vertex name</span>
+<span class="sd">        plural: name to mention several of them</span>
+<span class="sd">        type: vertex enum type</span>
+<span class="sd">        connections: enum value of connected vertices</span>
+<span class="sd">        cls: Wrapper class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cls</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__cls</span>
+
+    <span class="nd">@cls</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">cls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">cls</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__cls</span> <span class="o">=</span> <span class="bp">cls</span>
+
+
+<div class="viewcode-block" id="MetaGraph"><a class="viewcode-back" href="../../basalt.html#basalt.schema.MetaGraph">[docs]</a><span class="k">class</span> <span class="nc">MetaGraph</span><span class="p">(</span><span class="n">with_metaclass</span><span class="p">(</span><span class="n">DirectiveMeta</span><span class="p">)):</span>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_generate_methods</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shape MetaGraph child class according to the :func:`vertex` and :func:`edge`</span>
+<span class="sd">        directives.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_data_serializers</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_create_data_serializers</span><span class="p">()</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">_vertices</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nb">type</span><span class="p">:</span> <span class="n">VertexInfo</span><span class="p">(</span>
+                <span class="n">name</span><span class="p">,</span>
+                <span class="n">plural</span> <span class="k">if</span> <span class="n">plural</span> <span class="k">else</span> <span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;s&quot;</span><span class="p">,</span>
+                <span class="nb">type</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">edges_types</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="p">[])),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="nb">type</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">plural</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">vertex_types</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">info</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_vertices</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">info</span><span class="o">.</span><span class="n">cls</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_create_vertex_class</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_register_vertex_class</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">cls</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_add_vertex_property</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_add_vertex_property</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a property at class top-level to access the wrapper of the specified vertex&quot;&quot;&quot;</span>
+
+        <span class="k">def</span> <span class="nf">create_property</span><span class="p">():</span>
+            <span class="k">def</span> <span class="nf">getter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">VerticesWrapper</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span> <span class="n">info</span><span class="p">)</span>
+
+            <span class="n">getter</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;Manipulate vertices of type &quot;</span> <span class="o">+</span> <span class="n">info</span><span class="o">.</span><span class="n">name</span>
+            <span class="k">return</span> <span class="n">cached_property</span><span class="p">(</span><span class="n">getter</span><span class="p">)</span>
+
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">info</span><span class="o">.</span><span class="n">plural</span><span class="p">,</span> <span class="n">create_property</span><span class="p">())</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_register_vertex_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">a_cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Register the given class in the module of the graph it is related&quot;&quot;&quot;</span>
+        <span class="n">cls_module</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__module__</span><span class="p">]</span>
+        <span class="c1"># add vertex class to the module of graph class</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">cls_module</span><span class="p">,</span> <span class="n">a_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">a_cls</span><span class="p">)</span>
+        <span class="c1"># register class in __all__ of the module, if any</span>
+        <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cls_module</span><span class="p">,</span> <span class="s2">&quot;__all__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="n">cls_module</span><span class="o">.</span><span class="n">__all__</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_cls</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_create_data_serializers</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build a dict mapping every type of vertices and edges</span>
+<span class="sd">        to the proper serialization methods. For example</span>
+
+<span class="sd">        {&lt;VertexType.Foo: 3&gt;: basalt.serialization.PickleSerialization,</span>
+<span class="sd">         &lt;VertexType.Bar: 2&gt;: basalt.serialization.NoneSerialization,</span>
+<span class="sd">         (&lt;VertexType.Foo: 3&gt;, &lt;VertexType.Bar: 2&gt;): basalt.serialization.PickleSerialization,</span>
+<span class="sd">         (&lt;VertexType.Bar: 2&gt;, &lt;VertexType.Foo: 3&gt;): basalt.serialization.PickleSerialization}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">eax</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="nb">type</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">vertex_types</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">eax</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span> <span class="o">=</span> <span class="n">serialization_method</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">lhs</span><span class="p">,</span> <span class="n">others</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">edges_types</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">rhs</span><span class="p">,</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">others</span><span class="p">:</span>
+                <span class="n">eax</span><span class="p">[(</span><span class="n">lhs</span><span class="p">,</span> <span class="n">rhs</span><span class="p">)]</span> <span class="o">=</span> <span class="n">serialization_method</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">eax</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_create_vertex_class</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">info</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a Vertex class dedicated to a certain vertex type</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            info(VertexInfo): details about the specified vertex type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">class</span> <span class="nc">Vertex</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+                <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span> <span class="o">=</span> <span class="n">graph</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_id</span> <span class="o">=</span> <span class="nb">id</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">data</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;get vertex identifier&quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_id</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;get vertex enum type&quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">info</span><span class="o">.</span><span class="n">type</span>
+
+            <span class="nd">@property</span>
+            <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;get payload attached, if any</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    The deserialized payload is any, ``None`` otherwise</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">get</span><span class="p">((</span><span class="n">info</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span>
+
+            <span class="nd">@classmethod</span>
+            <span class="k">def</span> <span class="nf">serialize</span><span class="p">(</span><span class="n">vcls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_data_serializers</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">type</span><span class="p">]</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="nd">@classmethod</span>
+            <span class="k">def</span> <span class="nf">deserialize</span><span class="p">(</span><span class="n">vcls</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+                <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_data_serializers</span><span class="p">[</span><span class="n">info</span><span class="o">.</span><span class="n">type</span><span class="p">]</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Connect a vertex to this one</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    vertex(VertexWrapper): vertex object to connect</span>
+
+<span class="sd">                Returns:</span>
+<span class="sd">                    This instance</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add</span><span class="p">(</span><span class="n">vertex</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">vertex</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">discard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Remove connection with given vertex</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    vertex(VertexWrapper): vertex object to unlink</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_discard</span><span class="p">(</span><span class="n">vertex</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">vertex</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+
+            <span class="k">def</span> <span class="nf">_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">vertex_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="nb">type</span><span class="o">.</span><span class="n">value</span>
+                <span class="p">):</span>
+                    <span class="k">yield</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="nb">type</span><span class="p">]</span><span class="o">.</span><span class="n">cls</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="p">,</span> <span class="n">vertex_id</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+            <span class="k">def</span> <span class="nf">_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_data_serializers</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">type</span><span class="p">)]</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span>
+                        <span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">id</span><span class="p">),</span>
+                        <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
+                        <span class="o">**</span><span class="n">kwargs</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+                        <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">id</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span>
+
+            <span class="k">def</span> <span class="nf">_discard</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">discard</span><span class="p">(</span>
+                    <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="p">(</span><span class="nb">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="nb">id</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span>
+
+            <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vertex</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">),</span> <span class="p">(</span><span class="n">vertex</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">vertex</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_data_serializers</span><span class="p">[(</span><span class="bp">self</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">vertex</span><span class="o">.</span><span class="n">type</span><span class="p">)]</span><span class="o">.</span><span class="n">deserialize</span><span class="p">(</span>
+                        <span class="n">data</span>
+                    <span class="p">)</span>
+                <span class="k">return</span> <span class="n">data</span>
+
+        <span class="k">def</span> <span class="nf">_add</span><span class="p">(</span><span class="n">type_info</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">_func</span><span class="p">(</span><span class="n">slf</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Connect another {0}</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    id(int): {0} identifier</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">slf</span><span class="o">.</span><span class="n">_add</span><span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">_func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_func</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_func</span>
+
+        <span class="k">def</span> <span class="nf">_discard</span><span class="p">(</span><span class="n">type_info</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">_func</span><span class="p">(</span><span class="n">slf</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="sd">&quot;&quot;&quot;Disconnect another {0}</span>
+
+<span class="sd">                Args:</span>
+<span class="sd">                    id(int): {0} identifier</span>
+<span class="sd">                &quot;&quot;&quot;</span>
+                <span class="k">return</span> <span class="n">slf</span><span class="o">.</span><span class="n">_discard</span><span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+            <span class="n">_func</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">_func</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">_func</span>
+
+        <span class="k">def</span> <span class="nf">_iterator</span><span class="p">(</span><span class="n">type_info</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">property</span><span class="p">(</span>
+                <span class="n">fget</span><span class="o">=</span><span class="k">lambda</span> <span class="bp">self</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_edges</span><span class="p">(</span><span class="n">type_info</span><span class="o">.</span><span class="n">type</span><span class="p">),</span>
+                <span class="n">doc</span><span class="o">=</span><span class="s2">&quot;Get iterable over connected &quot;</span> <span class="o">+</span> <span class="n">type_info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">new_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">info</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;Vertex&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">Vertex</span><span class="p">,</span> <span class="nb">object</span><span class="p">),</span> <span class="p">{})</span>
+
+        <span class="k">for</span> <span class="n">vertex_type</span> <span class="ow">in</span> <span class="n">info</span><span class="o">.</span><span class="n">connections</span><span class="p">:</span>
+            <span class="n">other_info</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_vertices</span><span class="p">[</span><span class="n">vertex_type</span><span class="p">]</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_type</span><span class="p">,</span> <span class="n">other_info</span><span class="o">.</span><span class="n">plural</span><span class="p">,</span> <span class="n">_iterator</span><span class="p">(</span><span class="n">other_info</span><span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_type</span><span class="p">,</span> <span class="s2">&quot;add_&quot;</span> <span class="o">+</span> <span class="n">other_info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_add</span><span class="p">(</span><span class="n">other_info</span><span class="p">))</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">new_type</span><span class="p">,</span> <span class="s2">&quot;discard_&quot;</span> <span class="o">+</span> <span class="n">other_info</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">_discard</span><span class="p">(</span><span class="n">other_info</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">new_type</span>
+
+<div class="viewcode-block" id="MetaGraph.from_path"><a class="viewcode-back" href="../../basalt.html#basalt.schema.MetaGraph.from_path">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_path</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new graph instance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            path(str): the path to basalt database on filesystem.</span>
+<span class="sd">                The database is created if path does not exists</span>
+
+<span class="sd">            kwargs: additional arguments given to the :class:`basalt.Graph` constructor</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MetaGraph.from_graph"><a class="viewcode-back" href="../../basalt.html#basalt.schema.MetaGraph.from_graph">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_graph</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">graph</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new graph instance</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            graph(basalt.Graph): low-level graph instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">graph</span><span class="o">=</span><span class="n">graph</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">graph</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">graph</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vertices</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See :func:`basalt.Graph.vertices`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">edges</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See :func:`basalt.Graph.edges`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">edges</span>
+
+<div class="viewcode-block" id="MetaGraph.commit"><a class="viewcode-back" href="../../basalt.html#basalt.schema.MetaGraph.commit">[docs]</a>    <span class="k">def</span> <span class="nf">commit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See :func:`basalt.Graph.commit`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MetaGraph.statistics"><a class="viewcode-back" href="../../basalt.html#basalt.schema.MetaGraph.statistics">[docs]</a>    <span class="k">def</span> <span class="nf">statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;See :func:`basalt.Graph.statistics`&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">statistics</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

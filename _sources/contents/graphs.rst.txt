@@ -1,0 +1,104 @@
+Graphs
+######
+
+Definition
+==========
+
+Basalt allows manipulation of undirected graphs. A graph is made of vertices and edges.
+
+A vertex is made of:
+    * a type (``integer``)
+    * an identifier (``integer``)
+    * an optional payload
+
+An edge is made of:
+    * 2 vertices identifiers
+    * an optional payload
+
+A payload can be attached to vertices and edges
+    Internally it is stored as
+    a ``numpy.ndarray(dtype=numpy.byte)``, but multiple serialization methods
+    to also support pickle serialization as well as payloads classes coming
+    from Python bindings of the basalt C++ library.
+
+
+Basalt Python package provides 2 graph API to use undirected graphs:
+
+* low level bindings of the basalt C++ library.
+* a graph class generation API to generate Python classes dedicated
+  to a particular graph schema.
+
+Python bindings
+===============
+
+Basalt core is a C++ library that leverage rockdb to provide a graph oriented API.
+This library is exposed in Python through bindings. The best way to get started right now
+is to start reading reference documentation of :class:`basalt.Graph`
+
+Graph Class Generation
+======================
+
+Python bindings of C++ library are very low level, and is only about vertices and edges.
+Graph topology is not taken into account at all.
+
+This API allows one to define a Python graph class from its topology. For instance:
+
+    >>> from enum import Enum
+    >>> from basalt.schema import *
+    >>>
+    >>> class Vertex(Enum):
+    ...     PERSON = 1
+    ...     SKILL = 2
+    ...     CATEGORY = 3
+    >>>
+    >>> class Skills(MetaGraph):
+    ...     vertex("person", Vertex.PERSON, "pickle")
+    ...     vertex("skill", Vertex.SKILL, "pickle")
+    ...     vertex("category", Vertex.CATEGORY, "pickle", "categories")
+    ...
+    ...     edge(Vertex.PERSON, Vertex.SKILL)
+    ...     edge(Vertex.SKILL, Vertex.CATEGORY)
+    ...     edge(Vertex.CATEGORY, Vertex.CATEGORY)
+
+
+:mod:`basalt.schema` module provides 3 important symbols:
+
+* :func:`basalt.schema.vertex`: directive to declare a vertex. It take a name,
+  an enum value type, and optional a serialization method.
+* :func:`basalt.schema.edge`: a directive to specify a connection between 2 type of
+  vertices. Because an edge can also have a payload, a serialization method
+  can also be given to the `edge` function.
+* :class:`basalt.schema.MetaGraph`: a base class having a custom metaclass that takes
+  the directives below into account.
+
+The `Skills` class provides named methods to create vertices and edges so that it
+is not necessary to pass vertices and edges types anymore.
+
+It is possible to construct a ``Skills`` instance from either an existing graph instance
+or from a filesystem path.
+
+    >>> g = Skills(graph)  # create instance from existing graph instance "graph"
+    >>>
+    >>> alice = g.persons.add(0, "Alice")
+    >>>
+    >>> alice.type, alice.id, repr(alice.data)
+    (<Vertex.PERSON: 1>, 0, "'Alice'")
+    >>>
+    >>> cpp = g.skills.add(42, "C++")
+    >>>
+    >>> # Java identifier 0 does not conflict with
+    >>> # Alice identifier because they have different types
+    >>> g.skills.add(0, "Java")
+    <basalt.schema.SkillVertex...
+    >>>
+    >>> alice.add(cpp)
+    <basalt.schema.PersonVertex...
+    >>> # or connect both from cpp identifier
+    >>> alice.add_skill(42)
+    <basalt.schema.PersonVertex...
+    >>>
+    >>> for skill in alice.skills:
+    ...   print(skill.id, skill.data)
+    42 C++
+    >>>
+    >>> g.commit()

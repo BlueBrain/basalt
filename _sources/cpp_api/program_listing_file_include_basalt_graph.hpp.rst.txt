@@ -1,0 +1,53 @@
+
+.. _program_listing_file_include_basalt_graph.hpp:
+
+Program Listing for File graph.hpp
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_include_basalt_graph.hpp>` (``include/basalt/graph.hpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #pragma once
+   
+   #include <iosfwd>
+   #include <limits>
+   #include <memory>
+   #include <string>
+   #include <utility>
+   #include <vector>
+   
+   #include <basalt/fwd.hpp>
+   #include <basalt/status.hpp>
+   
+   namespace basalt {
+   
+   class Graph {
+     public:
+       using vertex_const_iterator_t = std::iterator<std::input_iterator_tag, const vertex_t>;
+   
+       explicit Graph(const std::string& path);
+       ~Graph();
+   
+       Edges& edges();
+   
+       Vertices& vertices();
+       Status commit() __attribute__((warn_unused_result));
+   
+       std::string statistics() const;
+   
+     private:
+       std::unique_ptr<GraphImpl> pimpl_;
+   };
+   
+   vertex_uid_t make_id(vertex_t type, vertex_id_t id);
+   
+   }  // namespace basalt
+   
+   std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uid_t& id);
+   
+   std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uids_t& ids);
+   
+   std::ostream& operator<<(std::ostream& ostr, const basalt::edge_uid_t& id);

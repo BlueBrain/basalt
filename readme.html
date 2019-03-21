@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; Basalt 0.2.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Graphs" href="contents/graphs.html" />
+    <link rel="prev" title="Basalt — Graph Storage library" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#build-and-installation-instructions">Build and installation instructions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-the-code">Getting the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c-library">C++ Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-3-bindings">Python 3 bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#contributing">Contributing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pull-requests">pull-requests</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contents/graphs.html">Graphs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/readme.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="basalt-c-11-graph-storage-library">
+<h1>Basalt - C++11 Graph Storage library<a class="headerlink" href="#basalt-c-11-graph-storage-library" title="Permalink to this headline">¶</a></h1>
+<p>Basic graph database backed by RocksDB key-value storage</p>
+<a class="reference external image-reference" href="https://travis-ci.org/tristan0x/basalt"><img alt="Build Status" src="https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&amp;branch=master" /></a>
+</div>
+<div class="section" id="development-stage">
+<h1>Development stage<a class="headerlink" href="#development-stage" title="Permalink to this headline">¶</a></h1>
+<p>This library is still under active development, and is not meant to be used
+in a production environment.</p>
+</div>
+<div class="section" id="usage-on-bluebrain-5">
+<h1>Usage on BlueBrain 5<a class="headerlink" href="#usage-on-bluebrain-5" title="Permalink to this headline">¶</a></h1>
+<p>Basalt is currently released as a Nix module on BB5 supercomputer:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ module purge
+$ module load nix/py36/basalt
+$ python3
+Python <span class="m">3</span>.6.3 <span class="o">(</span>default, Oct  <span class="m">3</span> <span class="m">2017</span>, <span class="m">07</span>:47:49<span class="o">)</span>
+<span class="o">[</span>GCC <span class="m">6</span>.4.0<span class="o">]</span> on linux
+Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&quot;</span>, <span class="s2">&quot;credits&quot;</span> or <span class="s2">&quot;license&quot;</span> <span class="k">for</span> more information.
+&gt;&gt;&gt; import basalt
+&gt;&gt;&gt; basalt.__version__
+<span class="s1">&#39;0.2.0&#39;</span>
+&gt;&gt;&gt; basalt.__rocksdb_version__
+<span class="s1">&#39;5.17.2&#39;</span>
+&gt;&gt;&gt; basalt.serve_doc<span class="o">()</span>
+Serving HTTP on <span class="m">0</span>.0.0.0 port <span class="m">8000</span> <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="build-and-installation-instructions">
+<h1>Build and installation instructions<a class="headerlink" href="#build-and-installation-instructions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://cmake.org">CMake</a> build system, version 3.5.1 or higher.</li>
+<li><a class="reference external" href="https://rocksdb.org/">RocksDB</a>, a persistent key-value store,
+version version 4.1.1 or higher.</li>
+<li><a class="reference external" href="https://python.org/">Python 3</a></li>
+</ul>
+</div>
+<div class="section" id="getting-the-code">
+<h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
+<p>This repository grabs few third-party libraries as <em>git submodules</em>.
+To clone them when you clone basalt, use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">--recursive</span></code> option.</p>
+<p>If you have already cloned basalt, you can get the submodules with command:
+<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--recursive</span> <span class="pre">--init</span></code></p>
+</div>
+<div class="section" id="c-library">
+<h2>C++ Library<a class="headerlink" href="#c-library" title="Permalink to this headline">¶</a></h2>
+<p>To build and run tests:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to/basalt
+mkdir build
+<span class="nb">pushd</span> build
+cmake ..
+<span class="nv">CTEST_OUTPUT_ON_FAILURE</span><span class="o">=</span><span class="m">1</span> make all <span class="nb">test</span>
+</pre></div>
+</div>
+<p>To install the library</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">pushd</span> build
+cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr/local .
+make all install
+</pre></div>
+</div>
+</div>
+<div class="section" id="python-3-bindings">
+<h2>Python 3 bindings<a class="headerlink" href="#python-3-bindings" title="Permalink to this headline">¶</a></h2>
+<p>To build and run tests</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to/basalt
+python setup.py <span class="nb">test</span>
+</pre></div>
+</div>
+<p>To install:</p>
+<ul class="simple">
+<li>with <em>pip</em>: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">.</span></code></li>
+<li>with <em>distutils</em>: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></li>
+<li>to create a binary tarballs:<ul>
+<li>most simple: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist</span></code></li>
+<li><a class="reference external" href="https://www.python.org/dev/peps/pep-0427/">wheel</a>: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">wheels;</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_wheel</span></code></li>
+<li>relocatable archive: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_dumb</span> <span class="pre">--relative</span></code></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="files-layout">
+<h1>Files Layout<a class="headerlink" href="#files-layout" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">basalt/</span></code> directory: Python code of the package</li>
+<li><code class="docutils literal notranslate"><span class="pre">include/</span></code> directory: public headers of the library</li>
+<li><code class="docutils literal notranslate"><span class="pre">src/basalt/</span></code> directory: source code of the library</li>
+<li><code class="docutils literal notranslate"><span class="pre">tests/unit/</span></code> directory: C++ unit-tests using
+<a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a> library</li>
+<li><code class="docutils literal notranslate"><span class="pre">tests/py/</span></code> directory: unit-tests of the Python package</li>
+<li><code class="docutils literal notranslate"><span class="pre">cmake/</span></code> directory: Additional CMake scripts</li>
+<li><code class="docutils literal notranslate"><span class="pre">dev/</span></code> directory: development utilities</li>
+<li><code class="docutils literal notranslate"><span class="pre">docs</span></code> directory: source code of Sphinx documentation</li>
+</ul>
+</div>
+<div class="section" id="embedded-third-parties">
+<h1>Embedded third-parties<a class="headerlink" href="#embedded-third-parties" title="Permalink to this headline">¶</a></h1>
+<p>External libraries are including either by copy/paste or git submodules
+in <code class="docutils literal notranslate"><span class="pre">src/third_party</span></code> directory.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a>:
+modern, C++-native, header-only, test framework for unit-tests, TDD
+and BDD unit-test library.</li>
+<li><a class="reference external" href="https://github.com/fmtlib/fmt">fmt</a>: A modern formatting library
+<strong>(not part of CMake build yet)</strong></li>
+<li><a class="reference external" href="https://pybind11.rtfd.io">pybind11</a>: Seamless operability between C++11 and Python</li>
+<li><a class="reference external" href="https://github.com/gabime/spdlog">SpdLog</a>: Fast C++ logging library.</li>
+</ul>
+</div>
+<div class="section" id="contributing">
+<h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
+<p>Contributions are welcome, via GitHub pull-requests and bug tracker.</p>
+<div class="section" id="pull-requests">
+<h2>pull-requests<a class="headerlink" href="#pull-requests" title="Permalink to this headline">¶</a></h2>
+<p>Enable CMake environment variables <code class="docutils literal notranslate"><span class="pre">Basalt_FORMATTING</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Basalt_PRECOMMIT</span></code> to ensure that your change complies
+with the coding conventions of this project.</p>
+<p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-DBasalt_FORMATTING:BOOL=ON</span> <span class="pre">-DBasalt_PRECOMMIT:BOOL=ON</span> <span class="pre">&lt;path&gt;</span></code></p>
+<p>Please make sure to execute <code class="docutils literal notranslate"><span class="pre">dev/check.sh</span></code> before submitting a patch in order to:</p>
+<ul class="simple">
+<li>run static analysis of C++ code with
+<a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/">clang-tidy</a></li>
+<li>run Python static analysis and code formatting with
+<a class="reference external" href="http://flake8.pycqa.org">flake8</a> and <a class="reference external" href="https://github.com/ambv/black">black</a>.
+Also install <a class="reference external" href="https://github.com/PyCQA/flake8-bugbear">flake8-bugbear</a>
+<em>flake8</em> plugin.</li>
+</ul>
+<p>Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
+with the <em>memcheck</em> CTest action: <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-VV</span> <span class="pre">--output-on-failure</span> <span class="pre">-T</span> <span class="pre">memcheck</span></code></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contents/graphs.html" class="btn btn-neutral float-right" title="Graphs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Basalt — Graph Storage library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
