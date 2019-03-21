@@ -80,9 +80,9 @@ Functions
 
 - :ref:`exhale_function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2`
 
-- :ref:`exhale_function_graph_8hpp_1a3a48b23d0486e9330b139aec791f15aa`
-
 - :ref:`exhale_function_graph_8hpp_1ac63a64cdc2948f45d0de8149fa14e58f`
 
 - :ref:`exhale_function_graph_8hpp_1a6c5a52c86ad459518d169da4c16ce108`
+
+- :ref:`exhale_function_graph_8hpp_1a3a48b23d0486e9330b139aec791f15aa`
 
