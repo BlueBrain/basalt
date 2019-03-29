@@ -17,6 +17,18 @@ class Edges {
     explicit Edges(GraphImpl& pimpl);
 
     /**
+     * \brief Iterator over the edges of the graph
+     * \param position starting position, default at the beginning
+     * \return edge iterator
+     */
+    EdgeIterator begin(std::size_t position = 0) const;
+
+    /**
+     * \return an iterator referring to the past-the-end
+     */
+    EdgeIterator end() const;
+
+    /**
      * \brief Create an edge between 2 vertices.
      * Both vertices must already be in the graph.
      * \param vertex1 one end of the edge

@@ -1,6 +1,9 @@
 # pure C++ shared library
 set(basalt_SOURCES
     basalt/edges.cpp
+    basalt/edge_iterator.cpp
+    basalt/edge_iterator_impl.hpp
+    basalt/edge_iterator_impl.cpp
     basalt/graph.cpp
     basalt/graph_impl.cpp
     basalt/graph_impl.hpp
@@ -15,6 +18,7 @@ set(basalt_SOURCES
 set(basalt_HEADERS
     ${basalt_include_directory}/basalt/basalt.hpp
     ${basalt_include_directory}/basalt/edges.hpp
+    ${basalt_include_directory}/basalt/edge_iterator.hpp
     ${basalt_include_directory}/basalt/fwd.hpp
     ${basalt_include_directory}/basalt/graph.hpp
     ${CMAKE_CURRENT_BINARY_DIR}/basalt/version.hpp

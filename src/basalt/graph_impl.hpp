@@ -9,7 +9,6 @@
 
 #include "fwd.hpp"
 #include "graph_kv.hpp"
-#include "vertex_iterator_impl.hpp"
 
 namespace basalt {
 
@@ -106,6 +105,7 @@ class GraphImpl {
     Status edges_erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit);
     Status edges_count(std::size_t& count) const;
     Status edges_clear(bool commit) __attribute__((warn_unused_result));
+    std::shared_ptr<EdgeIteratorImpl> edge_iterator(std::size_t from) const;
 
 
     Status commit();

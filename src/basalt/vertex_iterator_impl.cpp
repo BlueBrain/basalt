@@ -35,7 +35,7 @@ VertexIteratorImpl& VertexIteratorImpl::operator++() {
     return *this;
 }
 
-bool VertexIteratorImpl::operator!=(const basalt::VertexIteratorImpl& rhs) const {
+bool VertexIteratorImpl::operator!=(const VertexIteratorImpl& rhs) const {
     return !(*this == rhs);
 }
 

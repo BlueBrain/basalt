@@ -1,6 +1,9 @@
 #include <dirent.h>
 
+#include "edge_iterator_impl.hpp"
 #include "graph_impl.hpp"
+#include "vertex_iterator_impl.hpp"
+
 
 #include <gsl-lite/gsl-lite.hpp>
 #include <rocksdb/db.h>
@@ -288,6 +291,11 @@ Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
 std::shared_ptr<VertexIteratorImpl> GraphImpl::VertexIterator(std::size_t from) const {
     logger_get()->debug("VertexIterator(from={})", from);
     return std::make_shared<VertexIteratorImpl>(db_get(), vertices_column_.get(), "N", from);
+}
+
+std::shared_ptr<EdgeIteratorImpl> GraphImpl::edge_iterator(std::size_t from) const {
+    logger_get()->debug("edge_iterator(from={})", from);
+    return std::make_shared<EdgeIteratorImpl>(db_get(), edges_column_.get(), "E", from);
 }
 
 Status GraphImpl::vertices_clear(bool commit) {
