@@ -17,33 +17,34 @@ VertexIterator::VertexIterator(const basalt::GraphImpl& pimpl, size_t from) {
     }
 }
 
-VertexIterator::VertexIterator(const basalt::VertexIterator& rhs)
-    : pimpl_(rhs.pimpl_) {}
+VertexIterator::VertexIterator(const basalt::VertexIterator& other)
+    : pimpl_(other.pimpl_) {}
 
 VertexIterator& VertexIterator::operator++() {
     ++*pimpl_;
     return *this;
 }
 
-VertexIterator& VertexIterator::operator++(int value) {  // NOLINT(cert-dcl21-cpp)
+const VertexIterator VertexIterator::operator++(int value) {
+    const VertexIterator result(*this);
     while (value-- > 0) {
         this->operator++();
     }
-    return *this;
+    return result;
 }
 
-bool VertexIterator::operator==(const basalt::VertexIterator& rhs) const {
+bool VertexIterator::operator==(const basalt::VertexIterator& other) const {
     if (pimpl_) {
-        if (rhs.pimpl_) {
-            return *this->pimpl_ == *rhs.pimpl_;
+        if (other.pimpl_) {
+            return *this->pimpl_ == *other.pimpl_;
         }
         return pimpl_->end_reached();
     }
-    return !rhs.pimpl_;
+    return !other.pimpl_;
 }
 
-bool VertexIterator::operator!=(const basalt::VertexIterator& rhs) const {
-    return !(*this == rhs);
+bool VertexIterator::operator!=(const basalt::VertexIterator& other) const {
+    return !(*this == other);
 }
 
 const VertexIterator::value_type& VertexIterator::operator*() {

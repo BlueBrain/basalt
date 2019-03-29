@@ -79,9 +79,7 @@ class GraphKV {
         encode(vertex1, vertex2, keys[0]);
         encode(vertex2, vertex1, keys[1]);
     }
-    static inline void encode_reversed_edge(const char* data,
-                                            size_t size,
-                                            edge_key_t& key) {
+    static inline void encode_reversed_edge(const char* data, size_t size, edge_key_t& key) {
         static_cast<void>(size);
         assert(size == std::tuple_size<edge_key_t>::value);
         key[0] = 'E';
@@ -99,9 +97,7 @@ class GraphKV {
     /** \name Key decoding functions
      * \{
      */
-    static inline void decode_edge_dest(const char* data,
-                                        size_t size,
-                                        vertex_uid_t& vertex) {
+    static inline void decode_edge_dest(const char* data, size_t size, vertex_uid_t& vertex) {
         static_cast<void>(size);
         assert(size == std::tuple_size<edge_key_t>::value);
         assert(data[0] == 'E');
@@ -114,9 +110,7 @@ class GraphKV {
                     sizeof(vertex_uid_t::second_type));
     }
 
-    static inline void decode_vertex(const char* data,
-                                     size_t size,
-                                     vertex_uid_t& vertex) {
+    static inline void decode_vertex(const char* data, size_t size, vertex_uid_t& vertex) {
         static_cast<void>(size);
         assert(size == 1 + sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
         assert(data[0] == 'N');
@@ -125,6 +119,15 @@ class GraphKV {
         std::memcpy(reinterpret_cast<char*>(&vertex.second),
                     data + 1 + sizeof(vertex_uid_t::first_type), sizeof(vertex_uid_t::second_type));
     }
+
+    static inline void decode_edge(const char* data, size_t size, edge_uid_t& edge) {
+        decode_edge_dest(data, size, edge.second);
+        std::memcpy(reinterpret_cast<char*>(&edge.first.first), data + 1,
+                    sizeof(vertex_uid_t::first_type));
+        std::memcpy(reinterpret_cast<char*>(&edge.first.second),
+                    data + 1 + sizeof(vertex_uid_t::first_type), sizeof(vertex_uid_t::second_type));
+    }
+
     /**
      * \}
      */
