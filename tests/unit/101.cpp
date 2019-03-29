@@ -6,6 +6,7 @@
 
 #include <basalt/basalt.hpp>
 
+using basalt::edge_uid_t;
 using basalt::Graph;
 using basalt::make_id;
 using basalt::vertex_id_t;
@@ -197,7 +198,6 @@ TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
         std::set<vertex_uid_t> vertices_set;
         int count = 0;
         for (const auto& vertex: g.vertices()) {
-            std::cout << vertex << std::endl;
             ++count;
             vertices_set.insert(vertex);
         }
@@ -205,14 +205,45 @@ TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
         REQUIRE(vertices_set.size() == 4);
     }
 
-    // test count of vertices
-    auto count = 0lu;
-    g.vertices().count(count).raise_on_error();
-    REQUIRE(count == 4);
+    {
+        // test count of vertices
+        auto count = 0lu;
+        g.vertices().count(count).raise_on_error();
+        REQUIRE(count == 4);
+    }
+    {
+        // iterator over second half of vertices
+        auto count = 0lu;
+        const auto vertices_end = g.vertices().end();
+        for (auto vertex = g.vertices().begin(2); vertex != vertices_end; ++vertex) {
+            ++count;
+        }
+        REQUIRE(count == 2);
+    }
 
-    // iterator over second half of vertices
-    const auto vertices_end = g.vertices().end();
-    for (auto vertex = g.vertices().begin(count / 2); vertex != vertices_end; ++vertex) {
-        std::cout << *vertex << std::endl;
+    {
+        // iterate over all edges
+        std::set<edge_uid_t> edges_set;
+        const std::set<edge_uid_t> expected{
+            std::make_pair(make_id(vertex_type::synapse, 0), make_id(vertex_type::synapse, 1)),
+            std::make_pair(make_id(vertex_type::synapse, 1), make_id(vertex_type::synapse, 0)),
+
+            std::make_pair(make_id(vertex_type::synapse, 0), make_id(vertex_type::astrocyte, 0)),
+            std::make_pair(make_id(vertex_type::astrocyte, 0), make_id(vertex_type::synapse, 0)),
+
+            std::make_pair(make_id(vertex_type::synapse, 0), make_id(vertex_type::astrocyte, 1)),
+            std::make_pair(make_id(vertex_type::astrocyte, 1), make_id(vertex_type::synapse, 0)),
+
+            std::make_pair(make_id(vertex_type::astrocyte, 0), make_id(vertex_type::astrocyte, 1)),
+            std::make_pair(make_id(vertex_type::astrocyte, 1), make_id(vertex_type::astrocyte, 0))};
+        int count = 0;
+        for (const auto& edge: g.edges()) {
+            ++count;
+            edges_set.insert(edge);
+        }
+        // every edge is count twice
+        REQUIRE(count == 8);
+        REQUIRE(edges_set.size() == 8);
+        REQUIRE(edges_set == expected);
     }
 }

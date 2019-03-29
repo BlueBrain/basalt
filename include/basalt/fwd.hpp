@@ -8,6 +8,8 @@ namespace basalt {
 
 /// Forward declarations
 class Edges;
+class EdgeIterator;
+class EdgeIteratorImpl;
 class GraphImpl;
 class VertexIteratorImpl;
 class VertexIterator;

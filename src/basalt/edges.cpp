@@ -1,6 +1,9 @@
 #include <basalt/edges.hpp>
 
+#include <basalt/edge_iterator.hpp>
+
 #include "graph_impl.hpp"
+
 
 namespace basalt {
 
@@ -85,5 +88,12 @@ Status Edges::count(std::size_t& count) const {
     return pimpl_.edges_count(count);
 }
 
+EdgeIterator Edges::begin(size_t position) const {
+    return {pimpl_, position};
+}
+
+EdgeIterator Edges::end() const {
+    return {pimpl_, std::numeric_limits<std::size_t>::max()};
+}
 
 }  // namespace basalt

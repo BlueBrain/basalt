@@ -12,7 +12,7 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
   public:
     /**
      * \brief Ctors and dtors.
-     *  \{
+     * \{
      */
 
     /**
@@ -23,10 +23,12 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
     VertexIterator(const GraphImpl& pimpl, size_t from);
 
     /**
-     * Create an iterator over vertices
-     * \param rhs Other iterator
+     * Copy constructor
+     * \param other Other iterator
      */
-    VertexIterator(const VertexIterator& rhs);
+    VertexIterator(const VertexIterator& other);
+
+    /** \} */
 
     /**
      * \brief Move iterator to next element
@@ -36,17 +38,15 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
 
     /**
      * \brief Advance the iterator by specified element positions.
-     * \return this instance
+     * \return copy of the iterator before the operation
      */
-    VertexIterator& operator++(int);  // NOLINT(cert-dcl21-cpp)
+    const VertexIterator operator++(int);
 
-    /** \brief compare 2 vertices iterators.
-     */
-    bool operator==(const VertexIterator& rhs) const;
+    /** \brief compare 2 vertex iterators. */
+    bool operator==(const VertexIterator& other) const;
 
-    /** \brief compare 2 vertices iterators.
-     */
-    bool operator!=(const VertexIterator& rhs) const;
+    /** \brief compare 2 vertex iterators. */
+    bool operator!=(const VertexIterator& other) const;
 
     /**
      * Get vertex at the current iterator position

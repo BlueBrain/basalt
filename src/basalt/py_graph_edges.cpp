@@ -216,7 +216,11 @@ static const char* add_bulk_payload = R"(
 void register_graph_edges(py::module& m) {
     py::class_<basalt::Edges>(m, "Edges", docstring::edges_class)
         .def("__iter__",
-             [](const basalt::Edges& /*edges*/) { throw std::runtime_error("not-implemented"); })
+             [](const basalt::Edges& edges) {
+                 return py::make_iterator(edges.begin(), edges.end());
+             },
+             py::keep_alive<0, 1>())
+
         .def("__len__",
              [](const basalt::Edges& edges) {
                  std::size_t count;
