@@ -146,10 +146,15 @@ install_requirements = [
     "numpy>=1.11",
     "progress>=1.4",
 ]
+doc_requirements = [
+    "exhale",
+    "m2r",
+    "sphinx-rtd-theme",
+    "sphinx<2",
+]
 
 setup(
     name="basalt",
-    version="0.2.3",
     author="Blue Brain Project",
     author_email="bbp-ou-hpc@groupes.epfl.ch",
     classifiers=[
@@ -184,9 +189,9 @@ setup(
     ),
     package_data={"basalt": ["docs/html/**/*"]},
     zip_safe=False,
+    use_scm_version=True,
     install_requires=install_requirements,
-    setup_requires=["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
-    + install_requirements,
+    setup_requires=install_requirements + doc_requirements + ["setuptools_scm"],
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main

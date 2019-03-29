@@ -15,6 +15,9 @@
 import os
 import sys
 import textwrap
+
+from pkg_resources import get_distribution
+
 sys.path.insert(0, os.path.abspath('..'))
 import basalt
 
@@ -25,11 +28,10 @@ project = 'Basalt'
 copyright = '2019, BlueBrain HPC Team'
 author = 'BlueBrain HPC Team'
 
-# The short X.Y version
-version = basalt.__version__
 # The full version, including alpha/beta/rc tags
-release = basalt.__version__
-
+release = get_distribution('basalt').version
+# The short X.Y.Z version
+version = '.'.join(release.split('.')[:3])
 
 # -- General configuration ---------------------------------------------------
 
