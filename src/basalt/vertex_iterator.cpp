@@ -12,7 +12,7 @@ VertexIterator::VertexIterator(const basalt::GraphImpl& pimpl, size_t from) {
     if (from == std::numeric_limits<std::size_t>::max()) {
         pimpl_ = VertexIteratorImpl_ptr(nullptr);
     } else {
-        pimpl_ = pimpl.VertexIterator(from);
+        pimpl_ = pimpl.vertex_iterator(from);
         std::advance(*this, static_cast<VertexIterator::difference_type>(from));
     }
 }

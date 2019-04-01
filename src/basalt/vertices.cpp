@@ -55,11 +55,11 @@ Status Vertices::count(vertex_t type, std::size_t& count) const {
 }
 
 VertexIterator Vertices::begin(size_t position) const {
-    return VertexIterator(pimpl_, position);
+    return {pimpl_, position};
 }
 
 VertexIterator Vertices::end() const {
-    return VertexIterator(pimpl_, std::numeric_limits<std::size_t>::max());
+    return {pimpl_, std::numeric_limits<std::size_t>::max()};
 }
 
 Status Vertices::clear(bool commit) {
