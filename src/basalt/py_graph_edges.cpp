@@ -2,6 +2,7 @@
 
 #include <pybind11/stl.h>
 
+#include "basalt/edge_iterator.hpp"
 #include "basalt/edges.hpp"
 #include "py_graph_edges.hpp"
 #include "py_helpers.hpp"
@@ -46,6 +47,14 @@ static const char* edges_class = R"(
     True
     >>> (v2, v1) in graph.edges
     True
+
+    It is possible to iterator over all edges.
+    Every edge appears in both orders.
+
+    >>> for edge in sorted(graph.edges):
+    ...   print(edge)
+    ((0, 1), (0, 2))
+    ((0, 2), (0, 1))
 
 )";
 
@@ -227,6 +236,7 @@ void register_graph_edges(py::module& m) {
                  edges.count(count).raise_on_error();
                  return count;
              })
+
         .def("add",
              [](basalt::Edges& edges, const basalt::vertex_uid_t& vertex1,
                 const basalt::vertex_uid_t& vertex2, bool commit) {
