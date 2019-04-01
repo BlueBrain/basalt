@@ -1,6 +1,8 @@
 import tempfile
 import unittest
 
+import numpy as np
+
 from basalt import Graph, make_id
 from basalt.ngv import Neuron, PayloadHelper, VertexType
 
@@ -170,6 +172,13 @@ class TestGraph(unittest.TestCase):
         self.assertCountEqual(g.edges.get(C), [B, D])
         self.assertCountEqual(g.edges.get(D), [C])
 
+    def test_node_bulk_insertion_no_payload(self):
+        g = Graph(tempfile.mkdtemp())
+        g.vertices.add(
+            np.full(42, fill_value=3, dtype=np.int32),
+            np.arange(42, dtype=np.uint64),
+        )
+        self.assertEqual(len(g.vertices), 42)
 
 class TestPayloadHelper(unittest.TestCase):
     def test_neuron(self):
