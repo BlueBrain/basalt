@@ -39,6 +39,14 @@ class CMakeExtension(Extension):
 
 
 class CMakeBuild(build_ext):
+    user_options = build_ext.user_options + [
+        ('target=', None, "specify the CMake target to build"),
+    ]
+
+    def initialize_options(self):
+        self.target = "build_python_ext"
+        super(CMakeBuild, self).initialize_options()
+
     def run(self):
         try:
             out = subprocess.check_output(["cmake", "--version"])
@@ -70,7 +78,8 @@ class CMakeBuild(build_ext):
         ]
 
         optimize = "OFF" if self.debug else "ON"
-        build_args = ["--config", optimize, "--target", "_basalt"]
+        cmake_args += ["-DBasalt_CXX_OPTIMIZE:BOOL=" + optimize]
+        build_args = ["--config", optimize, "--target", self.target]
 
         if platform.system() == "Windows":
             cmake_args += [
@@ -82,7 +91,6 @@ class CMakeBuild(build_ext):
                 cmake_args += ["-A", "x64"]
             build_args += ["--", "/m"]
         else:
-            cmake_args += ["-DBasalt_CXX_OPTIMIZE:BOOL=" + optimize]
             build_args += ["--", "-j{}".format(max(1, os.cpu_count() - 1))]
 
         env = os.environ.copy()
@@ -118,13 +126,14 @@ class BasaltTest(test):
     """Custom disutils command that acts like as a replacement
     for the "test" command.
 
-    It first executes the standard "test" command, and then run
-    the "doctest" to also validate code snippets in the sphinx
+    It first executes the CMake test target, then the standard Python "test" command,
+    and finally run the "doctest" command to also validate code snippets in the sphinx
     documentation.
     """
 
     def run(self):
         super().run()
+        self.run_command("test_ext")
         subprocess.check_call([sys.executable, __file__, "doctest"])
 
 
@@ -166,6 +175,7 @@ setup(
     ext_modules=[CMakeExtension("basalt")],
     cmdclass=lazy_dict(
         build_ext=CMakeBuild,
+        test_ext=CMakeBuild,
         install=BasaltInstall,
         test=BasaltTest,
         install_doc=get_sphinx_command,  # build and copy sphinx documentation in ./basalt/doc
