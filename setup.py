@@ -140,9 +140,9 @@ class BasaltTest(test):
 install_requirements = [
     "cached-property>=1.5.1",
     "docopt>=0.6.2",
-    "h5py>=2.7.1",
+    "h5py>=2.6.0",
     "humanize>=0.5.1",
-    "numpy>=1.13",
+    "numpy>=1.11",
     "progress>=1.4",
 ]
 
