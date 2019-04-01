@@ -4,6 +4,8 @@ import tempfile
 import shutil
 import unittest
 
+import numpy as np
+
 from basalt.schema import edge, MetaGraph, vertex
 
 
@@ -45,6 +47,13 @@ class TestMetaGraph(unittest.TestCase):
         alice = g.persons.add(0, "Alice")
 
         alice.type, alice.id, repr(alice.data)
+        self.assertEqual(alice.type, Vertex.PERSON)
+        self.assertEqual(alice.id, 0)
+
+        alice2 = g.persons[np.uint64(0)]
+        self.assertEqual(alice.id, alice2.id)
+        self.assertEqual(alice.type, alice2.type)
+        self.assertEqual(alice.data, alice2.data)
 
         cpp = g.skills.add(42, "C++")
 
