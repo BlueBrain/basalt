@@ -1,0 +1,22 @@
+#!/bin/sh -e
+
+if [ "x${VALGRIND}" != x ] ;then
+  cd ${TRAVIS_BUILD_DIR}
+  mkdir -p build && cd build
+  cmake .. \
+    --warn-uninitialized \
+    -DBasalt_STATIC_ANALYSIS:BOOL=ON \
+    -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
+    -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
+    -DCMAKE_CXX_STANDARD=$CPP
+  make VERBOSE=1 -j2
+  ctest -VV -j2 --output-on-failure ${VALGRIND}
+else
+  cd ${TRAVIS_BUILD_DIR}
+  python3 setup.py sdist
+  cd dist
+  tarball=`echo *.tar.gz`
+  tar zxf ${tarball}
+  cd ${tarball%.tar.gz}
+  python3 setup.py test
+fi
