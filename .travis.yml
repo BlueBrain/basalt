@@ -3,16 +3,27 @@
 # - Paul Fultz II's FIT: https://github.com/pfultz2/Fit
 # - Eric Niebler's range-v3: https://github.com/ericniebler/range-v3
 # - Gabi Melman spdlog: https://github.com/gabime/spdlog
-sudo: required
+sudo: false
 language: cpp
 
 addons: &gcc7
   apt:
     packages:
+    - doxygen
     - g++-7
     - libhdf5-dev
     - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-babel
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pygments
+    - python3-pyparsing
     - python3-setuptools
+    - python3-wheel
     - valgrind
     sources:
     - ubuntu-toolchain-r-test
@@ -21,9 +32,19 @@ addons: &clang6
   apt:
     packages:
     - clang-6.0
+    - doxygen
     - libhdf5-dev
     - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pygments
+    - python3-pyparsing
     - python3-setuptools
+    - python3-wheel
     sources:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-xenial-6.0
@@ -34,6 +55,7 @@ addons: &clang7
     - clang-7
     - libhdf5-dev
     - librocksdb-dev
+    - python3-numpy
     - python3-setuptools
     sources:
       - ubuntu-toolchain-r-test
@@ -43,9 +65,19 @@ addons: &clang8
   apt:
     packages:
     - clang-8
+    - doxygen
     - libhdf5-dev
     - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pygments
+    - python3-pyparsing
     - python3-setuptools
+    - python3-wheel
     sources:
     - ubuntu-toolchain-r-test
     - llvm-toolchain-xenial-8
@@ -55,7 +87,7 @@ matrix:
     - os: osx
   include:
       # Test gcc-7: C++11
-    - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 VALGRIND="-T memcheck"
+    - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       dist: xenial
       addons: *gcc7
@@ -67,7 +99,7 @@ matrix:
       addons: *clang6
 
       # Test clang-7: C++11
-    - env: CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
+    - env: CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 VALGRIND="-T memcheck"
       os: linux
       dist: xenial
       addons: *clang7
@@ -86,6 +118,7 @@ matrix:
           packages:
           - hdf5
           - llvm
+          - numpy
           - rocksdb
 
 before_script:
@@ -98,24 +131,7 @@ before_script:
   - cmake --version
 
 script:
-  - cd ${TRAVIS_BUILD_DIR}
-  - mkdir -p build && cd build
-  - |
-    cmake .. \
-      --warn-uninitialized \
-      -DUSE_CLANG_TIDY:BOOL=ON \
-      -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
-      -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
-      -DCMAKE_CXX_STANDARD=$CPP \
-  - make VERBOSE=1 -j2
-  - ctest -VV -j2 --output-on-failure ${VALGRIND}
-  - cd ${TRAVIS_BUILD_DIR}
-  - python3 setup.py sdist
-  - cd dist
-  - tarball=`echo *.tar.gz`
-  - tar zxf ${tarball}
-  - cd ${tarball%.tar.gz}
-  - python3 setup.py test
+  - dev/travis-build
 
 notifications:
   email: false

@@ -1,13 +1,18 @@
 import functools
 import os.path as osp
+from packaging import version
 import shutil
 import tempfile
 import unittest
 from contextlib import contextmanager
 
+import h5py
 import numpy as np
 
 import basalt.ngv as ngv
+
+
+H5PY_HAS_FLOAT16 = version.parse(h5py.__version__) >= version.parse("2.8")
 
 
 class TestH5Importer(unittest.TestCase):
@@ -32,6 +37,7 @@ class TestH5Importer(unittest.TestCase):
             stats = ngv.import_neuroglial(file, path, create_vertices=True)
             self.assertEqual(stats["dataset"], {"astrocytes": 4, "neurons": 20})
 
+    @unittest.skipIf(not H5PY_HAS_FLOAT16, "This test requires h5py 2.8 or higher")
     def test_import_synaptic(self):
         with self.tempdir() as path:
             file = self.h5_file("synaptic_connectivity")
