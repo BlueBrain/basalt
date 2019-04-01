@@ -234,7 +234,7 @@ void register_graph_vertices(py::module& m) {
                          .raise_on_error();
                  }
              },
-             "types"_a, "ids"_a, "payloads"_a = py::none(), "commit"_a = false, docstring::add_bulk)
+             "types"_a, "ids"_a, "payloads"_a = py::list(), "commit"_a = false, docstring::add_bulk)
 
         .def("get",
              [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) -> py::object {
