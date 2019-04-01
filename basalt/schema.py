@@ -2,8 +2,8 @@ import collections
 import functools
 import sys
 
-
 from cached_property import cached_property
+import numpy as np
 from six import string_types, with_metaclass
 
 from basalt import Graph
@@ -388,7 +388,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         class Vertex:
             def __init__(self, graph, id, data=None):
                 assert id is not None
-                assert isinstance(id, int)
+                assert isinstance(id, (np.integer, int))
                 self._graph = graph
                 self._id = id
                 self._data = data
