@@ -85,4 +85,6 @@ if(NOT Basalt_BUILD_PYTHON_PACKAGE)
   add_subdirectory(tests/unit)
 endif()
 
+add_custom_target(build_python_ext DEPENDS _basalt unit-tests)
+
 bob_end_package()
