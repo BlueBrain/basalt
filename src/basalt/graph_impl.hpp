@@ -63,7 +63,7 @@ class GraphImpl {
     Status vertices_count(std::size_t& count) const;
     Status vertices_count(vertex_t type, std::size_t& count) const;
     Status vertices_get(const basalt::vertex_uid_t& vertex, std::string* value);
-    std::shared_ptr<VertexIteratorImpl> VertexIterator(std::size_t from) const;
+    std::shared_ptr<VertexIteratorImpl> vertex_iterator(std::size_t from) const;
     Status vertices_clear(bool commit) __attribute__((warn_unused_result));
 
     Status edges_insert(const vertex_uid_t& vertex1,

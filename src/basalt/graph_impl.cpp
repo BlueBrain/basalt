@@ -288,8 +288,8 @@ Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
     return to_status(iter->status());
 }
 
-std::shared_ptr<VertexIteratorImpl> GraphImpl::VertexIterator(std::size_t from) const {
-    logger_get()->debug("VertexIterator(from={})", from);
+std::shared_ptr<VertexIteratorImpl> GraphImpl::vertex_iterator(std::size_t from) const {
+    logger_get()->debug("vertex_iterator(from={})", from);
     return std::make_shared<VertexIteratorImpl>(db_get(), vertices_column_.get(), "N", from);
 }
 
