@@ -42,7 +42,7 @@ static const char* vertices_class = R"(
 )";
 
 static const char* discard = R"(
-    Remove a given vertex if present
+    Remove the given vertex if present
 
     Args:
         type(int): vertex type
