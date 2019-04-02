@@ -54,6 +54,16 @@ addons: &clang7
     - clang-7
     - libhdf5-dev
     - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pygments
+    - python3-pyparsing
+    - python3-setuptools
+    - python3-wheel
     - valgrind
     sources:
       - ubuntu-toolchain-r-test
