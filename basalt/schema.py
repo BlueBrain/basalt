@@ -198,7 +198,7 @@ directive = DirectiveMeta.directive
 
 
 @directive(dicts="vertex_types")
-def vertex(name, type, serialization=None, plural=None):
+def vertex(name, type, serialization=None, plural=None, default_payload=True):
     """Declare a vertex type
 
     Args:
@@ -213,28 +213,29 @@ def vertex(name, type, serialization=None, plural=None):
               the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
 
         plural(string): overwrite default plural (name + 's')
-
+        default_payload(bool): whether new vertex has an empty payload (default: True)
     """
 
     def _register(metagraph):
-        metagraph.vertex_types[name] = (type, serialization, plural)
+        metagraph.vertex_types[name] = (type, serialization, plural, default_payload)
 
     return _register
 
 
 @directive(dicts="edges_types")
-def edge(lhs, rhs, serialization=None):
+def edge(lhs, rhs, serialization=None, default_payload=True):
     """Directive to declare an edge between 2 type of vertices
 
     Args:
         lhs(enum value): vertex type at one end of the edge
         rhs(enum value): vertex type at the other end of the edge
         serialization: optional serialization method. see :func:`vertex`
+        default_payload(bool): whether new edge has an empty payload (default: True)
     """
 
     def _register(metagraph):
-        metagraph.edges_types.setdefault(lhs, set()).add((rhs, serialization))
-        metagraph.edges_types.setdefault(rhs, set()).add((lhs, serialization))
+        metagraph.edges_types.setdefault(lhs, set()).add((rhs, serialization, default_payload))
+        metagraph.edges_types.setdefault(rhs, set()).add((lhs, serialization, default_payload))
 
     return _register
 
@@ -253,6 +254,8 @@ class VerticesWrapper:
         self._vertex_cls = vertex_info.cls
 
     def add(self, id, data=None, **kwargs):
+        if data is None:
+            data = self._vertex_cls.default_payload()
         if data is not None:
             data = self._vertex_cls.serialize(data)
             self.g.vertices.add((self.type, id), data, **kwargs)
@@ -327,7 +330,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                 type,
                 (e[0] for e in cls.edges_types.get(type, [])),
             )
-            for name, (type, _, plural) in cls.vertex_types.items()
+            for name, (type, _, plural, _) in cls.vertex_types.items()
         }
 
         for info in cls._vertices.values():
@@ -370,11 +373,11 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
         """
         eax = dict()
-        for type, method, _ in cls.vertex_types.values():
-            eax[type] = serialization_method(method)
+        for type, method, _, default_payload in cls.vertex_types.values():
+            eax[type] = serialization_method(method, default_payload)
         for lhs, others in cls.edges_types.items():
-            for rhs, method in others:
-                eax[(lhs, rhs)] = serialization_method(method)
+            for rhs, method, default_payload in others:
+                eax[(lhs, rhs)] = serialization_method(method, default_payload)
         return eax
 
     @classmethod
@@ -426,6 +429,10 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             def deserialize(vcls, data):
                 return cls._data_serializers[info.type].deserialize(data)
 
+            @classmethod
+            def default_payload(vcls):
+                return cls._data_serializers[info.type].default_payload()
+
             def add(self, vertex, *args, **kwargs):
                 """Connect a vertex to this one
 
@@ -452,6 +459,8 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                     yield cls._vertices[type].cls(self._graph, vertex_id[1])
 
             def _add(self, type, id, data=None, **kwargs):
+                if data is None:
+                    data = cls._data_serializers[(self.type, type)].default_payload()
                 if data is not None:
                     data = cls._data_serializers[(self.type, type)].serialize(data)
                     self._graph.edges.add(
