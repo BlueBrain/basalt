@@ -13,10 +13,15 @@ class PickleSerialization:
     def deserialize(cls, obj):
         return pickle.loads(np.ndarray.tostring(obj))
 
+    @classmethod
+    def default_payload(cls):
+        return None
+
 
 class BasaltPayloadSerialization:
-    def __init__(self, payload_cls):
+    def __init__(self, payload_cls, default_payload):
         self.payload_cls = payload_cls
+        self._default_payload = default_payload
 
     def serialize(self, data):
         return data.serialize()
@@ -25,6 +30,11 @@ class BasaltPayloadSerialization:
         obj = self.payload_cls()
         obj.deserialize(data)
         return obj
+
+    def default_payload(self):
+        if self._default_payload:
+            return self.payload_cls()
+        return None
 
 
 class NoneSerialization:
@@ -36,12 +46,16 @@ class NoneSerialization:
     def deserialize(cls, data):
         return data
 
+    @classmethod
+    def default_payload(cls):
+        return None
 
-def serialization_method(name):
+
+def serialization_method(name, default_payload):
     if name == "pickle":
         return PickleSerialization
     elif getattr(name, "__module__", None) == "basalt._basalt.ngv":
-        return BasaltPayloadSerialization(name)
+        return BasaltPayloadSerialization(name, default_payload)
     elif name is None:
         return NoneSerialization
     else:
