@@ -11,12 +11,12 @@ in a production environment.
 
 # Usage on BlueBrain 5
 
-Basalt is currently released as a Nix module on BB5 supercomputer:
+Basalt is currently released as module on BB5 supercomputer:
 
 ```bash
 $ module purge
 $ . /gpfs/bbp.cscs.ch/apps/hpc/jenkins/config/modules.sh
-$ module load py-basalt/0.2.2/python3
+$ module load py-basalt
 $ python3
 Python 3.6.3 (default, Oct  3 2017, 07:47:49)
 [GCC 6.4.0] on linux
@@ -36,20 +36,22 @@ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 
 * [CMake](https://cmake.org) build system, version 3.5.1 or higher.
 * [RocksDB](https://rocksdb.org/), a persistent key-value store,
-  version version 4.1.1 or higher.
-* [Python 3](https://python.org/)
+  version 4.1.1 or higher.
+* [Python 3](https://python.org/), version 3.5 or higher.
 
 ## Getting the code
 
-This repository grabs few third-party libraries as *git submodules*.
+This repository grabs a few third-party libraries as *git modules*.
 To clone them when you clone basalt, use `git clone --recursive` option.
 
-If you have already cloned basalt, you can get the submodules with command:
+If you have already cloned basalt, you can get the submodules with the command:
 `git submodule update --recursive --init`
 
-## C++ Library
+## Building the library 101
 
-To build and run tests:
+### C++ Library only
+
+To build the Python 3 basalt package and run the tests:
 ```sh
 cd /path/to/basalt
 mkdir build
@@ -58,41 +60,86 @@ cmake ..
 CTEST_OUTPUT_ON_FAILURE=1 make all test
 ```
 
-To install the library
+To install the library:
 ```sh
 pushd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr/local .
 make all install
 ```
 
-## Python 3 bindings
+### Python 3 bindings
 
-To build and run tests
+To build and run the tests:
 
 ```sh
 cd /path/to/basalt
-python setup.py test
+python3 setup.py test
 ```
 
-To install:
-* with _pip_: `pip install -U .`
-* with _distutils_: `python setup.py install`
-* to create a binary tarballs:
-  * most simple: `python setup.py bdist`
-  * [wheel](https://www.python.org/dev/peps/pep-0427/): `pip install wheels; python setup.py bdist_wheel`
-  * relocatable archive: `python setup.py bdist_dumb --relative`
+To install the package:
+* with _pip_: `pip3 install -U .`
+* with _distutils_: `python3 setup.py install`
+* to create binary tarballs:
+  * most simple: `python3 setup.py bdist`
+  * [wheel](https://www.python.org/dev/peps/pep-0427/): `pip3 install wheels; python3 setup.py bdist_wheel`
+  * relocatable archive: `python3 setup.py bdist_dumb --relative`
+
+## CMake variables and targets
+
+Main CMake variables:
+
+* `Basalt_FORMATTING:BOOL`: provide the build target `clang-format` to check C++ code formatting
+* `Basalt_STATIC_ANALYSIS:BOOL`: provide the build target `clang-tidy` to perform static analysis of the C++ code
+* `Basalt_ARCH`: value given to the `-m` compiler option. "native" for instance
+* `Basalt_PRECOMMIT:BOOL`: Enable automatic checks before git commits
+* `Basalt_CXX_OPTIMIZE:BOOL`: Compile C++ with optimization
+* `Basalt_CXX_SYMBOLS:BOOL`: Compile C++ with debug symbols
+* `Basalt_CXX_WARNINGS:BOOL=ON`: Compile C++ with warnings
+
+For a more detailed list, please refer to file `CMakeCache.txt` in CMake build directory.
+
+CMake targets:
+
+* `basalt`: build the pure C++ library (without Python bindings)
+* `_basalt`: build the C++ library with Python bindings
+* `unit-tests`: build a C++ executable testing the C++ pure library
+* `all`: build the 3 targets above
+* `test`: execute the tests. It is recommended to execute the command `ctest --output-on-failure -VV` instead
+* `install`: install the pure C++ library and the CMake configuration required to easily use basalt
+  in another CMake project
+
+## Python setuptools commands
+
+Here are the main Python  setuptools commands available.
+
+* `build`: build native library
+* `test`: build and test the package. It also executes the C++ unit-tests as well as the code snippets in the Sphinx documentation.
+* `install`: install the Python package
+* `doctest`: execute the code snippets in the Sphinx documentation
+* `build_sphinx`: build the Sphinx documentation
+
+For instance: `python3 setup.py build_sphinx`
 
 # Files Layout
 
-* `basalt/` directory: Python code of the package
-* `include/` directory: public headers of the library
-* `src/basalt/` directory: source code of the library
-* `tests/unit/` directory: C++ unit-tests using
-  [Catch2](https://github.com/catchorg/Catch2) library
-* `tests/py/` directory: unit-tests of the Python package
-* `cmake/` directory: Additional CMake scripts
-* `dev/` directory: development utilities
-* `docs` directory: source code of Sphinx documentation
+```
+├── basalt ................... python code of the package
+│   ├── ngv .................. specific API for BBP NGV team
+├── cmake
+│   └── hpc-coding-conventions git module for C++ code guidelines
+├── dev ...................... development related scripts
+├── docs ..................... sphinx documentation source code
+├── include
+│   └── basalt ............... public headers of the C++ library
+├── README.md ................ that's me!
+├── src
+│   ├── basalt ............... C++ library implementation
+│   └── third_party .......... C++ libraries (mostly as git modules)
+└── tests
+    ├── benchmarks ........... scripts to execute before creating a git tag
+    ├── py ................... python unit-tests
+    └── unit ................. C++ unit-tests using Catch2
+```
 
 # Embedded third-parties
 
