@@ -134,7 +134,8 @@ class BasaltTest(test):
     def run(self):
         super().run()
         self.run_command("test_ext")
-        subprocess.check_call([sys.executable, __file__, "doctest"])
+        if platform.system() != 'Darwin':
+            subprocess.check_call([sys.executable, __file__, "doctest"])
 
 
 install_requirements = [
