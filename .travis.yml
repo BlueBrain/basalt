@@ -24,7 +24,6 @@ addons: &gcc7
     - python3-pyparsing
     - python3-setuptools
     - python3-wheel
-    - valgrind
     sources:
     - ubuntu-toolchain-r-test
 
@@ -55,8 +54,7 @@ addons: &clang7
     - clang-7
     - libhdf5-dev
     - librocksdb-dev
-    - python3-numpy
-    - python3-setuptools
+    - valgrind
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-xenial-7
