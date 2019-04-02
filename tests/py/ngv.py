@@ -146,6 +146,14 @@ class TestNGVGraph(unittest.TestCase):
         self.assertFalse(any(a1.discard_synapse(3).synapses))
 
     @ngv_graph
+    def test_vertex_update(self, g):
+        segment = g.segments.add(1)
+        segment.data.type = 42
+        segment.update()
+
+        self.assertEqual(g.segments.get(1).type, 42)
+
+    @ngv_graph
     def test_edges_payload_api(self, g):
         segment = g.segments.add(1)
 
