@@ -264,33 +264,64 @@ class VerticesWrapper:
         return self._vertex_cls(self.g, id)
 
     def get(self, id):
+        """get deserialized payload of to the specified vertex
+
+        Args:
+            id(int): vertex identifier
+
+        Returns:
+            Deserialize object if any, `None` otherwise
+        """
         data = self.g.vertices.get((self.type, id))
         if data is not None:
             data = self._vertex_cls.deserialize(data)
         return data
 
     def __getitem__(self, id):
+        """get wrapper object representing the specified vertex
+
+        Args:
+            id(int): vertex identifier
+        """
         data = self.g.vertices[(self.type, id)]
         return self._vertex_cls(self.g, id, data)
 
     def discard(self, id):
+        """Remove the given vertex if present
+
+        Args:
+            id(int): vertex identifier
+        """
         return self.g.vertices.discard((self.type, id))
 
-    def remove(self, id):
-        return self.g.vertices.remove((self.type, id))
-
     def __len__(self):
+        """Count number of vertices
+
+        Returns:
+             Number of vertices of this type
+        """
         return self.g.vertices.count(self.type)
 
     def __contains__(self, id):
+        """Check presence of a given vertex
+
+        Args:
+            id(int): vertex identifier
+
+        Returns:
+            `True` if vertex is present, `False` otherwise
+        """
         return (self.type, id) in self.g.vertices
 
     def __iter__(self):
+        """Get iterator over vertices of this type
+        """
         for vertex in self.g.vertices:
             if vertex[0] == self.type:
                 yield vertex
 
     def clear(self):
+        """Remove all vertices of this type"""
         raise NotImplementedError
 
 
@@ -433,10 +464,27 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
             @classmethod
             def serialize(vcls, data):
+                """Serialize given object
+
+                Args:
+                    data: object to serialize
+
+                Returns:
+                    `numpy.ndarray(shape=(N,), dtype=numpy.byte)` as expected by low-level
+                    basalt graph API.
+                """
                 return cls._data_serializers[info.type].serialize(data)
 
             @classmethod
             def deserialize(vcls, data):
+                """Deserialize given payload
+
+                Args:
+                    data(`numpy.ndarray(shape=(N,), dtype=numpy.byte)`): array to deserialize
+
+                Returns:
+                    deserialized object
+                """
                 return cls._data_serializers[info.type].deserialize(data)
 
             @classmethod
