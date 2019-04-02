@@ -421,6 +421,16 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                         self._data = self.deserialize(self._data)
                 return self._data
 
+            def update(self, **kwargs):
+                """submit payload change
+
+                Args:
+                    kwargs: keyword arguments given to the graph instance beneath
+                """
+                self._graph.vertices.add(
+                    (self.type.value, self.id), data=self.serialize(self.data), **kwargs
+                )
+
             @classmethod
             def serialize(vcls, data):
                 return cls._data_serializers[info.type].serialize(data)
