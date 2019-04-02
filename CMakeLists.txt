@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5.1)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # get version from Python package
-find_package(PythonInterp 3.6 REQUIRED)
+find_package(PythonInterp 3.5 REQUIRED)
 execute_process(COMMAND ${PYTHON_EXECUTABLE} setup.py --version
                 WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
                 RESULT_VARIABLE PY_VERSION_FAILED
