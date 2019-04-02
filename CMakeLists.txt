@@ -30,6 +30,11 @@ string(REGEX
 
 project(Basalt VERSION ${PY_PKG_VERSION} LANGUAGES CXX)
 
+if(NOT IS_DIRECTORY ${CMAKE_SOURCE_DIR}/cmake/hpc-coding-conventions)
+  message(FATAL_ERROR "It seems the git modules are missing.\n"
+                      "You can retrieve them by running the following command:\n"
+                      "    git submodule update --recursive --init")
+endif()
 add_subdirectory(cmake/hpc-coding-conventions/cpp)
 
 include(cmake/DartConfig.cmake)
