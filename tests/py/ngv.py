@@ -132,7 +132,7 @@ class TestNGVGraph(unittest.TestCase):
         a1.add(n2)
 
         for neuron in a1.neurons:
-            self.assertEqual(neuron.data, None)
+            self.assertEqual(neuron.data, ngv.Neuron())
             self.assertEqual(neuron.id, 2)
 
         g.synapses.add(3)
@@ -140,7 +140,7 @@ class TestNGVGraph(unittest.TestCase):
         a1.add_synapse(3)
 
         for astrocyte in g.synapses[3].astrocytes:
-            self.assertEqual(astrocyte.data, None)
+            self.assertEqual(astrocyte.data, ngv.Astrocyte())
             self.assertEqual(astrocyte.id, 1)
 
         self.assertFalse(any(a1.discard_synapse(3).synapses))
@@ -148,11 +148,16 @@ class TestNGVGraph(unittest.TestCase):
     @ngv_graph
     def test_edges_payload_api(self, g):
         segment = g.segments.add(1)
+
+        # connect a segment to an astrocyte, with an implicit payload
+        astrocyte = g.astrocytes.add(1).add(segment)
+        self.assertEqual(astrocyte[segment], ngv.EdgeAstrocyteSegment())
+
+        # attach a payload on an edge between a segment and an astrocyte
         payload = ngv.EdgeAstrocyteSegment(
             astrocyte=ngv.Point(42.0, 43.0, 44.0),
             vasculature=ngv.Point(45.0, 46.0, 47.0),
         )
-        # attach a payload on an edge between a segment and an astrocyte
-        astrocyte = g.astrocytes.add(1).add(segment, payload)
+        astrocyte.add(segment, payload)
 
         self.assertEqual(astrocyte[segment], payload)
