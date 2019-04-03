@@ -11,6 +11,5 @@ class Version(unittest.TestCase):
         self.assertIsTupleVersion(basalt.__version__)
 
     def assertIsTupleVersion(self, v):
-        print(v)
         self.assertIsInstance(v, str)
-        self.assertEqual(v.count('.'), 2)
+        self.assertGreaterEqual(v.count('.'), 2)
