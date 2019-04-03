@@ -48,8 +48,8 @@ static const char* edges_class = R"(
     >>> (v2, v1) in graph.edges
     True
 
-    It is possible to iterator over all edges.
-    Every edge appears in both orders.
+    It is possible to iterate over the edges of the graph.
+    Note that every edge appears in both direction:
 
     >>> for edge in sorted(graph.edges):
     ...   print(edge)
