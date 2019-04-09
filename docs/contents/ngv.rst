@@ -7,14 +7,14 @@ Graph class
 Basalt Python package comes with a definition of a graph to help the placement
 of astrocytes. See :class:`basalt.ngv.NGVGraph`
 
-It implements the following graph typology:
+It implements the following graph topology:
 
 .. image:: /_static/ngv-graph.png
 
 Payloads
 ========
 
-Efficient payloads classes have been implemented in C++ and exposed in Python bindings:
+Efficient payloads classes have been implemented in C++ and exposed in Python:
 
 * :class:`basalt.ngv.Astrocyte`
 * :class:`basalt.ngv.Neuron`
