@@ -4,5 +4,15 @@ recursive-include cmake *
 recursive-include docs/_static *
 recursive-include docs/contents *
 recursive-include include *
-recursive-include src *
+recursive-include src/basalt *
+recursive-include src/third_party/catch2 *
+recursive-include src/third_party/cereal/include *
+recursive-include src/third_party/fmt/include *
+recursive-include src/third_party/gsl-lite *
+recursive-include src/third_party/pybind11 *
+prune src/third_party/pybind11/docs
+prune src/third_party/pybind11/tests
+prune src/third_party/pybind11/CMakeFiles
+recursive-include src/third_party/spdlog/include *
 recursive-include tests *
+global-exclude *.py[co] .DS_Store __pycache__ .git
