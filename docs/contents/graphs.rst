@@ -7,19 +7,20 @@ Definition
 Basalt allows manipulation of undirected graphs. A graph is made of vertices and edges.
 
 A vertex is made of:
-    * a type (``integer``)
-    * an identifier (``integer``)
+    * an Unique IDentifier made of:
+        * a type (``integer``)
+        * an identifier (``integer``)
     * an optional payload
 
 An edge is made of:
-    * 2 vertices identifiers
+    * 2 vertices unique identifiers
     * an optional payload
 
 A payload can be attached to vertices and edges
-    Internally it is stored as
-    a ``numpy.ndarray(dtype=numpy.byte)``, but multiple serialization methods
-    to also support pickle serialization as well as payloads classes coming
-    from Python bindings of the basalt C++ library.
+    Internally a payload is stored as
+    a ``numpy.ndarray(dtype=numpy.byte)``, but it is possible to
+    pass any object that supports pickl serialization as well
+    payloads classes in ``basalt.ngv`` package.
 
 
 Basalt Python package provides 2 graph API to use undirected graphs:

@@ -44,14 +44,15 @@ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 This repository grabs a few third-party libraries as *git modules*.
 To clone them when you clone basalt, use `git clone --recursive` option.
 
-If you have already cloned basalt, you can get the submodules with the command:
+If you have already cloned basalt, you can get the git submodules with
+the command:
 `git submodule update --recursive --init`
 
 ## Building the library 101
 
 ### C++ Library only
 
-To build the Python 3 basalt package and run the tests:
+To build the basalt C++ shared library and run the tests:
 ```sh
 cd /path/to/basalt
 mkdir build
@@ -158,7 +159,7 @@ in `src/third_party` directory.
 
 Contributions are welcome, via GitHub pull-requests and bug tracker.
 
-## pull-requests
+## Pull Requests
 
 Enable CMake environment variables `Basalt_FORMATTING`
 and `Basalt_PRECOMMIT` to ensure that your change complies
