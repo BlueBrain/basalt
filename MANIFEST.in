@@ -1,8 +1,7 @@
 include CMakeLists.txt
-include docs/conf.py docs/Makefile docs/*.rst
+include doc/Makefile
 recursive-include cmake *
-recursive-include docs/_static *
-recursive-include docs/contents *
+recursive-include doc/source *
 recursive-include include *
 recursive-include src/basalt *
 recursive-include src/third_party/catch2 *
