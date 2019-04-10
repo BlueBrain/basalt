@@ -1,5 +1,6 @@
 import inspect
 import os
+import os.path as osp
 import platform
 import re
 import subprocess
@@ -35,7 +36,7 @@ def get_sphinx_command():
 class CMakeExtension(Extension):
     def __init__(self, name, sourcedir=""):
         Extension.__init__(self, name, sources=[])
-        self.sourcedir = os.path.abspath(sourcedir)
+        self.sourcedir = osp.abspath(sourcedir)
 
 
 class CMakeBuild(build_ext):
@@ -67,18 +68,19 @@ class CMakeBuild(build_ext):
             self.build_extension(ext)
 
     def build_extension(self, ext):
-        extdir = os.path.abspath(os.path.dirname(self.get_ext_fullpath(ext.name)))
-        extdir = os.path.join(extdir, ext.name)
+        extdir = osp.abspath(osp.dirname(self.get_ext_fullpath(ext.name)))
+        print("CMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir)
+        cmake_project = ext.name[1:].capitalize()
         cmake_args = [
             "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir,
             "-DPYTHON_EXECUTABLE=" + sys.executable,
-            "-DBasalt_USE_pybind11:BOOL=True",
-            "-DBasalt_ARCH=native",
+            "-D{}_USE_pybind11:BOOL=True".format(cmake_project),
+            "-D{}_ARCH=native".format(cmake_project),
             "-DCMAKE_BUILD_TYPE=",
         ]
 
         optimize = "OFF" if self.debug else "ON"
-        cmake_args += ["-DBasalt_CXX_OPTIMIZE:BOOL=" + optimize]
+        cmake_args += ["-D" + cmake_project + "_CXX_OPTIMIZE:BOOL=" + optimize]
         build_args = ["--config", optimize, "--target", self.target]
 
         if platform.system() == "Windows":
@@ -97,7 +99,7 @@ class CMakeBuild(build_ext):
         env["CXXFLAGS"] = '{} -DVERSION_INFO=\\"{}\\"'.format(
             env.get("CXXFLAGS", ""), self.distribution.get_version()
         )
-        if not os.path.exists(self.build_temp):
+        if not osp.exists(self.build_temp):
             os.makedirs(self.build_temp)
         subprocess.check_call(
             ["cmake", ext.sourcedir] + cmake_args, cwd=self.build_temp, env=env
@@ -107,7 +109,7 @@ class CMakeBuild(build_ext):
         )
 
 
-class BasaltInstall(install):
+class PkgInstall(install):
     """Custom distutils command that acts like as a replacement
     for the "install" command.
 
@@ -122,7 +124,7 @@ class BasaltInstall(install):
         super().run()
 
 
-class BasaltTest(test):
+class PkgTest(test):
     """Custom disutils command that acts like as a replacement
     for the "test" command.
 
@@ -136,6 +138,10 @@ class BasaltTest(test):
         self.run_command("test_ext")
         if platform.system() != 'Darwin':
             subprocess.check_call([sys.executable, __file__, "doctest"])
+
+    def reinitialize_command(self, cmd, **kwargs):
+        # disable inplace build of extension
+        pass
 
 
 install_requirements = [
@@ -163,11 +169,6 @@ setup(
         "Intended Audience :: Developers",
         "Programming Language :: C++",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.0",
-        "Programming Language :: Python :: 3.1",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -178,12 +179,12 @@ setup(
     description="Graph DB Storage",
     long_description="",
     packages=["basalt", "basalt.ngv"],
-    ext_modules=[CMakeExtension("basalt")],
+    ext_modules=[CMakeExtension("_basalt")],
     cmdclass=lazy_dict(
         build_ext=CMakeBuild,
         test_ext=CMakeBuild,
-        install=BasaltInstall,
-        test=BasaltTest,
+        install=PkgInstall,
+        test=PkgTest,
         install_doc=get_sphinx_command,  # build and copy sphinx documentation in ./basalt/doc
         doctest=get_sphinx_command,  # execute code snippets in documentation
     ),
