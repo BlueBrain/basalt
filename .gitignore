@@ -114,9 +114,9 @@ instance/
 .scrapy
 
 # Sphinx documentation
-docs/_build/
-docs/cpp_api/
-docs/doxyoutput/
+doc/source/_build/
+doc/source/cpp_api/
+doc/source/doxyoutput/
 
 # PyBuilder
 target/
@@ -172,4 +172,4 @@ dmypy.json
 # Pre-commit settings
 .pre-commit-config.yaml
 
-basalt/docs
+basalt/doc

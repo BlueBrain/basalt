@@ -23,7 +23,7 @@ def serve_doc(bind="", port=8000):
         bind(str): network interface to use (default all)
         port(int): network port to open
     """
-    doc_dir = osp.join(osp.dirname(__file__), "docs", "html")
+    doc_dir = osp.join(osp.dirname(__file__), "doc", "html")
     handler_class = functools.partial(
         http.server.SimpleHTTPRequestHandler
     )
