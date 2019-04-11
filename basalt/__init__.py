@@ -1,3 +1,4 @@
+# pylint: disable=no-name-in-module
 import http.server
 import functools
 import os
@@ -24,9 +25,7 @@ def serve_doc(bind="", port=8000):
         port(int): network port to open
     """
     doc_dir = osp.join(osp.dirname(__file__), "doc", "html")
-    handler_class = functools.partial(
-        http.server.SimpleHTTPRequestHandler
-    )
+    handler_class = functools.partial(http.server.SimpleHTTPRequestHandler)
     cwd = os.getcwd()
     try:
         os.chdir(doc_dir)

@@ -1,10 +1,13 @@
 """basalt-cli - CLI utility to deal with a basalt NGV graph
 
 Usage:
-  basalt-cli ngv import neuroglial [--max=<nb>] [--create-vertices] <h5-file> <basalt-path>
-  basalt-cli ngv import synaptic [--max=<nb>] [--create-vertices] <h5-file> <basalt-path>
-  basalt-cli ngv import gliovascular [--max=<nb>] [--create-vertices] <h5-connectivity> <h5-data> <basalt-path>
-  basalt-cli ngv import microdomain [--max=<nb>] [--create-vertices] <h5-data> <basalt-path>
+  basalt-cli ngv import neuroglial [--max=<nb>] [--create-vertices]
+             <h5-file> <basalt-path>
+  basalt-cli ngv import synaptic [--max=<nb>] [--create-vertices]
+             <h5-file> <basalt-path>
+  basalt-cli ngv import gliovascular [--max=<nb>] [--create-vertices]
+             <h5-connectivity> <h5-data> <basalt-path>
+  basalt-cli ngv import microdomain [--max=<nb>] [--create-vertices]
   basalt-cli doc [--bind=<ADDRESS>] [<port>]
   basalt-cli -h | --help
   basalt-cli --version

@@ -175,10 +175,10 @@ class TestGraph(unittest.TestCase):
     def test_node_bulk_insertion_no_payload(self):
         g = Graph(tempfile.mkdtemp())
         g.vertices.add(
-            np.full(42, fill_value=3, dtype=np.int32),
-            np.arange(42, dtype=np.uint64),
+            np.full(42, fill_value=3, dtype=np.int32), np.arange(42, dtype=np.uint64)
         )
         self.assertEqual(len(g.vertices), 42)
+
 
 class TestPayloadHelper(unittest.TestCase):
     def test_neuron(self):

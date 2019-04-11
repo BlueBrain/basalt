@@ -5,15 +5,19 @@ TRAVIS_BUILD_DIR="${TRAVIS_BUILD_DIR:-$SCRIPT_DIR/..}"
 
 if [ "x${VALGRIND}" != x ] ;then
   cd ${TRAVIS_BUILD_DIR}
-  mkdir -p build && cd build
+  rm -rf build-ci && mkdir -p build-ci && cd build-ci
   cmake .. \
     --warn-uninitialized \
+    -DBasalt_FORMATTING:BOOL=ON \
     -DBasalt_STATIC_ANALYSIS:BOOL=ON \
     -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
     -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
-    -DCMAKE_CXX_STANDARD=$CPP
+    -DCMAKE_CXX_STANDARD=${CPP:-11}
   make VERBOSE=1 -j2
-  ctest -VV -j2 --output-on-failure ${VALGRIND}
+  ctest -VV -j2 --output-on-failure ${CTEST_ACTION}
+  make check-clang-format
+  make check-cmake-format
+  make clang-tidy
 else
   cd ${TRAVIS_BUILD_DIR}
   python3 setup.py sdist

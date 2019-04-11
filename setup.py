@@ -41,7 +41,7 @@ class CMakeExtension(Extension):
 
 class CMakeBuild(build_ext):
     user_options = build_ext.user_options + [
-        ('target=', None, "specify the CMake target to build"),
+        ('target=', None, "specify the CMake target to build")
     ]
 
     def initialize_options(self):
@@ -152,12 +152,8 @@ install_requirements = [
     "numpy>=1.11",
     "progress>=1.4",
 ]
-doc_requirements = [
-    "exhale",
-    "m2r",
-    "sphinx-rtd-theme",
-    "sphinx<2",
-]
+
+doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
 
 setup(
     name="basalt",
