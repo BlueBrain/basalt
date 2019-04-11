@@ -8,16 +8,11 @@ Usage:
   basalt-cli ngv import gliovascular [--max=<nb>] [--create-vertices]
              <h5-connectivity> <h5-data> <basalt-path>
   basalt-cli ngv import microdomain [--max=<nb>] [--create-vertices]
-  basalt-cli doc [--bind=<ADDRESS>] [<port>]
   basalt-cli -h | --help
   basalt-cli --version
 
 Options
   --max=<nb>  Maximum number of items to import [default: -1].
-  -b --bind=<ADDRESS>   Specify alternate bind address [default: all interfaces]
-  port        Specify alternate port [default: 8000]
-  --no-browser Don't open the notebook in a browser after startup.
-
   -h --help   Show this screen.
   --version   Show version.
 
@@ -29,19 +24,12 @@ import sys
 
 from docopt import docopt
 
-from . import __version__, ngv, serve_doc
+from . import __version__, ngv
 
 
 def main(argv=None):
     args = docopt(__doc__, version="basalt " + __version__, argv=argv)
-    if args.get("doc"):
-        port = args.get("<port>") or 8000
-        port = int(port)
-        bind = args["--bind"]
-        if bind == "all interfaces":
-            bind = ""
-        serve_doc(bind, port)
-    elif args.get("ngv"):
+    if args.get("ngv"):
         if args.get("neuroglial"):
             if args.get("import"):
                 summary = ngv.import_neuroglial(

@@ -26,8 +26,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 '0.2.2'
 >>> basalt.__rocksdb_version__
 '5.17.2'
->>> basalt.serve_doc()
-Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 
 # Build and installation instructions
