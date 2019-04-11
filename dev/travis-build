@@ -1,4 +1,7 @@
-#!/bin/sh -e
+#!/bin/bash -e
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+TRAVIS_BUILD_DIR="${TRAVIS_BUILD_DIR:-$SCRIPT_DIR/..}"
 
 if [ "x${VALGRIND}" != x ] ;then
   cd ${TRAVIS_BUILD_DIR}

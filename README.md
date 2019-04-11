@@ -162,10 +162,16 @@ Contributions are welcome, via GitHub pull-requests and bug tracker.
 ## Pull Requests
 
 Enable CMake environment variables `Basalt_FORMATTING`
-and `Basalt_PRECOMMIT` to ensure that your change complies
+and `Basalt_PRECOMMIT` to ensure that your contribution complies
 with the coding conventions of this project.
 
 `cmake -DBasalt_FORMATTING:BOOL=ON -DBasalt_PRECOMMIT:BOOL=ON <path>`
+
+During the development phase, it is recommended to install basalt in
+editable mode with pip (see pip install `--editable` option).
+When your contribution is ready and tests pass, then you can
+execute the `dev/travis-build` script to foresee issues
+that may happen during the continuous integration process later on.
 
 Please make sure to execute `dev/check.sh` before submitting a patch in order to:
 * run static analysis of C++ code with
