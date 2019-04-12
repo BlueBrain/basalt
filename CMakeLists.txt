@@ -90,7 +90,12 @@ find_package(RocksDB 4.1.0 REQUIRED)
 
 find_package(GoogleBenchmark)
 if(GoogleBenchmark_FOUND)
-  include_directories(${GoogleBenchmark_INCLUDE_DIR})
+  include_directories(SYSTEM ${GoogleBenchmark_INCLUDE_DIR})
+endif()
+
+find_package(Boost)
+if(Boost_FOUND)
+  include_directories(SYSTEM ${Boost_INCLUDE_DIR})
 endif()
 
 set(basalt_include_directory ${PROJECT_SOURCE_DIR}/include)
@@ -119,6 +124,7 @@ add_subdirectory(src)
 if(NOT Basalt_BUILD_PYTHON_PACKAGE)
   add_subdirectory(tests/unit)
 endif()
+add_subdirectory(tests/benchmarks)
 
 add_custom_target(build_python_ext DEPENDS _basalt unit-tests)
 
