@@ -155,13 +155,15 @@ setup(
         build_ext=CMakeBuild,
         test_ext=CMakeBuild,
         test=PkgTest,
-        test_doc=get_sphinx_command,  # execute code snippets in documentation
+        test_doc=get_sphinx_command,
     ),
     package_data={"basalt": ["doc/html/**/*"]},
     zip_safe=False,
     use_scm_version=True,
+    python_requires=">=3.5",
     install_requires=install_requirements,
-    setup_requires=install_requirements + doc_requirements + ["setuptools_scm"],
+    setup_requires="setuptools_scm",
+    tests_require=doc_requirements,
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main
