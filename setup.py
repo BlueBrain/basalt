@@ -118,6 +118,10 @@ class PkgTest(test):
     new_commands = [('test_ext', lambda self: True), ('test_doc', lambda self: True)]
     sub_commands = test.sub_commands + new_commands
 
+    def run(self):
+        super().run()
+        self.run_command('test_ext')
+        self.run_command('test_doc')
 
 install_requirements = [
     "cached-property>=1.5.1",
@@ -162,8 +166,8 @@ setup(
     use_scm_version=True,
     python_requires=">=3.5",
     install_requires=install_requirements,
-    setup_requires="setuptools_scm",
-    tests_require=doc_requirements,
+    setup_requires=["setuptools_scm"],
+    tests_require=doc_requirements + doc_requirements,
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main

@@ -123,7 +123,7 @@ static const char* graph_commit = R"(
     Raises:
         RuntimeException: uppon error
 
-    >>> graph.vertices.add((VertexType.NEURON.value, 42))
+    >>> graph.vertices.add((1, 42))
     >>> graph.commit()
 )";
 

@@ -3,7 +3,7 @@
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 TRAVIS_BUILD_DIR="${TRAVIS_BUILD_DIR:-$SCRIPT_DIR/..}"
 
-if [ "x${VALGRIND}" != x ] ;then
+if [ "x${CPP_CHECK}" != x ] ;then
   cd ${TRAVIS_BUILD_DIR}
   rm -rf build-ci && mkdir -p build-ci && cd build-ci
   cmake .. \
