@@ -26,8 +26,6 @@ Type "help", "copyright", "credits" or "license" for more information.
 '0.2.2'
 >>> basalt.__rocksdb_version__
 '5.17.2'
->>> basalt.serve_doc()
-Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 ```
 
 # Build and installation instructions
@@ -161,25 +159,44 @@ Contributions are welcome, via GitHub pull-requests and bug tracker.
 
 ## Pull Requests
 
+### Development mode
+During the development phase, it is recommended to install basalt in
+editable mode with pip (see pip install `--editable` option).
+
+### Coding Conventions
+
 Enable CMake environment variables `Basalt_FORMATTING`
 and `Basalt_PRECOMMIT` to ensure that your contribution complies
 with the coding conventions of this project.
 
 `cmake -DBasalt_FORMATTING:BOOL=ON -DBasalt_PRECOMMIT:BOOL=ON <path>`
 
-During the development phase, it is recommended to install basalt in
-editable mode with pip (see pip install `--editable` option).
+Then to fix formatting of both C++ code and CMake files:
+```
+cd build-dir
+make clang-format cmake-format
+```
+
+### Wrap up
+
 When your contribution is ready and tests pass, then you can
-execute the `dev/travis-build` script to foresee issues
-that may happen during the continuous integration process later on.
+execute the `dev/travis-build` script to foresee issues in the
+Python package that may happen during the continuous integration
+process later on.
 
-Please make sure to execute `dev/check.sh` before submitting a patch in order to:
-* run static analysis of C++ code with
-  [clang-tidy](http://clang.llvm.org/extra/clang-tidy/)
-* run Python static analysis and code formatting with
-  [flake8](http://flake8.pycqa.org) and [black](https://github.com/ambv/black).
-  Also install [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear)
-  *flake8* plugin.
+#### C++ library checks
 
-Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
-with the *memcheck* CTest action: `ctest -VV --output-on-failure -T memcheck`
+Additionally, to perform memory checking over unit-tests with valgrind,
+C++ and CMake code formatting checks, as well as C++ static analysis
+check at once, execute the script as follow:
+`CHECK_NATIVE=yes dev/travis-build`
+
+To perform the checks manually, run the corresponding commands from
+cmake build directory:
+
+* memory check: `ctest -VV --output-on-failure -T memcheck`
+* C++ code formatting check: `make check-clang-format`
+  (`make clang-format` to fix it)
+* CMake code formatting check: `make check-cmake-format`
+  (`make cmake-format` to fix it)
+* C++ static analysis check: `make clang-tidy`

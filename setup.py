@@ -41,7 +41,7 @@ class CMakeExtension(Extension):
 
 class CMakeBuild(build_ext):
     user_options = build_ext.user_options + [
-        ('target=', None, "specify the CMake target to build"),
+        ('target=', None, "specify the CMake target to build")
     ]
 
     def initialize_options(self):
@@ -69,6 +69,7 @@ class CMakeBuild(build_ext):
 
     def build_extension(self, ext):
         extdir = osp.abspath(osp.dirname(self.get_ext_fullpath(ext.name)))
+        extdir = osp.join(extdir, 'basalt')
         print("CMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir)
         cmake_project = ext.name[1:].capitalize()
         cmake_args = [
@@ -109,40 +110,18 @@ class CMakeBuild(build_ext):
         )
 
 
-class PkgInstall(install):
-    """Custom distutils command that acts like as a replacement
-    for the "install" command.
-
-    It first execute the "install_doc" command before running the
-    default "install" command.
-    """
-
-    def run(self):
-        if not self.skip_build:
-            self.run_command("build")
-        self.run_command("install_doc")
-        super().run()
-
-
 class PkgTest(test):
     """Custom disutils command that acts like as a replacement
     for the "test" command.
-
-    It first executes the CMake test target, then the standard Python "test" command,
-    and finally run the "doctest" command to also validate code snippets in the sphinx
-    documentation.
     """
+
+    new_commands = [('test_ext', lambda self: True), ('test_doc', lambda self: True)]
+    sub_commands = test.sub_commands + new_commands
 
     def run(self):
         super().run()
-        self.run_command("test_ext")
-        if platform.system() != 'Darwin':
-            subprocess.check_call([sys.executable, __file__, "doctest"])
-
-    def reinitialize_command(self, cmd, **kwargs):
-        # disable inplace build of extension
-        pass
-
+        self.run_command('test_ext')
+        self.run_command('test_doc')
 
 install_requirements = [
     "cached-property>=1.5.1",
@@ -152,12 +131,8 @@ install_requirements = [
     "numpy>=1.11",
     "progress>=1.4",
 ]
-doc_requirements = [
-    "exhale",
-    "m2r",
-    "sphinx-rtd-theme",
-    "sphinx<2",
-]
+
+doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
 
 setup(
     name="basalt",
@@ -183,16 +158,16 @@ setup(
     cmdclass=lazy_dict(
         build_ext=CMakeBuild,
         test_ext=CMakeBuild,
-        install=PkgInstall,
         test=PkgTest,
-        install_doc=get_sphinx_command,  # build and copy sphinx documentation in ./basalt/doc
-        doctest=get_sphinx_command,  # execute code snippets in documentation
+        test_doc=get_sphinx_command,
     ),
-    package_data={"basalt": ["docs/html/**/*"]},
+    package_data={"basalt": ["doc/html/**/*"]},
     zip_safe=False,
     use_scm_version=True,
+    python_requires=">=3.5",
     install_requires=install_requirements,
-    setup_requires=install_requirements + doc_requirements + ["setuptools_scm"],
+    setup_requires=["setuptools_scm"],
+    tests_require=doc_requirements + doc_requirements,
     entry_points="""
         [console_scripts]
         basalt-cli = basalt.cli:main

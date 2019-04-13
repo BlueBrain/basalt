@@ -123,7 +123,7 @@ static const char* graph_commit = R"(
     Raises:
         RuntimeException: uppon error
 
-    >>> graph.vertices.add((VertexType.NEURON.value, 42))
+    >>> graph.vertices.add((1, 42))
     >>> graph.commit()
 )";
 
@@ -178,8 +178,7 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     py::class_<basalt::Graph>(m, "Graph", docstring::graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
-        .def_property_readonly("vertices", &basalt::Graph::vertices,
-                               docstring::graph_vertices)
+        .def_property_readonly("vertices", &basalt::Graph::vertices, docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
         .def("commit", [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)

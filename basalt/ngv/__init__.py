@@ -1,3 +1,5 @@
+# pylint: disable=no-name-in-module
+
 from .._basalt.ngv import (
     Astrocyte,
     Segment,
