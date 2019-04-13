@@ -206,11 +206,12 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
         type(enum): enum value
         serialization: it can take several values:
 
-            * ``"pickle"``: whenever an object will be attached to a vertex of this type,
-              the pickle module will be used to serialize/deserialize it.
+            * ``"pickle"``: whenever an object will be attached to a vertex
+              of this type, the pickle module will be used to serialize/deserialize it.
 
-            * ``None`` (default): payload specified when creating a vertex if passed as is to
-              the low level graph, that only accepts ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
+            * ``None`` (default): payload specified when creating a vertex if passed
+              as is to the low level graph, that only accepts
+              ``numpy.ndarray(shape=(N,), dtype=numpy.byte)``
 
         plural(string): overwrite default plural (name + 's')
         default_payload(bool): whether new vertex has an empty payload (default: True)
@@ -234,8 +235,12 @@ def edge(lhs, rhs, serialization=None, default_payload=True):
     """
 
     def _register(metagraph):
-        metagraph.edges_types.setdefault(lhs, set()).add((rhs, serialization, default_payload))
-        metagraph.edges_types.setdefault(rhs, set()).add((lhs, serialization, default_payload))
+        metagraph.edges_types.setdefault(lhs, set()).add(
+            (rhs, serialization, default_payload)
+        )
+        metagraph.edges_types.setdefault(rhs, set()).add(
+            (lhs, serialization, default_payload)
+        )
 
     return _register
 
@@ -371,7 +376,9 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
     @classmethod
     def _add_vertex_property(cls, info):
-        """Add a property at class top-level to access the wrapper of the specified vertex"""
+        """Add a property at class top-level to access the wrapper of the
+        specified vertex
+        """
 
         def create_property():
             def getter(self):
@@ -395,12 +402,18 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
     @classmethod
     def _create_data_serializers(cls):
         """Build a dict mapping every type of vertices and edges
-        to the proper serialization methods. For example
+        to the proper serialization methods. For example:
 
-        {<VertexType.Foo: 3>: basalt.serialization.PickleSerialization,
-         <VertexType.Bar: 2>: basalt.serialization.NoneSerialization,
-         (<VertexType.Foo: 3>, <VertexType.Bar: 2>): basalt.serialization.PickleSerialization,
-         (<VertexType.Bar: 2>, <VertexType.Foo: 3>): basalt.serialization.PickleSerialization}
+        {
+        <VertexType.Foo: 3>:
+            basalt.serialization.PickleSerialization,
+        <VertexType.Bar: 2>:
+            basalt.serialization.NoneSerialization,
+        (<VertexType.Foo: 3>, <VertexType.Bar: 2>):
+            basalt.serialization.PickleSerialization,
+        (<VertexType.Bar: 2>, <VertexType.Foo: 3>):
+            basalt.serialization.PickleSerialization
+        }
 
         """
         eax = dict()
@@ -470,8 +483,8 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                     data: object to serialize
 
                 Returns:
-                    `numpy.ndarray(shape=(N,), dtype=numpy.byte)` as expected by low-level
-                    basalt graph API.
+                    `numpy.ndarray(shape=(N,), dtype=numpy.byte)` as expected by
+                    low-level basalt graph API.
                 """
                 return cls._data_serializers[info.type].serialize(data)
 
@@ -480,7 +493,8 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                 """Deserialize given payload
 
                 Args:
-                    data(`numpy.ndarray(shape=(N,), dtype=numpy.byte)`): array to deserialize
+                    data(`numpy.ndarray(shape=(N,), dtype=numpy.byte)`): array
+                    to deserialize
 
                 Returns:
                     deserialized object

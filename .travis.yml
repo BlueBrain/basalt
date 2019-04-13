@@ -107,7 +107,7 @@ matrix:
       addons: *clang6
 
       # Test clang-7: C++11
-    - env: CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 VALGRIND="-T memcheck"
+    - env: CPP_CHECK=yes CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
       os: linux
       dist: xenial
       addons: *clang7

@@ -81,7 +81,6 @@ set(Basalt_KEY_INTS Basalt_VERSION_MAJOR Basalt_VERSION_MINOR Basalt_VERSION_PAT
 set(Basalt_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 set(Basalt_KEY_STRINGS Basalt_SEMVER Basalt_COMMIT Basalt_CXX_FLAGS Basalt_CMAKE_ARGS)
 
-
 if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/.git)
   bob_get_commit()
   bob_get_semver()

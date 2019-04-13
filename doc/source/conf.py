@@ -18,10 +18,6 @@ import textwrap
 
 from pkg_resources import get_distribution
 
-sys.path.insert(0, os.path.abspath('..'))
-import basalt
-
-
 # -- Project information -----------------------------------------------------
 
 project = 'Basalt'
@@ -62,7 +58,6 @@ doctest_global_setup = textwrap.dedent("""\
     import numpy as np
 
     import basalt
-    from basalt.ngv import VertexType
 
     tmpdir = tempfile.mkdtemp()
     graph = basalt.Graph(tmpdir)
