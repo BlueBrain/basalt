@@ -1,5 +1,7 @@
 from collections import Mapping, namedtuple
 import copy
+import io
+from pprint import pprint
 import json
 import sys
 
@@ -123,9 +125,7 @@ class UniqueLabel(Mapping):
         return 1
 
 
-def load_from_json(file):
-    with open(file) as istr:
-        data = json.load(istr)
+def load_from_data(data):
     context = Context.from_json(data["context"])
     labels = UniqueLabel("elements")
     benchmarks = group_benchmarks(data["benchmarks"], labels)
@@ -143,6 +143,11 @@ def main(argv=None):
 
     elif argv[1] == "notebook":
         generate_notebook(argv[2])
+
+
+def load_from_json(file):
+    with open(file) as istr:
+        return load_from_data(json.load(istr))
 
 
 EMPTY_NOTEBOOK = {
@@ -183,15 +188,18 @@ def generate_notebook(json_file):
             source=this_file,
         )
     )
-    notebook["cells"].append(
-        dict(
-            cell_type="code",
-            metadata={},
-            outputs=[],
-            execution_count=None,
-            source="_, benchmarks = load_from_json(" + repr(json_file) + ")\n",
+    with io.StringIO() as ostr:
+        with open(json_file) as istr:
+            pprint(json.load(istr), ostr)
+        notebook["cells"].append(
+            dict(
+                cell_type="code",
+                metadata={},
+                outputs=[],
+                execution_count=None,
+                source="_, benchmarks = load_from_data(" + ostr.getvalue() + ")\n",
+            )
         )
-    )
     context, benchmarks = load_from_json(json_file)
     for name, benchmark in benchmarks.items():
         notebook["cells"].append(
