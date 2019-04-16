@@ -11,6 +11,12 @@ Process JSON file written by google benchmarks in various ways:
 
     %(prog)s notebook result.json -o my_notebook.ipynb
     jupyter nbconvert --to notebook --execute --inplace my_notebook
+
+* Create a template of README.md used to enrich generated notebook
+
+    %(prog)s readme result.json
+    Edit README.md to replace/remove FIXMEs
+    %(prog)s notebook -r README.md -o my_notebook.ipynb result.json
 """
 import argparse
 from collections import Mapping, namedtuple
@@ -148,7 +154,34 @@ def load_from_data(data):
 # NOTEBOOK-STOP-HERE
 
 
-def generate_notebook(json_file, output=None, **kwargs):
+BENCHMARKS_MD = "## Benchmarks"
+
+
+def read_markdown(md_file, benchmarks):
+    result = dict(benchmarks={})
+    with open(md_file) as istr:
+        content = istr.read()
+    pos = content.find(BENCHMARKS_MD)
+    if pos == -1:
+        return result
+    content = "\n" + content[pos + len(BENCHMARKS_MD) :].lstrip()
+    parts = [part for part in content.split("\n### ") if part]
+    for i, part in enumerate(parts):
+        name, content = part.split("\n", 1)
+        if name == "Context" and i == 0:
+            result["context"] = content
+            continue
+        if name not in benchmarks:
+            continue
+        sections = part.split("#### ")
+        for section in sections:
+            sname, content = section.split("\n", 1)
+            if sname in ["Header", "Footer"]:
+                result["benchmarks"].setdefault(name, {})[sname] = content
+    return result
+
+
+def generate_notebook(json_file, output=None, md_file=None, **kwargs):
     with open(__file__) as istr:
         this_file = istr.read()
         pos = this_file.find("# NOTEBOOK-STOP-HERE")
@@ -176,10 +209,27 @@ def generate_notebook(json_file, output=None, **kwargs):
             )
         )
     context, benchmarks = load_from_json(json_file)
-    for name, benchmark in benchmarks.items():
+    if md_file:
+        md_data = read_markdown(md_file, benchmarks)
+    else:
+        md_data = dict(benchmarks={}, context=None)
+
+    if md_data["context"]:
         notebook["cells"].append(
             dict(
-                cell_type="markdown", metadata={}, source="## " + benchmark.title + "\n"
+                cell_type="markdown",
+                metadata={},
+                source="## Context\n" + md_data["context"],
+            )
+        )
+    for name, benchmark in benchmarks.items():
+        header = md_data["benchmarks"].get(name, {}).get("Header") or ""
+        footer = md_data["benchmarks"].get(name, {}).get("Footer") or ""
+        notebook["cells"].append(
+            dict(
+                cell_type="markdown",
+                metadata={},
+                source="## " + benchmark.title + "\n" + header,
             )
         )
         notebook["cells"].append(
@@ -191,6 +241,10 @@ def generate_notebook(json_file, output=None, **kwargs):
                 source="benchmarks[" + repr(name) + "].plot()\n",
             )
         )
+        if footer:
+            notebook["cells"].append(
+                dict(cell_type="markdown", metadata={}, source=footer)
+            )
     if output is None:
         json.dump(notebook, sys.stdout, indent=4)
     else:
@@ -200,13 +254,52 @@ def generate_notebook(json_file, output=None, **kwargs):
 
 def plot_benchmarks(json_file, **kwargs):
     import matplotlib
+
     matplotlib.use("PS")
     context, benchmarks = load_from_json(json_file)
     for benchmark in benchmarks.values():
         benchmark.fig().savefig(benchmark.raw_title + ".png")
 
 
-ACTIONS = dict(notebook=generate_notebook, plot=plot_benchmarks)
+def generate_readme(json_file, append=False, output=None, **kwargs):
+    context, benchmarks = load_from_json(json_file)
+    with open(output, "a" if append else "w") as ostr:
+        print(BENCHMARKS_MD, file=ostr)
+        print(file=ostr)
+        print("### Context", file=ostr)
+        print(file=ostr)
+        print("Running", context.executable, "  ", file=ostr)
+        print(
+            "Run on ({} X {} MHz CPUs)".format(context.num_cpus, context.mhz_per_cpu),
+            file=ostr,
+        )
+        print("CPU Caches:", file=ostr)
+        for cache in context.caches:
+            print(
+                "* L{}".format(cache.level),
+                cache.type,
+                cache.size,
+                "(x{})".format(cache.num_sharing),
+                file=ostr,
+            )
+        print(file=ostr)
+        for benchmark in benchmarks:
+            print("###", benchmark, file=ostr)
+            print(file=ostr)
+            print("#### Header", file=ostr)
+            print(file=ostr)
+            print(
+                "**FIXME**: content will be embedded in notebook before the plot",
+                file=ostr,
+            )
+            print(file=ostr)
+            print("#### Footer", file=ostr)
+            print(file=ostr)
+            print(
+                "**FIXME**: content will be embedded in notebook after the plot",
+                file=ostr,
+            )
+            print(file=ostr)
 
 
 def main(argv=None):
@@ -220,13 +313,27 @@ def main(argv=None):
     notebook = subparsers.add_parser("notebook", help="Generate Jupyter Notebook")
     notebook.add_argument("json_file", help="json file written by google benchmark")
     notebook.add_argument(
-        "-o", "--output", help="Destination file [default to standard output]"
+        "-o",
+        "--output",
+        help="Destination file [default to standard output]",
+        default="README.md",
+    )
+    notebook.add_argument(
+        "-r", "--readme", help="Markdown file to embed in the notebook", dest="md_file"
     )
     notebook.set_defaults(func=generate_notebook)
 
     plot = subparsers.add_parser("plot", help="Generate PNG images")
     plot.add_argument("json_file", help="json file written by google benchmark")
     plot.set_defaults(func=plot_benchmarks)
+
+    readme = subparsers.add_parser("readme", help="Generate README.md template")
+    readme.add_argument("-a", "--append", action="store_true")
+    readme.add_argument("json_file", help="json file written by google benchmark")
+    readme.add_argument(
+        "-o", "--output", help="Output file [default= %(default)s", default="README.md"
+    )
+    readme.set_defaults(func=generate_readme)
 
     args = parser.parse_args(args=argv)
     args.func(**vars(args))
