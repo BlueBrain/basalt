@@ -56,20 +56,20 @@ class Context(
 
 
 class Line(namedtuple("Line", ["name", "values", "timings"])):
+    """Plot line"""
     pass
 
 
-class Benchmark(namedtuple("Benchmark", ["raw_title", "label", "lines", "max_timing"])):
+class Benchmark(namedtuple("Benchmark", ["raw_title", "lines", "max_timing"])):
+    """One benchmark made of several lines"""
     @property
     def title(self):
+        """Benchmark title from C++ function name"""
         return self.raw_title.replace("_", " ").capitalize()
 
     @property
-    def xticklabels(self):
-        return [humanize.naturalsize(xtick, gnu=True) for xtick in self.xticks]
-
-    @property
     def time_unit(self):
+        """FIXME: adapt according to lines data"""
         return "ms"
 
     @property
@@ -81,8 +81,18 @@ class Benchmark(namedtuple("Benchmark", ["raw_title", "label", "lines", "max_tim
         ticks = sorted(list(ticks))
         return ticks
 
+    @property
+    def xticklabels(self):
+        return [humanize.naturalsize(xtick, gnu=True) for xtick in self.xticks]
+
     @staticmethod
-    def from_json(title, label, benchmarks):
+    def from_json(title, benchmarks):
+        """Create an instance of this class based on data in JSON file
+
+        Args:
+            title: first part of the C++ function name
+            benchmarks(list of dict): benchmark data, one per line to plot
+        """
         lines = dict()
         max_timing = 0
         for benchmark in benchmarks:
@@ -97,18 +107,20 @@ class Benchmark(namedtuple("Benchmark", ["raw_title", "label", "lines", "max_tim
             line.values.append(int(value))
             line.timings.append(timing / 1e6)
         return Benchmark(
-            raw_title=title, label=label, lines=lines.values(), max_timing=max_timing
+            raw_title=title, lines=lines.values(), max_timing=max_timing
         )
 
     def plot(self):
+        """plot the Matplotlib figure"""
         self.fig()
 
     def fig(self):
+        """build the Matplotlib figure"""
         import matplotlib.pyplot as plt
 
         fig, ax = plt.subplots(1, 1, figsize=(12, 6))
         ax.set_title(self.title)
-        ax.set_xlabel(self.label)
+        ax.set_xlabel("elements")
         ax.xscale = "log"
         ax.set_ylabel("time (" + self.time_unit + ")")
         ax.set_xticks(self.xticks)
@@ -119,45 +131,84 @@ class Benchmark(namedtuple("Benchmark", ["raw_title", "label", "lines", "max_tim
         return fig
 
 
-def group_benchmarks(data, labels=None):
+def group_benchmarks(data):
+    """
+    Gather plot lines per benchmark
+
+    Args:
+        data: list of benchmark executions (plot lines)
+
+    Returns:
+        dict(name -> [dict(...)])
+    """
     result = dict()
     for benchmark in data:
         title = benchmark["name"].split("__", 1)[0]
         result.setdefault(title, []).append(benchmark)
     return {
-        title: Benchmark.from_json(title, labels.get(title, ""), benchmarks)
+        title: Benchmark.from_json(title, benchmarks)
         for title, benchmarks in result.items()
     }
 
 
-class UniqueLabel(Mapping):
-    def __init__(self, label):
-        self.__label = label
-
-    def __getitem__(self, e):
-        return self.__label
-
-    def __iter__(self):
-        return iter([self.__label])
-
-    def __len__(self):
-        return 1
-
-
 def load_from_data(data):
+    """Load context and benchmarks datastructures based on raw JSON data"""
     context = Context.from_json(data["context"])
-    labels = UniqueLabel("elements")
-    benchmarks = group_benchmarks(data["benchmarks"], labels)
+    benchmarks = group_benchmarks(data["benchmarks"])
     return context, benchmarks
 
 
 # NOTEBOOK-STOP-HERE
 
+def load_from_json(file):
+    with open(file) as istr:
+        return load_from_data(json.load(istr))
+
 
 BENCHMARKS_MD = "## Benchmarks"
+EMPTY_NOTEBOOK = {
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language": "python",
+            "name": "python3",
+        },
+        "language_info": {
+            "codemirror_mode": {"name": "ipython", "version": 3},
+            "file_extension": ".py",
+            "mimetype": "text/x-python",
+            "name": "python",
+            "nbconvert_exporter": "python",
+            "pygments_lexer": "ipython3",
+            "version": "3.6.4",
+        },
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2,
+    "cells": [],
+}
+
 
 
 def read_markdown(md_file, benchmarks):
+    """
+    Extract additional benchmark information from specified Markdown file
+
+    Args:
+        md_file: Markdown file
+        benchmarks: benchmark names in JSON
+
+    Returns:
+         dict(
+            context="markdown text",
+            benchmarks={
+                "name": {
+                    'header': 'markdown text',
+                    'footer': 'markdown text',
+                },
+                ...
+            }
+    """
     result = dict(benchmarks={})
     with open(md_file) as istr:
         content = istr.read()
@@ -182,6 +233,13 @@ def read_markdown(md_file, benchmarks):
 
 
 def generate_notebook(json_file, output=None, md_file=None, **kwargs):
+    """Create Jupyter notebook
+
+    Args:
+        json_file: input JSON file
+        output: output file (default sys.stdout)
+        md_file: optional Markdown file with additional information
+    """
     with open(__file__) as istr:
         this_file = istr.read()
         pos = this_file.find("# NOTEBOOK-STOP-HERE")
@@ -253,6 +311,12 @@ def generate_notebook(json_file, output=None, md_file=None, **kwargs):
 
 
 def plot_benchmarks(json_file, **kwargs):
+    """
+    Create one PNG for every benchmark
+
+    Args:
+        json_file: JSON benchmark file
+    """
     import matplotlib
 
     matplotlib.use("PS")
@@ -262,6 +326,12 @@ def plot_benchmarks(json_file, **kwargs):
 
 
 def generate_readme(json_file, append=False, output=None, **kwargs):
+    """Create default Markdown file
+
+    Args:
+        json_file: JSON benchmark file
+        append: append to file or overwrite, default overwrite
+    """
     context, benchmarks = load_from_json(json_file)
     with open(output, "a" if append else "w") as ostr:
         print(BENCHMARKS_MD, file=ostr)
@@ -337,34 +407,6 @@ def main(argv=None):
 
     args = parser.parse_args(args=argv)
     args.func(**vars(args))
-
-
-def load_from_json(file):
-    with open(file) as istr:
-        return load_from_data(json.load(istr))
-
-
-EMPTY_NOTEBOOK = {
-    "metadata": {
-        "kernelspec": {
-            "display_name": "Python 3",
-            "language": "python",
-            "name": "python3",
-        },
-        "language_info": {
-            "codemirror_mode": {"name": "ipython", "version": 3},
-            "file_extension": ".py",
-            "mimetype": "text/x-python",
-            "name": "python",
-            "nbconvert_exporter": "python",
-            "pygments_lexer": "ipython3",
-            "version": "3.6.4",
-        },
-    },
-    "nbformat": 4,
-    "nbformat_minor": 2,
-    "cells": [],
-}
 
 
 if __name__ == "__main__":
