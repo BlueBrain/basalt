@@ -1,3 +1,18 @@
+"""
+Process JSON file written by google benchmarks in various ways:
+
+* create one PNG for every benchmark
+
+    %(prog)s plot result.json
+
+* create a Jupyter notebook with the benchmark plots.
+  Note: the benchmark does not contain the generated plots,
+  the notebook needs to be executed by a Jupyter kernel first.
+
+    %(prog)s notebook result.json -o my_notebook.ipynb
+    jupyter nbconvert --to notebook --execute --inplace my_notebook
+"""
+import argparse
 from collections import Mapping, namedtuple
 import copy
 import io
@@ -6,7 +21,6 @@ import json
 import sys
 
 import humanize
-import matplotlib
 
 
 class Cache(namedtuple("Cache", ["type", "level", "size", "num_sharing"])):
@@ -83,7 +97,6 @@ class Benchmark(namedtuple("Benchmark", ["raw_title", "label", "lines", "max_tim
     def plot(self):
         self.fig()
 
-
     def fig(self):
         import matplotlib.pyplot as plt
 
@@ -132,51 +145,13 @@ def load_from_data(data):
     return context, benchmarks
 
 
-def main(argv=None):
-    argv = argv or sys.argv
-    context, benchmarks = load_from_json(argv[2])
-
-    if argv[1] == "plot":
-        matplotlib.use("PS")
-        for benchmark in benchmarks.values():
-            benchmark.fig().savefig(benchmark.raw_title + ".png")
-
-    elif argv[1] == "notebook":
-        generate_notebook(argv[2])
+# NOTEBOOK-STOP-HERE
 
 
-def load_from_json(file):
-    with open(file) as istr:
-        return load_from_data(json.load(istr))
-
-
-EMPTY_NOTEBOOK = {
-    "metadata": {
-        "kernelspec": {
-            "display_name": "Python 3",
-            "language": "python",
-            "name": "python3",
-        },
-        "language_info": {
-            "codemirror_mode": {"name": "ipython", "version": 3},
-            "file_extension": ".py",
-            "mimetype": "text/x-python",
-            "name": "python",
-            "nbconvert_exporter": "python",
-            "pygments_lexer": "ipython3",
-            "version": "3.6.4",
-        },
-    },
-    "nbformat": 4,
-    "nbformat_minor": 2,
-    "cells": [],
-}
-
-
-def generate_notebook(json_file):
+def generate_notebook(json_file, output=None, **kwargs):
     with open(__file__) as istr:
         this_file = istr.read()
-        pos = this_file.find("def main(")
+        pos = this_file.find("# NOTEBOOK-STOP-HERE")
         this_file = this_file[:pos]
     notebook = copy.copy(EMPTY_NOTEBOOK)
     notebook["cells"].append(
@@ -216,7 +191,73 @@ def generate_notebook(json_file):
                 source="benchmarks[" + repr(name) + "].plot()\n",
             )
         )
-    json.dump(notebook, sys.stdout, indent=4)
+    if output is None:
+        json.dump(notebook, sys.stdout, indent=4)
+    else:
+        with open(output, "w") as ostr:
+            json.dump(notebook, ostr, indent=4)
+
+
+def plot_benchmarks(json_file, **kwargs):
+    import matplotlib
+    matplotlib.use("PS")
+    context, benchmarks = load_from_json(json_file)
+    for benchmark in benchmarks.values():
+        benchmark.fig().savefig(benchmark.raw_title + ".png")
+
+
+ACTIONS = dict(notebook=generate_notebook, plot=plot_benchmarks)
+
+
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Plot google benchmark results",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=sys.modules[__name__].__doc__,
+    )
+    subparsers = parser.add_subparsers()
+
+    notebook = subparsers.add_parser("notebook", help="Generate Jupyter Notebook")
+    notebook.add_argument("json_file", help="json file written by google benchmark")
+    notebook.add_argument(
+        "-o", "--output", help="Destination file [default to standard output]"
+    )
+    notebook.set_defaults(func=generate_notebook)
+
+    plot = subparsers.add_parser("plot", help="Generate PNG images")
+    plot.add_argument("json_file", help="json file written by google benchmark")
+    plot.set_defaults(func=plot_benchmarks)
+
+    args = parser.parse_args(args=argv)
+    args.func(**vars(args))
+
+
+def load_from_json(file):
+    with open(file) as istr:
+        return load_from_data(json.load(istr))
+
+
+EMPTY_NOTEBOOK = {
+    "metadata": {
+        "kernelspec": {
+            "display_name": "Python 3",
+            "language": "python",
+            "name": "python3",
+        },
+        "language_info": {
+            "codemirror_mode": {"name": "ipython", "version": 3},
+            "file_extension": ".py",
+            "mimetype": "text/x-python",
+            "name": "python",
+            "nbconvert_exporter": "python",
+            "pygments_lexer": "ipython3",
+            "version": "3.6.4",
+        },
+    },
+    "nbformat": 4,
+    "nbformat_minor": 2,
+    "cells": [],
+}
 
 
 if __name__ == "__main__":
