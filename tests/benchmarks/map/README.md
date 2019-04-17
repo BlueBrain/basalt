@@ -53,7 +53,7 @@ Tested types:
 * *stdunordered*: `std::unordered_map`
 * *flatmap*: `boost::container::flat_map`
 
-Both keys and values are 32bits integers.
+Both keys and values are 32bit integers.
 
 ### ascending_insertion
 
