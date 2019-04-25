@@ -1,6 +1,7 @@
 # Basalt - C++11 Graph Storage library
 
-Basic graph database backed by RocksDB key-value storage
+Basalt is a persistent graph database for fast storage,
+backed by RocksDB key-value storage.
 
 [![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
 
@@ -200,3 +201,16 @@ cmake build directory:
 * CMake code formatting check: `make check-cmake-format`
   (`make cmake-format` to fix it)
 * C++ static analysis check: `make clang-tidy`
+
+## Release
+
+1. Build and test from scratch: `tox -r`
+1. Run benchmarks in `tests/benchmarks` and ensure there is no regression.
+1. Create a git tag.
+1. Create source distribution: `python setup.py sdist`.
+1. Test installation with pip within a Docker container:
+   `dev/check-source-distribution dist/basalt-VERSION.tar.gz`
+1. Build documentation and update the *gh-pages* accordingly.
+1. Upload source distribution on pypi:
+   `twine upload -s basalt-VERSION.tar.gz`
+1. Create release on GitHub project

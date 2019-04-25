@@ -1,0 +1,16 @@
+#!/bin/bash -e
+
+if [ "x$1" == x ] ;then
+	echo "Usage: $0 pkg" 2>&1
+	exit 1
+fi
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+SCRIPT="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+
+temp_dir=`mktemp -d`
+cp "$1" "$temp_dir"
+
+docker build -f "$DIR/${SCRIPT}.Dockerfile" -t "$SCRIPT":3.7 $DIR
+docker run --rm -v "$temp_dir:/src" "$SCRIPT:3.7" bash -c "pip3 install /src/${1##*/} ; basalt-cli --version"
+rm -rf "$temp_dir"
