@@ -132,7 +132,7 @@ install_requirements = [
     "progress>=1.4",
 ]
 
-doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
+doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx>=2"]
 
 # read the contents of your README file
 this_directory = osp.abspath(osp.dirname(__file__))
