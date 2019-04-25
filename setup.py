@@ -141,6 +141,9 @@ with open(osp.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="basalt",
+    description="Persistent Graph Database for fast storage",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     author="BlueBrain Project, EPFL",
     author_email="bbp-ou-hpc@groupes.epfl.ch",
     classifiers=[
@@ -157,9 +160,6 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Database :: Database Engines/Servers",
     ],
-    description="Graph DB Storage",
-    long_description=long_description,
-    long_description_content_type='text/markdown',
     packages=["basalt", "basalt.ngv"],
     ext_modules=[CMakeExtension("_basalt")],
     cmdclass=lazy_dict(
