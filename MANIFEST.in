@@ -1,4 +1,4 @@
-include CMakeLists.txt
+include CMakeLists.txt LICENSE
 include doc/Makefile
 recursive-include cmake *
 recursive-include doc/source *

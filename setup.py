@@ -134,25 +134,32 @@ install_requirements = [
 
 doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx<2"]
 
+# read the contents of your README file
+this_directory = osp.abspath(osp.dirname(__file__))
+with open(osp.join(this_directory, 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
+
 setup(
     name="basalt",
-    author="Blue Brain Project",
+    author="BlueBrain Project, EPFL",
     author_email="bbp-ou-hpc@groupes.epfl.ch",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console :: Curses",
         "Intended Audience :: Developers",
+        "License :: OSI Approved :: GNU Lesser General Public License v3 (LGPLv3)",
+        "Operating System :: MacOS",
+        "Operating System :: POSIX :: Linux",
         "Programming Language :: C++",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Topic :: Database :: Database Engines/Servers",
-        "Operating System :: MacOS",
-        "Operating System :: POSIX :: Linux",
     ],
     description="Graph DB Storage",
-    long_description="",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=["basalt", "basalt.ngv"],
     ext_modules=[CMakeExtension("_basalt")],
     cmdclass=lazy_dict(
