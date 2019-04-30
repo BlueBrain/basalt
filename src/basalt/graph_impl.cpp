@@ -40,110 +40,22 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
     return async_write;
 }
 
-/**
- * \}
- */
-
-inline static const rocksdb::Options& db_options() {
-    static const rocksdb::Options& db_options = []() {
-        rocksdb::Options options;
-        // FIXME set it on column family level
-        options.prefix_extractor.reset(
-            rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t) + sizeof(vertex_id_t)));
-        options.create_if_missing = true;
-        options.max_open_files = -1;
-        options.statistics = rocksdb::CreateDBStatistics();
-        return options;
-    }();
-    return db_options;
-}
-
-inline static const rocksdb::ColumnFamilyOptions& vertices_cfo() {
-    static const rocksdb::ColumnFamilyOptions vertices_cfo = []() {
-        rocksdb::ColumnFamilyOptions options;
-        // optimize vertex prefix enumeration to look for all vertices of a particular
-        // type
-        options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t)));
-        options.write_buffer_size = 128u << 20u;      // 128MB
-        options.target_file_size_base = 128u << 20u;  // 128MB
-        options.max_bytes_for_level_base = options.target_file_size_base * 10;
-        return options;
-    }();
-    return vertices_cfo;
-}
-
-inline static const rocksdb::ColumnFamilyOptions& edges_cfo() {
-    static const rocksdb::ColumnFamilyOptions edges_cfo = []() {
-        rocksdb::ColumnFamilyOptions options;
-        // optimize vertex prefix enumeration to look for all edges of a particular
-        // vertex
-        options.prefix_extractor.reset(
-            rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t) + sizeof(vertex_id_t)));
-        // Enable prefix bloom for SST files
-        rocksdb::BlockBasedTableOptions table_options{};
-        table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
-        options.table_factory.reset(NewBlockBasedTableFactory(table_options));
-        options.write_buffer_size = 128u << 20u;      // 128MB
-        options.target_file_size_base = 128u << 20u;  // 128MB
-        options.max_bytes_for_level_base = options.target_file_size_base * 10;
-        return options;
-    }();
-    return edges_cfo;
-}
-
-inline static const std::string& vertices_cfn() {
-    static const std::string vertices_cfn = rocksdb::kDefaultColumnFamilyName;
-    return vertices_cfn;
-}
-
-inline static const std::string& edges_cfn() {
-    static const std::string edges_cfn = "edges";
-    return edges_cfn;
-}
-
-void GraphImpl::setup_db(const rocksdb::Options& options, const std::string& path) {
-    std::unique_ptr<rocksdb::DB> db_ptr;
-    {  // open db
-        rocksdb::DB* db;
-        rocksdb::Status status = rocksdb::DB::Open(options, path, &db);
-        db_ptr.reset(db);
-        if (status.code() == rocksdb::Status::kInvalidArgument) {
-            return;
-        }
-        to_status(status).raise_on_error();
-    }
-
-    std::vector<std::string> column_family_names;
-    rocksdb::DB::ListColumnFamilies(options, db_ptr->GetName(), &column_family_names);
-    if (std::find(column_family_names.begin(), column_family_names.end(), vertices_cfn()) ==
-        column_family_names.end()) {
-        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(vertices_cfo(), vertices_cfn(), &cf)).raise_on_error();
-        delete cf;
-    }
-    if (std::find(column_family_names.begin(), column_family_names.end(), edges_cfn()) ==
-        column_family_names.end()) {
-        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(edges_cfo(), edges_cfn(), &cf)).raise_on_error();
-        delete cf;
-    }
-}
-
 GraphImpl::GraphImpl(const std::string& path)
+    : GraphImpl(path, Config(path)) {}
+
+GraphImpl::GraphImpl(const std::string& path, const Config& config)
     : path_(path)
+    , config_(config)
     , vertices_(*this)
     , edges_(*this)
     , statistics_(rocksdb::CreateDBStatistics())
-    , options_(new rocksdb::Options(db_options(), {})) {
+    , options_(new rocksdb::Options) {
     rocksdb::DB* db;
 
-    setup_db(*options_, path);
-
-    std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
-    column_families.emplace_back(vertices_cfn(), vertices_cfo());
-    column_families.emplace_back(edges_cfn(), edges_cfo());
+    this->config_.configure(*options_, path);
+    const auto& column_families = this->config_.column_families();
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
-    handles.reserve(2);
+    handles.reserve(column_families.size());
     to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db)).raise_on_error();
     vertices_column_.reset(handles[0]);
     edges_column_.reset(handles[1]);
@@ -156,6 +68,18 @@ GraphImpl::GraphImpl(const std::string& path)
         logger_ = spdlog::rotating_logger_mt(logger_name, path + "/logs/graph.log", 1048576 * 5, 3);
         logger_->info("creating or loading database at location: {}", path);
         logger_->set_level(spdlog::level::level_enum::trace);
+    }
+    {
+        struct stat info;
+        auto json_config = path + "/config.json";
+        if (stat(json_config.c_str(), &info) != 0) {
+            std::ofstream ostr(json_config);
+            if (ostr.is_open()) {
+                ostr << config_ << '\n';
+            } else {
+                logger_->error("Could not write JSON config file {}", strerror(errno));
+            }
+        }
     }
 }
 

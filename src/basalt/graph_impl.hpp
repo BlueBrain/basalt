@@ -7,6 +7,7 @@
 #include <basalt/status.hpp>
 #include <basalt/vertices.hpp>
 
+#include "config.hpp"
 #include "fwd.hpp"
 #include "graph_kv.hpp"
 
@@ -19,6 +20,7 @@ class GraphImpl {
     using column_families_t = std::vector<rocksdb::ColumnFamilyHandle*>;
 
     explicit GraphImpl(const std::string& path);
+    GraphImpl(const std::string& path, const Config& config);
 
     inline const logger_t& logger_get() const noexcept {
         return this->logger_;
@@ -112,7 +114,6 @@ class GraphImpl {
     std::string statistics() const;
 
     static Status to_status(const rocksdb::Status& status);
-    static void setup_db(const rocksdb::Options& options, const std::string& path);
 
   private:
     Status edges_erase(rocksdb::WriteBatch& batch, const vertex_uid_t& vertex, size_t& removed);
@@ -120,6 +121,7 @@ class GraphImpl {
                const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle);
 
     const std::string& path_;
+    const Config config_;
     Vertices vertices_;
     Edges edges_;
     std::shared_ptr<rocksdb::Statistics> statistics_;

@@ -1,5 +1,7 @@
 # pure C++ shared library
 set(basalt_SOURCES
+    basalt/config.hpp
+    basalt/config.cpp
     basalt/edges.cpp
     basalt/edge_iterator.cpp
     basalt/edge_iterator_impl.hpp
@@ -34,7 +36,8 @@ include_directories(SYSTEM
                     ${gsl_include_directory}
                     ${pybind11_include_directory}
                     ${RocksDB_INCLUDE_DIR}
-                    ${spdlog_include_directory})
+                    ${spdlog_include_directory}
+                    ${nlohmann_include_directory})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt ${CMAKE_CURRENT_BINARY_DIR})
 
