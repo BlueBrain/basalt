@@ -43,9 +43,9 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
 GraphImpl::GraphImpl(const std::string& path)
     : GraphImpl(path, Config(path)) {}
 
-GraphImpl::GraphImpl(const std::string& path, const Config& config)
+GraphImpl::GraphImpl(const std::string& path, Config config)
     : path_(path)
-    , config_(config)
+    , config_(std::move(config))
     , vertices_(*this)
     , edges_(*this)
     , statistics_(rocksdb::CreateDBStatistics())
@@ -56,7 +56,13 @@ GraphImpl::GraphImpl(const std::string& path, const Config& config)
     const auto& column_families = this->config_.column_families();
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     handles.reserve(column_families.size());
-    to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db)).raise_on_error();
+    if (config_.read_only()) {
+        to_status(rocksdb::DB::OpenForReadOnly(*options_, path, column_families, &handles, &db))
+            .raise_on_error();
+    } else {
+        to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db))
+            .raise_on_error();
+    }
     vertices_column_.reset(handles[0]);
     edges_column_.reset(handles[1]);
 
@@ -70,7 +76,7 @@ GraphImpl::GraphImpl(const std::string& path, const Config& config)
         logger_->set_level(spdlog::level::level_enum::trace);
     }
     {
-        struct stat info;
+        struct stat info {};
         auto json_config = path + "/config.json";
         if (stat(json_config.c_str(), &info) != 0) {
             std::ofstream ostr(json_config);

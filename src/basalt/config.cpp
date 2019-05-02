@@ -1,7 +1,10 @@
 #include <fstream>
 #include <iomanip>
+#include <sstream>
+#include <sys/sysinfo.h>
 
 #include <gsl-lite/gsl-lite.hpp>
+#include <rocksdb/cache.h>
 #include <rocksdb/db.h>
 #include <rocksdb/filter_policy.h>
 #include <rocksdb/slice_transform.h>
@@ -14,22 +17,140 @@
 
 namespace basalt {
 
+/**
+ * Convert rocksdb status object to a basalt one
+ */
 static inline Status to_status(const rocksdb::Status& status) {
     return {static_cast<Status::Code>(status.code()), status.ToString()};
 }
 
+/**
+ * Get real column family name from one specified in the JSON config
+ */
 static inline std::string column_family_name(const std::string& name) {
     if (name == "<default>") {
         return rocksdb::kDefaultColumnFamilyName;
-    } else {
-        return name;
     }
+    return name;
 }
 
+/**
+ * Get a fixed-prefix slice transform rocksdb configuration from JSON config
+ */
 static const rocksdb::SliceTransform* fixed_prefix_extractor(const nlohmann::json& config) {
     return rocksdb::NewFixedPrefixTransform(config["prefix_len"].get<size_t>());
 }
 
+/**
+ * \brief parse human readable number of bytes
+ * \param capacity valid string: "42", "1024k", "2M", "10T",
+ *        "10%" (means 10% of total usable main memory)
+ * \return number of bytes
+ */
+static size_t capacity_from_string(const std::string& capacity) {
+    if (capacity.size() < 2) {
+        throw std::runtime_error("Invalid lru cache capacity. Expecting at least 2 characters: '" +
+                                 capacity + '\'');
+    }
+    auto size_len = capacity.size();
+    size_t factor = 1;
+    if (std::isdigit(capacity.back()) != 0) {
+        size_len -= 1;
+        auto unit = capacity.back();
+        if (unit == 't' || unit == 'T') {
+            factor <<= 40u;
+        } else if (unit == 'g' || unit == 'G') {
+            factor <<= 30u;
+        } else if (unit == 'm' || unit == 'M') {
+            factor <<= 20u;
+        } else if (unit == 'k' || unit == 'K') {
+            factor <<= 10u;
+        } else if (unit == '%') {
+            size_t percent;
+            std::istringstream iss(capacity.substr(0, size_len));
+            iss >> percent;
+
+            struct sysinfo info {};
+            if (sysinfo(&info) != 0) {
+                throw std::runtime_error(std::string("Could not get total available RAM: ") +
+                                         strerror(errno));
+            }
+            return info.totalram / percent;
+        } else {
+            throw std::runtime_error(std::string("Unknown unit: ") + unit);
+        }
+    }
+    size_t size;
+    std::istringstream iss(capacity.substr(0, size_len));
+    iss >> size;
+    return size * factor;
+}
+
+/**
+ * Get least recent use block cache rocksdb config from JSON config
+ */
+static std::shared_ptr<rocksdb::Cache> lru_block_cache(const nlohmann::json& config) {
+    int num_shard_bits = 4;
+    {
+        auto num_shard_bits_json = config.find("num_shard_bits");
+        if (num_shard_bits_json != config.end()) {
+            num_shard_bits_json.value().get_to(num_shard_bits);
+        }
+    }
+    auto capacity_json = config["capacity"];
+    size_t capacity;
+    if (capacity_json.is_string()) {
+        capacity = capacity_from_string(capacity_json.get<std::string>());
+    } else if (capacity_json.is_number()) {
+        capacity_json.get_to(capacity);
+    } else {
+        throw std::runtime_error(
+            "Unexpected type for lru cache capacity. Expecting either string or number");
+    }
+
+    return rocksdb::NewLRUCache(capacity, num_shard_bits);
+}
+
+/**
+ * Get rocksdb block cache config from a JSON config
+ * \param config JSON config to read
+ * \param global_block_cache the block cache declared at top-level of the JSON config
+ */
+static std::shared_ptr<rocksdb::Cache> block_cache(
+    const nlohmann::json& config,
+    std::shared_ptr<rocksdb::Cache>& global_block_cache) {
+    auto const type = config["type"].get<std::string>();
+    if (type == "global") {
+        if (global_block_cache == nullptr) {
+            throw std::runtime_error("Global block cache is undefined");
+        }
+        return global_block_cache;
+    }
+    if (type == "lru") {
+        return lru_block_cache(config["config"]);
+    }
+    throw std::runtime_error(std::string("Unknown block cache type: ") + type);
+}
+
+/**
+ * Get rocksdb block cache from a parent JSON config having a "block_cache" entry.
+ * \param config JSON config
+ * \param global_block_cache the block cache declared at top-level of the JSON config
+ */
+static std::shared_ptr<rocksdb::Cache> block_cache_if_present(
+    const nlohmann::json& config,
+    std::shared_ptr<rocksdb::Cache>& global_block_cache) {
+    std::shared_ptr<rocksdb::Cache> result;
+    auto lru_cache_config = config.find("block_cache");
+    if (lru_cache_config != config.end()) {
+        result = block_cache(lru_cache_config.value(), global_block_cache);
+    }
+    return result;
+}
+
+/**
+ * Get rocksdb bloom filter policy config from JSON config
+ */
 static std::shared_ptr<const rocksdb::FilterPolicy> bloom_filter_policy(
     const nlohmann::json& config) {
     bool use_block_based_builder = true;
@@ -42,18 +163,26 @@ static std::shared_ptr<const rocksdb::FilterPolicy> bloom_filter_policy(
         rocksdb::NewBloomFilterPolicy(bits_per_key, use_block_based_builder));
 }
 
+/**
+ * get rocksdb filter policy config from JSON config
+ */
 static std::shared_ptr<const rocksdb::FilterPolicy> filter_policy(const nlohmann::json& config) {
     auto const type = config["type"].get<std::string>();
     if (type == "bloom") {
         return bloom_filter_policy(config["config"]);
-    } else {
-        throw std::runtime_error("Unknown filter policy type=" + type);
     }
+    throw std::runtime_error("Unknown filter policy type=" + type);
 }
 
+/**
+ * Get the rocksdb block-based table factory (the only table factory supported actually)
+ * from a JSON config
+ */
 static std::shared_ptr<rocksdb::TableFactory> block_based_table_factory(
-    const nlohmann::json& config) {
+    const nlohmann::json& config,
+    std::shared_ptr<rocksdb::Cache> global_block_cache) {
     rocksdb::BlockBasedTableOptions options;
+    options.block_cache = block_cache_if_present(config, global_block_cache);
     auto const& fpc = config.find("filter_policy");
     if (fpc != config.end()) {
         options.filter_policy = filter_policy(fpc.value());
@@ -61,7 +190,12 @@ static std::shared_ptr<rocksdb::TableFactory> block_based_table_factory(
     return std::shared_ptr<rocksdb::TableFactory>(rocksdb::NewBlockBasedTableFactory(options));
 }
 
-static rocksdb::ColumnFamilyOptions column_families_options(const nlohmann::json& config) {
+/**
+ * Get the list of rocksdb column families configuration from JSON config
+ */
+static rocksdb::ColumnFamilyOptions column_families_options(
+    const nlohmann::json& config,
+    std::shared_ptr<rocksdb::Cache>& global_block_cache) {
     rocksdb::ColumnFamilyOptions result;
     result.write_buffer_size =
         config["write_buffer_size"].get<decltype(result.write_buffer_size)>();
@@ -85,7 +219,8 @@ static rocksdb::ColumnFamilyOptions column_families_options(const nlohmann::json
         if (tfc != config.end()) {
             auto const type = tfc.value()["type"].get<std::string>();
             if (type == "block-based") {
-                result.table_factory = block_based_table_factory(tfc.value()["config"]);
+                result.table_factory = block_based_table_factory(tfc.value()["config"],
+                                                                 global_block_cache);
             } else {
                 throw std::runtime_error("Unknown table factory type=" + type);
             }
@@ -95,9 +230,13 @@ static rocksdb::ColumnFamilyOptions column_families_options(const nlohmann::json
     return result;
 }
 
+/**
+ * Prepare the rocksdb column families on the filesystem if they do not already exist.
+ */
 static void create_columns_families(const nlohmann::json& config,
                                     const std::string& db_path,
-                                    rocksdb::Options& options) {
+                                    rocksdb::Options& options,
+                                    std::shared_ptr<rocksdb::Cache> global_block_cache) {
     std::unique_ptr<rocksdb::DB> db_ptr;
     {  // open db
         rocksdb::DB* db;
@@ -117,13 +256,17 @@ static void create_columns_families(const nlohmann::json& config,
         if (std::find(column_family_names.begin(), column_family_names.end(), name) ==
             column_family_names.end()) {
             gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-            auto const& cf_options = column_families_options(cf_config["config"]);
+            auto const& cf_options = column_families_options(cf_config["config"],
+                                                             global_block_cache);
             to_status(db_ptr->CreateColumnFamily(cf_options, name, &cf)).raise_on_error();
             delete cf;
         }
     }
 }
 
+/**
+ * Setup rocksdb statistics according to JSON config
+ */
 static void setup_statistics(const nlohmann::json& config, rocksdb::Options& options) {
     auto const& stats = config.find("statistics");
     if (stats != config.end()) {
@@ -133,6 +276,9 @@ static void setup_statistics(const nlohmann::json& config, rocksdb::Options& opt
     }
 }
 
+/**
+ * Setup rocksdb maximum number of opened files according to JSON config
+ */
 static void setup_max_open_files(const nlohmann::json& config, rocksdb::Options& options) {
     auto const& value = config.find("max_open_files");
     if (value != config.end()) {
@@ -147,40 +293,85 @@ static void setup_create_if_missing(const nlohmann::json& config, rocksdb::Optio
     }
 }
 
+/**
+ * Provide the default JSON config if not provided when creating the database
+ */
 static nlohmann::json default_json() {
     nlohmann::json config;
+    config["read_only"] = false;
     config["statistics"] = true;
     config["max_open_files"] = -1;
     config["create_if_missing"] = true;
+    config["block_cache"] = {{"type", "lru"},
+                             {"config",
+                              {{"capacity", 1u << 30u /* 1GB */}, {"num_shard_bits", 4}}}};
+    // clang-format off
     config["column_families"] = {
-        {{"name", "<default>"},
-         {"config",
-          {{"write_buffer_size", 128u << 20u /* 128MB */},
-           {"target_file_size_base", 128u << 20u /* 128MB */},
-           {"max_bytes_for_level_base", 10 * 128u << 20u /* 128MB */},
-           {"prefix_extractor", {{"type", "fixed"}, {"config", {{"prefix_len", 5}}}}}}}},
-        {{"name", "edges"},
-         {"config",
-          {{"write_buffer_size", 128u << 20u /* 128MB */},
-           {"target_file_size_base", 128u << 20u /* 128MB */},
-           {"max_bytes_for_level_base", 10 * 128u << 20u /* 1280MB */},
-           {"prefix_extractor", {{"type", "fixed"}, {"config", {{"prefix_len", 13}}}}},
-           {"table_factory",
-            {{"type", "block-based"},
-             {"config",
-              {{"filter-policy",
-                {{"type", "bloom"},
-                 {"config",
-                  {
-                      {"bits_per_key", 10},
-                      {"use_block_based_builder", true},
-                  }}}},
-               {"index", {"binary", "hash"}},
-               {"block_size", 4096}}}}}}}}};
+        {
+            {"name", "<default>"},
+            {"config", {
+                {"write_buffer_size", 128u << 20u /* 128MB */},
+                {"target_file_size_base", 128u << 20u /* 128MB */},
+                {"max_bytes_for_level_base", 10 * 128u << 20u /* 1280MB */},
+                {"prefix_extractor", {
+                    {"type", "fixed"},
+                    {"config", {
+                        {"prefix_len", 5}
+                    }}
+                }},
+                {"table_factory", {
+                    {"type", "block-based"},
+                    {"config", {
+                        {"block_cache", {
+                            {"type", "global"}
+                        }}
+                    }}
+                }}
+            }}
+        },
+        {
+            {"name", "edges"},
+            {"config", {
+                {"write_buffer_size", 128u << 20u /* 128MB */},
+                {"target_file_size_base", 128u << 20u /* 128MB */},
+                {"max_bytes_for_level_base", 10 * 128u << 20u /* 1280MB */},
+                {"prefix_extractor", {
+                    {"type", "fixed"},
+                    {"config", {
+                        {"prefix_len", 13}
+                    }}
+                }},
+                {"table_factory", {
+                    {"type", "block-based"},
+                    {"config", {
+                        {"block_cache", {
+                            {"type", "lru"},
+                            {"config", {
+                                {"capacity", "10%"}
+                            }}
+                        }},
+                        {"filter-policy", {
+                            {"type", "bloom"},
+                            {"config", {
+                                {"bits_per_key", 10},
+                                {"use_block_based_builder", true},
+                            }}
+                        }},
+                        {"index", {"binary", "hash"}},
+                        {"block_size", 4096}
+                    }}
+                }}
+            }}
+        }
+    };
+    // clang-format on
     return config;
 }
 
 
+/**
+ * Get JSON config from an input stream
+ */
 static nlohmann::json from_stream(std::ifstream& istr) {
     nlohmann::json config;
     istr >> config;
@@ -199,9 +390,8 @@ static nlohmann::json from_db_path(const std::string& db_path) {
     istr.open(json_file);
     if (istr.is_open()) {
         return from_stream(istr);
-    } else {
-        return default_json();
     }
+    return default_json();
 }
 
 Config::Config(const std::string& db_path)
@@ -214,29 +404,43 @@ Config::Config(std::ifstream& istr)
     : config_(from_stream(istr)) {}
 
 void Config::configure(rocksdb::Options& options, const std::string& db_path) const {
-    setup_statistics(this->config_, options);
-    setup_max_open_files(this->config_, options);
-    setup_create_if_missing(this->config_, options);
-    create_columns_families(this->config_["column_families"], db_path, options);
+    setup_statistics(config_, options);
+    setup_max_open_files(config_, options);
+    setup_create_if_missing(config_, options);
+
+    std::shared_ptr<rocksdb::Cache> empty;
+    auto global_block_cache = block_cache_if_present(config_, empty);
+    create_columns_families(config_["column_families"], db_path, options, global_block_cache);
 }
 
 std::ostream& Config::write(std::ostream& ostr, std::streamsize indent) const {
     const auto width = static_cast<int>(ostr.width());
-    return ostr << std::setw(static_cast<int>(indent)) << this->config_ << std::setw(width);
+    return ostr << std::setw(static_cast<int>(indent)) << config_ << std::setw(width);
 }
 
 std::vector<rocksdb::ColumnFamilyDescriptor> Config::column_families() const {
     std::vector<rocksdb::ColumnFamilyDescriptor> cfd;
-    for (auto const& cf_config: this->config_["column_families"]) {
+    std::shared_ptr<rocksdb::Cache> empty;
+    auto global_block_cache = block_cache_if_present(config_, empty);
+    for (auto const& cf_config: config_["column_families"]) {
         auto const& name = column_family_name(cf_config["name"]);
-        auto const& cf_options = column_families_options(cf_config["config"]);
+        auto const& cf_options = column_families_options(cf_config["config"], global_block_cache);
         cfd.emplace_back(name, cf_options);
     }
     return cfd;
 }
 
+bool Config::read_only() const {
+    bool read_only = false;
+    auto config = config_.find("read_only");
+    if (config != config_.end()) {
+        read_only = config.value().get<bool>();
+    }
+    return read_only;
+}
+
 bool Config::operator==(const Config& other) const {
-    return this->config_ == other.config_;
+    return config_ == other.config_;
 }
 
 std::ostream& operator<<(std::ostream& ostr, const Config& config) {

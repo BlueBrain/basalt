@@ -62,6 +62,12 @@ class Config {
 
     bool operator==(const Config& other) const;
 
+    /**
+     *
+     * \return true if the database should be opened only for read only operations.
+     */
+    bool read_only() const;
+
   private:
     const nlohmann::json config_;
 };
