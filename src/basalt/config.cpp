@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cctype>
 #include <fstream>
 #include <iomanip>
 #include <sstream>
@@ -16,6 +18,63 @@
 #include <rocksdb/table.h>
 
 namespace basalt {
+
+static void compression_options(const nlohmann::json& config, rocksdb::CompressionOptions& options) {
+    auto window_bits = config.find("window_bits");
+    if (window_bits != config.end()) {
+        window_bits.value().get_to(options.window_bits);
+    }
+    auto level = config.find("level");
+    if (level != config.end()) {
+        level.value().get_to(options.level);
+    }
+    auto strategy = config.find("strategy");
+    if (strategy != config.end()) {
+        strategy.value().get_to(options.strategy);
+    }
+}
+
+static rocksdb::CompressionType compression_type(std::string name) {
+    rocksdb::CompressionType result;
+    std::transform(name.begin(), name.end(), name.begin(),
+    [](unsigned char c) { return std::toupper(c);});
+    if (name == "NO" || name.empty()) {
+        result = rocksdb::CompressionType::kNoCompression;
+    } else if (name == "SNAPPY") {
+        result = rocksdb::CompressionType::kSnappyCompression;
+    } else if (name == "ZLIB") {
+        result = rocksdb::CompressionType::kZlibCompression;
+    } else if (name == "LZ4") {
+        result = rocksdb::CompressionType::kLZ4Compression;
+    } else if (name == "LZ4HC") {
+        result = rocksdb::CompressionType::kLZ4HCCompression;
+    } else {
+        std::ostringstream iss;
+        iss << "Unsupported compression format: '" << name << '\'';
+        throw std::runtime_error(iss.str());
+    }
+    return result;
+}
+
+
+static void configure_compression(const nlohmann::json& config, std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>& compression) {
+    compression.first = compression_type(config["type"].get<std::string>());
+    auto json_options = config.find("config");
+    if (json_options != config.end()) {
+        compression_options(json_options.value(), compression.second);
+    }
+}
+
+static std::unique_ptr<std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>>
+compression_if_present(const nlohmann::json& config) {
+    auto compression = config.find("compression");
+    if (compression != config.end()) {
+        std::unique_ptr<std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>> result(new std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>);
+        configure_compression(compression.value(), *result);
+        return result;
+    }
+    return nullptr;
+}
 
 /**
  * Convert rocksdb status object to a basalt one
@@ -293,6 +352,14 @@ static void setup_create_if_missing(const nlohmann::json& config, rocksdb::Optio
     }
 }
 
+static void setup_compression(const nlohmann::json& config, rocksdb::Options& options) {
+    auto compression = compression_if_present(config);
+    if (compression != nullptr) {
+        options.compression = compression->first;
+        options.compression_opts = compression->second;
+    }
+}
+
 /**
  * Provide the default JSON config if not provided when creating the database
  */
@@ -302,10 +369,17 @@ static nlohmann::json default_json() {
     config["statistics"] = true;
     config["max_open_files"] = -1;
     config["create_if_missing"] = true;
-    config["block_cache"] = {{"type", "lru"},
-                             {"config",
-                              {{"capacity", 1u << 30u /* 1GB */}, {"num_shard_bits", 4}}}};
     // clang-format off
+    config["block_cache"] = {
+        {"type", "lru"},
+        {"config", {
+            {"capacity", 1u << 30u /* 1GB */},
+            {"num_shard_bits", 4}
+        }}
+    };
+    config["compression"] = {
+        {"type", "snappy"}
+    };
     config["column_families"] = {
         {
             {"name", "<default>"},
@@ -407,6 +481,7 @@ void Config::configure(rocksdb::Options& options, const std::string& db_path) co
     setup_statistics(config_, options);
     setup_max_open_files(config_, options);
     setup_create_if_missing(config_, options);
+    setup_compression(config_, options);
 
     std::shared_ptr<rocksdb::Cache> empty;
     auto global_block_cache = block_cache_if_present(config_, empty);
