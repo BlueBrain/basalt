@@ -62,7 +62,7 @@ class Vertices {
 
     /**
      * \brief Insert a vertex in the graph.
-     * \tparam T vertex payload type
+     * \tparam Payload vertex payload type
      * \param vertex the vertex unique identifier to insert
      * \param data vertex payload
      * \param commit whether uncommitted operations should be flushed or not
@@ -74,7 +74,6 @@ class Vertices {
 
     /**
      * \brief Insert a vertex in the graph.
-     * \tparam T vertex payload type
      * \param vertex vertex unique identifier to insert
      * \param data vertex payload
      * \param size payload length

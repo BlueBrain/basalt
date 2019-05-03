@@ -26,24 +26,15 @@ namespace basalt {
  */
 
 struct membuf: std::streambuf {
-    membuf(pybind11::array_t<char>& data) {
-        auto request = data.request();
-        auto ptr = reinterpret_cast<char*>(request.ptr);
-        this->setg(ptr, ptr, ptr + request.size);
-    }
-    membuf(char* base, size_t size) {
-        this->setg(base, base, base + size);
-    }
+    membuf(pybind11::array_t<char>& data);
+    membuf(char* base, size_t size);
+    virtual ~membuf();
 };
 
 struct imemstream: virtual membuf, std::istream {
-    imemstream(char* base, size_t size)
-        : membuf(base, size)
-        , std::istream(this) {}
-
-    imemstream(pybind11::array_t<char>& data)
-        : membuf(data)
-        , std::istream(this) {}
+    imemstream(char* base, size_t size);
+    imemstream(pybind11::array_t<char>& data);
+    virtual ~imemstream();
 };
 
 /**
