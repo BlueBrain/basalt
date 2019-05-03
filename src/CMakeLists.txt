@@ -59,7 +59,8 @@ set(PYBIND11_SOURCES
     basalt/py_graph_edges.cpp
     basalt/py_graph_vertices.hpp
     basalt/py_graph_vertices.cpp
-    basalt/py_helpers.hpp)
+    basalt/py_helpers.hpp
+    basalt/py_helpers.cpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 add_subdirectory(${pybind11_project_directory})
 pybind11_add_module(_basalt SHARED ${PYBIND11_SOURCES} $<TARGET_OBJECTS:basalt_obj>)

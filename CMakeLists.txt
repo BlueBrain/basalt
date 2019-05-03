@@ -74,6 +74,10 @@ endif()
 
 bob_begin_cxx_flags()
 bob_cxx11_flags()
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-exit-time-destructors")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-float-equal")
+endif()
 bob_end_cxx_flags()
 
 set(Basalt_KEY_INTS Basalt_VERSION_MAJOR Basalt_VERSION_MINOR Basalt_VERSION_PATCH)
