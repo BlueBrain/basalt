@@ -41,15 +41,28 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
 }
 
 GraphImpl::GraphImpl(const std::string& path)
-    : GraphImpl(path, Config(path)) {}
+    : GraphImpl(path, Config(path), false) {}
 
-GraphImpl::GraphImpl(const std::string& path, Config config)
+GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
     : path_(path)
     , config_(std::move(config))
     , vertices_(*this)
     , edges_(*this)
     , statistics_(rocksdb::CreateDBStatistics())
     , options_(new rocksdb::Options) {
+
+    if (throw_if_exists) {
+        struct stat info;
+        auto status = stat(path.c_str(), &info);
+        if (status != ENOENT) {
+            if (status != 0) {
+                // something went wont
+                throw std::runtime_error(strerror(errno));
+            }
+            throw std::runtime_error("Database directory is not supposed to exist");
+        }
+    }
+
     rocksdb::DB* db;
 
     this->config_.configure(*options_, path);

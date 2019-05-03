@@ -32,6 +32,13 @@ class Graph {
      */
     explicit Graph(const std::string& path);
 
+    /**
+     * \brief create graph on disk at the given path with the given configuration
+     * \param path the graph directory on disk (must not exist)
+     * \param config the path to a JSON file
+     */
+     Graph(const std::string& path, const std::string& config);
+
     ~Graph();
 
     /**

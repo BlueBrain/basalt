@@ -20,7 +20,7 @@ class GraphImpl {
     using column_families_t = std::vector<rocksdb::ColumnFamilyHandle*>;
 
     explicit GraphImpl(const std::string& path);
-    GraphImpl(const std::string& path, Config config);
+    GraphImpl(const std::string& path, Config config, bool throw_if_exists);
 
     inline const logger_t& logger_get() const noexcept {
         return this->logger_;
