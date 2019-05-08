@@ -12,6 +12,7 @@ Basalt --- Graph Storage library
 
 .. toctree::
    :maxdepth: 1
+   :caption: Introduction
 
    readme
 
@@ -21,6 +22,12 @@ Basalt --- Graph Storage library
 
    contents/graphs
    contents/ngv
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Contributing:
+
+   contributing
 
 .. toctree::
    :maxdepth: 2
