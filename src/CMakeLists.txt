@@ -47,9 +47,10 @@ include_directories(SYSTEM
                     ${spdlog_include_directory}
                     ${nlohmann_include_directory})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt {CMAKE_CURRENT_SOURCE_DIR}/python_bindings ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt {CMAKE_CURRENT_SOURCE_DIR}/python_bindings
+                    ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(basalt_obj OBJECT ${basalt_SOURCES} ${basalt_HEADERS})
+add_library(basalt_obj ${basalt_HEADERS} ${basalt_SOURCES} OBJECT)
 set_property(TARGET basalt_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Shared library
@@ -74,5 +75,8 @@ set(PYBIND11_SOURCES
     python_bindings/py_helpers.cpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 add_subdirectory(${pybind11_project_directory})
-pybind11_add_module(_basalt SHARED ${PYBIND11_SOURCES} $<TARGET_OBJECTS:basalt_obj>)
+pybind11_add_module(_basalt
+                    SHARED
+                    ${PYBIND11_SOURCES}
+                    $<TARGET_OBJECTS:basalt_obj>)
 target_link_libraries(_basalt PRIVATE ${RocksDB_LIBRARIES})
