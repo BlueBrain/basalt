@@ -50,7 +50,7 @@ include_directories(SYSTEM
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt {CMAKE_CURRENT_SOURCE_DIR}/python_bindings
                     ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(basalt_obj ${basalt_HEADERS} ${basalt_SOURCES} OBJECT)
+add_library(basalt_obj OBJECT ${basalt_HEADERS} ${basalt_SOURCES})
 set_property(TARGET basalt_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Shared library
