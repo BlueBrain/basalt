@@ -30,8 +30,11 @@ Status Vertices::insert(const vertex_t* types,
     if (payloads == nullptr) {
         return pimpl_.vertices_insert({types, num_vertices}, {ids, num_vertices}, {}, {}, commit);
     }
-    return pimpl_.vertices_insert({types, num_vertices}, {ids, num_vertices},
-                                  {payloads, num_vertices}, {payloads_sizes, num_vertices}, commit);
+    return pimpl_.vertices_insert({types, num_vertices},
+                                  {ids, num_vertices},
+                                  {payloads, num_vertices},
+                                  {payloads_sizes, num_vertices},
+                                  commit);
 }
 
 Status Vertices::has(const vertex_uid_t& vertex, bool& result) const {

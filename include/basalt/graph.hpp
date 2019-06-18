@@ -37,7 +37,7 @@ class Graph {
      * \param path the graph directory on disk (must not exist)
      * \param config the path to a JSON file
      */
-     Graph(const std::string& path, const std::string& config);
+    Graph(const std::string& path, const std::string& config);
 
     ~Graph();
 

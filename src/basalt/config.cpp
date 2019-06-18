@@ -19,7 +19,8 @@
 
 namespace basalt {
 
-static void compression_options(const nlohmann::json& config, rocksdb::CompressionOptions& options) {
+static void compression_options(const nlohmann::json& config,
+                                rocksdb::CompressionOptions& options) {
     auto window_bits = config.find("window_bits");
     if (window_bits != config.end()) {
         window_bits.value().get_to(options.window_bits);
@@ -36,8 +37,9 @@ static void compression_options(const nlohmann::json& config, rocksdb::Compressi
 
 static rocksdb::CompressionType compression_type(std::string name) {
     rocksdb::CompressionType result;
-    std::transform(name.begin(), name.end(), name.begin(),
-    [](unsigned char c) { return std::toupper(c);});
+    std::transform(name.begin(), name.end(), name.begin(), [](unsigned char c) {
+        return std::toupper(c);
+    });
     if (name == "NO" || name.empty()) {
         result = rocksdb::CompressionType::kNoCompression;
     } else if (name == "SNAPPY") {
@@ -57,7 +59,9 @@ static rocksdb::CompressionType compression_type(std::string name) {
 }
 
 
-static void configure_compression(const nlohmann::json& config, std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>& compression) {
+static void configure_compression(
+    const nlohmann::json& config,
+    std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>& compression) {
     compression.first = compression_type(config["type"].get<std::string>());
     auto json_options = config.find("config");
     if (json_options != config.end()) {
@@ -69,7 +73,8 @@ static std::unique_ptr<std::pair<rocksdb::CompressionType, rocksdb::CompressionO
 compression_if_present(const nlohmann::json& config) {
     auto compression = config.find("compression");
     if (compression != config.end()) {
-        std::unique_ptr<std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>> result(new std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>);
+        std::unique_ptr<std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>> result(
+            new std::pair<rocksdb::CompressionType, rocksdb::CompressionOptions>);
         configure_compression(compression.value(), *result);
         return result;
     }

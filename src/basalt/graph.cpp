@@ -20,8 +20,7 @@ Graph::Graph(const std::string& path)
     : pimpl_(new GraphImpl(path)) {}
 
 Graph::Graph(const std::string& path, const std::string& config)
-: pimpl_(new GraphImpl(path, from_file(config), true))
-{}
+    : pimpl_(new GraphImpl(path, from_file(config), true)) {}
 
 Graph::~Graph() = default;
 

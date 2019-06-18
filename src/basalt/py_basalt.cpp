@@ -163,7 +163,8 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
         .def(py::init([](int code, const std::string& message) {
                  return basalt::Status(static_cast<basalt::Status::Code>(code), message);
              }),
-             "code"_a, "message"_a = std::string())
+             "code"_a,
+             "message"_a = std::string())
         .def_property_readonly("code",
                                [](const basalt::Status& status) {
                                    return static_cast<int>(status.code);
@@ -180,10 +181,14 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     py::class_<basalt::Graph>(m, "Graph", docstring::graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
-        .def(py::init<const std::string&, const std::string&>(), "path"_a, "config"_a, docstring::graph_init_with_config)
+        .def(py::init<const std::string&, const std::string&>(),
+             "path"_a,
+             "config"_a,
+             docstring::graph_init_with_config)
         .def_property_readonly("vertices", &basalt::Graph::vertices, docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
-        .def("commit", [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
+        .def("commit",
+             [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)
         .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
 
