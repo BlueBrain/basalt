@@ -99,6 +99,7 @@ matrix:
       os: osx
       addons:
         homebrew:
+          update: true
           packages:
           - hdf5
           - llvm
