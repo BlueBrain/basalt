@@ -51,7 +51,7 @@ GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exist
     , statistics_(rocksdb::CreateDBStatistics())
     , options_(new rocksdb::Options) {
     if (throw_if_exists) {
-        struct stat info;
+        struct stat info {};
         auto status = stat(path.c_str(), &info);
         if (status != ENOENT) {
             if (status != 0) {

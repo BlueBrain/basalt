@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iomanip>
 #include <sstream>
-#include <sys/sysinfo.h>
 
 #include <gsl-lite/gsl-lite.hpp>
 #include <rocksdb/cache.h>
@@ -13,9 +12,10 @@
 #include <rocksdb/statistics.h>
 #include <rocksdb/table.h>
 
-#include "config.hpp"
 #include <basalt/status.hpp>
-#include <rocksdb/table.h>
+
+#include "config.hpp"
+#include "system.hpp"
 
 namespace basalt {
 
@@ -134,12 +134,7 @@ static size_t capacity_from_string(const std::string& capacity) {
             std::istringstream iss(capacity.substr(0, size_len));
             iss >> percent;
 
-            struct sysinfo info {};
-            if (sysinfo(&info) != 0) {
-                throw std::runtime_error(std::string("Could not get total available RAM: ") +
-                                         strerror(errno));
-            }
-            return info.totalram / percent;
+            return system::available_memory_bytes() / percent;
         } else {
             throw std::runtime_error(std::string("Unknown unit: ") + unit);
         }
