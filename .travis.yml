@@ -101,6 +101,7 @@ matrix:
         homebrew:
           update: true
           packages:
+          - doxygen
           - hdf5
           - llvm
           - numpy
