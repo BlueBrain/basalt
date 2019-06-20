@@ -94,6 +94,30 @@ matrix:
   allow_failures:
     - os: osx
   include:
+      # Test gcc-7: C++11
+    - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
+      os: linux
+      dist: xenial
+      addons: *gcc7
+
+      # Test clang-6.0: C++11
+    - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
+      os: linux
+      dist: xenial
+      addons: *clang6
+
+      # Test clang-7: C++11
+    - env: CPP_CHECK=yes CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
+      os: linux
+      dist: xenial
+      addons: *clang7
+
+      # Test clang-8: C++11
+    - env: CLANG_VERSION=8 CXX_OPTIMIZE=OFF CPP=11
+      os: linux
+      dist: xenial
+      addons: *clang8
+
       # osx
     - env: CXX_OPTIMIZE=OFF CPP=11
       os: osx
