@@ -4,7 +4,6 @@
 #include "graph_impl.hpp"
 #include "vertex_iterator_impl.hpp"
 
-
 #include <gsl-lite/gsl-lite.hpp>
 #include <rocksdb/db.h>
 #include <rocksdb/filter_policy.h>

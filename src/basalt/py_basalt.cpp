@@ -12,6 +12,7 @@
 #include <pybind11/stl_bind.h>
 
 #include "basalt/version.hpp"
+#include "config.hpp"
 #include "graph_impl.hpp"
 #include "py_circuit_payloads.hpp"
 #include "py_graph_edges.hpp"
@@ -81,6 +82,14 @@ static const char* make_id = R"(
 
     >>> basalt.make_id(42, 43)
     (42, 43)
+)";
+
+static const char* default_json_config = R"(
+    Helper function to write a JSON file containing
+    the default basalt database configuration.
+
+    Args:
+        type(str): path to JSON file to write
 )";
 
 static const char* status_raise_on_error = R"(
@@ -158,6 +167,14 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
     m.attr("__version__") = basalt_version();
 
     m.def("make_id", &basalt::make_id, "type"_a, "id"_a, docstring::make_id);
+
+    m.def("default_config_file",
+          [](const std::string& path) {
+              std::ofstream ostr(path);
+              ostr << basalt::Config();
+          },
+          "path"_a,
+          docstring::default_json_config);
 
     py::class_<basalt::Status>(m, "Status", docstring::status)
         .def(py::init([](int code, const std::string& message) {
