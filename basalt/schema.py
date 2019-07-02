@@ -84,46 +84,34 @@ class DirectiveMeta(type):
             new_cls._generate_methods()
         return new_cls
 
-    def __init__(cls, name, bases, attr_dict):
-        # The class is being created: if it is a package we must ensure
-        # that the directives are called on the class to set it up
-        if "spack.pkg" in cls.__module__:
-            # Package name as taken
-            # from llnl.util.lang.get_calling_module_name
-            pkg_name = cls.__module__.split(".")[-1]
-            setattr(cls, "name", pkg_name)
-
-        super(DirectiveMeta, cls).__init__(name, bases, attr_dict)
-
     @staticmethod
     def directive(dicts=None):
-        """Decorator for Spack directives.
+        """Decorator for Basalt directives.
 
-        Spack directives allow you to modify a package while it is being
-        defined, e.g. to add version or dependency information.  Directives
-        are one of the key pieces of Spack's package "language", which is
-        embedded in python.
+        Basalt directives allow you to describe a graph typology
+        while defining a graph Python class., e.g. describe the kind
+        of vertices and the possible edges between these vertices.
 
         Here's an example directive:
 
-            @directive(dicts='versions')
-            version(pkg, ...):
+            @directive(dicts='edges_types')
+            edge(name, ...):
                 ...
 
         This directive allows you write:
 
-            class Foo(Package):
-                version(...)
+            class Foo(MetaGraph):
+                edge(...)
 
         The ``@directive`` decorator handles a couple things for you:
 
-          1. Adds the class scope (pkg) as an initial parameter when
+          1. Adds the class scope (graph) as an initial parameter when
              called, like a class method would.  This allows you to modify
              a package from within a directive, while the package is still
              being defined.
 
-          2. It automatically adds a dictionary called "versions" to the
-             package so that you can refer to pkg.versions.
+          2. It automatically adds a dictionary called "edges_types" to the
+             graph class so that you can refer to it later..
 
         The ``(dicts='versions')`` part ensures that ALL packages in Spack
         will have a ``versions`` attribute after they're constructed, and
