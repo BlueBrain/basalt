@@ -142,11 +142,12 @@ with open(osp.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="basalt",
-    description="Persistent Graph Database for fast storage",
+    description="Graph API propelled by RocksDB persistent key-value store for fast storage",
     long_description=long_description,
     long_description_content_type='text/markdown',
     author="BlueBrain Project, EPFL",
-    author_email="bbp-ou-hpc@groupes.epfl.ch",
+    author_email="tristan.carel@epfl.ch",
+    license="LGPLv3",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console :: Curses",
