@@ -3,7 +3,7 @@
 import functools
 from pkg_resources import get_distribution, DistributionNotFound
 
-from ._basalt import Status, Vertices, Edges, Graph, make_id
+from ._basalt import Status, Vertices, Edges, Graph, make_id, default_config_file
 from ._basalt import __rocksdb_version__  # noqa
 
 try:
@@ -11,5 +11,4 @@ try:
 except DistributionNotFound:
     from ._basalt import __version__
 
-
-__all__ = ["Graph", "Status", "make_id", "Edges", "Vertices"]
+__all__ = ["default_config_file", "Edges", "Graph", "make_id", "Status", "Vertices"]

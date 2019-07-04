@@ -61,8 +61,6 @@ unset(Basalt_SERIALIZATION_METHODS)
 unset(index)
 
 bob_begin_cxx_flags()
-bob_cxx11_flags()
-
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   message(STATUS "Detected Clang compiler")
   set(FLAGS "${FLAGS} -Wlifetime")
@@ -71,8 +69,6 @@ elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
 elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "Intel")
   message(STATUS "Detected Intel compiler")
 endif()
-
-bob_begin_cxx_flags()
 bob_cxx11_flags()
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-exit-time-destructors")
@@ -111,6 +107,7 @@ set(gsl_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/gsl-lite/include
 set(pybind11_project_directory ${PROJECT_SOURCE_DIR}/src/third_party/pybind11)
 set(pybind11_include_directory ${pybind11_project_directory}/include)
 set(spdlog_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/spdlog/include)
+set(nlohmann_include_directory ${PROJECT_SOURCE_DIR}/src/third_party/nlohmann/include)
 
 if(USE_CLANG_TIDY)
   cmake_minimum_required(VERSION 3.8)

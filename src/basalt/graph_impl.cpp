@@ -4,7 +4,6 @@
 #include "graph_impl.hpp"
 #include "vertex_iterator_impl.hpp"
 
-
 #include <gsl-lite/gsl-lite.hpp>
 #include <rocksdb/db.h>
 #include <rocksdb/filter_policy.h>
@@ -40,111 +39,41 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
     return async_write;
 }
 
-/**
- * \}
- */
-
-inline static const rocksdb::Options& db_options() {
-    static const rocksdb::Options& db_options = []() {
-        rocksdb::Options options;
-        // FIXME set it on column family level
-        options.prefix_extractor.reset(
-            rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t) + sizeof(vertex_id_t)));
-        options.create_if_missing = true;
-        options.max_open_files = -1;
-        options.statistics = rocksdb::CreateDBStatistics();
-        return options;
-    }();
-    return db_options;
-}
-
-inline static const rocksdb::ColumnFamilyOptions& vertices_cfo() {
-    static const rocksdb::ColumnFamilyOptions vertices_cfo = []() {
-        rocksdb::ColumnFamilyOptions options;
-        // optimize vertex prefix enumeration to look for all vertices of a particular
-        // type
-        options.prefix_extractor.reset(rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t)));
-        options.write_buffer_size = 128u << 20u;      // 128MB
-        options.target_file_size_base = 128u << 20u;  // 128MB
-        options.max_bytes_for_level_base = options.target_file_size_base * 10;
-        return options;
-    }();
-    return vertices_cfo;
-}
-
-inline static const rocksdb::ColumnFamilyOptions& edges_cfo() {
-    static const rocksdb::ColumnFamilyOptions edges_cfo = []() {
-        rocksdb::ColumnFamilyOptions options;
-        // optimize vertex prefix enumeration to look for all edges of a particular
-        // vertex
-        options.prefix_extractor.reset(
-            rocksdb::NewFixedPrefixTransform(1 + sizeof(vertex_t) + sizeof(vertex_id_t)));
-        // Enable prefix bloom for SST files
-        rocksdb::BlockBasedTableOptions table_options{};
-        table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
-        options.table_factory.reset(NewBlockBasedTableFactory(table_options));
-        options.write_buffer_size = 128u << 20u;      // 128MB
-        options.target_file_size_base = 128u << 20u;  // 128MB
-        options.max_bytes_for_level_base = options.target_file_size_base * 10;
-        return options;
-    }();
-    return edges_cfo;
-}
-
-inline static const std::string& vertices_cfn() {
-    static const std::string vertices_cfn = rocksdb::kDefaultColumnFamilyName;
-    return vertices_cfn;
-}
-
-inline static const std::string& edges_cfn() {
-    static const std::string edges_cfn = "edges";
-    return edges_cfn;
-}
-
-void GraphImpl::setup_db(const rocksdb::Options& options, const std::string& path) {
-    std::unique_ptr<rocksdb::DB> db_ptr;
-    {  // open db
-        rocksdb::DB* db;
-        rocksdb::Status status = rocksdb::DB::Open(options, path, &db);
-        db_ptr.reset(db);
-        if (status.code() == rocksdb::Status::kInvalidArgument) {
-            return;
-        }
-        to_status(status).raise_on_error();
-    }
-
-    std::vector<std::string> column_family_names;
-    rocksdb::DB::ListColumnFamilies(options, db_ptr->GetName(), &column_family_names);
-    if (std::find(column_family_names.begin(), column_family_names.end(), vertices_cfn()) ==
-        column_family_names.end()) {
-        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(vertices_cfo(), vertices_cfn(), &cf)).raise_on_error();
-        delete cf;
-    }
-    if (std::find(column_family_names.begin(), column_family_names.end(), edges_cfn()) ==
-        column_family_names.end()) {
-        gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-        to_status(db_ptr->CreateColumnFamily(edges_cfo(), edges_cfn(), &cf)).raise_on_error();
-        delete cf;
-    }
-}
-
 GraphImpl::GraphImpl(const std::string& path)
+    : GraphImpl(path, Config(path), false) {}
+
+GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
     : path_(path)
+    , config_(std::move(config))
     , vertices_(*this)
     , edges_(*this)
     , statistics_(rocksdb::CreateDBStatistics())
-    , options_(new rocksdb::Options(db_options(), {})) {
+    , options_(new rocksdb::Options) {
+    if (throw_if_exists) {
+        struct stat info {};
+        auto status = stat(path.c_str(), &info);
+        if (status != ENOENT) {
+            if (status != 0) {
+                // something went wont
+                throw std::runtime_error(strerror(errno));
+            }
+            throw std::runtime_error("Database directory is not supposed to exist");
+        }
+    }
+
     rocksdb::DB* db;
 
-    setup_db(*options_, path);
-
-    std::vector<rocksdb::ColumnFamilyDescriptor> column_families;
-    column_families.emplace_back(vertices_cfn(), vertices_cfo());
-    column_families.emplace_back(edges_cfn(), edges_cfo());
+    this->config_.configure(*options_, path);
+    const auto& column_families = this->config_.column_families();
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
-    handles.reserve(2);
-    to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db)).raise_on_error();
+    handles.reserve(column_families.size());
+    if (config_.read_only()) {
+        to_status(rocksdb::DB::OpenForReadOnly(*options_, path, column_families, &handles, &db))
+            .raise_on_error();
+    } else {
+        to_status(rocksdb::DB::Open(*options_, path, column_families, &handles, &db))
+            .raise_on_error();
+    }
     vertices_column_.reset(handles[0]);
     edges_column_.reset(handles[1]);
 
@@ -156,6 +85,18 @@ GraphImpl::GraphImpl(const std::string& path)
         logger_ = spdlog::rotating_logger_mt(logger_name, path + "/logs/graph.log", 1048576 * 5, 3);
         logger_->info("creating or loading database at location: {}", path);
         logger_->set_level(spdlog::level::level_enum::trace);
+    }
+    {
+        struct stat info {};
+        auto json_config = path + "/config.json";
+        if (stat(json_config.c_str(), &info) != 0) {
+            std::ofstream ostr(json_config);
+            if (ostr.is_open()) {
+                ostr << config_ << '\n';
+            } else {
+                logger_->error("Could not write JSON config file {}", strerror(errno));
+            }
+        }
     }
 }
 
@@ -169,18 +110,23 @@ Status GraphImpl::vertices_insert(const vertex_uid_t& vertex, bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, commit={})", vertex, commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
-    return to_status(db_get()->Put(write_options(commit), vertices_column_.get(),
-                                   rocksdb::Slice(key.data(), key.size()), rocksdb::Slice()));
+    return to_status(db_get()->Put(write_options(commit),
+                                   vertices_column_.get(),
+                                   rocksdb::Slice(key.data(), key.size()),
+                                   rocksdb::Slice()));
 }
 
 Status GraphImpl::vertices_insert(const vertex_uid_t& vertex,
                                   const gsl::span<const char>& payload,
                                   bool commit) {
-    logger_get()->debug("vertices_insert(vertex={}, data_size={}, commit={})", vertex,
-                        payload.size(), commit);
+    logger_get()->debug("vertices_insert(vertex={}, data_size={}, commit={})",
+                        vertex,
+                        payload.size(),
+                        commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
-    return to_status(db_get()->Put(write_options(commit), vertices_column_.get(),
+    return to_status(db_get()->Put(write_options(commit),
+                                   vertices_column_.get(),
                                    rocksdb::Slice(key.data(), key.size()),
                                    rocksdb::Slice(payload.data(), payload.size())));
 }
@@ -190,8 +136,10 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
                                   const gsl::span<const char* const> payloads,
                                   const gsl::span<const std::size_t> payloads_sizes,
                                   bool commit) {
-    logger_get()->debug("vertices_insert(vertices={}, payloads={}, commit={}", types.length(),
-                        payloads.length() != 0, commit);
+    logger_get()->debug("vertices_insert(vertices={}, payloads={}, commit={}",
+                        types.length(),
+                        payloads.length() != 0,
+                        commit);
     GraphKV::vertex_key_t key;
     rocksdb::WriteBatch batch;
 
@@ -199,13 +147,15 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
         const rocksdb::Slice empty_payload;
         for (auto i = 0u; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
-            batch.Put(vertices_column_.get(), rocksdb::Slice(key.data(), key.size()),
+            batch.Put(vertices_column_.get(),
+                      rocksdb::Slice(key.data(), key.size()),
                       empty_payload);
         }
     } else {
         for (auto i = 0u; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
-            batch.Put(vertices_column_.get(), rocksdb::Slice(key.data(), key.size()),
+            batch.Put(vertices_column_.get(),
+                      rocksdb::Slice(key.data(), key.size()),
                       rocksdb::Slice(payloads[i], payloads_sizes[i]));
         }
     }
@@ -220,8 +170,8 @@ Status GraphImpl::vertices_has(const vertex_uid_t& vertex, bool& result) const {
     const rocksdb::Slice slice(key.data(), key.size());
 
     std::string value;
-    const auto& status = db_get()->Get(default_read_options(), vertices_column_.get(), slice,
-                                       &value);
+    const auto& status =
+        db_get()->Get(default_read_options(), vertices_column_.get(), slice, &value);
     if (status.IsNotFound()) {
         result = false;
         return Status::ok();
@@ -234,8 +184,10 @@ Status GraphImpl::vertices_get(const vertex_uid_t& vertex, std::string* value) {
     logger_get()->debug("vertices_get(vertex={})", vertex);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
-    const auto& status = db_get()->Get(default_read_options(), vertices_column_.get(),
-                                       rocksdb::Slice(key.data(), key.size()), value);
+    const auto& status = db_get()->Get(default_read_options(),
+                                       vertices_column_.get(),
+                                       rocksdb::Slice(key.data(), key.size()),
+                                       value);
     if (status.IsNotFound()) {
         return Status::error_missing_vertex(vertex);
     }
@@ -331,8 +283,11 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
                                const vertex_uid_t& vertex2,
                                const gsl::span<const char>& payload,
                                bool commit) {
-    logger_get()->debug("edges_insert(vertex1={}, vertex2={}, payload={}, commit={})", vertex1,
-                        vertex2, !payload.empty(), commit);
+    logger_get()->debug("edges_insert(vertex1={}, vertex2={}, payload={}, commit={})",
+                        vertex1,
+                        vertex2,
+                        !payload.empty(),
+                        commit);
     if (vertex1 == vertex2) {
         return Status::error_invalid_edge(vertex1, vertex2);
     }
@@ -367,7 +322,11 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                                bool create_vertices,
                                bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
-                        vertex, type, vertices.size(), create_vertices, commit);
+                        vertex,
+                        type,
+                        vertices.size(),
+                        create_vertices,
+                        commit);
     if (vertices.empty()) {
         return Status::ok();
     }
@@ -388,7 +347,8 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     } else {
         GraphKV::vertex_key_t key;
         GraphKV::encode(vertex, key);
-        batch.Put(this->vertices_column_.get(), rocksdb::Slice(key.data(), key.size()),
+        batch.Put(this->vertices_column_.get(),
+                  rocksdb::Slice(key.data(), key.size()),
                   rocksdb::Slice());
     }
     std::vector<GraphKV::edge_keys_t> keys(vertices.size());
@@ -399,11 +359,13 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
             GraphKV::encode(target, vertex_key);
             const rocksdb::Slice payload{vertex_payloads[i], vertex_payloads_sizes[i]};
             batch.Put(this->vertices_column_.get(),
-                      rocksdb::Slice(vertex_key.data(), vertex_key.size()), payload);
+                      rocksdb::Slice(vertex_key.data(), vertex_key.size()),
+                      payload);
         }
         GraphKV::encode(vertex, target, keys[i]);
         for (const auto& key: keys[i]) {
-            batch.Put(edges_column_.get(), rocksdb::Slice(key.data(), key.size()),
+            batch.Put(edges_column_.get(),
+                      rocksdb::Slice(key.data(), key.size()),
                       rocksdb::Slice());
         }
     }
@@ -416,7 +378,11 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                                bool create_vertices,
                                bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
-                        vertex, type, vertices.size(), create_vertices, commit);
+                        vertex,
+                        type,
+                        vertices.size(),
+                        create_vertices,
+                        commit);
     if (vertices.empty()) {
         return Status::ok();
     }
@@ -437,7 +403,8 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     } else {
         GraphKV::vertex_key_t key;
         GraphKV::encode(vertex, key);
-        batch.Put(this->vertices_column_.get(), rocksdb::Slice(key.data(), key.size()),
+        batch.Put(this->vertices_column_.get(),
+                  rocksdb::Slice(key.data(), key.size()),
                   rocksdb::Slice());
     }
     std::vector<GraphKV::edge_keys_t> keys(vertices.size());
@@ -447,11 +414,13 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         if (create_vertices) {
             GraphKV::encode(target, vertex_key);
             batch.Put(this->vertices_column_.get(),
-                      rocksdb::Slice(vertex_key.data(), vertex_key.size()), rocksdb::Slice());
+                      rocksdb::Slice(vertex_key.data(), vertex_key.size()),
+                      rocksdb::Slice());
         }
         GraphKV::encode(vertex, target, keys[i]);
         for (const auto& key: keys[i]) {
-            batch.Put(edges_column_.get(), rocksdb::Slice(key.data(), key.size()),
+            batch.Put(edges_column_.get(),
+                      rocksdb::Slice(key.data(), key.size()),
                       rocksdb::Slice());
         }
     }
@@ -463,7 +432,9 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                                const std::vector<const char*>& data,
                                const std::vector<std::size_t>& sizes,
                                bool commit) {
-    logger_get()->debug("edges_insert(vertex={}, vertices={}, commit={})", vertex, vertices,
+    logger_get()->debug("edges_insert(vertex={}, vertices={}, commit={})",
+                        vertex,
+                        vertices,
                         commit);
     {  // check presence of both vertices
         bool vertex_present = false;
@@ -488,7 +459,8 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         for (auto i = 0u; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
             for (const auto& key: keys[i]) {
-                batch.Put(edges_column_.get(), rocksdb::Slice(key.data(), key.size()),
+                batch.Put(edges_column_.get(),
+                          rocksdb::Slice(key.data(), key.size()),
                           rocksdb::Slice());
             }
         }
@@ -496,7 +468,8 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         for (auto i = 0u; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
             for (const auto& key: keys[i]) {
-                batch.Put(edges_column_.get(), rocksdb::Slice(key.data(), key.size()),
+                batch.Put(edges_column_.get(),
+                          rocksdb::Slice(key.data(), key.size()),
                           rocksdb::Slice(data[i], sizes[i]));
             }
         }
@@ -511,8 +484,10 @@ Status GraphImpl::edges_has(const vertex_uid_t& vertex1,
     GraphKV::edge_key_t key;
     GraphKV::encode(vertex1, vertex2, key);
     std::string value;
-    const auto& status = db_get()->Get(default_read_options(), edges_column_.get(),
-                                       rocksdb::Slice(key.data(), key.size()), &value);
+    const auto& status = db_get()->Get(default_read_options(),
+                                       edges_column_.get(),
+                                       rocksdb::Slice(key.data(), key.size()),
+                                       &value);
     if (status.IsNotFound()) {
         result = false;
         return Status::ok();
@@ -525,8 +500,10 @@ Status GraphImpl::edges_get(const edge_uid_t& edge, std::string* value) const {
     logger_get()->debug("edges_get(edge={})", edge);
     GraphKV::edge_key_t key;
     GraphKV::encode(edge.first, edge.second, key);
-    const auto& status = db_get()->Get(default_read_options(), edges_column_.get(),
-                                       rocksdb::Slice(key.data(), key.size()), value);
+    const auto& status = db_get()->Get(default_read_options(),
+                                       edges_column_.get(),
+                                       rocksdb::Slice(key.data(), key.size()),
+                                       value);
     if (status.IsNotFound()) {
         return Status::error_missing_edge(edge);
     }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <fstream>
 #include <iosfwd>
 #include <limits>
 #include <memory>
@@ -12,27 +13,56 @@
 
 namespace basalt {
 
-/// \brief Undirected Connectivity Graph
+/**
+ * \brief Undirected Connectivity Graph
+ */
 class Graph {
   public:
     /** \brief iterator over vertices */
     using vertex_const_iterator_t = std::iterator<std::input_iterator_tag, const vertex_t>;
 
     /**
+     * \name Ctors & Dtor
+     * \{
+     */
+
+    /**
      * \brief load graph if present on disk, initialize it otherwise
-     * \param path graph location on filesystem
+     * \param path graph directory on disk
      */
     explicit Graph(const std::string& path);
+
+    /**
+     * \brief create graph on disk at the given path with the given configuration
+     * \param path the graph directory on disk (must not exist)
+     * \param config the path to a JSON file
+     */
+    Graph(const std::string& path, const std::string& config);
+
     ~Graph();
 
-    /** \name edges accessor
-     ** \{ */
-    /** \brief edges accessor */
+    /**
+     * \}
+     */
+
+    /**
+     * \name edges accessor
+     * \{
+     */
+
+    /**
+     * \brief edges accessor
+     */
     Edges& edges();
 
-    /** \brief vertices accessor */
+    /**
+     * \brief vertices accessor
+     */
     Vertices& vertices();
-    /** \} */
+
+    /**
+     * \}
+     * */
 
     /**
      * \brief Process uncommitted operations
@@ -40,23 +70,33 @@ class Graph {
      */
     Status commit() __attribute__((warn_unused_result));
 
-    /** \brief Provides human readable string of all database counters */
+    /**
+     * \brief Provides human readable string of all database counters
+     */
     std::string statistics() const;
 
   private:
     std::unique_ptr<GraphImpl> pimpl_;
 };
 
-/// \brief \a vertex_uid_t constructor helper function
+/**
+ * \brief \a vertex_uid_t constructor helper function
+ */
 vertex_uid_t make_id(vertex_t type, vertex_id_t id);
 
 }  // namespace basalt
 
-/// \brief specialization to gently push a \a vertex_uid_t to an output stream
+/**
+ * \brief specialization to gently push a \a vertex_uid_t to an output stream
+ */
 std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uid_t& id);
 
-/// \brief specialization to gently push a \a vertex_uids_t to an output stream
+/**
+ * \brief specialization to gently push a \a vertex_uids_t to an output stream
+ */
 std::ostream& operator<<(std::ostream& ostr, const basalt::vertex_uids_t& ids);
 
-/// \brief specialization to gently push a \a edge_uid_t to an output stream
+/**
+ * \brief specialization to gently push a \a edge_uid_t to an output stream
+ */
 std::ostream& operator<<(std::ostream& ostr, const basalt::edge_uid_t& id);

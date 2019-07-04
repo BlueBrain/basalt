@@ -57,11 +57,13 @@ class Context(
 
 class Line(namedtuple("Line", ["name", "values", "timings"])):
     """Plot line"""
+
     pass
 
 
 class Benchmark(namedtuple("Benchmark", ["raw_title", "lines", "max_timing"])):
     """One benchmark made of several lines"""
+
     @property
     def title(self):
         """Benchmark title from C++ function name"""
@@ -106,9 +108,7 @@ class Benchmark(namedtuple("Benchmark", ["raw_title", "lines", "max_timing"])):
             line = lines.setdefault(name, Line(name=name, values=[], timings=[]))
             line.values.append(int(value))
             line.timings.append(timing / 1e6)
-        return Benchmark(
-            raw_title=title, lines=lines.values(), max_timing=max_timing
-        )
+        return Benchmark(raw_title=title, lines=lines.values(), max_timing=max_timing)
 
     def plot(self):
         """plot the Matplotlib figure"""
@@ -160,6 +160,7 @@ def load_from_data(data):
 
 # NOTEBOOK-STOP-HERE
 
+
 def load_from_json(file):
     with open(file) as istr:
         return load_from_data(json.load(istr))
@@ -187,7 +188,6 @@ EMPTY_NOTEBOOK = {
     "nbformat_minor": 2,
     "cells": [],
 }
-
 
 
 def read_markdown(md_file, benchmarks):

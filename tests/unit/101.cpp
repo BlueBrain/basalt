@@ -144,9 +144,13 @@ TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
     Graph g(new_db_path());
 
     // add synapses with id 0 and 1
-    const auto s0 = checked_insert(g, vertex_type::synapse, 0,
+    const auto s0 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   0,
                                    synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
-    const auto s1 = checked_insert(g, vertex_type::synapse, 1,
+    const auto s1 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   1,
                                    synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
 
     // add astrocytes

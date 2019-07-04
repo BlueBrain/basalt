@@ -24,7 +24,8 @@ class GraphKV {
     static inline void encode(const vertex_t type, const vertex_id_t id, vertex_key_t& key) {
         key[0] = 'N';
         std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&type), sizeof(decltype(type)));
-        std::memcpy(key.data() + 1 + sizeof(decltype(type)), reinterpret_cast<const char*>(&id),
+        std::memcpy(key.data() + 1 + sizeof(decltype(type)),
+                    reinterpret_cast<const char*>(&id),
                     sizeof(decltype(id)));
     }
 
@@ -34,7 +35,8 @@ class GraphKV {
 
     static inline void encode_edge_prefix(const vertex_uid_t& vertex, edge_key_prefix_t& key) {
         key[0] = 'E';
-        std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&vertex.first),
+        std::memcpy(key.data() + 1,
+                    reinterpret_cast<const char*>(&vertex.first),
                     sizeof(vertex_uid_t::first_type));
         std::memcpy(key.data() + 1 + sizeof(vertex_uid_t::first_type),
                     reinterpret_cast<const char*>(&vertex.second),
@@ -45,21 +47,24 @@ class GraphKV {
                                           vertex_t type,
                                           edge_key_type_prefix_t& key) {
         key[0] = 'E';
-        std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&vertex.first),
+        std::memcpy(key.data() + 1,
+                    reinterpret_cast<const char*>(&vertex.first),
                     sizeof(vertex_uid_t::first_type));
         std::memcpy(key.data() + 1 + sizeof(vertex_uid_t::first_type),
                     reinterpret_cast<const char*>(&vertex.second),
                     sizeof(vertex_uid_t::second_type));
         std::memcpy(key.data() + 1 + sizeof(vertex_uid_t::first_type) +
                         sizeof(vertex_uid_t::second_type),
-                    reinterpret_cast<const char*>(&type), sizeof(vertex_uid_t::first_type));
+                    reinterpret_cast<const char*>(&type),
+                    sizeof(vertex_uid_t::first_type));
     }
 
     static inline void encode(const vertex_uid_t& vertex1,
                               const vertex_uid_t& vertex2,
                               edge_key_t& key) {
         key[0] = 'E';
-        std::memcpy(key.data() + 1, reinterpret_cast<const char*>(&vertex1.first),
+        std::memcpy(key.data() + 1,
+                    reinterpret_cast<const char*>(&vertex1.first),
                     sizeof(vertex_uid_t::first_type));
         std::memcpy(key.data() + 1 + sizeof(vertex_uid_t::first_type),
                     reinterpret_cast<const char*>(&vertex1.second),
@@ -88,7 +93,8 @@ class GraphKV {
                     sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
         std::memcpy(key.data() + 1 + sizeof(vertex_uid_t::first_type) +
                         sizeof(vertex_uid_t::second_type),
-                    data + 1, sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
+                    data + 1,
+                    sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
     }
     /**
      *  \}
@@ -114,18 +120,22 @@ class GraphKV {
         static_cast<void>(size);
         assert(size == 1 + sizeof(vertex_uid_t::first_type) + sizeof(vertex_uid_t::second_type));
         assert(data[0] == 'N');
-        std::memcpy(reinterpret_cast<char*>(&vertex.first), data + 1,
+        std::memcpy(reinterpret_cast<char*>(&vertex.first),
+                    data + 1,
                     sizeof(vertex_uid_t::first_type));
         std::memcpy(reinterpret_cast<char*>(&vertex.second),
-                    data + 1 + sizeof(vertex_uid_t::first_type), sizeof(vertex_uid_t::second_type));
+                    data + 1 + sizeof(vertex_uid_t::first_type),
+                    sizeof(vertex_uid_t::second_type));
     }
 
     static inline void decode_edge(const char* data, size_t size, edge_uid_t& edge) {
         decode_edge_dest(data, size, edge.second);
-        std::memcpy(reinterpret_cast<char*>(&edge.first.first), data + 1,
+        std::memcpy(reinterpret_cast<char*>(&edge.first.first),
+                    data + 1,
                     sizeof(vertex_uid_t::first_type));
         std::memcpy(reinterpret_cast<char*>(&edge.first.second),
-                    data + 1 + sizeof(vertex_uid_t::first_type), sizeof(vertex_uid_t::second_type));
+                    data + 1 + sizeof(vertex_uid_t::first_type),
+                    sizeof(vertex_uid_t::second_type));
     }
 
     /**

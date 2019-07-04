@@ -123,7 +123,9 @@ matrix:
       os: osx
       addons:
         homebrew:
+          update: true
           packages:
+          - doxygen
           - hdf5
           - llvm
           - numpy

@@ -9,8 +9,18 @@
 
 namespace basalt {
 
+static Config from_file(const std::string& path) {
+    std::ifstream istr;
+    istr.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    istr.open(path);
+    return Config(istr);
+}
+
 Graph::Graph(const std::string& path)
     : pimpl_(new GraphImpl(path)) {}
+
+Graph::Graph(const std::string& path, const std::string& config)
+    : pimpl_(new GraphImpl(path, from_file(config), true)) {}
 
 Graph::~Graph() = default;
 
