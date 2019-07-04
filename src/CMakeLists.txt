@@ -29,11 +29,11 @@ set(basalt_HEADERS
     ${basalt_include_directory}/basalt/vertex_iterator.hpp)
 
 if(APPLE)
-    list(APPEND basalt_SOURCES basalt/system_macos.cpp)
+  list(APPEND basalt_SOURCES basalt/system_macos.cpp)
 elseif(UNIX)
-    list(APPEND basalt_SOURCES basalt/system_linux.cpp)
+  list(APPEND basalt_SOURCES basalt/system_linux.cpp)
 else()
-    message(FATAL_ERROR "Unsupported environment")
+  message(FATAL_ERROR "Unsupported environment")
 endif()
 
 configure_file(basalt/version.hpp.in basalt/version.hpp @ONLY)
