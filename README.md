@@ -12,7 +12,7 @@ in a production environment.
 
 # Usage on BlueBrain 5
 
-Basalt is currently released as module on Blue Brain Project supercomputer:
+Basalt is currently released as module on Blue Brain 5 supercomputer:
 
 ```bash
 $ module purge
