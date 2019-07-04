@@ -97,8 +97,16 @@ struct synapse_t {
 /// Cereal serialization method for \a synapse_t
 template <class Archive>
 void serialize(Archive& ar, synapse_t& s) {
-    ar(s.pre_gid, s.post_gid, s.nrn_idx, s.astro_idx, s.is_excitatory, s.pre, s.post,
-       s.mesh_filename, s.skeleton_filename, s.psd_area);
+    ar(s.pre_gid,
+       s.post_gid,
+       s.nrn_idx,
+       s.astro_idx,
+       s.is_excitatory,
+       s.pre,
+       s.post,
+       s.mesh_filename,
+       s.skeleton_filename,
+       s.psd_area);
 }
 
 /**
@@ -148,8 +156,15 @@ struct astrocyte_t {
 /// Cereal serialization method for \a astrocyte_t
 template <class Archive>
 void serialize(Archive& ar, astrocyte_t& a) {
-    ar(a.astrocyte_id, a.microdomain_id, a.soma_center, a.soma_radius, a.name, a.mtype,
-       a.morphology_filename, a.synapses_idx, a.neurons_idx);
+    ar(a.astrocyte_id,
+       a.microdomain_id,
+       a.soma_center,
+       a.soma_radius,
+       a.name,
+       a.mtype,
+       a.morphology_filename,
+       a.synapses_idx,
+       a.neurons_idx);
 }
 
 /**
@@ -218,8 +233,17 @@ struct microdomain_t {
 /// Cereal serialization method for \a microdomain_t
 template <class Archive>
 void serialize(Archive& ar, microdomain_t& m) {
-    ar(m.microdomain_id, m.astrocyte_id, m.neighbors, m.vertex_coordinates, m.triangles, m.centroid,
-       m.area, m.volume, m.mesh_filename, m.neurons_idx, m.synapses_idx);
+    ar(m.microdomain_id,
+       m.astrocyte_id,
+       m.neighbors,
+       m.vertex_coordinates,
+       m.triangles,
+       m.centroid,
+       m.area,
+       m.volume,
+       m.mesh_filename,
+       m.neurons_idx,
+       m.synapses_idx);
 }
 
 /**

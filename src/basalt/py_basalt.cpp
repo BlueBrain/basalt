@@ -12,6 +12,7 @@
 #include <pybind11/stl_bind.h>
 
 #include "basalt/version.hpp"
+#include "config.hpp"
 #include "graph_impl.hpp"
 #include "py_circuit_payloads.hpp"
 #include "py_graph_edges.hpp"
@@ -67,7 +68,6 @@ static const char* status = R"(
     >>> status = basalt.Status(code=42, message="the answer to every question")
     >>> status.message
     'the answer to every question'
-
 )";
 
 static const char* make_id = R"(
@@ -82,7 +82,14 @@ static const char* make_id = R"(
 
     >>> basalt.make_id(42, 43)
     (42, 43)
+)";
 
+static const char* default_json_config = R"(
+    Helper function to write a JSON file containing
+    the default basalt database configuration.
+
+    Args:
+        type(str): path to JSON file to write
 )";
 
 static const char* status_raise_on_error = R"(
@@ -100,7 +107,6 @@ static const char* status_raise_on_error = R"(
     Traceback (most recent call last):
         ...
     RuntimeError: actually...
-
 )";
 
 static const char* graph = R"(
@@ -114,7 +120,14 @@ static const char* graph_init = R"(
     Args:
         path(str): path to rocksdb database on filesystem.
         Database is will be created if path does not exist.
+)";
 
+static const char* graph_init_with_config = R"(
+    Construct a graph object
+
+    Args:
+        path(str): unexisting path to rocksdb database on filesystem to create
+        config(str): path to a JSON file
 )";
 
 static const char* graph_commit = R"(
@@ -132,7 +145,6 @@ static const char* graph_edges = R"(
 
     Returns:
         instance of :py:class:`Edges`
-
 )";
 
 static const char* graph_vertices = R"(
@@ -140,7 +152,6 @@ static const char* graph_vertices = R"(
 
     Returns:
         instance of :py:class:`Vertices`
-
 )";
 
 }  // namespace docstring
@@ -157,11 +168,20 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     m.def("make_id", &basalt::make_id, "type"_a, "id"_a, docstring::make_id);
 
+    m.def("default_config_file",
+          [](const std::string& path) {
+              std::ofstream ostr(path);
+              ostr << basalt::Config();
+          },
+          "path"_a,
+          docstring::default_json_config);
+
     py::class_<basalt::Status>(m, "Status", docstring::status)
         .def(py::init([](int code, const std::string& message) {
                  return basalt::Status(static_cast<basalt::Status::Code>(code), message);
              }),
-             "code"_a, "message"_a = std::string())
+             "code"_a,
+             "message"_a = std::string())
         .def_property_readonly("code",
                                [](const basalt::Status& status) {
                                    return static_cast<int>(status.code);
@@ -178,9 +198,14 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     py::class_<basalt::Graph>(m, "Graph", docstring::graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
+        .def(py::init<const std::string&, const std::string&>(),
+             "path"_a,
+             "config"_a,
+             docstring::graph_init_with_config)
         .def_property_readonly("vertices", &basalt::Graph::vertices, docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
-        .def("commit", [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
+        .def("commit",
+             [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)
         .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
 

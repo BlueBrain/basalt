@@ -85,9 +85,16 @@ std::unique_ptr<synapse_t> synapse_t::create(uint32_t pre_gid,
                                              float psd_area) {
     int_vector_t astro_idx_vector;
     basalt::fill_vector(astro_idx, astro_idx_vector);
-    return std::unique_ptr<synapse_t>(new synapse_t(pre_gid, post_gid, nrn_idx, astro_idx_vector,
-                                                    is_excitatory, pre, post, mesh_filename,
-                                                    skeleton_filename, psd_area));
+    return std::unique_ptr<synapse_t>(new synapse_t(pre_gid,
+                                                    post_gid,
+                                                    nrn_idx,
+                                                    astro_idx_vector,
+                                                    is_excitatory,
+                                                    pre,
+                                                    post,
+                                                    mesh_filename,
+                                                    skeleton_filename,
+                                                    psd_area));
 }
 
 pybind11::array_t<char> synapse_t::serialize_sstream() const {
@@ -151,9 +158,15 @@ std::unique_ptr<astrocyte_t> astrocyte_t::create(uint32_t astrocyte_id,
     int_vector_t neurons_idx_vector;
     basalt::fill_vector(synapses_idx, synapses_idx_vector);
     basalt::fill_vector(neurons_idx, neurons_idx_vector);
-    return std::unique_ptr<astrocyte_t>(
-        new astrocyte_t(astrocyte_id, microdomain_id, soma_center, soma_radius, name, mtype,
-                        morphology_filename, synapses_idx_vector, neurons_idx_vector));
+    return std::unique_ptr<astrocyte_t>(new astrocyte_t(astrocyte_id,
+                                                        microdomain_id,
+                                                        soma_center,
+                                                        soma_radius,
+                                                        name,
+                                                        mtype,
+                                                        morphology_filename,
+                                                        synapses_idx_vector,
+                                                        neurons_idx_vector));
 }
 
 pybind11::array astrocyte_t::serialize_sstream() const {
@@ -230,10 +243,17 @@ std::unique_ptr<microdomain_t> microdomain_t::create(uint32_t microdomain_id,
     basalt::fill_vector(triangles, triangles_vector);
     basalt::fill_vector(neurons_idx, neurons_idx_vector);
     basalt::fill_vector(synapses_idx, synapses_idx_vector);
-    return std::unique_ptr<microdomain_t>(
-        new microdomain_t(microdomain_id, astrocyte_id, neighbors_vector, vertex_coordinates_vector,
-                          triangles_vector, centroid, area, volume, mesh_filename,
-                          neurons_idx_vector, synapses_idx_vector));
+    return std::unique_ptr<microdomain_t>(new microdomain_t(microdomain_id,
+                                                            astrocyte_id,
+                                                            neighbors_vector,
+                                                            vertex_coordinates_vector,
+                                                            triangles_vector,
+                                                            centroid,
+                                                            area,
+                                                            volume,
+                                                            mesh_filename,
+                                                            neurons_idx_vector,
+                                                            synapses_idx_vector));
 }
 
 pybind11::array microdomain_t::serialize_sstream() const {

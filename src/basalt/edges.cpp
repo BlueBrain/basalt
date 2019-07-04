@@ -47,9 +47,13 @@ Status Edges::insert(const vertex_uid_t& vertex,
                      size_t num_vertices,
                      bool create_vertices,
                      bool commit) {
-    return pimpl_.edges_insert(vertex, type, {vertices, num_vertices},
+    return pimpl_.edges_insert(vertex,
+                               type,
+                               {vertices, num_vertices},
                                {vertex_payloads, num_vertices},
-                               {vertex_payloads_sizes, num_vertices}, create_vertices, commit);
+                               {vertex_payloads_sizes, num_vertices},
+                               create_vertices,
+                               commit);
 };
 
 Status Edges::has(const vertex_uid_t& vertex1, const vertex_uid_t& vertex2, bool& result) const {

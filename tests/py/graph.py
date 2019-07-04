@@ -1,9 +1,12 @@
+import json
+import os
+import os.path as osp
 import tempfile
 import unittest
 
 import numpy as np
 
-from basalt import Graph, make_id
+from basalt import Graph, make_id, default_config_file
 from basalt.ngv import Neuron, PayloadHelper, VertexType
 
 N42 = (VertexType.NEURON.value, 42)
@@ -192,6 +195,19 @@ class TestPayloadHelper(unittest.TestCase):
             neuron = PayloadHelper.deserialize(input, data)
             self.assertIsInstance(neuron, Neuron)
             self.assertEqual(neuron.gid, 42)
+
+
+class TestConfig(unittest.TestCase):
+    def test_default_config(self):
+        fd, path = tempfile.mkstemp(suffix=".json")
+        os.close(fd)
+        os.remove(path)
+        default_config_file(path)
+        self.assertTrue(osp.exists(path))
+        with open(path) as istr:
+            config = json.load(istr)
+        self.assertEqual(config["read_only"], False)
+        self.assertEqual(config["statistics"], True)
 
 
 if __name__ == '__main__':

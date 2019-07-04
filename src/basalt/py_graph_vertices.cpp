@@ -173,31 +173,44 @@ void register_graph_vertices(py::module& m) {
                  vertices.count(type, count).raise_on_error();
                  return count;
              },
-             "type"_a, docstring::count_type)
+             "type"_a,
+             docstring::count_type)
 
         .def("add",
              [](basalt::Vertices& vertices, basalt::vertex_uid_t vertex, bool commit = false) {
                  const auto status = vertices.insert(vertex, commit);
                  status.raise_on_error();
              },
-             "vertex"_a, "commit"_a = false, docstring::add)
+             "vertex"_a,
+             "commit"_a = false,
+             docstring::add)
 
         .def("add",
-             [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex,
-                py::array_t<char> data, bool commit = false) {
+             [](basalt::Vertices& vertices,
+                const basalt::vertex_uid_t& vertex,
+                py::array_t<char> data,
+                bool commit = false) {
                  if (data.ndim() != 1) {
                      throw std::runtime_error("Number of dimensions must be one");
                  }
-                 const auto status = vertices.insert(vertex, data.data(),
-                                                     static_cast<std::size_t>(data.size()), commit);
+                 const auto status = vertices.insert(vertex,
+                                                     data.data(),
+                                                     static_cast<std::size_t>(data.size()),
+                                                     commit);
                  status.raise_on_error();
              },
-             "vertex"_a, "data"_a, "commit"_a = false, docstring::add_payload)
+             "vertex"_a,
+             "data"_a,
+             "commit"_a = false,
+             docstring::add_payload)
 
         /// TODO: replace types and ids by numpy.array([(0, 1), (2,3)], dtype="int32,int64")
         .def("add",
-             [](basalt::Vertices& instance, py::array_t<basalt::vertex_t> types,
-                py::array_t<basalt::vertex_id_t> ids, py::list payloads, bool commit = false) {
+             [](basalt::Vertices& instance,
+                py::array_t<basalt::vertex_t> types,
+                py::array_t<basalt::vertex_id_t> ids,
+                py::list payloads,
+                bool commit = false) {
                  if (ids.ndim() != 1) {
                      throw std::runtime_error("Number of dimensions of array 'ids' must be one");
                  }
@@ -223,18 +236,29 @@ void register_graph_vertices(py::module& m) {
                  }
                  if (payloads_data.empty()) {
                      instance
-                         .insert(types.data(), ids.data(), nullptr, nullptr,
-                                 static_cast<std::size_t>(ids.size()), commit)
+                         .insert(types.data(),
+                                 ids.data(),
+                                 nullptr,
+                                 nullptr,
+                                 static_cast<std::size_t>(ids.size()),
+                                 commit)
                          .raise_on_error();
                  } else {
                      instance
-                         .insert(types.data(), ids.data(), payloads_data.data(),
-                                 payloads_sizes.data(), static_cast<std::size_t>(ids.size()),
+                         .insert(types.data(),
+                                 ids.data(),
+                                 payloads_data.data(),
+                                 payloads_sizes.data(),
+                                 static_cast<std::size_t>(ids.size()),
                                  commit)
                          .raise_on_error();
                  }
              },
-             "types"_a, "ids"_a, "payloads"_a = py::list(), "commit"_a = false, docstring::add_bulk)
+             "types"_a,
+             "ids"_a,
+             "payloads"_a = py::list(),
+             "commit"_a = false,
+             docstring::add_bulk)
 
         .def("get",
              [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) -> py::object {
@@ -249,7 +273,8 @@ void register_graph_vertices(py::module& m) {
                  }
                  return std::move(basalt::to_py_array(data));
              },
-             "vertex"_a, docstring::get)
+             "vertex"_a,
+             docstring::get)
 
         .def("__getitem__",
              [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) -> py::object {
@@ -264,14 +289,16 @@ void register_graph_vertices(py::module& m) {
                  }
                  return std::move(basalt::to_py_array(data));
              },
-             "vertex"_a, docstring::getitem)
+             "vertex"_a,
+             docstring::getitem)
 
 
         .def("clear",
              [](basalt::Vertices& vertices, bool commit = false) {
                  vertices.clear(commit).raise_on_error();
              },
-             "commit"_a = false, docstring::clear)
+             "commit"_a = false,
+             docstring::clear)
 
         .def("__contains__",
              [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) {
@@ -280,12 +307,16 @@ void register_graph_vertices(py::module& m) {
                  status.raise_on_error();
                  return result;
              },
-             "Check presence of a vertex in the graph", "vertex"_a)
+             "Check presence of a vertex in the graph",
+             "vertex"_a)
 
         .def("discard",
-             [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex,
+             [](basalt::Vertices& vertices,
+                const basalt::vertex_uid_t& vertex,
                 bool commit = false) { vertices.erase(vertex, commit).raise_on_error(); },
-             "vertex"_a, "commit"_a = false, docstring::discard);
+             "vertex"_a,
+             "commit"_a = false,
+             docstring::discard);
 }
 
 }  // namespace basalt

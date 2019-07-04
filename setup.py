@@ -123,6 +123,7 @@ class PkgTest(test):
         self.run_command('test_ext')
         self.run_command('test_doc')
 
+
 install_requirements = [
     "cached-property>=1.5.1",
     "docopt>=0.6.2",
