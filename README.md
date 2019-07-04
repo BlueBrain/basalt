@@ -1,6 +1,6 @@
 # Basalt - Graph Storage API for C++ and Python
 
-Basalt is a graph storage API propelled by RocksDB persistent
+Basalt is a graph storage API powered by RocksDB persistent
 key-value store for fast storage
 
 [![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
@@ -10,7 +10,9 @@ key-value store for fast storage
 This library is still under active development, and is not meant to be used
 in a production environment.
 
-# Usage on BlueBrain 5
+# Usage
+
+## Blue Brain 5 supercomputer
 
 Basalt is currently released as module on Blue Brain 5 supercomputer:
 

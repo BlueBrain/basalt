@@ -142,7 +142,7 @@ with open(osp.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name="basalt",
-    description="Graph API propelled by RocksDB persistent key-value store for fast storage",
+    description="Graph API powered by RocksDB persistent key-value store for fast storage",
     long_description=long_description,
     long_description_content_type='text/markdown',
     author="BlueBrain Project, EPFL",
