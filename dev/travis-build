@@ -7,26 +7,26 @@ if [ "x${CPP_CHECK}" != x ] ;then
   pip install --user --upgrade cmake-format==0.4.5
   export PATH="$HOME/.local/bin:$PATH"
   cmake-format --version
-  cd ${TRAVIS_BUILD_DIR}
+  cd "${TRAVIS_BUILD_DIR}"
   rm -rf build-ci && mkdir -p build-ci && cd build-ci
   cmake .. \
     --warn-uninitialized \
     -DBasalt_FORMATTING:BOOL=ON \
     -DBasalt_STATIC_ANALYSIS:BOOL=ON \
-    -DBasalt_CXX_OPTIMIZE:BOOL=$CXX_OPTIMIZE \
-    -DPYTHON_EXECUTABLE:FILEPATH=`which python3` \
+    -DBasalt_CXX_OPTIMIZE:BOOL="$CXX_OPTIMIZE" \
+    -DPYTHON_EXECUTABLE:FILEPATH=$(which python3) \
     -DCMAKE_CXX_STANDARD=${CPP:-11}
   make VERBOSE=1 -j2
-  ctest -VV -j2 --output-on-failure ${CTEST_ACTION}
+  ctest -VV -j2 --output-on-failure "${CTEST_ACTION}"
   make check-clang-format
   make check-cmake-format
   make clang-tidy
 else
-  cd ${TRAVIS_BUILD_DIR}
+  cd "${TRAVIS_BUILD_DIR}"
   python3 setup.py sdist
   cd dist
-  tarball=`echo *.tar.gz`
-  tar zxf ${tarball}
-  cd ${tarball%.tar.gz}
+  tarball=$(echo *.tar.gz)
+  tar zxf "${tarball}"
+  cd "${tarball%.tar.gz}"
   python3 setup.py test
 fi

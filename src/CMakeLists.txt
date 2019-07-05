@@ -47,9 +47,10 @@ include_directories(SYSTEM
                     ${spdlog_include_directory}
                     ${nlohmann_include_directory})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/basalt {CMAKE_CURRENT_SOURCE_DIR}/python_bindings
+                    ${CMAKE_CURRENT_BINARY_DIR})
 
-add_library(basalt_obj OBJECT ${basalt_SOURCES} ${basalt_HEADERS})
+add_library(basalt_obj OBJECT ${basalt_HEADERS} ${basalt_SOURCES})
 set_property(TARGET basalt_obj PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 # Shared library
@@ -61,17 +62,17 @@ install(FILES ${basalt_HEADERS} DESTINATION include)
 
 # Shared library with Python bindings
 set(PYBIND11_SOURCES
-    basalt/circuit_payloads.hpp
-    basalt/circuit_payloads.cpp
-    basalt/py_basalt.cpp
-    basalt/py_circuit_payloads.hpp
-    basalt/py_circuit_payloads.cpp
-    basalt/py_graph_edges.hpp
-    basalt/py_graph_edges.cpp
-    basalt/py_graph_vertices.hpp
-    basalt/py_graph_vertices.cpp
-    basalt/py_helpers.hpp
-    basalt/py_helpers.cpp)
+    python_bindings/circuit_payloads.hpp
+    python_bindings/circuit_payloads.cpp
+    python_bindings/py_basalt.cpp
+    python_bindings/py_circuit_payloads.hpp
+    python_bindings/py_circuit_payloads.cpp
+    python_bindings/py_graph_edges.hpp
+    python_bindings/py_graph_edges.cpp
+    python_bindings/py_graph_vertices.hpp
+    python_bindings/py_graph_vertices.cpp
+    python_bindings/py_helpers.hpp
+    python_bindings/py_helpers.cpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
 add_subdirectory(${pybind11_project_directory})
 pybind11_add_module(_basalt SHARED ${PYBIND11_SOURCES} $<TARGET_OBJECTS:basalt_obj>)
