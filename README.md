@@ -83,7 +83,7 @@ To install the package:
 * with _distutils_: `python3 setup.py install`
 * to create binary tarballs:
   * most simple: `python3 setup.py bdist`
-  * [wheel](https://www.python.org/dev/peps/pep-0427/): `pip3 install wheels; python3 setup.py bdist_wheel`
+  * [wheel](https://www.python.org/dev/peps/pep-0427/): `pip3 install wheel; python3 setup.py bdist_wheel`
   * relocatable archive: `python3 setup.py bdist_dumb --relative`
 
 ## CMake variables and targets
@@ -130,7 +130,7 @@ For instance: `python3 setup.py build_sphinx`
 ├── cmake
 │   └── hpc-coding-conventions git module for C++ code guidelines
 ├── dev ...................... development related scripts
-├── docs ..................... sphinx documentation source code
+├── doc ...................... sphinx documentation source code
 ├── include
 │   └── basalt ............... public headers of the C++ library
 ├── README.md ................ that's me!
@@ -158,61 +158,5 @@ in `src/third_party` directory.
 
 # Contributing
 
-Contributions are welcome, via GitHub pull-requests and bug tracker.
-
-## Pull Requests
-
-### Development mode
-During the development phase, it is recommended to install basalt in
-editable mode with pip (see pip install `--editable` option).
-
-### Coding Conventions
-
-Enable CMake environment variables `Basalt_FORMATTING`
-and `Basalt_PRECOMMIT` to ensure that your contribution complies
-with the coding conventions of this project.
-
-`cmake -DBasalt_FORMATTING:BOOL=ON -DBasalt_PRECOMMIT:BOOL=ON <path>`
-
-Then to fix formatting of both C++ code and CMake files:
-```
-cd build-dir
-make clang-format cmake-format
-```
-
-### Wrap up
-
-When your contribution is ready and tests pass, then you can
-execute the `dev/travis-build` script to foresee issues in the
-Python package that may happen during the continuous integration
-process later on.
-
-#### C++ library checks
-
-Additionally, to perform memory checking over unit-tests with valgrind,
-C++ and CMake code formatting checks, as well as C++ static analysis
-check at once, execute the script as follow:
-`CHECK_NATIVE=yes dev/travis-build`
-
-To perform the checks manually, run the corresponding commands from
-cmake build directory:
-
-* memory check: `ctest -VV --output-on-failure -T memcheck`
-* C++ code formatting check: `make check-clang-format`
-  (`make clang-format` to fix it)
-* CMake code formatting check: `make check-cmake-format`
-  (`make cmake-format` to fix it)
-* C++ static analysis check: `make clang-tidy`
-
-## Release
-
-1. Build and test from scratch: `tox -r`
-1. Run benchmarks in `tests/benchmarks` and ensure there is no regression.
-1. Create a git tag.
-1. Create source distribution: `python setup.py sdist`.
-1. Test installation with pip within a Docker container:
-   `dev/check-source-distribution dist/basalt-VERSION.tar.gz`
-1. Build documentation and update the *gh-pages* accordingly.
-1. Upload source distribution on pypi:
-   `twine upload -s basalt-VERSION.tar.gz`
-1. Create release on GitHub project
+If you want to improve the project or you see any issue, every contribution is welcome.
+Please check [contribution guidelines](CONTRIBUTING.md) for more information.
