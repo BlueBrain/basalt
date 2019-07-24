@@ -1,3 +1,5 @@
+"""Payload classes used by Blue Brain Neuroglia Vasculature team
+"""
 # pylint: disable=no-name-in-module
 
 from .._basalt.ngv import (
