@@ -21,7 +21,7 @@ This repository provides a [Conan](https://conan.io/) package to ease integratio
 
 ### CMake
 
-It is also possible to build and install the library using CMake, see [build section](#manual-build-installation-instructions) below.
+It is also possible to build and install the library using CMake, see [build section](#manual-build-and-installation-instructions) below.
 
 ## Python API
 
@@ -143,7 +143,7 @@ For instance: `python3 setup.py build_sphinx`
 
 ```
 ├── basalt ................... python code of the package
-│   ├── ngv .................. specific API for BBP NGV team
+│   ├── ngv .................. specific API for BBP Neuroglia Vasculature team
 ├── cmake
 │   └── hpc-coding-conventions git module for C++ code guidelines
 ├── dev ...................... development related scripts
