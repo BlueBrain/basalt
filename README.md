@@ -1,18 +1,35 @@
 # Basalt - Graph Storage API for C++ and Python
 
 Basalt is a graph storage API powered by RocksDB persistent
-key-value store for fast storage
+key-value store for fast storage like NVMe technologies.
 
-[![Build Status](https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/tristan0x/basalt)
+[![Build Status](https://api.travis-ci.com/BlueBrain/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/BlueBrain/basalt)
+
+Documentation is currently hosted on GitHub: [https://bluebrain.github.io/basalt]
 
 # Development stage
 
-This library is still under active development, and is not meant to be used
-in a production environment.
+The C++ and Python APIs of Basalt are stable already, but substantial additions might come in the future. Thus this library development status is beta.
 
 # Usage
 
-## Blue Brain 5 supercomputer
+## C++ API
+
+### Conan package
+
+This repository provides a [Conan](https://conan.io/) package to ease integration into your existing projects.
+
+### CMake
+
+It is also possible to build and install the library using CMake, see [build section](#manual-build-installation-instructions) below.
+
+## Python API
+
+### Pypi
+
+Python bindings of Basalt are available on [Pypi](https://pypi.org/simple/basalt).
+
+### Blue Brain 5 supercomputer
 
 Basalt is currently released as module on Blue Brain 5 supercomputer:
 
@@ -31,7 +48,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 '5.17.2'
 ```
 
-# Build and installation instructions
+# Manual build and installation instructions
 
 ## Requirements
 
