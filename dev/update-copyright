@@ -1,0 +1,96 @@
+#!/usr/bin/python3
+
+"""
+Update copyright header in C++ files
+"""
+
+import logging
+from pathlib import Path
+
+HEADER_SETTINGS = dict(
+    cpp=dict(
+        prelude="/*************************************************************************\n",
+        line_prefix=" * ",
+        epilog=" *************************************************************************/\n",
+    ),
+    # FIXME: module docstring may be before the copyright
+    # py=dict(
+    #     prelude='"""\n',
+    #     line_prefix="",
+    #     epilog='"""\n',
+    # )
+)
+
+HEADER_CONTENT = """\
+Copyright (C) 2019 Blue Brain Project
+
+This file is part of Basalt distributed under the terms of the GNU
+Lesser General Public License. See top-level LICENSE file for details."""
+
+class HeaderGenerator:
+    def __init__(self, language):
+        self.language = language
+
+    @property
+    def prelude(self):
+        return HEADER_SETTINGS[self.language]["prelude"]
+
+    @property
+    def epilog(self):
+        return HEADER_SETTINGS[self.language]["epilog"]
+
+    @property
+    def line_prefix(self):
+        return HEADER_SETTINGS[self.language]["line_prefix"]
+
+    @property
+    def header(self):
+        header = self.prelude
+        for line in HEADER_CONTENT.split('\n'):
+            header += (self.line_prefix + line).rstrip() + '\n'
+        header += self.epilog
+        return header
+
+    def prepend_header(self, filename):
+        with open(filename) as istr:
+            content = istr.read()
+        with open(filename, 'w') as ostr:
+            ostr.write(self.header)
+            ostr.write(content)
+
+    def update_header(self, filename, content):
+        with open(filename, 'w') as ostr:
+            ostr.write(self.header)
+            ostr.write(content)
+
+    def update_copyright(self, filename):
+        istr = open(filename)
+        prelude = istr.readline()
+        if prelude != self.prelude:
+            logging.info("%s add header", filename)
+            istr.close()
+            self.prepend_header(filename)
+        else:
+            header = prelude
+            while True:
+                line = istr.readline()
+                header += line
+                if line == self.epilog:
+                    break
+            if header != self.header:
+                logging.info("%s update header", filename)
+                self.update_header(filename, istr.read())
+
+
+def main():
+    logging.basicConfig(level=logging.INFO)
+    cpp = HeaderGenerator("cpp")
+    for subdir in ['include', 'src/basalt', 'src/python_bindings']:
+        for filename in Path(subdir).glob('**/*.[ch]pp'):
+            cpp.update_copyright(str(filename))
+    for filename in Path('src/basalt').glob('**/*.hpp.in'):
+        cpp.update_copyright(str(filename))
+
+
+if __name__ == '__main__':
+    main()
