@@ -1,13 +1,6 @@
 basalt package
 ==============
 
-Subpackages
------------
-
-.. toctree::
-
-    basalt.ngv
-
 Submodules
 ----------
 

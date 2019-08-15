@@ -19,8 +19,7 @@ An edge is made of:
 A payload can be attached to vertices and edges
     Internally a payload is stored as
     a ``numpy.ndarray(dtype=numpy.byte)``, but it is possible to
-    pass any object that supports pickl serialization as well
-    payloads classes in ``basalt.ngv`` package.
+    pass any object that supports pickle serialization
 
 
 Basalt Python package provides 2 graph API to use undirected graphs:

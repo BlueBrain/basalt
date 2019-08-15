@@ -20,7 +20,6 @@
 #include "basalt/version.hpp"
 #include "config.hpp"
 #include "graph_impl.hpp"
-#include "py_circuit_payloads.hpp"
 #include "py_graph_edges.hpp"
 #include "py_graph_vertices.hpp"
 #include "py_helpers.hpp"
@@ -215,7 +214,6 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
              docstring::graph_commit)
         .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
 
-    basalt::register_circuit_payloads_bindings(m);
     basalt::register_graph_edges(m);
     basalt::register_graph_vertices(m);
 }

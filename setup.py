@@ -124,14 +124,7 @@ class PkgTest(test):
         self.run_command('test_doc')
 
 
-install_requirements = [
-    "cached-property>=1.5.1",
-    "docopt>=0.6.2",
-    "h5py>=2.6.0",
-    "humanize>=0.5.1",
-    "numpy>=1.11",
-    "progress>=1.4",
-]
+install_requirements = ["cached-property>=1.5.1", "numpy>=1.11"]
 
 doc_requirements = ["exhale", "m2r", "sphinx-rtd-theme", "sphinx>=2"]
 
@@ -162,7 +155,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Topic :: Database :: Database Engines/Servers",
     ],
-    packages=["basalt", "basalt.ngv"],
+    packages=["basalt"],
     ext_modules=[CMakeExtension("_basalt")],
     cmdclass=lazy_dict(
         build_ext=CMakeBuild,
@@ -177,8 +170,4 @@ setup(
     install_requires=install_requirements,
     setup_requires=["setuptools_scm"],
     tests_require=doc_requirements + doc_requirements,
-    entry_points="""
-        [console_scripts]
-        basalt-cli = basalt.cli:main
-    """,
 )

@@ -62,11 +62,7 @@ install(FILES ${basalt_HEADERS} DESTINATION include)
 
 # Shared library with Python bindings
 set(PYBIND11_SOURCES
-    python_bindings/circuit_payloads.hpp
-    python_bindings/circuit_payloads.cpp
     python_bindings/py_basalt.cpp
-    python_bindings/py_circuit_payloads.hpp
-    python_bindings/py_circuit_payloads.cpp
     python_bindings/py_graph_edges.hpp
     python_bindings/py_graph_edges.cpp
     python_bindings/py_graph_vertices.hpp
