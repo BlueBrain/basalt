@@ -61,7 +61,7 @@ class NoneSerialization:
 def serialization_method(name, default_payload):
     if name == "pickle":
         return PickleSerialization
-    elif getattr(name, "__module__", None) == "basalt._basalt.ngv":
+    elif hasattr(name, "serialize"):
         return BasaltPayloadSerialization(name, default_payload)
     elif name is None:
         return NoneSerialization
