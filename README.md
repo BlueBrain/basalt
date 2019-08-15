@@ -143,7 +143,6 @@ For instance: `python3 setup.py build_sphinx`
 
 ```
 ├── basalt ................... python code of the package
-│   ├── ngv .................. specific API for BBP Neuroglia Vasculature team
 ├── cmake
 │   └── hpc-coding-conventions git module for C++ code guidelines
 ├── dev ...................... development related scripts
