@@ -22,41 +22,39 @@ static Config from_file(const std::string& path) {
     return Config(istr);
 }
 
-Graph::Graph(const std::string& path)
-    : Graph(path, false) {}
+template <bool Ordered>
+AbstractGraph<Ordered>::AbstractGraph(const std::string& path)
+    : pimpl_(new GraphImpl<Ordered>(path)) {}
 
-Graph::Graph(const std::string& path, const std::string& config)
-    : Graph(path, config, false) {}
+template <bool Ordered>
+AbstractGraph<Ordered>::AbstractGraph(const std::string& path, const std::string& config)
+    : pimpl_(new GraphImpl<Ordered>(path, from_file(config), true)) {}
 
-Graph::Graph(const std::string& path, bool ordered)
-    : pimpl_(new GraphImpl(path, ordered)) {}
+template <bool Ordered>
+AbstractGraph<Ordered>::~AbstractGraph() = default;
 
-Graph::Graph(const std::string& path, const std::string& config, bool ordered)
-    : pimpl_(new GraphImpl(path, ordered, from_file(config), true)) {}
-
-Graph::~Graph() = default;
-
-Edges& Graph::edges() {
+template <bool Ordered>
+Edges<Ordered>& AbstractGraph<Ordered>::edges() {
     return pimpl_->edges_get();
 }
 
-Vertices& Graph::vertices() {
+template <bool Ordered>
+Vertices<Ordered>& AbstractGraph<Ordered>::vertices() {
     return pimpl_->vertices_get();
 }
 
-Status Graph::commit() {
+template <bool Ordered>
+Status AbstractGraph<Ordered>::commit() {
     return pimpl_->commit();
 }
 
-std::string Graph::statistics() const {
+template <bool Ordered>
+std::string AbstractGraph<Ordered>::statistics() const {
     return pimpl_->statistics();
 }
 
-OrderedGraph::OrderedGraph(const std::string& path)
-    : Graph(path, true) {}
-
-OrderedGraph::OrderedGraph(const std::string& path, const std::string& config)
-    : Graph(path, config, true) {}
+template class AbstractGraph<true>;
+template class AbstractGraph<false>;
 
 /////
 

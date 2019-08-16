@@ -13,12 +13,15 @@
 namespace basalt {
 
 /// Forward declarations
+template <bool Ordered>
 class Edges;
 class EdgeIterator;
 class EdgeIteratorImpl;
+template <bool Ordered>
 class GraphImpl;
 class VertexIteratorImpl;
 class VertexIterator;
+template <bool Ordered>
 class Vertices;
 
 using vertex_t = int;

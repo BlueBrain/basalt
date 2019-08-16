@@ -14,13 +14,14 @@ namespace basalt {
 /**
  * Manipulate the edges of a graph
  */
+template <bool Ordered>
 class Edges {
   public:
     /**
      * \brief Construct a \a Edges
      * \param pimpl Pointer to implementation
      */
-    explicit Edges(GraphImpl& pimpl);
+    explicit Edges(GraphImpl<Ordered>& pimpl);
 
     /**
      * \brief Iterator over the edges of the graph
@@ -199,7 +200,10 @@ class Edges {
     Status clear(bool commit) __attribute__((warn_unused_result));
 
   private:
-    GraphImpl& pimpl_;
+    GraphImpl<Ordered>& pimpl_;
 };
+
+extern template class Edges<true>;
+extern template class Edges<false>;
 
 }  // namespace basalt

@@ -11,7 +11,9 @@
 #include "graph_impl.hpp"
 
 namespace basalt {
-EdgeIterator::EdgeIterator(const basalt::GraphImpl& pimpl, size_t from) {
+
+template <bool Ordered>
+EdgeIterator::EdgeIterator(const basalt::GraphImpl<Ordered>& pimpl, size_t from) {
     if (from == std::numeric_limits<std::size_t>::max()) {
         pimpl_ = EdgeIteratorImpl_ptr(nullptr);
     } else {
@@ -19,6 +21,10 @@ EdgeIterator::EdgeIterator(const basalt::GraphImpl& pimpl, size_t from) {
         std::advance(*this, static_cast<EdgeIterator::difference_type>(from));
     }
 }
+
+// Explicit instantiation
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<true>& pimpl, size_t from);
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<false>& pimpl, size_t from);
 
 EdgeIterator::EdgeIterator(const basalt::EdgeIterator& other)
     : pimpl_(other.pimpl_) {}

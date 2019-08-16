@@ -228,23 +228,28 @@ static const char* add_bulk_payload = R"(
 }  // namespace docstring
 
 
-void register_graph_edges(py::module& m) {
-    py::class_<basalt::Edges>(m, "Edges", docstring::edges_class)
+template <bool Ordered>
+py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
+    py::module& m,
+    const std::string& class_prefix = "") {
+    return py::class_<basalt::Edges<Ordered>>(m,
+                                              (class_prefix + "Edges").c_str(),
+                                              docstring::edges_class)
         .def("__iter__",
-             [](const basalt::Edges& edges) {
+             [](const basalt::Edges<false>& edges) {
                  return py::make_iterator(edges.begin(), edges.end());
              },
              py::keep_alive<0, 1>())
 
         .def("__len__",
-             [](const basalt::Edges& edges) {
+             [](const basalt::Edges<false>& edges) {
                  std::size_t count;
                  edges.count(count).raise_on_error();
                  return count;
              })
 
         .def("add",
-             [](basalt::Edges& edges,
+             [](basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex1,
                 const basalt::vertex_uid_t& vertex2,
                 bool commit) {
@@ -257,7 +262,7 @@ void register_graph_edges(py::module& m) {
              docstring::add_edge)
 
         .def("add",
-             [](basalt::Edges& edges,
+             [](basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex1,
                 const basalt::vertex_uid_t& vertex2,
                 py::array_t<char> data,
@@ -276,7 +281,7 @@ void register_graph_edges(py::module& m) {
              docstring::add_edge_payload)
 
         .def("add",
-             [](basalt::Edges& edges,
+             [](basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex,
                 const basalt::vertex_t type,
                 py::array_t<basalt::vertex_id_t> vertices,
@@ -303,7 +308,7 @@ void register_graph_edges(py::module& m) {
              docstring::add_bulk)
 
         .def("add",
-             [](basalt::Edges& edges,
+             [](basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex,
                 const basalt::vertex_t type,
                 py::array_t<basalt::vertex_id_t> vertices,
@@ -347,7 +352,7 @@ void register_graph_edges(py::module& m) {
              docstring::add_bulk_payload)
 
         .def("__contains__",
-             [](const basalt::Edges& edges, const basalt::edge_uid_t& edge) {
+             [](const basalt::Edges<false>& edges, const basalt::edge_uid_t& edge) {
                  bool result = false;
                  edges.has(edge.first, edge.second, result).raise_on_error();
                  return result;
@@ -356,7 +361,7 @@ void register_graph_edges(py::module& m) {
              "Check connectivity between 2 vertices")
 
         .def("get",
-             [](const basalt::Edges& edges, const basalt::edge_uid_t& edge) -> py::object {
+             [](const basalt::Edges<false>& edges, const basalt::edge_uid_t& edge) -> py::object {
                  std::string data;
                  const auto& status = edges.get(edge, &data);
                  if (status.code == basalt::Status::missing_edge_code) {
@@ -372,7 +377,7 @@ void register_graph_edges(py::module& m) {
              docstring::get_data)
 
         .def("get",
-             [](const basalt::Edges& edges, const basalt::vertex_uid_t& vertex) {
+             [](const basalt::Edges<false>& edges, const basalt::vertex_uid_t& vertex) {
                  basalt::vertex_uids_t eax;
                  edges.get(vertex, eax).raise_on_error();
                  return eax;
@@ -381,7 +386,7 @@ void register_graph_edges(py::module& m) {
              docstring::get_edges)
 
         .def("get",
-             [](const basalt::Edges& edges,
+             [](const basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex,
                 basalt::vertex_t filter) {
                  basalt::vertex_uids_t eax;
@@ -393,7 +398,7 @@ void register_graph_edges(py::module& m) {
              docstring::get_edges_filter)
 
         .def("discard",
-             [](basalt::Edges& edges, const basalt::edge_uid_t& edge, bool commit = false) {
+             [](basalt::Edges<false>& edges, const basalt::edge_uid_t& edge, bool commit = false) {
                  edges.erase(edge.first, edge.second, commit).raise_on_error();
              },
              "edge"_a,
@@ -401,7 +406,9 @@ void register_graph_edges(py::module& m) {
              docstring::discard_edge)
 
         .def("discard",
-             [](basalt::Edges& edges, const basalt::vertex_uid_t& vertex, bool commit = false) {
+             [](basalt::Edges<false>& edges,
+                const basalt::vertex_uid_t& vertex,
+                bool commit = false) {
                  std::size_t removed;
                  edges.erase(vertex, removed, commit).raise_on_error();
                  return removed;
@@ -411,7 +418,7 @@ void register_graph_edges(py::module& m) {
              docstring::discard_edges)
 
         .def("discard",
-             [](basalt::Edges& edges,
+             [](basalt::Edges<false>& edges,
                 const basalt::vertex_uid_t& vertex,
                 basalt::vertex_t filter,
                 bool commit = false) {
@@ -423,6 +430,11 @@ void register_graph_edges(py::module& m) {
              "filter"_a,
              "commit"_a = false,
              docstring::discard_edges_if);
+}
+
+void register_graph_edges(py::module& m) {
+    register_graph_edges_class<false>(m);
+    register_graph_edges_class<true>(m, "Ordered");
 }
 
 }  // namespace basalt

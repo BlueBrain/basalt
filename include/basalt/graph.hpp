@@ -19,10 +19,8 @@
 
 namespace basalt {
 
-/**
- * \brief Undirected Connectivity Graph
- */
-class Graph {
+template <bool Ordered>
+class AbstractGraph {
   public:
     /** \brief iterator over vertices */
     using vertex_const_iterator_t = std::iterator<std::input_iterator_tag, const vertex_t>;
@@ -36,35 +34,30 @@ class Graph {
      * \brief load graph if present on disk, initialize it otherwise
      * \param path graph directory on disk
      */
-    explicit Graph(const std::string& path);
+    explicit AbstractGraph(const std::string& path);
 
     /**
      * \brief create graph on disk at the given path with the given configuration
      * \param path the graph directory on disk (must not exist)
      * \param config the path to a JSON file
      */
-    Graph(const std::string& path, const std::string& config);
+    AbstractGraph(const std::string& path, const std::string& config);
 
-    ~Graph();
+    ~AbstractGraph();
 
     /**
      * \}
      */
 
     /**
-     * \name edges accessor
-     * \{
-     */
-
-    /**
      * \brief edges accessor
      */
-    Edges& edges();
+    Edges<Ordered>& edges();
 
     /**
      * \brief vertices accessor
      */
-    Vertices& vertices();
+    Vertices<Ordered>& vertices();
 
     /**
      * \}
@@ -82,39 +75,21 @@ class Graph {
     std::string statistics() const;
 
   private:
-    std::unique_ptr<GraphImpl> pimpl_;
-
-  protected:
-    explicit Graph(const std::string& path, bool ordered);
-    Graph(const std::string& path, const std::string& config, bool ordered);
+    std::unique_ptr<GraphImpl<Ordered>> pimpl_;
 };
 
+/**
+ * \brief Undirected Connectivity Graph
+ */
+using Graph = AbstractGraph<false>;
 
-class OrderedGraph: public Graph {
-  public:
-    /**
-     * \name Ctors & Dtor
-     * \{
-     */
+/**
+ *  \brief Graph in which edges have orientations.
+ */
+using OrderedGraph = AbstractGraph<true>;
 
-    /**
-     * \brief load graph if present on disk, initialize it otherwise
-     * \param path graph directory on disk
-     */
-    explicit OrderedGraph(const std::string& path);
-
-    /**
-     * \brief create graph on disk at the given path with the given configuration
-     * \param path the graph directory on disk (must not exist)
-     * \param config the path to a JSON file
-     */
-    OrderedGraph(const std::string& path, const std::string& config);
-
-    /**
-     * \}
-     */
-};
-
+extern template class AbstractGraph<true>;
+extern template class AbstractGraph<false>;
 
 /**
  * \brief \a vertex_uid_t constructor helper function

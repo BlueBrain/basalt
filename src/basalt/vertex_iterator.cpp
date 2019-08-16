@@ -12,7 +12,8 @@
 
 namespace basalt {
 
-VertexIterator::VertexIterator(const basalt::GraphImpl& pimpl, size_t from) {
+template <bool Ordered>
+VertexIterator::VertexIterator(const basalt::GraphImpl<Ordered>& pimpl, size_t from) {
     // \fixme TCL this limit value is VertexIteratorImpl internal stuff
     // and so should not be used here
     if (from == std::numeric_limits<std::size_t>::max()) {
@@ -56,5 +57,8 @@ bool VertexIterator::operator!=(const basalt::VertexIterator& other) const {
 const VertexIterator::value_type& VertexIterator::operator*() {
     return **pimpl_;
 }
+
+template VertexIterator::VertexIterator(const basalt::GraphImpl<true>& pimpl, size_t from);
+template VertexIterator::VertexIterator(const basalt::GraphImpl<false>& pimpl, size_t from);
 
 }  // namespace basalt

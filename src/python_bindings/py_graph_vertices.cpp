@@ -157,16 +157,21 @@ static const char* getitem = R"(
 
 }  // namespace docstring
 
-void register_graph_vertices(py::module& m) {
-    py::class_<basalt::Vertices>(m, "Vertices", docstring::vertices_class)
+template <bool Ordered>
+py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
+    py::module& m,
+    const std::string& class_prefix = "") {
+    return py::class_<basalt::Vertices<Ordered>>(m,
+                                                 (class_prefix + "Vertices").c_str(),
+                                                 docstring::vertices_class)
         .def("__iter__",
-             [](const basalt::Vertices& vertices) {
+             [](const basalt::Vertices<Ordered>& vertices) {
                  return py::make_iterator(vertices.begin(), vertices.end());
              },
              py::keep_alive<0, 1>())
 
         .def("__len__",
-             [](const basalt::Vertices& vertices) {
+             [](const basalt::Vertices<Ordered>& vertices) {
                  std::size_t count;
                  vertices.count(count).raise_on_error();
                  return count;
@@ -174,7 +179,7 @@ void register_graph_vertices(py::module& m) {
              docstring::len)
 
         .def("count",
-             [](const basalt::Vertices& vertices, basalt::vertex_t type) -> std::size_t {
+             [](const basalt::Vertices<Ordered>& vertices, basalt::vertex_t type) -> std::size_t {
                  std::size_t count;
                  vertices.count(type, count).raise_on_error();
                  return count;
@@ -183,7 +188,9 @@ void register_graph_vertices(py::module& m) {
              docstring::count_type)
 
         .def("add",
-             [](basalt::Vertices& vertices, basalt::vertex_uid_t vertex, bool commit = false) {
+             [](basalt::Vertices<Ordered>& vertices,
+                basalt::vertex_uid_t vertex,
+                bool commit = false) {
                  const auto status = vertices.insert(vertex, commit);
                  status.raise_on_error();
              },
@@ -192,7 +199,7 @@ void register_graph_vertices(py::module& m) {
              docstring::add)
 
         .def("add",
-             [](basalt::Vertices& vertices,
+             [](basalt::Vertices<Ordered>& vertices,
                 const basalt::vertex_uid_t& vertex,
                 py::array_t<char> data,
                 bool commit = false) {
@@ -212,7 +219,7 @@ void register_graph_vertices(py::module& m) {
 
         /// TODO: replace types and ids by numpy.array([(0, 1), (2,3)], dtype="int32,int64")
         .def("add",
-             [](basalt::Vertices& instance,
+             [](basalt::Vertices<Ordered>& instance,
                 py::array_t<basalt::vertex_t> types,
                 py::array_t<basalt::vertex_id_t> ids,
                 py::list payloads,
@@ -267,7 +274,8 @@ void register_graph_vertices(py::module& m) {
              docstring::add_bulk)
 
         .def("get",
-             [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) -> py::object {
+             [](basalt::Vertices<Ordered>& vertices,
+                const basalt::vertex_uid_t& vertex) -> py::object {
                  std::string data;
                  auto const& status = vertices.get(vertex, &data);
                  if (status.code == basalt::Status::missing_vertex_code) {
@@ -283,7 +291,8 @@ void register_graph_vertices(py::module& m) {
              docstring::get)
 
         .def("__getitem__",
-             [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) -> py::object {
+             [](basalt::Vertices<Ordered>& vertices,
+                const basalt::vertex_uid_t& vertex) -> py::object {
                  std::string data;
                  auto const& status = vertices.get(vertex, &data);
                  if (status.code == basalt::Status::missing_vertex_code) {
@@ -300,14 +309,14 @@ void register_graph_vertices(py::module& m) {
 
 
         .def("clear",
-             [](basalt::Vertices& vertices, bool commit = false) {
+             [](basalt::Vertices<Ordered>& vertices, bool commit = false) {
                  vertices.clear(commit).raise_on_error();
              },
              "commit"_a = false,
              docstring::clear)
 
         .def("__contains__",
-             [](basalt::Vertices& vertices, const basalt::vertex_uid_t& vertex) {
+             [](basalt::Vertices<Ordered>& vertices, const basalt::vertex_uid_t& vertex) {
                  bool result = false;
                  auto const status = vertices.has(vertex, result);
                  status.raise_on_error();
@@ -317,12 +326,17 @@ void register_graph_vertices(py::module& m) {
              "vertex"_a)
 
         .def("discard",
-             [](basalt::Vertices& vertices,
+             [](basalt::Vertices<Ordered>& vertices,
                 const basalt::vertex_uid_t& vertex,
                 bool commit = false) { vertices.erase(vertex, commit).raise_on_error(); },
              "vertex"_a,
              "commit"_a = false,
              docstring::discard);
+}
+
+void register_graph_vertices(py::module& m) {
+    register_graph_vertices_class<true>(m, "Ordered");
+    register_graph_vertices_class<false>(m);
 }
 
 }  // namespace basalt

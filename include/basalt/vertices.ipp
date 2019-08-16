@@ -7,8 +7,9 @@
 
 namespace basalt {
 
+template <bool Ordered>
 template <typename Payload>
-Status Vertices::insert(const vertex_uid_t& vertex, const Payload& data, bool commit) {
+Status Vertices<Ordered>::insert(const vertex_uid_t& vertex, const Payload& data, bool commit) {
     std::ostringstream oss;
     data.serialize(oss);
     // \fixme TCL get buffer beginning and length from ostringstream
@@ -17,8 +18,9 @@ Status Vertices::insert(const vertex_uid_t& vertex, const Payload& data, bool co
     return insert(vertex, raw.c_str(), raw.size(), commit);
 }
 
+template <bool Ordered>
 template <typename T>
-Status Vertices::get(const vertex_uid_t& vertex, T& payload) const {
+Status Vertices<Ordered>::get(const vertex_uid_t& vertex, T& payload) const {
     std::string data;
     auto const& status = get(vertex, &data);
     if (status) {

@@ -20,13 +20,14 @@
 namespace basalt {
 
 /// \brief Graph pointer to implementation
+template <bool Ordered>
 class GraphImpl {
   public:
     using logger_t = std::shared_ptr<spdlog::logger>;
     using column_families_t = std::vector<rocksdb::ColumnFamilyHandle*>;
 
-    explicit GraphImpl(const std::string& path, bool ordered);
-    GraphImpl(const std::string& path, bool ordered, Config config, bool throw_if_exists);
+    explicit GraphImpl(const std::string& path);
+    GraphImpl(const std::string& path, Config config, bool throw_if_exists);
 
     inline const logger_t& logger_get() const noexcept {
         return this->logger_;
@@ -35,16 +36,16 @@ class GraphImpl {
     inline const std::string& path_get() const noexcept {
         return this->path_;
     }
-    inline const Edges& edges_get() const noexcept {
+    inline const Edges<Ordered>& edges_get() const noexcept {
         return this->edges_;
     }
-    inline Edges& edges_get() noexcept {
+    inline Edges<Ordered>& edges_get() noexcept {
         return this->edges_;
     }
-    inline const Vertices& vertices_get() const noexcept {
+    inline const Vertices<Ordered>& vertices_get() const noexcept {
         return this->vertices_;
     }
-    inline Vertices& vertices_get() noexcept {
+    inline Vertices<Ordered>& vertices_get() noexcept {
         return this->vertices_;
     }
 
@@ -127,10 +128,9 @@ class GraphImpl {
                const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle);
 
     const std::string& path_;
-    const bool ordered_;
     const Config config_;
-    Vertices vertices_;
-    Edges edges_;
+    Vertices<Ordered> vertices_;
+    Edges<Ordered> edges_;
     std::shared_ptr<rocksdb::Statistics> statistics_;
     std::unique_ptr<rocksdb::Options> options_;
     logger_t logger_;
@@ -139,5 +139,8 @@ class GraphImpl {
     std::unique_ptr<rocksdb::ColumnFamilyHandle> vertices_column_;
     std::unique_ptr<rocksdb::ColumnFamilyHandle> edges_column_;
 };
+
+extern template class GraphImpl<true>;
+extern template class GraphImpl<false>;
 
 }  // namespace basalt

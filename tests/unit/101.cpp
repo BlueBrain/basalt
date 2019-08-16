@@ -6,6 +6,7 @@
 
 #include <basalt/basalt.hpp>
 
+using basalt::AbstractGraph;
 using basalt::edge_uid_t;
 using basalt::Graph;
 using basalt::make_id;
@@ -23,8 +24,8 @@ using basalt::vertex_uids_t;
  * \param payload vertex content
  * \return vertex unique identifier
  */
-template <typename Payload>
-inline vertex_uid_t checked_insert(Graph& g,
+template <typename Payload, bool Ordered>
+inline vertex_uid_t checked_insert(AbstractGraph<Ordered>& g,
                                    vertex_t type,
                                    vertex_id_t id,
                                    const Payload& payload) {

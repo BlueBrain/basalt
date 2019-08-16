@@ -45,12 +45,13 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
     return async_write;
 }
 
-GraphImpl::GraphImpl(const std::string& path, bool ordered)
-    : GraphImpl(path, ordered, Config(path), false) {}
+template <bool Ordered>
+GraphImpl<Ordered>::GraphImpl(const std::string& path)
+    : GraphImpl(path, Config(path), false) {}
 
-GraphImpl::GraphImpl(const std::string& path, bool ordered, Config config, bool throw_if_exists)
+template <bool Ordered>
+GraphImpl<Ordered>::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
     : path_(path)
-    , ordered_(ordered)
     , config_(std::move(config))
     , vertices_(*this)
     , edges_(*this)
@@ -107,13 +108,15 @@ GraphImpl::GraphImpl(const std::string& path, bool ordered, Config config, bool 
     }
 }
 
-Status GraphImpl::to_status(const rocksdb::Status& status) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::to_status(const rocksdb::Status& status) {
     return {static_cast<Status::Code>(status.code()), status.ToString()};
 }
 
 ///// vertices methods
 
-Status GraphImpl::vertices_insert(const vertex_uid_t& vertex, bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_insert(const vertex_uid_t& vertex, bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, commit={})", vertex, commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -123,9 +126,10 @@ Status GraphImpl::vertices_insert(const vertex_uid_t& vertex, bool commit) {
                                    rocksdb::Slice()));
 }
 
-Status GraphImpl::vertices_insert(const vertex_uid_t& vertex,
-                                  const gsl::span<const char>& payload,
-                                  bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_insert(const vertex_uid_t& vertex,
+                                           const gsl::span<const char>& payload,
+                                           bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, data_size={}, commit={})",
                         vertex,
                         payload.size(),
@@ -138,11 +142,12 @@ Status GraphImpl::vertices_insert(const vertex_uid_t& vertex,
                                    rocksdb::Slice(payload.data(), payload.size())));
 }
 
-Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
-                                  const gsl::span<const vertex_id_t> ids,
-                                  const gsl::span<const char* const> payloads,
-                                  const gsl::span<const std::size_t> payloads_sizes,
-                                  bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_insert(const gsl::span<const vertex_t> types,
+                                           const gsl::span<const vertex_id_t> ids,
+                                           const gsl::span<const char* const> payloads,
+                                           const gsl::span<const std::size_t> payloads_sizes,
+                                           bool commit) {
     logger_get()->debug("vertices_insert(vertices={}, payloads={}, commit={}",
                         types.length(),
                         payloads.length() != 0,
@@ -169,8 +174,8 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-
-Status GraphImpl::vertices_has(const vertex_uid_t& vertex, bool& result) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_has(const vertex_uid_t& vertex, bool& result) const {
     logger_get()->debug("vertices_has(vertex={})", vertex);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -187,7 +192,8 @@ Status GraphImpl::vertices_has(const vertex_uid_t& vertex, bool& result) const {
     return to_status(status);
 }
 
-Status GraphImpl::vertices_get(const vertex_uid_t& vertex, std::string* value) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_get(const vertex_uid_t& vertex, std::string* value) {
     logger_get()->debug("vertices_get(vertex={})", vertex);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -201,7 +207,8 @@ Status GraphImpl::vertices_get(const vertex_uid_t& vertex, std::string* value) {
     return to_status(status);
 }
 
-Status GraphImpl::vertices_erase(const vertex_uid_t& vertex, bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_erase(const vertex_uid_t& vertex, bool commit) {
     logger_get()->debug("vertices_erase(vertex={}, commit={})", vertex, commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -216,7 +223,8 @@ Status GraphImpl::vertices_erase(const vertex_uid_t& vertex, bool commit) {
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::vertices_count(std::size_t& count) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_count(std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->vertices_column_.get());
@@ -229,7 +237,8 @@ Status GraphImpl::vertices_count(std::size_t& count) const {
     return to_status(iter->status());
 }
 
-Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_count(vertex_t type, std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->vertices_column_.get());
@@ -247,17 +256,20 @@ Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
     return to_status(iter->status());
 }
 
-std::shared_ptr<VertexIteratorImpl> GraphImpl::vertex_iterator(std::size_t from) const {
+template <bool Ordered>
+std::shared_ptr<VertexIteratorImpl> GraphImpl<Ordered>::vertex_iterator(std::size_t from) const {
     logger_get()->debug("vertex_iterator(from={})", from);
     return std::make_shared<VertexIteratorImpl>(db_get(), vertices_column_.get(), "N", from);
 }
 
-std::shared_ptr<EdgeIteratorImpl> GraphImpl::edge_iterator(std::size_t from) const {
+template <bool Ordered>
+std::shared_ptr<EdgeIteratorImpl> GraphImpl<Ordered>::edge_iterator(std::size_t from) const {
     logger_get()->debug("edge_iterator(from={})", from);
     return std::make_shared<EdgeIteratorImpl>(db_get(), edges_column_.get(), "E", from);
 }
 
-Status GraphImpl::vertices_clear(bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::vertices_clear(bool commit) {
     rocksdb::WriteBatch batch;
     clear(batch, vertices_column_);
     clear(batch, edges_column_);
@@ -266,7 +278,8 @@ Status GraphImpl::vertices_clear(bool commit) {
 
 ///// edges methods
 
-Status GraphImpl::edges_count(std::size_t& count) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_count(std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->edges_column_.get());
@@ -275,22 +288,24 @@ Status GraphImpl::edges_count(std::size_t& count) const {
         ++num_vertices;
         iter->Next();
     }
-    if (!ordered_) {
+    if (!Ordered) {
         count = num_vertices / 2;
     }
     return to_status(iter->status());
 }
 
-Status GraphImpl::edges_clear(bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_clear(bool commit) {
     rocksdb::WriteBatch batch;
     clear(batch, edges_column_);
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
-                               const vertex_uid_t& vertex2,
-                               const gsl::span<const char>& payload,
-                               bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_insert(const vertex_uid_t& vertex1,
+                                        const vertex_uid_t& vertex2,
+                                        const gsl::span<const char>& payload,
+                                        bool commit) {
     logger_get()->debug("edges_insert(vertex1={}, vertex2={}, payload={}, commit={})",
                         vertex1,
                         vertex2,
@@ -317,19 +332,20 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
     rocksdb::WriteBatch batch;
 
     batch.Put(edges_column_.get(), rocksdb::Slice(keys[0].data(), keys[0].size()), data_slice);
-    if (!ordered_) {
+    if (!Ordered) {
         batch.Put(edges_column_.get(), rocksdb::Slice(keys[1].data(), keys[1].size()), data_slice);
     }
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_t type,
-                               const gsl::span<const vertex_id_t>& vertices,
-                               const gsl::span<const char* const> vertex_payloads,
-                               const gsl::span<const std::size_t>& vertex_payloads_sizes,
-                               bool create_vertices,
-                               bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_insert(const vertex_uid_t& vertex,
+                                        const vertex_t type,
+                                        const gsl::span<const vertex_id_t>& vertices,
+                                        const gsl::span<const char* const> vertex_payloads,
+                                        const gsl::span<const std::size_t>& vertex_payloads_sizes,
+                                        bool create_vertices,
+                                        bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -375,7 +391,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         batch.Put(edges_column_.get(),
                   rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
                   rocksdb::Slice());
-        if (!ordered_) {
+        if (!Ordered) {
             batch.Put(edges_column_.get(),
                       rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                       rocksdb::Slice());
@@ -384,11 +400,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_t type,
-                               const gsl::span<const vertex_id_t>& vertices,
-                               bool create_vertices,
-                               bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_insert(const vertex_uid_t& vertex,
+                                        const vertex_t type,
+                                        const gsl::span<const vertex_id_t>& vertices,
+                                        bool create_vertices,
+                                        bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -433,7 +450,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         batch.Put(edges_column_.get(),
                   rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
                   rocksdb::Slice());
-        if (!ordered_) {
+        if (!Ordered) {
             batch.Put(edges_column_.get(),
                       rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                       rocksdb::Slice());
@@ -442,11 +459,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_uids_t& vertices,
-                               const std::vector<const char*>& data,
-                               const std::vector<std::size_t>& sizes,
-                               bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_insert(const vertex_uid_t& vertex,
+                                        const vertex_uids_t& vertices,
+                                        const std::vector<const char*>& data,
+                                        const std::vector<std::size_t>& sizes,
+                                        bool commit) {
     logger_get()->debug("edges_insert(vertex={}, vertices={}, commit={})",
                         vertex,
                         vertices,
@@ -485,7 +503,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
             batch.Put(edges_column_.get(),
                       rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
                       rocksdb::Slice(data[i], sizes[i]));
-            if (!ordered_) {
+            if (!Ordered) {
                 batch.Put(edges_column_.get(),
                           rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                           rocksdb::Slice(data[i], sizes[i]));
@@ -495,9 +513,10 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_has(const vertex_uid_t& vertex1,
-                            const vertex_uid_t& vertex2,
-                            bool& result) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_has(const vertex_uid_t& vertex1,
+                                     const vertex_uid_t& vertex2,
+                                     bool& result) const {
     logger_get()->debug("edges_has(vertex1={}, vertex2={})", vertex1, vertex2);
     GraphKV::edge_key_t key;
     GraphKV::encode(vertex1, vertex2, key);
@@ -514,7 +533,8 @@ Status GraphImpl::edges_has(const vertex_uid_t& vertex1,
     return to_status(status);
 }
 
-Status GraphImpl::edges_get(const edge_uid_t& edge, std::string* value) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_get(const edge_uid_t& edge, std::string* value) const {
     logger_get()->debug("edges_get(edge={})", edge);
     GraphKV::edge_key_t key;
     GraphKV::encode(edge.first, edge.second, key);
@@ -528,7 +548,8 @@ Status GraphImpl::edges_get(const edge_uid_t& edge, std::string* value) const {
     return to_status(status);
 }
 
-Status GraphImpl::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
     logger_get()->debug("edges_get(vertex={})", vertex);
     GraphKV::edge_key_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, key);
@@ -548,9 +569,10 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) co
     return to_status(iter->status());
 }
 
-Status GraphImpl::edges_get(const vertex_uid_t& vertex,
-                            vertex_t filter,
-                            vertex_uids_t& edges) const {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_get(const vertex_uid_t& vertex,
+                                     vertex_t filter,
+                                     vertex_uids_t& edges) const {
     logger_get()->debug("edges_get(vertex={}, filter={}, edges_column_={})", vertex, filter, edges);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -573,9 +595,10 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex,
     return Status::ok();
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex1,
-                              const vertex_uid_t& vertex2,
-                              bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_erase(const vertex_uid_t& vertex1,
+                                       const vertex_uid_t& vertex2,
+                                       bool commit) {
     logger_get()->debug("edges_erase(vertex1={}, vertex2={}, commit={})", vertex1, vertex2, commit);
 
     GraphKV::edge_keys_t keys;
@@ -588,9 +611,10 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex1,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_erase(rocksdb::WriteBatch& batch,
-                              const vertex_uid_t& vertex,
-                              size_t& removed) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_erase(rocksdb::WriteBatch& batch,
+                                       const vertex_uid_t& vertex,
+                                       size_t& removed) {
     GraphKV::edge_key_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -624,7 +648,8 @@ Status GraphImpl::edges_erase(rocksdb::WriteBatch& batch,
     return to_status(status);
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool commit) {
     logger_get()->debug("edges_erase(vertex={}, commit={})", vertex, commit);
     rocksdb::WriteBatch batch;
     auto edges = 0ul;
@@ -638,10 +663,11 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool 
     return status;
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex,
-                              vertex_t filter,
-                              size_t& removed,
-                              bool commit) {
+template <bool Ordered>
+Status GraphImpl<Ordered>::edges_erase(const vertex_uid_t& vertex,
+                                       vertex_t filter,
+                                       size_t& removed,
+                                       bool commit) {
     logger_get()->debug("edges_erase(vertex={}, filter={}, commit={})", vertex, filter, commit);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -677,19 +703,22 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex,
     return to_status(status);
 }
 
-Status GraphImpl::commit() {
+template <bool Ordered>
+Status GraphImpl<Ordered>::commit() {
     logger_get()->debug("commit()");
     to_status(db_get()->Flush(rocksdb::FlushOptions(), vertices_column_.get())).raise_on_error();
     return to_status(db_get()->Flush(rocksdb::FlushOptions(), edges_column_.get()))
         .raise_on_error();
 }
 
-std::string GraphImpl::statistics() const {
+template <bool Ordered>
+std::string GraphImpl<Ordered>::statistics() const {
     return statistics_->ToString();
 }
 
-void GraphImpl::clear(rocksdb::WriteBatch& batch,
-                      const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
+template <bool Ordered>
+void GraphImpl<Ordered>::clear(rocksdb::WriteBatch& batch,
+                               const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
     auto iter = db_get()->NewIterator(default_read_options(), handle.get());
     iter->SeekToFirst();
     if (iter->Valid()) {
@@ -699,5 +728,8 @@ void GraphImpl::clear(rocksdb::WriteBatch& batch,
         }
     }
 }
+
+template class GraphImpl<true>;
+template class GraphImpl<false>;
 
 }  // namespace basalt

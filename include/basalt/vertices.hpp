@@ -15,13 +15,14 @@ namespace basalt {
 /**
  * \brief Manipulate graph vertices
  */
+template <bool Ordered>
 class Vertices {
   public:
     /**
      * Build a \a Vertices
      * \param pimpl Pointer to implementation
      */
-    explicit Vertices(GraphImpl& pimpl);
+    explicit Vertices(GraphImpl<Ordered>& pimpl);
     /**
      * \brief Iterate over vertices
      * \param position starting position, default at the beginning
@@ -146,8 +147,12 @@ class Vertices {
         __attribute__((warn_unused_result));
 
   private:
-    GraphImpl& pimpl_;
+    GraphImpl<Ordered>& pimpl_;
 };
+
+extern template class Vertices<true>;
+extern template class Vertices<false>;
+
 }  // namespace basalt
 
 #include <basalt/vertices.ipp>

@@ -119,6 +119,11 @@ static const char* graph = R"(
 
 )";
 
+static const char* directed_graph = R"(
+    Directed Connectivity Graph
+
+)";
+
 static const char* graph_init = R"(
     Construct a graph object
 
@@ -213,6 +218,21 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
              [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)
         .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
+
+    py::class_<basalt::OrderedGraph>(m, "OrderedGraph", docstring::directed_graph)
+        .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
+        .def(py::init<const std::string&, const std::string&>(),
+             "path"_a,
+             "config"_a,
+             docstring::graph_init_with_config)
+        .def_property_readonly("vertices",
+                               &basalt::OrderedGraph::vertices,
+                               docstring::graph_vertices)
+        .def_property_readonly("edges", &basalt::OrderedGraph::edges, docstring::graph_edges)
+        .def("commit",
+             [](basalt::OrderedGraph& graph) { graph.commit().raise_on_error(); },
+             docstring::graph_commit)
+        .def("statistics", &basalt::OrderedGraph::statistics, docstring::graph_vertices);
 
     basalt::register_graph_edges(m);
     basalt::register_graph_vertices(m);
