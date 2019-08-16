@@ -23,10 +23,16 @@ static Config from_file(const std::string& path) {
 }
 
 Graph::Graph(const std::string& path)
-    : pimpl_(new GraphImpl(path)) {}
+    : Graph(path, false) {}
 
 Graph::Graph(const std::string& path, const std::string& config)
-    : pimpl_(new GraphImpl(path, from_file(config), true)) {}
+    : Graph(path, config, false) {}
+
+Graph::Graph(const std::string& path, bool ordered)
+    : pimpl_(new GraphImpl(path, ordered)) {}
+
+Graph::Graph(const std::string& path, const std::string& config, bool ordered)
+    : pimpl_(new GraphImpl(path, ordered, from_file(config), true)) {}
 
 Graph::~Graph() = default;
 
@@ -45,6 +51,12 @@ Status Graph::commit() {
 std::string Graph::statistics() const {
     return pimpl_->statistics();
 }
+
+OrderedGraph::OrderedGraph(const std::string& path)
+    : Graph(path, true) {}
+
+OrderedGraph::OrderedGraph(const std::string& path, const std::string& config)
+    : Graph(path, config, true) {}
 
 /////
 

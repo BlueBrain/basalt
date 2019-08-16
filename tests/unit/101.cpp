@@ -137,6 +137,31 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
     }
 }
 
+TEST_CASE("ordered graph", "[GraphKV]") {
+    using basalt::OrderedGraph;
+    using bbp::in_silico::synapse_t;
+
+    OrderedGraph g(new_db_path());
+
+    // add synapses with id 0 and 1
+    const auto s0 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   0,
+                                   synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    const auto s1 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   1,
+                                   synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    // connect the 2 synapses together
+    check_is_ok(g.edges().insert(s0, s1));
+
+    bool result = false;
+    REQUIRE(g.edges().has(s0, s1, result));
+    REQUIRE(result);
+    REQUIRE(g.edges().has(s1, s0, result));
+    REQUIRE(!result);
+}
+
 TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
     using basalt::Graph;
     using bbp::in_silico::synapse_t;

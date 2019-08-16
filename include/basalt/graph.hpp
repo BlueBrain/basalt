@@ -83,7 +83,38 @@ class Graph {
 
   private:
     std::unique_ptr<GraphImpl> pimpl_;
+
+  protected:
+    explicit Graph(const std::string& path, bool ordered);
+    Graph(const std::string& path, const std::string& config, bool ordered);
 };
+
+
+class OrderedGraph: public Graph {
+  public:
+    /**
+     * \name Ctors & Dtor
+     * \{
+     */
+
+    /**
+     * \brief load graph if present on disk, initialize it otherwise
+     * \param path graph directory on disk
+     */
+    explicit OrderedGraph(const std::string& path);
+
+    /**
+     * \brief create graph on disk at the given path with the given configuration
+     * \param path the graph directory on disk (must not exist)
+     * \param config the path to a JSON file
+     */
+    OrderedGraph(const std::string& path, const std::string& config);
+
+    /**
+     * \}
+     */
+};
+
 
 /**
  * \brief \a vertex_uid_t constructor helper function

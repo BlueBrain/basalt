@@ -45,11 +45,12 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
     return async_write;
 }
 
-GraphImpl::GraphImpl(const std::string& path)
-    : GraphImpl(path, Config(path), false) {}
+GraphImpl::GraphImpl(const std::string& path, bool ordered)
+    : GraphImpl(path, ordered, Config(path), false) {}
 
-GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
+GraphImpl::GraphImpl(const std::string& path, bool ordered, Config config, bool throw_if_exists)
     : path_(path)
+    , ordered_(ordered)
     , config_(std::move(config))
     , vertices_(*this)
     , edges_(*this)
@@ -151,14 +152,14 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
 
     if (payloads.empty()) {
         const rocksdb::Slice empty_payload;
-        for (auto i = 0u; i < types.length(); ++i) {
+        for (auto i = 0ul; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
             batch.Put(vertices_column_.get(),
                       rocksdb::Slice(key.data(), key.size()),
                       empty_payload);
         }
     } else {
-        for (auto i = 0u; i < types.length(); ++i) {
+        for (auto i = 0ul; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
             batch.Put(vertices_column_.get(),
                       rocksdb::Slice(key.data(), key.size()),
@@ -263,7 +264,6 @@ Status GraphImpl::vertices_clear(bool commit) {
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-
 ///// edges methods
 
 Status GraphImpl::edges_count(std::size_t& count) const {
@@ -275,7 +275,9 @@ Status GraphImpl::edges_count(std::size_t& count) const {
         ++num_vertices;
         iter->Next();
     }
-    count = num_vertices / 2;
+    if (!ordered_) {
+        count = num_vertices / 2;
+    }
     return to_status(iter->status());
 }
 
@@ -314,8 +316,9 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
     const rocksdb::Slice data_slice(payload.data(), payload.size());
     rocksdb::WriteBatch batch;
 
-    for (const auto& key: keys) {
-        batch.Put(edges_column_.get(), rocksdb::Slice(key.data(), key.size()), data_slice);
+    batch.Put(edges_column_.get(), rocksdb::Slice(keys[0].data(), keys[0].size()), data_slice);
+    if (!ordered_) {
+        batch.Put(edges_column_.get(), rocksdb::Slice(keys[1].data(), keys[1].size()), data_slice);
     }
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
@@ -359,7 +362,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     }
     std::vector<GraphKV::edge_keys_t> keys(vertices.size());
     GraphKV::vertex_key_t vertex_key;
-    for (auto i = 0u; i < keys.size(); ++i) {
+    for (auto i = 0ul; i < keys.size(); ++i) {
         const auto target = make_id(type, vertices[i]);
         if (create_vertices) {
             GraphKV::encode(target, vertex_key);
@@ -369,9 +372,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                       payload);
         }
         GraphKV::encode(vertex, target, keys[i]);
-        for (const auto& key: keys[i]) {
+        batch.Put(edges_column_.get(),
+                  rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
+                  rocksdb::Slice());
+        if (!ordered_) {
             batch.Put(edges_column_.get(),
-                      rocksdb::Slice(key.data(), key.size()),
+                      rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                       rocksdb::Slice());
         }
     }
@@ -415,7 +421,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     }
     std::vector<GraphKV::edge_keys_t> keys(vertices.size());
     GraphKV::vertex_key_t vertex_key;
-    for (auto i = 0u; i < keys.size(); ++i) {
+    for (auto i = 0ul; i < keys.size(); ++i) {
         const auto target = make_id(type, vertices[i]);
         if (create_vertices) {
             GraphKV::encode(target, vertex_key);
@@ -424,9 +430,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                       rocksdb::Slice());
         }
         GraphKV::encode(vertex, target, keys[i]);
-        for (const auto& key: keys[i]) {
+        batch.Put(edges_column_.get(),
+                  rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
+                  rocksdb::Slice());
+        if (!ordered_) {
             batch.Put(edges_column_.get(),
-                      rocksdb::Slice(key.data(), key.size()),
+                      rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                       rocksdb::Slice());
         }
     }
@@ -462,7 +471,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     std::vector<GraphKV::edge_keys_t> keys(vertices.size());
     rocksdb::WriteBatch batch;
     if (data.empty()) {
-        for (auto i = 0u; i < vertices.size(); ++i) {
+        for (auto i = 0ul; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
             for (const auto& key: keys[i]) {
                 batch.Put(edges_column_.get(),
@@ -471,11 +480,14 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
             }
         }
     } else {
-        for (auto i = 0u; i < vertices.size(); ++i) {
+        for (auto i = 0ul; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
-            for (const auto& key: keys[i]) {
+            batch.Put(edges_column_.get(),
+                      rocksdb::Slice(keys[i][0].data(), keys[i][0].size()),
+                      rocksdb::Slice(data[i], sizes[i]));
+            if (!ordered_) {
                 batch.Put(edges_column_.get(),
-                          rocksdb::Slice(key.data(), key.size()),
+                          rocksdb::Slice(keys[i][1].data(), keys[i][1].size()),
                           rocksdb::Slice(data[i], sizes[i]));
             }
         }
