@@ -1,0 +1,2685 @@
+{
+    "head": {
+        "link": [],
+        "vars": [
+            "p",
+            "license"
+        ]
+    },
+    "results": {
+        "bindings": [
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lua_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Squeak"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Squeak"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ceylon_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Permissive_free_software_licence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Claire_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_2.0_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F*_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Genie_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/New_BSD_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Orc_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pixie_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rust_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rust_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/VSXu"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ADMB"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CLACL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freeware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Small_Basic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Newspeak_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pharo"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pharo"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Reia_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TLA+"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Agda_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Extensible_Embeddable_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/FpgaC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inform__1-6__1"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freeware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inform__1-6__1"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inform__7__1"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Aldor"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ISC_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NESL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NESL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bsd_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Atom_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Windows"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ChucK"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IOS"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ChucK"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mac_OS_X"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ChucK"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Linux"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ChucK"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/FreeBASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/FreeBASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Limbo_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Nickle_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SPARK_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/STELLA_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Scratch_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://www.tcl.tk/software/tcltk/license.html"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Tcl"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ur_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv2"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XL_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DUP_programming_language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sass_(stylesheet_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AMOS_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv3"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Emacs_Lisp"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Euphoria_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Java_Community_Process"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Java_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Java_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mercury_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mercury_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PHP_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PHP"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_Software_Foundation_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freely_redistributable_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rebol"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rebol"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ruby_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ruby_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ruby_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/2-clause_BSD"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ruby_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/A_Sharp_(.NET)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Common_Language_Runtime"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mono_(software)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DotGNU"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Colony_Framework"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Crystal_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F_Sharp_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://www.mivamerchant.com/support/docs/empresa-license-agreement"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIVA_Script"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Affero_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Snap!_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Swift_(parallel_scripting_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Swift_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Swift_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TTM_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Clojure"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv2"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Go!_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Go_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ioke_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/R_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD-3"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/EC_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Elixir_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Qore_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Qore_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Qore_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cython"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PowerShell"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_Roberta"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/A+_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Opa_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Affero_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Opa_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Asymptote_(vector_graphics_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Permissive_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Elm_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kojo_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "https://unspace.ca/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "https://github.com/haml/haml/blob/master/MIT-LICENSE"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cobra_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JavaFX_Script"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Judoscript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Licence_of_zlib/libpng"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MiniD"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Parser_(CGI_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PHP_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Php4delphi"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Scientific_Vector_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CoffeeScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Klibc"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Klibc"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mirah_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ActiveVFP"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ezhil_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ParaSail_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Praspel"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mozilla_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Programming_with_Big_Data_in_R"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Programming_with_Big_Data_in_R"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SAMPL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Stylus_(stylesheet_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Xtend"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zlib_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AngelScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Umple"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/P*"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ATS_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Alice_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Clean_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commercial_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Clean_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Simplified_BSD_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Clean_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dart_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OpenMx"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pan_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TOM_(object-oriented_programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AppleScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Permissive_free_software_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CWEB"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/J_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commercial_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PureBasic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XBasic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Academic_Free_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fantom_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GrGen"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Objective-J"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PCASTL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PLEXIL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pnuts"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pure_Data__Miller_S._Puckette__1"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Closed-source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/QBasic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/X11"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PicoLisp"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PicoLisp"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv3"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Basic_For_Qt"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bsd_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ACL2"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Factor_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Hack_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL_3"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Hop_(software)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Julia_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/General_Public_Licence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Julia_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Less_(stylesheet_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Nu_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OCaml"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Oz_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mozilla_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pike_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pike_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pike_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Racket_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Raptor_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://www.sac-home.org/index.php?p=.%2F55_Download%2F61_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SAC_programming_language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TypeScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Unicon_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Vala_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commercial_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Basic_for_Applications"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Wolfram_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Yorick_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/QB64"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XBLite"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XBLite"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Boost_Software_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/D_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lasso_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIRC_scripting_language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modula-3"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Processing_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Processing_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freeware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TADS"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mozilla_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XUL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AMPL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Free_and_open_source_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AMPL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Boo_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Noop"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_6"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_6"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/4th_Dimension_(software)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Free_software_licence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/E_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fortress_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IronPython"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://www.modelica.org/licenses/ModelicaLicense2/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modelica"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://nwn.bioware.com/forums/viewtopic.html?forum=58&topic=46097"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NWScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NewLISP"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Common_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Object_REXX"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv2"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Object_REXX"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD-like_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Standard_ML_of_New_Jersey"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freeware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ThinBasic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ThinBasic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/X10_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MetaPost"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MSX_BASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL2"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SmallBASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artelys_Knitro"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Linotte"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Whiley_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Citrine_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_Licence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/P4_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PascalABC.NET"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/International_Components_for_Unicode"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NetRexx"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kaminari"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPLv2"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Falcon_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Falcon_Programming_Language_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Falcon_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Neko_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Nim_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Red_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Seed7"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Seed7"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NetLogo"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freeware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/FutureBASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AIMMS"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_E"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commercial_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Monkey_X"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zlib_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Monkey_X"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Urbiscript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artistic_License_2.0"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Logtalk"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License_2.0"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Logtalk"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Basic4GL"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AspectJ"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gambas"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Closed_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Axum_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BeanShell"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BeanShell"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BeanShell"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gosu_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Golo_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LGPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ciao_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ciao_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jasmin_(software)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/WebAssembly"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open-source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Harbour_(software)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Open_source"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SK8"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commercial_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/WordBASIC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BitC"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_licenses"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Scala_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gremlin_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Etoys_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Etoys_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Lesser_General_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pure_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Squirrel_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/VisSim"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Common_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Yoix"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Public_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bio7"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kotlin_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BSD_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pyomo"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Shareware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Logic"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Public_domain"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColorForth"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Groovy_(programming_language)"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_Software_Foundation_License"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_for_S60"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_license"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_for_S60"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GScript"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Proprietary_software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveCode__Transcript__1"
+                }
+            },
+            {
+                "license": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GPL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveCode__Transcript__1"
+                }
+            }
+        ],
+        "distinct": false,
+        "ordered": true
+    }
+}

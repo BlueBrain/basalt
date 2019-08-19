@@ -22,39 +22,39 @@ static Config from_file(const std::string& path) {
     return Config(istr);
 }
 
-template <bool Ordered>
-AbstractGraph<Ordered>::AbstractGraph(const std::string& path)
-    : pimpl_(new GraphImpl<Ordered>(path)) {}
+template <EdgeOrientation Orientation>
+AbstractGraph<Orientation>::AbstractGraph(const std::string& path)
+    : pimpl_(new GraphImpl<Orientation>(path)) {}
 
-template <bool Ordered>
-AbstractGraph<Ordered>::AbstractGraph(const std::string& path, const std::string& config)
-    : pimpl_(new GraphImpl<Ordered>(path, from_file(config), true)) {}
+template <EdgeOrientation Orientation>
+AbstractGraph<Orientation>::AbstractGraph(const std::string& path, const std::string& config)
+    : pimpl_(new GraphImpl<Orientation>(path, from_file(config), true)) {}
 
-template <bool Ordered>
-AbstractGraph<Ordered>::~AbstractGraph() = default;
+template <EdgeOrientation Orientation>
+AbstractGraph<Orientation>::~AbstractGraph() = default;
 
-template <bool Ordered>
-Edges<Ordered>& AbstractGraph<Ordered>::edges() {
+template <EdgeOrientation Orientation>
+Edges<Orientation>& AbstractGraph<Orientation>::edges() {
     return pimpl_->edges_get();
 }
 
-template <bool Ordered>
-Vertices<Ordered>& AbstractGraph<Ordered>::vertices() {
+template <EdgeOrientation Orientation>
+Vertices<Orientation>& AbstractGraph<Orientation>::vertices() {
     return pimpl_->vertices_get();
 }
 
-template <bool Ordered>
-Status AbstractGraph<Ordered>::commit() {
+template <EdgeOrientation Orientation>
+Status AbstractGraph<Orientation>::commit() {
     return pimpl_->commit();
 }
 
-template <bool Ordered>
-std::string AbstractGraph<Ordered>::statistics() const {
+template <EdgeOrientation Orientation>
+std::string AbstractGraph<Orientation>::statistics() const {
     return pimpl_->statistics();
 }
 
-template class AbstractGraph<true>;
-template class AbstractGraph<false>;
+template class AbstractGraph<EdgeOrientation::directed>;
+template class AbstractGraph<EdgeOrientation::undirected>;
 
 /////
 

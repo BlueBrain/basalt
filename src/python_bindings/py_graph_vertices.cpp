@@ -66,7 +66,7 @@ static const char* count_type = R"(
     Get number of vertices of a certain type
 
     Args:
-        type(int): vertex type
+        type(int): vertex type.
 
     Returns:
         Number of vertices of the given type
@@ -76,27 +76,27 @@ static const char* add = R"(
     Insert a vertex in the graph
 
     Args:
-        vertex(tuple): vertex unique identifier
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex(tuple): vertex unique identifier.
+        commit(bool): whether uncommitted operations should be flushed or not.
 )";
 
 static const char* add_payload = R"(
     Insert a vertex in the graph
 
     Args:
-        vertex(tuple): vertex unique identifier
-        data(numpy.array(dtype=numpy.byte)): payload attached to the vertex
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex(tuple): vertex unique identifier.
+        data(numpy.array(dtype=numpy.byte)): payload attached to the vertex.
+        commit(bool): whether uncommitted operations should be flushed or not.
 )";
 
 static const char* add_bulk = R"(
     Insert several vertices in the graph all at once",
 
     Args:
-        types(np.array(dtype=np.int32): 1-dimensional array of vertex types
-        ids(np.array(dtype=np.int64)): 1-dimensional array of vertex identifiers
-        payloads: optional list of vertex payload
-        commit(bool): whether uncommitted operations should be flushed or not
+        types(np.array(dtype=np.int32): 1-dimensional array of vertex types.
+        ids(np.array(dtype=np.int64)): 1-dimensional array of vertex identifiers.
+        payloads: optional list of vertex payload.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
 )";
 
@@ -104,7 +104,7 @@ static const char* clear = R"(
     Remove all vertices of the graph along with their edges
 
     Args:
-        commit(bool): whether uncommitted operations should be flushed or not
+        commit(bool): whether uncommitted operations should be flushed or not.
 
     >>> graph.vertices.add((0, 1))
     >>> graph.vertices.clear()
@@ -117,7 +117,7 @@ static const char* get = R"(
     Retrieve a vertex payload from the graph
 
     Args:
-        vertex(tuple): vertex unique identifier
+        vertex(tuple): vertex unique identifier.
 
     Returns:
         vertex payload if vertex exists and has a payload, None
@@ -136,7 +136,7 @@ static const char* getitem = R"(
     Retrieve a vertex payload from the graph
 
     Args:
-        vertex(tuple): vertex unique identifier
+        vertex(tuple): vertex unique identifier.
 
     Raises:
         KeyError: if vertex does not exist
@@ -157,21 +157,21 @@ static const char* getitem = R"(
 
 }  // namespace docstring
 
-template <bool Ordered>
-py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
+template <EdgeOrientation Orientation>
+py::class_<basalt::Vertices<Orientation>> register_graph_vertices_class(
     py::module& m,
     const std::string& class_prefix = "") {
-    return py::class_<basalt::Vertices<Ordered>>(m,
+    return py::class_<basalt::Vertices<Orientation>>(m,
                                                  (class_prefix + "Vertices").c_str(),
                                                  docstring::vertices_class)
         .def("__iter__",
-             [](const basalt::Vertices<Ordered>& vertices) {
+             [](const basalt::Vertices<Orientation>& vertices) {
                  return py::make_iterator(vertices.begin(), vertices.end());
              },
              py::keep_alive<0, 1>())
 
         .def("__len__",
-             [](const basalt::Vertices<Ordered>& vertices) {
+             [](const basalt::Vertices<Orientation>& vertices) {
                  std::size_t count;
                  vertices.count(count).raise_on_error();
                  return count;
@@ -179,7 +179,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              docstring::len)
 
         .def("count",
-             [](const basalt::Vertices<Ordered>& vertices, basalt::vertex_t type) -> std::size_t {
+             [](const basalt::Vertices<Orientation>& vertices, basalt::vertex_t type) -> std::size_t {
                  std::size_t count;
                  vertices.count(type, count).raise_on_error();
                  return count;
@@ -188,7 +188,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              docstring::count_type)
 
         .def("add",
-             [](basalt::Vertices<Ordered>& vertices,
+             [](basalt::Vertices<Orientation>& vertices,
                 basalt::vertex_uid_t vertex,
                 bool commit = false) {
                  const auto status = vertices.insert(vertex, commit);
@@ -199,7 +199,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              docstring::add)
 
         .def("add",
-             [](basalt::Vertices<Ordered>& vertices,
+             [](basalt::Vertices<Orientation>& vertices,
                 const basalt::vertex_uid_t& vertex,
                 py::array_t<char> data,
                 bool commit = false) {
@@ -219,7 +219,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
 
         /// TODO: replace types and ids by numpy.array([(0, 1), (2,3)], dtype="int32,int64")
         .def("add",
-             [](basalt::Vertices<Ordered>& instance,
+             [](basalt::Vertices<Orientation>& instance,
                 py::array_t<basalt::vertex_t> types,
                 py::array_t<basalt::vertex_id_t> ids,
                 py::list payloads,
@@ -274,7 +274,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              docstring::add_bulk)
 
         .def("get",
-             [](basalt::Vertices<Ordered>& vertices,
+             [](basalt::Vertices<Orientation>& vertices,
                 const basalt::vertex_uid_t& vertex) -> py::object {
                  std::string data;
                  auto const& status = vertices.get(vertex, &data);
@@ -291,7 +291,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              docstring::get)
 
         .def("__getitem__",
-             [](basalt::Vertices<Ordered>& vertices,
+             [](basalt::Vertices<Orientation>& vertices,
                 const basalt::vertex_uid_t& vertex) -> py::object {
                  std::string data;
                  auto const& status = vertices.get(vertex, &data);
@@ -309,14 +309,14 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
 
 
         .def("clear",
-             [](basalt::Vertices<Ordered>& vertices, bool commit = false) {
+             [](basalt::Vertices<Orientation>& vertices, bool commit = false) {
                  vertices.clear(commit).raise_on_error();
              },
              "commit"_a = false,
              docstring::clear)
 
         .def("__contains__",
-             [](basalt::Vertices<Ordered>& vertices, const basalt::vertex_uid_t& vertex) {
+             [](basalt::Vertices<Orientation>& vertices, const basalt::vertex_uid_t& vertex) {
                  bool result = false;
                  auto const status = vertices.has(vertex, result);
                  status.raise_on_error();
@@ -326,7 +326,7 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
              "vertex"_a)
 
         .def("discard",
-             [](basalt::Vertices<Ordered>& vertices,
+             [](basalt::Vertices<Orientation>& vertices,
                 const basalt::vertex_uid_t& vertex,
                 bool commit = false) { vertices.erase(vertex, commit).raise_on_error(); },
              "vertex"_a,
@@ -335,8 +335,8 @@ py::class_<basalt::Vertices<Ordered>> register_graph_vertices_class(
 }
 
 void register_graph_vertices(py::module& m) {
-    register_graph_vertices_class<true>(m, "Ordered");
-    register_graph_vertices_class<false>(m);
+    register_graph_vertices_class<EdgeOrientation::directed>(m, "Directed");
+    register_graph_vertices_class<EdgeOrientation::undirected>(m);
 }
 
 }  // namespace basalt

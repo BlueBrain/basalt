@@ -13,19 +13,19 @@
 
 namespace basalt {
 
-template <bool Ordered>
-Edges<Ordered>::Edges(GraphImpl<Ordered>& pimpl)
+template <EdgeOrientation Orientation>
+Edges<Orientation>::Edges(GraphImpl<Orientation>& pimpl)
     : pimpl_(pimpl) {}
 
-template <bool Ordered>
-Status Edges<Ordered>::insert(const vertex_uid_t& vertex1,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::insert(const vertex_uid_t& vertex1,
                               const vertex_uid_t& vertex2,
                               bool commit) {
     return pimpl_.edges_insert(vertex1, vertex2, {nullptr, 0}, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::insert(const vertex_uid_t& vertex1,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::insert(const vertex_uid_t& vertex1,
                               const vertex_uid_t& vertex2,
                               const char* data,
                               std::size_t size,
@@ -33,8 +33,8 @@ Status Edges<Ordered>::insert(const vertex_uid_t& vertex1,
     return pimpl_.edges_insert(vertex1, vertex2, {data, size}, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
                               const vertex_uids_t& vertices,
                               const std::vector<const char*>& data,
                               const std::vector<std::size_t>& sizes,
@@ -42,8 +42,8 @@ Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
     return pimpl_.edges_insert(vertex, vertices, data, sizes, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
                               vertex_t type,
                               const std::size_t* vertices,
                               size_t num_vertices,
@@ -52,8 +52,8 @@ Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
     return pimpl_.edges_insert(vertex, type, {vertices, num_vertices}, create_vertices, commit);
 };
 
-template <bool Ordered>
-Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
                               vertex_t type,
                               const std::size_t* vertices,
                               const char* const* vertex_payloads,
@@ -70,71 +70,71 @@ Status Edges<Ordered>::insert(const vertex_uid_t& vertex,
                                commit);
 };
 
-template <bool Ordered>
-Status Edges<Ordered>::has(const vertex_uid_t& vertex1,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::has(const vertex_uid_t& vertex1,
                            const vertex_uid_t& vertex2,
                            bool& result) const {
     return pimpl_.edges_has(vertex1, vertex2, result);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
     return pimpl_.edges_get(vertex, edges);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::get(const edge_uid_t& edge, std::string* value) const {
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::get(const edge_uid_t& edge, std::string* value) const {
     return pimpl_.edges_get(edge, value);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::get(const vertex_uid_t& vertex,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::get(const vertex_uid_t& vertex,
                            vertex_t filter,
                            vertex_uids_t& edges) const {
     return pimpl_.edges_get(vertex, filter, edges);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::erase(const vertex_uid_t& vertex1,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::erase(const vertex_uid_t& vertex1,
                              const vertex_uid_t& vertex2,
                              bool commit) {
     return pimpl_.edges_erase(vertex1, vertex2, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::erase(const vertex_uid_t& vertex,
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::erase(const vertex_uid_t& vertex,
                              vertex_t filter,
                              size_t& removed,
                              bool commit) {
     return pimpl_.edges_erase(vertex, filter, removed, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit) {
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::erase(const vertex_uid_t& vertex, std::size_t& removed, bool commit) {
     return pimpl_.edges_erase(vertex, removed, commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::clear(bool commit) {
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::clear(bool commit) {
     return pimpl_.edges_clear(commit);
 }
 
-template <bool Ordered>
-Status Edges<Ordered>::count(std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status Edges<Orientation>::count(std::size_t& count) const {
     return pimpl_.edges_count(count);
 }
 
-template <bool Ordered>
-EdgeIterator Edges<Ordered>::begin(size_t position) const {
+template <EdgeOrientation Orientation>
+EdgeIterator Edges<Orientation>::begin(size_t position) const {
     return {pimpl_, position};
 }
 
-template <bool Ordered>
-EdgeIterator Edges<Ordered>::end() const {
+template <EdgeOrientation Orientation>
+EdgeIterator Edges<Orientation>::end() const {
     return {pimpl_, std::numeric_limits<std::size_t>::max()};
 }
 
-template class Edges<true>;
-template class Edges<false>;
+template class Edges<EdgeOrientation::directed>;
+template class Edges<EdgeOrientation::undirected>;
 
 }  // namespace basalt

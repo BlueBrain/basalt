@@ -14,14 +14,14 @@ namespace basalt {
 /**
  * Manipulate the edges of a graph
  */
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class Edges {
   public:
     /**
      * \brief Construct a \a Edges
      * \param pimpl Pointer to implementation
      */
-    explicit Edges(GraphImpl<Ordered>& pimpl);
+    explicit Edges(GraphImpl<Orientation>& pimpl);
 
     /**
      * \brief Iterator over the edges of the graph
@@ -136,8 +136,8 @@ class Edges {
         __attribute__((warn_unused_result));
 
     /**
-     * \brief get vertices connected to one vertex
-     * \param vertex one end of the edges to look
+     * \brief get vertices connected to a vertex
+     * \param vertex for directed graph, the head of the edges to look for, any end of the edges otherwise
      * \param edges accumulator where connected vertices are added.
      * \return information whether operation succeeded or not
      */
@@ -200,10 +200,10 @@ class Edges {
     Status clear(bool commit) __attribute__((warn_unused_result));
 
   private:
-    GraphImpl<Ordered>& pimpl_;
+    GraphImpl<Orientation>& pimpl_;
 };
 
-extern template class Edges<true>;
-extern template class Edges<false>;
+extern template class Edges<EdgeOrientation::directed>;
+extern template class Edges<EdgeOrientation::undirected>;
 
 }  // namespace basalt

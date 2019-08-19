@@ -24,7 +24,7 @@ using basalt::vertex_uids_t;
  * \param payload vertex content
  * \return vertex unique identifier
  */
-template <typename Payload, bool Ordered>
+template <typename Payload, basalt::EdgeOrientation Ordered>
 inline vertex_uid_t checked_insert(AbstractGraph<Ordered>& g,
                                    vertex_t type,
                                    vertex_id_t id,
@@ -139,10 +139,9 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
 }
 
 TEST_CASE("ordered graph", "[GraphKV]") {
-    using basalt::OrderedGraph;
     using bbp::in_silico::synapse_t;
 
-    OrderedGraph g(new_db_path());
+    basalt::DirectedGraph g(new_db_path());
 
     // add synapses with id 0 and 1
     const auto s0 = checked_insert(g,

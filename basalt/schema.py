@@ -13,7 +13,7 @@ from cached_property import cached_property
 import numpy as np
 from six import string_types, with_metaclass
 
-from basalt import Graph
+from basalt import DirectedGraph, Graph
 from .serialization import serialization_method
 
 __all__ = ["vertex", "edge", "MetaGraph"]
@@ -95,7 +95,7 @@ class DirectiveMeta(type):
     def directive(dicts=None):
         """Decorator for Basalt directives.
 
-        Basalt directives allow you to describe a graph typology
+        Basalt directives allow you to describe a graph topology
         while defining a graph Python class., e.g. describe the kind
         of vertices and the possible edges between these vertices.
 
@@ -119,16 +119,6 @@ class DirectiveMeta(type):
 
           2. It automatically adds a dictionary called "edges_types" to the
              graph class so that you can refer to it later..
-
-        The ``(dicts='versions')`` part ensures that ALL packages in Spack
-        will have a ``versions`` attribute after they're constructed, and
-        that if no directive actually modified it, it will just be an
-        empty dict.
-
-        This is just a modular way to add storage attributes to the
-        Package class, and it's how Spack gets information from the
-        packages to the core.
-
 
         """
         global __all__
@@ -236,6 +226,17 @@ def edge(lhs, rhs, serialization=None, default_payload=True):
         metagraph.edges_types.setdefault(rhs, set()).add(
             (lhs, serialization, default_payload)
         )
+
+    return _register
+
+
+@directive(dicts="settings")
+def directed(value):
+    """Directive to declare whether the graph is directed or not (the default)"""
+
+    def _register(metagraph):
+        assert isinstance(value, bool)
+        metagraph.settings["directed"] = value
 
     return _register
 
@@ -437,6 +438,15 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                 if self._data is not None:
                     self._data = self.deserialize(self._data)
 
+            def __hash__(self):
+                return hash((self.type, self.id))
+
+            def __eq__(self, other):
+                return (self.type, self.id) == (other.type, other.id)
+
+            def __str__(self):
+                return "({type}:{id})".format(type=self.type, id=self.id)
+
             @property
             def id(self):
                 """get vertex identifier"""
@@ -623,7 +633,8 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             self.g = graph
         else:
             assert path is not None
-            self.g = Graph(path, **kwargs)
+            graph_cls = DirectedGraph if self.settings.get("directed", False) else Graph
+            self.g = graph_cls(path, **kwargs)
 
     @property
     def vertices(self):

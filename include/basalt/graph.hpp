@@ -19,7 +19,7 @@
 
 namespace basalt {
 
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class AbstractGraph {
   public:
     /** \brief iterator over vertices */
@@ -52,12 +52,12 @@ class AbstractGraph {
     /**
      * \brief edges accessor
      */
-    Edges<Ordered>& edges();
+    Edges<Orientation>& edges();
 
     /**
      * \brief vertices accessor
      */
-    Vertices<Ordered>& vertices();
+    Vertices<Orientation>& vertices();
 
     /**
      * \}
@@ -75,21 +75,21 @@ class AbstractGraph {
     std::string statistics() const;
 
   private:
-    std::unique_ptr<GraphImpl<Ordered>> pimpl_;
+    std::unique_ptr<GraphImpl<Orientation>> pimpl_;
 };
 
 /**
  * \brief Undirected Connectivity Graph
  */
-using Graph = AbstractGraph<false>;
+using Graph = AbstractGraph<EdgeOrientation::undirected>;
 
 /**
  *  \brief Graph in which edges have orientations.
  */
-using OrderedGraph = AbstractGraph<true>;
+using DirectedGraph = AbstractGraph<EdgeOrientation::directed>;
 
-extern template class AbstractGraph<true>;
-extern template class AbstractGraph<false>;
+extern template class AbstractGraph<EdgeOrientation::directed>;
+extern template class AbstractGraph<EdgeOrientation::undirected>;
 
 /**
  * \brief \a vertex_uid_t constructor helper function

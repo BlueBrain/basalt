@@ -12,16 +12,21 @@
 
 namespace basalt {
 
+enum class EdgeOrientation {
+    undirected,
+    directed,
+};
+
 /// Forward declarations
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class Edges;
 class EdgeIterator;
 class EdgeIteratorImpl;
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class GraphImpl;
 class VertexIteratorImpl;
 class VertexIterator;
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class Vertices;
 
 using vertex_t = int;

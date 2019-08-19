@@ -68,8 +68,8 @@ static const char* discard_edge = R"(
     Remove edge between 2 vertices
 
     Args:
-        edge(tuple): edge unique identifier to remove
-        commit(bool): whether uncommitted operations should be flushed or not
+        edge(tuple): edge unique identifier to remove.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
     >>> v1, v2 = (0, 1), (0, 2)
     >>> graph.edges.discard((v1, v2))
@@ -80,8 +80,8 @@ static const char* discard_edges = R"(
     Remove edges connected to a given vertex
 
     Args:
-        vertex(tuple): vertex unique identifier
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex(tuple): vertex unique identifier.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
 )";
 
@@ -91,7 +91,7 @@ static const char* discard_edges_if = R"(
 
     Args:
         vertex(tuple): vertex unique identifier from where the edge starts.
-        type(int): type of the other end of the edge
+        type(int): type of the other end of the edge.
         commit(bool): whether uncommitted operations should be flushed or not
 
 )";
@@ -100,7 +100,7 @@ static const char* get_data = R"(
     Get payload associated to an edge
 
     Args:
-        edge(tuple): edge unique identifier
+        edge(tuple): edge unique identifier.
 
     Returns:
         `None` is edge does not exist or does not have an associated payload.
@@ -127,7 +127,7 @@ static const char* get_edges = R"(
     Get all vertices connected to one vertex
 
     Args:
-        vertex(tuple): vertex unique identifier
+        vertex(tuple): vertex unique identifier.
 
     Returns:
         vector of vertices (usable like a list)
@@ -148,11 +148,11 @@ static const char* get_edges_filter = R"(
     Get vertices of a certain type connected to one vertex
 
     Args:
-        vertex(tuple): vertex unique identifier
-        filter(int): vertex type
+        vertex(tuple): vertex unique identifier.
+        filter(int): vertex type.
 
     Returns:
-        vector of vertices (usable like a list)
+        vector of vertices (usable like a list).
 
     >>> graph.vertices.clear()
     >>> v1, v2, v3 = [(0, 1), (0, 2), (1, 3)]
@@ -169,9 +169,9 @@ static const char* add_edge = R"(
     Add or overwrite an edge
 
     Args:
-        vertex1(tuple): first vertex identifier
-        vertex2(tuple): second vertex identifier
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex1(tuple): first vertex identifier.
+        vertex2(tuple): second vertex identifier.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
     >>> graph.vertices.clear()
     >>> v1, v2 = [(0, 1), (0, 2)]
@@ -185,10 +185,10 @@ static const char* add_edge_payload = R"(
     Add or overwrite an edge with a payload attached
 
     Args:
-        vertex1(tuple): first vertex identifier
-        vertex2(tuple): second vertex identifier
-        payload(np.array(dtype=np.byte)): array of bytes
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex1(tuple): first vertex identifier.
+        vertex2(tuple): second vertex identifier.
+        payload(np.array(dtype=np.byte)): array of bytes.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
     >>> graph.vertices.clear()
     >>> v1, v2 = [(0, 1), (0, 2)]
@@ -202,12 +202,12 @@ static const char* add_bulk = R"(
     Create an edge between a vertex and a list of other vertices
 
     Args:
-        vertex(tuple): vertex from which all edges to create start
-        type(int): type of target vertices to connect to (the same of all target vertices)
-        vertices(np.array(dtype=np.int64)): array of target vertices identifiers
+        vertex(tuple): vertex from which all edges to create start.
+        type(int): type of target vertices to connect to (the same of all target vertices).
+        vertices(np.array(dtype=np.int64)): array of target vertices identifiers.
         create_vertices(bool): wether the target vertices are also created or not
-            Any prior vertices with the same identifiers will be overwriten
-        commit(bool): whether uncommitted operations should be flushed or not
+            Any prior vertices with the same identifiers will be overwritten.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
 )";
 
@@ -215,41 +215,41 @@ static const char* add_bulk_payload = R"(
     Create an edge between a vertex and a list of other vertices that are also created
 
     Args:
-        vertex(tuple): vertex from which all edges to create start
-        type(int): type of target vertices to connect to (the same of all target vertices)
-        vertices(np.array(dtype=np.int64)): array of target vertices identifiers
-        vertex_payloads(list of np.array(dtype=np.int64)): payload of target vertices
-        create_vertices(bool): wether the target vertices are also created or not
-            Any prior vertices with the same identifiers will be overwriten
-        commit(bool): whether uncommitted operations should be flushed or not
+        vertex(tuple): vertex from which all edges to create start.
+        type(int): type of target vertices to connect to (the same of all target vertices).
+        vertices(np.array(dtype=np.int64)): array of target vertices identifiers.
+        vertex_payloads(list of np.array(dtype=np.int64)): payload of target vertices.
+        create_vertices(bool): wether the target vertices are also created or not.
+            Any prior vertices with the same identifiers will be overwritten.
+        commit(bool): whether uncommitted operations should be flushed or not.
 
 )";
 
 }  // namespace docstring
 
 
-template <bool Ordered>
-py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
+template <EdgeOrientation Orientation>
+py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
     py::module& m,
     const std::string& class_prefix = "") {
-    return py::class_<basalt::Edges<Ordered>>(m,
+    return py::class_<basalt::Edges<Orientation>>(m,
                                               (class_prefix + "Edges").c_str(),
                                               docstring::edges_class)
         .def("__iter__",
-             [](const basalt::Edges<false>& edges) {
+             [](const basalt::Edges<Orientation>& edges) {
                  return py::make_iterator(edges.begin(), edges.end());
              },
              py::keep_alive<0, 1>())
 
         .def("__len__",
-             [](const basalt::Edges<false>& edges) {
-                 std::size_t count;
+             [](const basalt::Edges<Orientation>& edges) {
+                 std::size_t count{};
                  edges.count(count).raise_on_error();
                  return count;
              })
 
         .def("add",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex1,
                 const basalt::vertex_uid_t& vertex2,
                 bool commit) {
@@ -262,7 +262,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::add_edge)
 
         .def("add",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex1,
                 const basalt::vertex_uid_t& vertex2,
                 py::array_t<char> data,
@@ -281,7 +281,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::add_edge_payload)
 
         .def("add",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex,
                 const basalt::vertex_t type,
                 py::array_t<basalt::vertex_id_t> vertices,
@@ -308,7 +308,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::add_bulk)
 
         .def("add",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex,
                 const basalt::vertex_t type,
                 py::array_t<basalt::vertex_id_t> vertices,
@@ -352,7 +352,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::add_bulk_payload)
 
         .def("__contains__",
-             [](const basalt::Edges<false>& edges, const basalt::edge_uid_t& edge) {
+             [](const basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge) {
                  bool result = false;
                  edges.has(edge.first, edge.second, result).raise_on_error();
                  return result;
@@ -361,7 +361,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              "Check connectivity between 2 vertices")
 
         .def("get",
-             [](const basalt::Edges<false>& edges, const basalt::edge_uid_t& edge) -> py::object {
+             [](const basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge) -> py::object {
                  std::string data;
                  const auto& status = edges.get(edge, &data);
                  if (status.code == basalt::Status::missing_edge_code) {
@@ -377,7 +377,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::get_data)
 
         .def("get",
-             [](const basalt::Edges<false>& edges, const basalt::vertex_uid_t& vertex) {
+             [](const basalt::Edges<Orientation>& edges, const basalt::vertex_uid_t& vertex) {
                  basalt::vertex_uids_t eax;
                  edges.get(vertex, eax).raise_on_error();
                  return eax;
@@ -386,7 +386,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::get_edges)
 
         .def("get",
-             [](const basalt::Edges<false>& edges,
+             [](const basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex,
                 basalt::vertex_t filter) {
                  basalt::vertex_uids_t eax;
@@ -398,7 +398,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::get_edges_filter)
 
         .def("discard",
-             [](basalt::Edges<false>& edges, const basalt::edge_uid_t& edge, bool commit = false) {
+             [](basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge, bool commit = false) {
                  edges.erase(edge.first, edge.second, commit).raise_on_error();
              },
              "edge"_a,
@@ -406,7 +406,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::discard_edge)
 
         .def("discard",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex,
                 bool commit = false) {
                  std::size_t removed;
@@ -418,7 +418,7 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
              docstring::discard_edges)
 
         .def("discard",
-             [](basalt::Edges<false>& edges,
+             [](basalt::Edges<Orientation>& edges,
                 const basalt::vertex_uid_t& vertex,
                 basalt::vertex_t filter,
                 bool commit = false) {
@@ -433,8 +433,8 @@ py::class_<basalt::Edges<Ordered>> register_graph_edges_class(
 }
 
 void register_graph_edges(py::module& m) {
-    register_graph_edges_class<false>(m);
-    register_graph_edges_class<true>(m, "Ordered");
+    register_graph_edges_class<EdgeOrientation::undirected>(m);
+    register_graph_edges_class<EdgeOrientation::directed>(m, "Directed");
 }
 
 }  // namespace basalt

@@ -1,21 +1,24 @@
+from collections import OrderedDict
 from enum import Enum
 import functools
+import json
+import os.path as osp
 import tempfile
 import shutil
 import unittest
 
 import numpy as np
 
-from basalt.schema import edge, MetaGraph, vertex
-
-
-class Vertex(Enum):
-    PERSON = 1
-    SKILL = 2
-    CATEGORY = 3
+from basalt.schema import directed, edge, MetaGraph, vertex
+from basalt.serialization import PickleSerialization
 
 
 class Skills(MetaGraph):
+    class Vertex(Enum):
+        PERSON = 1
+        SKILL = 2
+        CATEGORY = 3
+
     vertex("person", Vertex.PERSON, "pickle")
     vertex("skill", Vertex.SKILL, "pickle")
     vertex("category", Vertex.CATEGORY, serialization="pickle", plural="categories")
@@ -37,17 +40,178 @@ def tempdir(func):
     return _func
 
 
-class TestMetaGraph(unittest.TestCase):
+class PLInfluence(MetaGraph):
+    directed(True)
+
+    class Vertex(Enum):
+        LICENSE = 1
+        LANGUAGE = 2
+        DEVELOPER = 3
+
+    vertex("license", Vertex.LICENSE, serialization="pickle")
+    vertex("language", Vertex.LANGUAGE, serialization="pickle")
+    vertex("developer", Vertex.DEVELOPER, serialization="pickle")
+    edge(Vertex.LANGUAGE, Vertex.LICENSE)
+    edge(Vertex.LANGUAGE, Vertex.LANGUAGE)
+    edge(Vertex.LANGUAGE, Vertex.DEVELOPER)
+
+    def import_json_data(self):
+        file_fmt = osp.join(osp.dirname(__file__), "PLGraph_{}.json")
+        LG_SUFFIX = "_(programming_language)"
+        developers_ids = OrderedDict()
+        license_ids = OrderedDict()
+        language_ids = OrderedDict()
+        links = {}
+        vip_pl = {
+            "Java": "JAVA",
+             "C": "C",
+            "C++": "CPP",
+            "Haskell": "HASKELL",
+        }
+
+        # load language -> developer data
+        # dbpedia SPARQL query (http://dbpedia.org/sparql):
+        #   SELECT *
+        #   WHERE { ?p a <http://dbpedia.org/ontology/ProgrammingLanguage> .
+        #   ?p <http://dbpedia.org/ontology/developer> ?developer . }
+        with open(file_fmt.format("developer")) as istr:
+            data = json.load(istr)['results']['bindings']
+        for entry in data:
+            developer = (
+                entry['developer']['value'].rsplit('/', 1)[-1].replace('_', ' ')
+            )
+            developer_id = developers_ids.setdefault(developer, len(developers_ids))
+            del developer
+            language = entry['p']['value'].rsplit('/', 1)[-1]
+            if language.endswith(LG_SUFFIX):
+                language = language[: -len(LG_SUFFIX)]
+            language_id = language_ids.setdefault(language, len(language_ids))
+            alias = vip_pl.get(language)
+            if alias is not None:
+                setattr(self, alias, language_id)
+            del language
+            links.setdefault("la_de", set()).add((language_id, developer_id))
+
+        print(sorted(language_ids.keys()))
+
+        # load language -> license data
+        # dbpedia SPARQL query (http://dbpedia.org/sparql):
+        #   SELECT *
+        #   WHERE { ?p a <http://dbpedia.org/ontology/ProgrammingLanguage> .
+        #   ?p <http://dbpedia.org/ontology/license> ?license . }
+        with open(file_fmt.format("license")) as istr:
+            data = json.load(istr)['results']['bindings']
+        for entry in data:
+            license = entry['license']['value'].rsplit('/', 1)[-1].replace('_', ' ')
+            license_id = license_ids.setdefault(license, len(license_ids))
+            del license
+            language = entry['p']['value'].rsplit('/', 1)[-1]
+            if language.endswith(LG_SUFFIX):
+                language = language[: -len(LG_SUFFIX)]
+            language_id = language_ids.setdefault(language, len(language_ids))
+            alias = vip_pl.get(language)
+            if alias is not None:
+                setattr(self, alias, language_id)
+            del language
+            links.setdefault("la_li", set()).add((language_id, license_id))
+
+        # load language -> influenced language data
+        # dbpedia SPARQL query (http://dbpedia.org/sparql):
+        #   SELECT *
+        #   WHERE { ?p a <http://dbpedia.org/ontology/ProgrammingLanguage> .
+        #   ?p <http://dbpedia.org/ontology/inspired> ?inspired . }
+        with open(file_fmt.format("influence")) as istr:
+            data = json.load(istr)['results']['bindings']
+        for entry in data:
+            language = entry['p']['value'].rsplit('/', 1)[-1]
+            if language.endswith(LG_SUFFIX):
+                language = language[: -len(LG_SUFFIX)]
+            language_id = language_ids.setdefault(language, len(language_ids))
+            alias = vip_pl.get(language)
+            if alias is not None:
+                setattr(self, alias, language_id)
+            del language
+            influenced = entry['influenced']['value'].rsplit('/', 1)[-1]
+            if influenced.endswith(LG_SUFFIX):
+                influenced = influenced[: -len(LG_SUFFIX)]
+            influenced = influenced.replace('_', ' ')
+            influenced_id = language_ids.setdefault(influenced, len(language_ids))
+            del influenced
+            links.setdefault("la_la", set()).add((language_id, influenced_id))
+
+        # import vertices
+
+        for vtype, data in [
+            (self.Vertex.DEVELOPER, developers_ids),
+            (self.Vertex.LANGUAGE, language_ids),
+            (self.Vertex.LICENSE, license_ids),
+        ]:
+            self.vertices.add(
+                np.full((len(data),), vtype.value, dtype=np.int32),
+                np.fromiter(data.values(), dtype=np.int64),
+                [PickleSerialization.serialize(k) for k in data.keys()],
+            )
+        for htype, ttype, data in [
+            (self.Vertex.LANGUAGE, self.Vertex.LICENSE, links["la_li"]),
+            (self.Vertex.LANGUAGE, self.Vertex.LANGUAGE, links["la_la"]),
+            (self.Vertex.LANGUAGE, self.Vertex.DEVELOPER, links["la_de"]),
+        ]:
+            for hid, tid in data:
+                self.edges.add((htype.value, hid), (ttype.value, tid))
+
+
+class TestPLGraph(unittest.TestCase):
+    @tempdir
+    def test_pl_graph(self, path):
+        g = PLInfluence.from_path(path)
+        g.import_json_data()
+
+        self.assertEqual(len(g.vertices), 961)
+        self.assertEqual(len(g.languages), 649)
+        self.assertEqual(len(g.developers), 232)
+        self.assertEqual(len(g.licenses), 80)
+        self.assertEqual(len(g.edges), 1314)
+
+        c = g.languages[g.C]
+        self.assertEqual(c.id, g.C)
+        self.assertEqual(c.data, "C")
+        authors = [dev.data for dev in c.developers]
+        self.assertCountEqual(authors, ['ANSI C', 'Cornell University', 'Dennis Ritchie', 'ISO standard'])
+        self.assertEqual(len(list(c.languages)), 24)
+
+        # languages directly inspired from Java
+        java = g.languages[g.JAVA]
+        self.assertEqual(len(list(java.languages)), 18)
+
+        # languages directly inspired from C++
+        cpp = g.languages[g.CPP]
+        self.assertEqual(len(list(cpp.languages)), 11)
+
+        # languages directly inspired from Haskell
+        haskell = g.languages[g.HASKELL]
+        self.assertEqual(len(list(haskell.languages)), 32)
+
+        # languages recursively inspired by C
+        c_rec_influenced = set()
+        work = [g.languages[g.C]]
+        while len(work):
+            pl = work.pop()
+            for influenced in pl.languages:
+                if influenced not in c_rec_influenced:
+                    c_rec_influenced.add(influenced)
+                    work.append(influenced)
+        self.assertEqual(len(c_rec_influenced), 134)
+
+
+class TestSkillMetaGraph(unittest.TestCase):
     @tempdir
     def test_skills_graph(self, path):
-        g = Skills.from_path(
-            path
-        )  # create instance from existing graph instance "graph"
+        g = Skills.from_path(path)
 
         alice = g.persons.add(0, "Alice")
 
         alice.type, alice.id, repr(alice.data)
-        self.assertEqual(alice.type, Vertex.PERSON)
+        self.assertEqual(alice.type, Skills.Vertex.PERSON)
         self.assertEqual(alice.id, 0)
 
         alice2 = g.persons[np.uint64(0)]

@@ -12,8 +12,8 @@
 
 namespace basalt {
 
-template <bool Ordered>
-EdgeIterator::EdgeIterator(const basalt::GraphImpl<Ordered>& pimpl, size_t from) {
+template <EdgeOrientation Orientation>
+EdgeIterator::EdgeIterator(const basalt::GraphImpl<Orientation>& pimpl, size_t from) {
     if (from == std::numeric_limits<std::size_t>::max()) {
         pimpl_ = EdgeIteratorImpl_ptr(nullptr);
     } else {
@@ -23,8 +23,8 @@ EdgeIterator::EdgeIterator(const basalt::GraphImpl<Ordered>& pimpl, size_t from)
 }
 
 // Explicit instantiation
-template EdgeIterator::EdgeIterator(const basalt::GraphImpl<true>& pimpl, size_t from);
-template EdgeIterator::EdgeIterator(const basalt::GraphImpl<false>& pimpl, size_t from);
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl, size_t from);
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl, size_t from);
 
 EdgeIterator::EdgeIterator(const basalt::EdgeIterator& other)
     : pimpl_(other.pimpl_) {}

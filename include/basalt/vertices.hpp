@@ -15,14 +15,14 @@ namespace basalt {
 /**
  * \brief Manipulate graph vertices
  */
-template <bool Ordered>
+template <EdgeOrientation Orientation>
 class Vertices {
   public:
     /**
      * Build a \a Vertices
      * \param pimpl Pointer to implementation
      */
-    explicit Vertices(GraphImpl<Ordered>& pimpl);
+    explicit Vertices(GraphImpl<Orientation>& pimpl);
     /**
      * \brief Iterate over vertices
      * \param position starting position, default at the beginning
@@ -147,11 +147,11 @@ class Vertices {
         __attribute__((warn_unused_result));
 
   private:
-    GraphImpl<Ordered>& pimpl_;
+    GraphImpl<Orientation>& pimpl_;
 };
 
-extern template class Vertices<true>;
-extern template class Vertices<false>;
+extern template class Vertices<EdgeOrientation::directed>;
+extern template class Vertices<EdgeOrientation::undirected>;
 
 }  // namespace basalt
 
