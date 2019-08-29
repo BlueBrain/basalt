@@ -176,28 +176,28 @@ class TestPLGraph(unittest.TestCase):
         c = g.languages[g.C]
         self.assertEqual(c.id, g.C)
         self.assertEqual(c.data, "C")
-        authors = [dev.data for dev in c.developers]
+        authors = [dev.data for dev in c.authors]
         self.assertCountEqual(authors, ['ANSI C', 'Cornell University', 'Dennis Ritchie', 'ISO standard'])
-        self.assertEqual(len(list(c.languages)), 24)
+        self.assertEqual(len(list(c.influenced)), 24)
 
         # languages directly inspired from Java
         java = g.languages[g.JAVA]
-        self.assertEqual(len(list(java.languages)), 18)
+        self.assertEqual(len(list(java.influenced)), 18)
 
         # languages directly inspired from C++
         cpp = g.languages[g.CPP]
-        self.assertEqual(len(list(cpp.languages)), 11)
+        self.assertEqual(len(list(cpp.influenced)), 11)
 
         # languages directly inspired from Haskell
         haskell = g.languages[g.HASKELL]
-        self.assertEqual(len(list(haskell.languages)), 32)
+        self.assertEqual(len(list(haskell.influenced)), 32)
 
         # languages recursively inspired by C
         c_rec_influenced = set()
         work = [g.languages[g.C]]
         while len(work):
             pl = work.pop()
-            for influenced in pl.languages:
+            for influenced in pl.influenced:
                 if influenced not in c_rec_influenced:
                     c_rec_influenced.add(influenced)
                     work.append(influenced)

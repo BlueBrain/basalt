@@ -209,22 +209,37 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
     return _register
 
 
+class EdgeType(
+    collections.namedtuple("Edge", ["tail", "serialization", "default_payload", "name", "plural"])
+):
+    def reverse(self, head):
+        return EdgeType(
+            tail=head,
+            serialization=self.serialization,
+            default_payload=self.default_payload,
+            name=self.name,
+            plural=self.plural,
+        )
+
+
 @directive(dicts="edges_types")
-def edge(lhs, rhs, name=None, plural=None, serialization=None, default_payload=True):
+def edge(head, tail, name=None, plural=None, serialization=None, default_payload=True):
     """Directive to declare an edge between 2 type of vertices
 
     Args:
-        lhs(enum value): vertex type at one end of the edge
-        rhs(enum value): vertex type at the other end of the edge
+        head(enum value): vertex type at one end of the edge
+        tail(enum value): vertex type at the other end of the edge
         name(str): edge name, default is the type of the edge tail
         plural(str): overwrite default plural (name + 's')
         serialization: optional serialization method. see :func:`vertex`
         default_payload(bool): whether new edge has an empty payload (default: True)
     """
-
+    if plural is None:
+        if name is not None:
+            plural = name + 's'
     def _register(metagraph):
-        metagraph.edges_types.setdefault(lhs, set()).add(
-            (rhs, serialization, default_payload)
+        metagraph.edges_types.setdefault(head, set()).add(
+            EdgeType(tail=tail, serialization=serialization, default_payload=default_payload, name=name, plural=plural)
         )
 
     return _register
@@ -360,16 +375,13 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             edges = list(cls.edges_types.items())
             for lhs, conns in edges:
                 for conn in conns:
-                    conn = list(conn)
-                    rhs = conn[0]
-                    conn[0] = lhs
-                    cls.edges_types.setdefault(rhs, set()).add(tuple(conn))
+                    cls.edges_types.setdefault(conn.tail, set()).add(conn.reverse(lhs))
         cls._vertices = {
             type: VertexInfo(
-                name,
-                plural if plural else name + "s",
-                type,
-                (e[0] for e in cls.edges_types.get(type, [])),
+                name=name,
+                plural=plural if plural else name + "s",
+                type=type,
+                connections=cls.edges_types.get(type, []),
             )
             for name, (type, _, plural, _) in cls.vertex_types.items()
         }
@@ -424,9 +436,9 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         eax = dict()
         for type, method, _, default_payload in cls.vertex_types.values():
             eax[type] = serialization_method(method, default_payload)
-        for lhs, others in cls.edges_types.items():
-            for rhs, method, default_payload in others:
-                eax[(lhs, rhs)] = serialization_method(method, default_payload)
+        for lhs, conns in cls.edges_types.items():
+            for conn in conns:
+                eax[(lhs, conn.tail)] = serialization_method(conn.serialization, conn.default_payload)
         return eax
 
     @classmethod
@@ -609,11 +621,18 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
         new_type = type(info.name.capitalize() + "Vertex", (Vertex, object), {})
 
-        for vertex_type in info.connections:
-            other_info = cls._vertices[vertex_type]
-            setattr(new_type, other_info.plural, _iterator(other_info))
-            setattr(new_type, "add_" + other_info.name, _add(other_info))
-            setattr(new_type, "discard_" + other_info.name, _discard(other_info))
+        for edge_info in info.connections:
+            other_vertex_info = cls._vertices[edge_info.tail]
+            name = other_vertex_info.name
+            plural = other_vertex_info.plural
+            if edge_info.name is not None:
+                name = edge_info.name
+                plural = edge_info.plural
+            if plural is None:
+                raise Exception(name)
+            setattr(new_type, plural, _iterator(other_vertex_info))
+            setattr(new_type, "add_" + name, _add(other_vertex_info))
+            setattr(new_type, "discard_" + name, _discard(other_vertex_info))
         return new_type
 
     @classmethod
