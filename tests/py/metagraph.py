@@ -13,6 +13,18 @@ from basalt.schema import directed, edge, MetaGraph, vertex
 from basalt.serialization import PickleSerialization
 
 
+def tempdir(func):
+    @functools.wraps(func)
+    def _func(*args):
+        path = tempfile.mkdtemp()
+        try:
+            func(*args, path)
+        finally:
+            shutil.rmtree(path)
+
+    return _func
+
+
 class Skills(MetaGraph):
     class Vertex(Enum):
         PERSON = 1
@@ -28,18 +40,6 @@ class Skills(MetaGraph):
     edge(Vertex.CATEGORY, Vertex.CATEGORY)
 
 
-def tempdir(func):
-    @functools.wraps(func)
-    def _func(*args):
-        path = tempfile.mkdtemp()
-        try:
-            func(*args, path)
-        finally:
-            shutil.rmtree(path)
-
-    return _func
-
-
 class PLInfluence(MetaGraph):
     directed(True)
 
@@ -52,8 +52,8 @@ class PLInfluence(MetaGraph):
     vertex("language", Vertex.LANGUAGE, serialization="pickle")
     vertex("developer", Vertex.DEVELOPER, serialization="pickle")
     edge(Vertex.LANGUAGE, Vertex.LICENSE)
-    edge(Vertex.LANGUAGE, Vertex.LANGUAGE)
-    edge(Vertex.LANGUAGE, Vertex.DEVELOPER)
+    edge(Vertex.LANGUAGE, Vertex.LANGUAGE, name="influenced", plural="influenced")
+    edge(Vertex.LANGUAGE, Vertex.DEVELOPER, name="author")
 
     def import_json_data(self):
         file_fmt = osp.join(osp.dirname(__file__), "PLGraph_{}.json")
@@ -140,7 +140,6 @@ class PLInfluence(MetaGraph):
             links.setdefault("la_la", set()).add((language_id, influenced_id))
 
         # import vertices
-
         for vtype, data in [
             (self.Vertex.DEVELOPER, developers_ids),
             (self.Vertex.LANGUAGE, language_ids),
@@ -151,6 +150,8 @@ class PLInfluence(MetaGraph):
                 np.fromiter(data.values(), dtype=np.int64),
                 [PickleSerialization.serialize(k) for k in data.keys()],
             )
+
+        # import edges
         for htype, ttype, data in [
             (self.Vertex.LANGUAGE, self.Vertex.LICENSE, links["la_li"]),
             (self.Vertex.LANGUAGE, self.Vertex.LANGUAGE, links["la_la"]),

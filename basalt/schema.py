@@ -6,6 +6,7 @@ Lesser General Public License. See top-level LICENSE file for details.
 """
 
 import collections
+import copy
 import functools
 import sys
 
@@ -209,12 +210,14 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
 
 
 @directive(dicts="edges_types")
-def edge(lhs, rhs, serialization=None, default_payload=True):
+def edge(lhs, rhs, name=None, plural=None, serialization=None, default_payload=True):
     """Directive to declare an edge between 2 type of vertices
 
     Args:
         lhs(enum value): vertex type at one end of the edge
         rhs(enum value): vertex type at the other end of the edge
+        name(str): edge name, default is the type of the edge tail
+        plural(str): overwrite default plural (name + 's')
         serialization: optional serialization method. see :func:`vertex`
         default_payload(bool): whether new edge has an empty payload (default: True)
     """
@@ -222,9 +225,6 @@ def edge(lhs, rhs, serialization=None, default_payload=True):
     def _register(metagraph):
         metagraph.edges_types.setdefault(lhs, set()).add(
             (rhs, serialization, default_payload)
-        )
-        metagraph.edges_types.setdefault(rhs, set()).add(
-            (lhs, serialization, default_payload)
         )
 
     return _register
@@ -355,6 +355,15 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         directives.
         """
         cls._data_serializers = cls._create_data_serializers()
+        # add opposite edge if graph is undirected
+        if not cls.settings.setdefault("directed", False):
+            edges = list(cls.edges_types.items())
+            for lhs, conns in edges:
+                for conn in conns:
+                    conn = list(conn)
+                    rhs = conn[0]
+                    conn[0] = lhs
+                    cls.edges_types.setdefault(rhs, set()).add(tuple(conn))
         cls._vertices = {
             type: VertexInfo(
                 name,
