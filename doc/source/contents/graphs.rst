@@ -4,10 +4,11 @@ Graphs
 Definition
 ==========
 
-Basalt allows manipulation of undirected graphs. A graph is made of vertices and edges.
+Basalt allows manipulation of graphs. They can be directed or undirected.
+A graph is made of vertices and edges.
 
 A vertex is made of:
-    * an Unique IDentifier made of:
+    * an Unique Identifier made of:
         * a type (``integer``)
         * an identifier (``integer``)
     * an optional payload
@@ -41,7 +42,8 @@ Graph Class Generation
 Python bindings of C++ library are very low level, and is only about vertices and edges.
 Graph topology is not taken into account at all.
 
-This API allows one to define a Python graph class from its topology. For instance:
+This Python API allows one to define a Python graph class from its topology.
+For instance:
 
     >>> from enum import Enum
     >>> from basalt.schema import *
@@ -61,13 +63,15 @@ This API allows one to define a Python graph class from its topology. For instan
     ...     edge(Vertex.CATEGORY, Vertex.CATEGORY)
 
 
-:mod:`basalt.schema` module provides 3 important symbols:
+:mod:`basalt.schema` module provides 4 important symbols:
 
 * :func:`basalt.schema.vertex`: directive to declare a vertex. It take a name,
   an enum value type, and optional a serialization method.
 * :func:`basalt.schema.edge`: a directive to specify a connection between 2 type of
   vertices. Because an edge can also have a payload, a serialization method
   can also be given to the `edge` function.
+* :func:`basalt.schema.directed`: a directive to specify whether the graph is directed or not.
+  Default is undirected.
 * :class:`basalt.schema.MetaGraph`: a base class having a custom metaclass that takes
   the directives below into account.
 

@@ -9,9 +9,67 @@ Documentation is currently hosted on GitHub: [https://bluebrain.github.io/basalt
 
 # Development stage
 
-The C++ and Python APIs of Basalt are stable already, but substantial additions might come in the future. Thus this library development status is beta.
+The C++ and Python APIs of Basalt are stable already, but substantial additions might come in the future. Thus this library development status is still beta.
 
 # Usage
+
+## Python
+
+### MetaGraph API
+
+```python
+class PLInfluences(basalt.MetaGraph):
+    """A directed graph where vertices are programming languages.
+    """
+    directed(True)
+
+    class Vertex(Enum):
+        LANGUAGE = 1
+
+    vertex("language", Vertex.LANGUAGE, serialization="pickle")
+    edge(Vertex.LANGUAGE, Vertex.LANGUAGE, name="influenced", plural="influenced")
+
+    @classmethod
+    def load_from_dbpedia(cls):
+        # [...]
+
+g = PLInfluences.load_from_dbpedia("/path/on/disk")
+for language in g.languages:
+  print(language.id, language.data())
+  for influenced in language.influenced:
+    print("  ", influenced.data())
+```
+
+### Python bindings
+
+```python
+g = basalt.Graph("/path/on/disk")
+g.vertices.add((0, 1)) # vertex type=0 id=1
+g.vertices.add(numpy.full((10,), 1, dtype=numpy.int32), # types
+               numpy.arange(10, dtype=numpy.int64)) # ids
+g.edges.add((0, 1), (1, 0))
+g.edges.add((0, 1),
+            numpy.full(9,), 1, dtype=numpy.int32),
+            numpy.arange(9, dtype=numpy.int64)
+g.commit()
+```
+
+## C++
+
+```cpp
+Graph g("/path/on/disk");
+g.vertices().insert({0, 1});
+g.vertices().insert({0, 2});
+for (const auto& vertex: g.vertices()) {
+  std::clog << vertex << '\n';
+}
+for (const auto& edge: g.edges()) {
+  std::clog << edge.first << " -> " << edge.second << '\n';
+}
+g.commit();
+```
+
+# Installation
 
 ## C++ API
 
