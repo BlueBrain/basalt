@@ -58,7 +58,9 @@ const VertexIterator::value_type& VertexIterator::operator*() {
     return **pimpl_;
 }
 
-template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl, size_t from);
-template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl, size_t from);
+template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+                                        size_t from);
+template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+                                        size_t from);
 
 }  // namespace basalt

@@ -19,48 +19,48 @@ Edges<Orientation>::Edges(GraphImpl<Orientation>& pimpl)
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::insert(const vertex_uid_t& vertex1,
-                              const vertex_uid_t& vertex2,
-                              bool commit) {
+                                  const vertex_uid_t& vertex2,
+                                  bool commit) {
     return pimpl_.edges_insert(vertex1, vertex2, {nullptr, 0}, commit);
 }
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::insert(const vertex_uid_t& vertex1,
-                              const vertex_uid_t& vertex2,
-                              const char* data,
-                              std::size_t size,
-                              bool commit) {
+                                  const vertex_uid_t& vertex2,
+                                  const char* data,
+                                  std::size_t size,
+                                  bool commit) {
     return pimpl_.edges_insert(vertex1, vertex2, {data, size}, commit);
 }
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
-                              const vertex_uids_t& vertices,
-                              const std::vector<const char*>& data,
-                              const std::vector<std::size_t>& sizes,
-                              bool commit) {
+                                  const vertex_uids_t& vertices,
+                                  const std::vector<const char*>& data,
+                                  const std::vector<std::size_t>& sizes,
+                                  bool commit) {
     return pimpl_.edges_insert(vertex, vertices, data, sizes, commit);
 }
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
-                              vertex_t type,
-                              const std::size_t* vertices,
-                              size_t num_vertices,
-                              bool create_vertices,
-                              bool commit) {
+                                  vertex_t type,
+                                  const std::size_t* vertices,
+                                  size_t num_vertices,
+                                  bool create_vertices,
+                                  bool commit) {
     return pimpl_.edges_insert(vertex, type, {vertices, num_vertices}, create_vertices, commit);
 };
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
-                              vertex_t type,
-                              const std::size_t* vertices,
-                              const char* const* vertex_payloads,
-                              const std::size_t* vertex_payloads_sizes,
-                              size_t num_vertices,
-                              bool create_vertices,
-                              bool commit) {
+                                  vertex_t type,
+                                  const std::size_t* vertices,
+                                  const char* const* vertex_payloads,
+                                  const std::size_t* vertex_payloads_sizes,
+                                  size_t num_vertices,
+                                  bool create_vertices,
+                                  bool commit) {
     return pimpl_.edges_insert(vertex,
                                type,
                                {vertices, num_vertices},
@@ -72,8 +72,8 @@ Status Edges<Orientation>::insert(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::has(const vertex_uid_t& vertex1,
-                           const vertex_uid_t& vertex2,
-                           bool& result) const {
+                               const vertex_uid_t& vertex2,
+                               bool& result) const {
     return pimpl_.edges_has(vertex1, vertex2, result);
 }
 
@@ -89,23 +89,23 @@ Status Edges<Orientation>::get(const edge_uid_t& edge, std::string* value) const
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::get(const vertex_uid_t& vertex,
-                           vertex_t filter,
-                           vertex_uids_t& edges) const {
+                               vertex_t filter,
+                               vertex_uids_t& edges) const {
     return pimpl_.edges_get(vertex, filter, edges);
 }
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::erase(const vertex_uid_t& vertex1,
-                             const vertex_uid_t& vertex2,
-                             bool commit) {
+                                 const vertex_uid_t& vertex2,
+                                 bool commit) {
     return pimpl_.edges_erase(vertex1, vertex2, commit);
 }
 
 template <EdgeOrientation Orientation>
 Status Edges<Orientation>::erase(const vertex_uid_t& vertex,
-                             vertex_t filter,
-                             size_t& removed,
-                             bool commit) {
+                                 vertex_t filter,
+                                 size_t& removed,
+                                 bool commit) {
     return pimpl_.edges_erase(vertex, filter, removed, commit);
 }
 

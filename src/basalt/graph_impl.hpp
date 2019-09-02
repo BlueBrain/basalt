@@ -25,7 +25,8 @@ class GraphImpl {
   public:
     using logger_t = std::shared_ptr<spdlog::logger>;
     using column_families_t = std::vector<rocksdb::ColumnFamilyHandle*>;
-    using edge_keys_t = std::array<GraphKV::edge_key_t, Orientation == EdgeOrientation::directed? 1: 2>;
+    using edge_keys_t =
+        std::array<GraphKV::edge_key_t, Orientation == EdgeOrientation::directed ? 1 : 2>;
 
 
     explicit GraphImpl(const std::string& path);

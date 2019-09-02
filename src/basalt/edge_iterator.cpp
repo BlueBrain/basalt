@@ -23,8 +23,10 @@ EdgeIterator::EdgeIterator(const basalt::GraphImpl<Orientation>& pimpl, size_t f
 }
 
 // Explicit instantiation
-template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl, size_t from);
-template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl, size_t from);
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+                                    size_t from);
+template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+                                    size_t from);
 
 EdgeIterator::EdgeIterator(const basalt::EdgeIterator& other)
     : pimpl_(other.pimpl_) {}

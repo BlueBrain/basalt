@@ -67,7 +67,11 @@ class EdgeIterator: public std::iterator<std::input_iterator_tag, const edge_uid
     EdgeIteratorImpl_ptr pimpl_;
 };
 
-extern template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl, size_t from);
-extern template EdgeIterator::EdgeIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl, size_t from);
+extern template EdgeIterator::EdgeIterator(
+    const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+    size_t from);
+extern template EdgeIterator::EdgeIterator(
+    const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+    size_t from);
 
 }  // namespace basalt

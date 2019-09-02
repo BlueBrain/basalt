@@ -23,38 +23,38 @@ static Config from_file(const std::string& path) {
 }
 
 template <EdgeOrientation Orientation>
-AbstractGraph<Orientation>::AbstractGraph(const std::string& path)
+MetaGraph<Orientation>::MetaGraph(const std::string& path)
     : pimpl_(new GraphImpl<Orientation>(path)) {}
 
 template <EdgeOrientation Orientation>
-AbstractGraph<Orientation>::AbstractGraph(const std::string& path, const std::string& config)
+MetaGraph<Orientation>::MetaGraph(const std::string& path, const std::string& config)
     : pimpl_(new GraphImpl<Orientation>(path, from_file(config), true)) {}
 
 template <EdgeOrientation Orientation>
-AbstractGraph<Orientation>::~AbstractGraph() = default;
+MetaGraph<Orientation>::~MetaGraph() = default;
 
 template <EdgeOrientation Orientation>
-Edges<Orientation>& AbstractGraph<Orientation>::edges() {
+Edges<Orientation>& MetaGraph<Orientation>::edges() {
     return pimpl_->edges_get();
 }
 
 template <EdgeOrientation Orientation>
-Vertices<Orientation>& AbstractGraph<Orientation>::vertices() {
+Vertices<Orientation>& MetaGraph<Orientation>::vertices() {
     return pimpl_->vertices_get();
 }
 
 template <EdgeOrientation Orientation>
-Status AbstractGraph<Orientation>::commit() {
+Status MetaGraph<Orientation>::commit() {
     return pimpl_->commit();
 }
 
 template <EdgeOrientation Orientation>
-std::string AbstractGraph<Orientation>::statistics() const {
+std::string MetaGraph<Orientation>::statistics() const {
     return pimpl_->statistics();
 }
 
-template class AbstractGraph<EdgeOrientation::directed>;
-template class AbstractGraph<EdgeOrientation::undirected>;
+template class MetaGraph<EdgeOrientation::directed>;
+template class MetaGraph<EdgeOrientation::undirected>;
 
 /////
 

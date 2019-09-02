@@ -233,8 +233,8 @@ py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
     py::module& m,
     const std::string& class_prefix = "") {
     return py::class_<basalt::Edges<Orientation>>(m,
-                                              (class_prefix + "Edges").c_str(),
-                                              docstring::edges_class)
+                                                  (class_prefix + "Edges").c_str(),
+                                                  docstring::edges_class)
         .def("__iter__",
              [](const basalt::Edges<Orientation>& edges) {
                  return py::make_iterator(edges.begin(), edges.end());
@@ -361,7 +361,8 @@ py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
              "Check connectivity between 2 vertices")
 
         .def("get",
-             [](const basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge) -> py::object {
+             [](const basalt::Edges<Orientation>& edges,
+                const basalt::edge_uid_t& edge) -> py::object {
                  std::string data;
                  const auto& status = edges.get(edge, &data);
                  if (status.code == basalt::Status::missing_edge_code) {
@@ -398,7 +399,9 @@ py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
              docstring::get_edges_filter)
 
         .def("discard",
-             [](basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge, bool commit = false) {
+             [](basalt::Edges<Orientation>& edges,
+                const basalt::edge_uid_t& edge,
+                bool commit = false) {
                  edges.erase(edge.first, edge.second, commit).raise_on_error();
              },
              "edge"_a,

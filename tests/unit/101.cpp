@@ -6,10 +6,10 @@
 
 #include <basalt/basalt.hpp>
 
-using basalt::AbstractGraph;
 using basalt::edge_uid_t;
 using basalt::Graph;
 using basalt::make_id;
+using basalt::MetaGraph;
 using basalt::vertex_id_t;
 using basalt::vertex_t;
 using basalt::vertex_uid_t;
@@ -25,7 +25,7 @@ using basalt::vertex_uids_t;
  * \return vertex unique identifier
  */
 template <typename Payload, basalt::EdgeOrientation Ordered>
-inline vertex_uid_t checked_insert(AbstractGraph<Ordered>& g,
+inline vertex_uid_t checked_insert(MetaGraph<Ordered>& g,
                                    vertex_t type,
                                    vertex_id_t id,
                                    const Payload& payload) {

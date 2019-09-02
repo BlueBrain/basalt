@@ -162,8 +162,8 @@ py::class_<basalt::Vertices<Orientation>> register_graph_vertices_class(
     py::module& m,
     const std::string& class_prefix = "") {
     return py::class_<basalt::Vertices<Orientation>>(m,
-                                                 (class_prefix + "Vertices").c_str(),
-                                                 docstring::vertices_class)
+                                                     (class_prefix + "Vertices").c_str(),
+                                                     docstring::vertices_class)
         .def("__iter__",
              [](const basalt::Vertices<Orientation>& vertices) {
                  return py::make_iterator(vertices.begin(), vertices.end());
@@ -179,7 +179,8 @@ py::class_<basalt::Vertices<Orientation>> register_graph_vertices_class(
              docstring::len)
 
         .def("count",
-             [](const basalt::Vertices<Orientation>& vertices, basalt::vertex_t type) -> std::size_t {
+             [](const basalt::Vertices<Orientation>& vertices,
+                basalt::vertex_t type) -> std::size_t {
                  std::size_t count;
                  vertices.count(type, count).raise_on_error();
                  return count;

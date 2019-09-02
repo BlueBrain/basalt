@@ -67,7 +67,11 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
     VertexIteratorImpl_ptr pimpl_;
 };
 
-extern template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl, size_t from);
-extern template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl, size_t from);
+extern template VertexIterator::VertexIterator(
+    const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+    size_t from);
+extern template VertexIterator::VertexIterator(
+    const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+    size_t from);
 
 }  // namespace basalt

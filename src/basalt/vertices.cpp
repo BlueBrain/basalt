@@ -19,9 +19,9 @@ Vertices<Orientation>::Vertices(GraphImpl<Orientation>& pimpl)
 
 template <EdgeOrientation Orientation>
 Status Vertices<Orientation>::insert(const basalt::vertex_uid_t& vertex,
-                                 const char* data,
-                                 std::size_t size,
-                                 bool commit) {
+                                     const char* data,
+                                     std::size_t size,
+                                     bool commit) {
     return pimpl_.vertices_insert(vertex, {data, size}, commit);
 }
 
@@ -32,11 +32,11 @@ Status Vertices<Orientation>::insert(const basalt::vertex_uid_t& vertex, bool co
 
 template <EdgeOrientation Orientation>
 Status Vertices<Orientation>::insert(const vertex_t* types,
-                                 const vertex_id_t* ids,
-                                 const char* const* payloads,
-                                 const std::size_t* payloads_sizes,
-                                 size_t num_vertices,
-                                 bool commit) {
+                                     const vertex_id_t* ids,
+                                     const char* const* payloads,
+                                     const std::size_t* payloads_sizes,
+                                     size_t num_vertices,
+                                     bool commit) {
     if (payloads == nullptr) {
         return pimpl_.vertices_insert({types, num_vertices}, {ids, num_vertices}, {}, {}, commit);
     }

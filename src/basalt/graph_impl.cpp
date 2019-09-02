@@ -128,8 +128,8 @@ Status GraphImpl<Orientation>::vertices_insert(const vertex_uid_t& vertex, bool 
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::vertices_insert(const vertex_uid_t& vertex,
-                                           const gsl::span<const char>& payload,
-                                           bool commit) {
+                                               const gsl::span<const char>& payload,
+                                               bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, data_size={}, commit={})",
                         vertex,
                         payload.size(),
@@ -144,10 +144,10 @@ Status GraphImpl<Orientation>::vertices_insert(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::vertices_insert(const gsl::span<const vertex_t> types,
-                                           const gsl::span<const vertex_id_t> ids,
-                                           const gsl::span<const char* const> payloads,
-                                           const gsl::span<const std::size_t> payloads_sizes,
-                                           bool commit) {
+                                               const gsl::span<const vertex_id_t> ids,
+                                               const gsl::span<const char* const> payloads,
+                                               const gsl::span<const std::size_t> payloads_sizes,
+                                               bool commit) {
     logger_get()->debug("vertices_insert(vertices={}, payloads={}, commit={}",
                         types.length(),
                         payloads.length() != 0,
@@ -257,7 +257,8 @@ Status GraphImpl<Orientation>::vertices_count(vertex_t type, std::size_t& count)
 }
 
 template <EdgeOrientation Orientation>
-std::shared_ptr<VertexIteratorImpl> GraphImpl<Orientation>::vertex_iterator(std::size_t from) const {
+std::shared_ptr<VertexIteratorImpl> GraphImpl<Orientation>::vertex_iterator(
+    std::size_t from) const {
     logger_get()->debug("vertex_iterator(from={})", from);
     return std::make_shared<VertexIteratorImpl>(db_get(), vertices_column_.get(), "N", from);
 }
@@ -304,9 +305,9 @@ Status GraphImpl<Orientation>::edges_clear(bool commit) {
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex1,
-                                        const vertex_uid_t& vertex2,
-                                        const gsl::span<const char>& payload,
-                                        bool commit) {
+                                            const vertex_uid_t& vertex2,
+                                            const gsl::span<const char>& payload,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex1={}, vertex2={}, payload={}, commit={})",
                         vertex1,
                         vertex2,
@@ -336,13 +337,14 @@ Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex1,
 }
 
 template <EdgeOrientation Orientation>
-Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
-                                        const vertex_t type,
-                                        const gsl::span<const vertex_id_t>& vertices,
-                                        const gsl::span<const char* const> vertex_payloads,
-                                        const gsl::span<const std::size_t>& vertex_payloads_sizes,
-                                        bool create_vertices,
-                                        bool commit) {
+Status GraphImpl<Orientation>::edges_insert(
+    const vertex_uid_t& vertex,
+    const vertex_t type,
+    const gsl::span<const vertex_id_t>& vertices,
+    const gsl::span<const char* const> vertex_payloads,
+    const gsl::span<const std::size_t>& vertex_payloads_sizes,
+    bool create_vertices,
+    bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -396,10 +398,10 @@ Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
-                                        const vertex_t type,
-                                        const gsl::span<const vertex_id_t>& vertices,
-                                        bool create_vertices,
-                                        bool commit) {
+                                            const vertex_t type,
+                                            const gsl::span<const vertex_id_t>& vertices,
+                                            bool create_vertices,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -452,10 +454,10 @@ Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
-                                        const vertex_uids_t& vertices,
-                                        const std::vector<const char*>& data,
-                                        const std::vector<std::size_t>& sizes,
-                                        bool commit) {
+                                            const vertex_uids_t& vertices,
+                                            const std::vector<const char*>& data,
+                                            const std::vector<std::size_t>& sizes,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex={}, vertices={}, commit={})",
                         vertex,
                         vertices,
@@ -500,8 +502,8 @@ Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_has(const vertex_uid_t& vertex1,
-                                     const vertex_uid_t& vertex2,
-                                     bool& result) const {
+                                         const vertex_uid_t& vertex2,
+                                         bool& result) const {
     logger_get()->debug("edges_has(vertex1={}, vertex2={})", vertex1, vertex2);
     GraphKV::edge_key_t key;
     GraphKV::encode(vertex1, vertex2, key);
@@ -556,8 +558,8 @@ Status GraphImpl<Orientation>::edges_get(const vertex_uid_t& vertex, vertex_uids
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_get(const vertex_uid_t& vertex,
-                                     vertex_t filter,
-                                     vertex_uids_t& edges) const {
+                                         vertex_t filter,
+                                         vertex_uids_t& edges) const {
     logger_get()->debug("edges_get(vertex={}, filter={}, edges_column_={})", vertex, filter, edges);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -582,8 +584,8 @@ Status GraphImpl<Orientation>::edges_get(const vertex_uid_t& vertex,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex1,
-                                       const vertex_uid_t& vertex2,
-                                       bool commit) {
+                                           const vertex_uid_t& vertex2,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex1={}, vertex2={}, commit={})", vertex1, vertex2, commit);
 
     edge_keys_t keys;
@@ -598,8 +600,8 @@ Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex1,
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_erase(rocksdb::WriteBatch& batch,
-                                       const vertex_uid_t& vertex,
-                                       size_t& removed) {
+                                           const vertex_uid_t& vertex,
+                                           size_t& removed) {
     GraphKV::edge_key_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -634,7 +636,9 @@ Status GraphImpl<Orientation>::edges_erase(rocksdb::WriteBatch& batch,
 }
 
 template <EdgeOrientation Orientation>
-Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool commit) {
+Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex,
+                                           size_t& removed,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex={}, commit={})", vertex, commit);
     rocksdb::WriteBatch batch;
     auto edges = 0ul;
@@ -650,9 +654,9 @@ Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex, size_t& r
 
 template <EdgeOrientation Orientation>
 Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex,
-                                       vertex_t filter,
-                                       size_t& removed,
-                                       bool commit) {
+                                           vertex_t filter,
+                                           size_t& removed,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex={}, filter={}, commit={})", vertex, filter, commit);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -703,7 +707,7 @@ std::string GraphImpl<Orientation>::statistics() const {
 
 template <EdgeOrientation Orientation>
 void GraphImpl<Orientation>::clear(rocksdb::WriteBatch& batch,
-                               const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
+                                   const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
     auto iter = db_get()->NewIterator(default_read_options(), handle.get());
     iter->SeekToFirst();
     if (iter->Valid()) {
