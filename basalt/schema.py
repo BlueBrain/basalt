@@ -6,7 +6,6 @@ Lesser General Public License. See top-level LICENSE file for details.
 """
 
 import collections
-import copy
 import functools
 import sys
 
