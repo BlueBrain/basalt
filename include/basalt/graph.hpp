@@ -19,9 +19,7 @@
 
 namespace basalt {
 
-/**
- * \brief Undirected Connectivity Graph
- */
+template <EdgeOrientation Orientation>
 class Graph {
   public:
     /** \brief iterator over vertices */
@@ -52,19 +50,14 @@ class Graph {
      */
 
     /**
-     * \name edges accessor
-     * \{
-     */
-
-    /**
      * \brief edges accessor
      */
-    Edges& edges();
+    Edges<Orientation>& edges();
 
     /**
      * \brief vertices accessor
      */
-    Vertices& vertices();
+    Vertices<Orientation>& vertices();
 
     /**
      * \}
@@ -82,8 +75,21 @@ class Graph {
     std::string statistics() const;
 
   private:
-    std::unique_ptr<GraphImpl> pimpl_;
+    std::unique_ptr<GraphImpl<Orientation>> pimpl_;
 };
+
+/**
+ * \brief Undirected Connectivity Graph
+ */
+using UndirectedGraph = Graph<EdgeOrientation::undirected>;
+
+/**
+ *  \brief Graph in which edges have orientations.
+ */
+using DirectedGraph = Graph<EdgeOrientation::directed>;
+
+extern template class Graph<EdgeOrientation::directed>;
+extern template class Graph<EdgeOrientation::undirected>;
 
 /**
  * \brief \a vertex_uid_t constructor helper function

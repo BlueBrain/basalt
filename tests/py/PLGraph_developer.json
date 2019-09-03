@@ -1,0 +1,3125 @@
+{
+    "head": {
+        "link": [],
+        "vars": [
+            "p",
+            "developer"
+        ]
+    },
+    "results": {
+        "bindings": [
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microware"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BASIC09"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Chris_Pressey"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Befunge"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CURL"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Curl_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LucasArts"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SCUMM"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Digital_Equipment_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SISAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Colorado_State_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SISAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lawrence_Livermore_National_Laboratory"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SISAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Manchester"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SISAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bell_Labs"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SNOBOL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/David_J._Farber"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SNOBOL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ralph_E._Griswold"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SNOBOL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ivan_P._Polonsky"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SNOBOL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/International_Electrotechnical_Commission"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SQL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/International_Organization_for_Standardization"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SQL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_California,_Berkeley"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sather"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Waikato"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sather"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_project"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sather"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/VBScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/W3C"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XSLT"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Tony_Hoare"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ALGOL_W"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Niklaus_Wirth"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ALGOL_W"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNOME"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Genie_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/William_Cook_(computer_scientist)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Orc_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jayadev_Misra"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Orc_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Small_Basic"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gilad_Bracha"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Newspeak_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Digital_Equipment_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DIBOL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/John_Barnes_(computer_scientist)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/RTL/2"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ulf_Norell"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Agda_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cray"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Chapel_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Harvard_Medical_School"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Little_b_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JScript_.NET"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ric_Holt"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SP/k"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/James_Cordy"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SP/k"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/D.B._Wortman"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SP/k"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/D.T._Barnard"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SP/k"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Graham_Nelson"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inform__1-6__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Graham_Nelson"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inform__7__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Tim_Sweeney_(game_developer)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Unreal_Engine__UnrealScript__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM_Thomas_J._Watson_Research_Center"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Aldor"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Adobe_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OpenBD"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/New_Atlanta"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Railo"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lucee"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColdFusion_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gameloft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Earthworm_Jim_HD"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bell_Labs"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Limbo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Vita_Nuova_Holdings"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Limbo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gary_Kildall"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PL/M"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kx_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Q_(programming_language_from_Kx_Systems)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Altran"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SPARK_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AdaCore"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SPARK_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_Media_Lab"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Scratch_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/John_Ousterhout"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Tcl"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Christophe_de_Dinechin"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rod_Burstall"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/COWSEL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Robin_Popplestone"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/COWSEL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Chris_Eppstein"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sass_(stylesheet_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Natalie_Weizenbaum"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sass_(stylesheet_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gordon_Eubanks"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CBASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ric_Holt"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Concurrent_Euclid"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/James_Cordy"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Concurrent_Euclid"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Acorn"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modula-2+"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DEC_Systems_Research_Center"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modula-2+"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ric_Holt"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Turing+"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/James_Cordy"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Turing+"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Constantin_Sotiropoulos"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AMOS_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fran\u00e7ois_Lionet"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AMOS_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kenneth_E._Iverson"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/APL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dennis_Ritchie"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/B_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ken_Thompson_(computer_programmer)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/B_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Massachusetts_Institute_of_Technology"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CLU_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ANSI_C"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dennis_Ritchie"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ISO_standard"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/American_National_Standards_Institute"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Common_Lisp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Computer"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dylan_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Carnegie_Mellon_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dylan_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Harlequin_(software_company)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dylan_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bertrand_Meyer"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eiffel_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GNU_Project"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Emacs_Lisp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://openeuphoria.org/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Euphoria_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fortran"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/John_Backus"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fortran"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GW-BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Netscape"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JavaScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ecma_International"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JavaScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mozilla_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JavaScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Microsystems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Java_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Terry_Winograd"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/KRL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Daniel_G._Bobrow"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/KRL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Steve_Russell_(computer_scientist)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lisp_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jeremy_Ashkenas"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Seymour_Papert"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Logo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Wally_Feurzeig"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Logo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SINTEF"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mary_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Melbourne"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mercury_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Xerox_PARC"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mesa_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Niklaus_Wirth"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modula"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/INMOS"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Occam_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zend_Technologies"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PHP"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/International_Business_Machines"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PL/I"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Larry_Wall"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Adobe_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PostScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_Software_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Id_Software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/QuakeC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Yukihiro_Matsumoto"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ruby_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Diana_Merry"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Alan_Kay"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dan_Ingalls"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PARC_(company)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Adele_Goldberg_(computer_scientist)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/L._Peter_Deutsch"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Smalltalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/INRIA"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ANSI/ISO_C_Specification_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Commissariat_\u00e0_l'\u00c9nergie_Atomique"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ANSI/ISO_C_Specification_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AdaCore"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/A_Sharp_(.NET)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C_Sharp_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Digital_Equipment_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DIGITAL_Command_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ric_Holt"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Euclid_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/James_Cordy"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Euclid_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F_Sharp_Software_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F_Sharp_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F_Sharp_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Herbert_A._Simon"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Information_Processing_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Allen_Newell"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Information_Processing_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cliff_Shaw"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Information_Processing_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/J_Sharp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.mivamerchant.com"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIVA_Script"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://scratch.mit.edu/users/Jens"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Snap!_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Inc."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Swift_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zebra_Technologies"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zebra_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/W3C"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SPARQL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Google"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Go_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mentor_Graphics"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Handel-C"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cadence_Design_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cadence_SKILL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ric_Holt"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Object-Oriented_Turing"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PowerShell"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rexx"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mike_Cowlishaw"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rexx"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Script.NET"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Adobe_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ExtendScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Morgan_Stanley"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/A+_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.linkedin.com/company/mlstate"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Opa_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://incrtcl.sourceforge.net/itcl/mmc/index.html"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Itk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/James_Cordy"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TXL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Charles_Halpern-Hamu"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TXL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "https://github.com/amatsuda"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "https://github.com/mattwildig"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "https://github.com/norman"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "https://github.com/teeparham"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Haml"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://incrtcl.sourceforge.net/itcl/mmc/index.html"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Incr_Tcl"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Microsystems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JavaFX_Script"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Language_Integrated_Query"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Atari"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lite-C"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jeremy_Ashkenas"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CoffeeScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/H._Peter_Anvin"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Klibc"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Qt_Project"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/QML"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Freelance"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ezhil_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Inria"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Join-pattern"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Geeks_ltd."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/M_Sharp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mike_Zuurman"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MexScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.itemis.com"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Xtend"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.blitzbasic.com/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Blitz_BASIC__BlitzMax__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MathWorks"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MATLAB__MATLAB__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Andreas_J\u00f6nsson"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AngelScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Oracle_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PeopleCode"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Varigence"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Business_Intelligence_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Timothy_Lethbridge"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Umple"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cliff_L._Biffle"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Beatnik_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Osaka_Electro-Communication_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dolittle_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CaseWare,_Inc."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Accent_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Centrum_Wiskunde_&_Informatica"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Alma-0"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Carnegie_Mellon_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BLISS"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://charm.cs.uiuc.edu"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Charm++"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Google"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dart_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/HPCC"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ECL_(data-centric_programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Lars_Pensj\u00f6"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LPC_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Felix_Croes"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LPC_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/J\u00f6rn_Rennecke"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LPC_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://openmx.psyc.virginia.edu/about-openmx-project"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OpenMx"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cornell_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PL/C"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Inc."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AppleScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Donald_Knuth"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CWEB"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Inc."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/HyperTalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Computer"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NewtonScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fantaisie_Software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PureBasic"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Stanford_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Self_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Microsystems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Self_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/David_Ungar"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Self_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Valentin_Turchin"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Refal"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sinclair_Research"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sinclair_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/QBasic"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Centrum_Wiskunde_&_Informatica"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ABC_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/J_Strother_Moore"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ACL2"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Matt_Kaufmann"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ACL2"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Macromedia"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ActionScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Computer_Sciences_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CMS-2_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Facebook"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Hack_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM_RPG"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Stefan_Karpinski"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Julia_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jeff_Bezanson"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Julia_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Alexis_Sellier"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Less_(stylesheet_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dmitry_Fadeyev"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Less_(stylesheet_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/INRIA"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OCaml"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Vrije_Universiteit_Brussel"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Pico_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bell_Labs"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rc"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TypeScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Basic"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Basic_.NET"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Basic_for_Applications"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Wolfram_Research"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Wolfram_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CMS_Pipelines"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C._Wayne_Ratliff"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/DBase"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Digital_Mars"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/D_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Khaled_Mardam-Bey"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIRC_scripting_language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Elego_Software_Solutions_GmbH"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Modula-3"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Research"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Polyphonic_C_Sharp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Brian_Kernighan"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ratfor"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Mozilla_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XUL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Rodrigo_B._De_Oliveira"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Boo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_SQL_Server"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C\u03c9"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Research"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C\u03c9"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/4D_SAS"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/4th_Dimension_(software)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Intel"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Cilk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sun_Labs"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fortress_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kx_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/K_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BioWare"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NWScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Khronos_Group"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OpenGL_ES"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Courant_Institute_of_Mathematical_Sciences"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SETL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/X10_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Washington"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ZPL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/RAND"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JOSS"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Steve_Wozniak"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Integer_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MSX_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.artelys.com"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Artelys_Knitro"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/KUKA"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/KUKA_Robot_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/The_P4_Language_Consortium"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/P4_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ezzat_Harky"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SWAF"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ezzat_Harky"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SWAF_Markup_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM_Thomas_J._Watson_Research_Center"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/A\u266f_(Axiom)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Color_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Illinois_at_Urbana-Champaign"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TUTOR_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bob_Bemer"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/COMTRAN"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Speedcoding"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/John_Backus"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Speedcoding"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Akira_Matsuda"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kaminari"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Hiroshi_Shibata"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kaminari"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Yuki_Nishijima"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kaminari"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Zachary_Scott_(programmer)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kaminari"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Technical_University_of_Berlin"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ELAN_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.falconpl.org/index.ftd?page_id=authors"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Falcon_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GemTalk_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gemstone_(database)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Karl_Glazebrook"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Christian_Soeller"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Jarle_Brinchmann"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Tuomas_Lukka"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Perl_Data_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Constantin_Sotiropoulos"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/STOS_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Fran\u00e7ois_Lionet"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/STOS_BASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Thinking_Machines_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/C*"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Richard_P._Gabriel"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NIL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Guy_L._Steele,_Jr."
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/NIL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/StarLogo"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT_Media_Lab"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/StarLogo"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.aimms.com"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AIMMS"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.blitzbasic.com/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Monkey_X"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JetBrains"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Nemerle"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Systems_Management_Associates"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/PROMAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BBN_Technologies"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/TELCOMP"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Impulse_Accelerated_Technologies"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Impulse_C"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Eclipse_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/AspectJ"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Axum_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/The_Fortran_Company"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/F_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/INSA_Lyon"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Golo_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_British_Columbia"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Plus_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Thinking_Machines_Corporation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/*Lisp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apple_Computer"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/SK8"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sage_Software_Canada"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ProvideX"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/W3C"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/XPath"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/WordBASIC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Bell_Labs"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Newsqueak"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Johns_Hopkins_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BitC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.eros-os.com"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/BitC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Semmle"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/.QL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/\u00c9cole_Polytechnique_F\u00e9d\u00e9rale_de_Lausanne"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Scala_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Microsoft_Research"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Spec_Sharp"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/University_of_Sydney"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Blue_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Apache_Software_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Gremlin_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://www.seadeo.com/"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JOVIAL"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Dan_Ingalls"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Etoys_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Andreas_Raab"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Etoys_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ABB_Group"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/RAPID"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/The_Open_University"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Sense_(programming)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/RemObjects_Software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Oxygene_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Ken_Kahn"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ToonTalk"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Visual_Solutions"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/VisSim"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Adobe_Systems"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Halide_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/MIT"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Halide_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Stanford"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Halide_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/JetBrains"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Kotlin_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Charles_H._Moore"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ColorForth"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IBM_i_Control_Language"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Brad_Fitzpatrick"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/S2_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/ITT_Visual_Information_Solutions"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/IDL_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/International_Computers_Limited"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/S3_(programming_language)"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_Software_Foundation"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Python_for_S60"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Guidewire_Software"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/GScript"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveCode_(company)"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/LiveCode__Transcript__1"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Khronos_Group"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/OpenGL_SC"
+                }
+            },
+            {
+                "developer": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/Intermetrics"
+                },
+                "p": {
+                    "type": "uri",
+                    "value": "http://dbpedia.org/resource/CS-4_(programming_language)"
+                }
+            }
+        ],
+        "distinct": false,
+        "ordered": true
+    }
+}

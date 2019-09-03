@@ -20,7 +20,6 @@ class GraphKV {
     using edge_key_prefix_t = std::array<char, 1 + sizeof(vertex_id_t) + sizeof(vertex_t)>;
     using edge_key_type_prefix_t = std::array<char, 1 + sizeof(vertex_id_t) + 2 * sizeof(vertex_t)>;
     using edge_key_t = std::array<char, 1 + 2 * (sizeof(vertex_id_t) + sizeof(vertex_t))>;
-    using edge_keys_t = std::array<edge_key_t, 2>;
 
     constexpr static auto edge_key_size = std::tuple_size<edge_key_t>::value;
 
@@ -84,12 +83,20 @@ class GraphKV {
                     reinterpret_cast<const char*>(&vertex2.second),
                     sizeof(vertex_uid_t::second_type));
     }
+
     static inline void encode(const vertex_uid_t& vertex1,
                               const vertex_uid_t& vertex2,
-                              edge_keys_t& keys) {
+                              std::array<edge_key_t, 1>& keys) {
+        encode(vertex1, vertex2, keys[0]);
+    }
+
+    static inline void encode(const vertex_uid_t& vertex1,
+                              const vertex_uid_t& vertex2,
+                              std::array<edge_key_t, 2>& keys) {
         encode(vertex1, vertex2, keys[0]);
         encode(vertex2, vertex1, keys[1]);
     }
+
     static inline void encode_reversed_edge(const char* data, size_t size, edge_key_t& key) {
         static_cast<void>(size);
         assert(size == std::tuple_size<edge_key_t>::value);

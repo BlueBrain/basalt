@@ -45,10 +45,12 @@ inline static const rocksdb::WriteOptions& write_options(bool commit) {
     return async_write;
 }
 
-GraphImpl::GraphImpl(const std::string& path)
+template <EdgeOrientation Orientation>
+GraphImpl<Orientation>::GraphImpl(const std::string& path)
     : GraphImpl(path, Config(path), false) {}
 
-GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
+template <EdgeOrientation Orientation>
+GraphImpl<Orientation>::GraphImpl(const std::string& path, Config config, bool throw_if_exists)
     : path_(path)
     , config_(std::move(config))
     , vertices_(*this)
@@ -106,13 +108,15 @@ GraphImpl::GraphImpl(const std::string& path, Config config, bool throw_if_exist
     }
 }
 
-Status GraphImpl::to_status(const rocksdb::Status& status) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::to_status(const rocksdb::Status& status) {
     return {static_cast<Status::Code>(status.code()), status.ToString()};
 }
 
 ///// vertices methods
 
-Status GraphImpl::vertices_insert(const vertex_uid_t& vertex, bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_insert(const vertex_uid_t& vertex, bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, commit={})", vertex, commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -122,9 +126,10 @@ Status GraphImpl::vertices_insert(const vertex_uid_t& vertex, bool commit) {
                                    rocksdb::Slice()));
 }
 
-Status GraphImpl::vertices_insert(const vertex_uid_t& vertex,
-                                  const gsl::span<const char>& payload,
-                                  bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_insert(const vertex_uid_t& vertex,
+                                               const gsl::span<const char>& payload,
+                                               bool commit) {
     logger_get()->debug("vertices_insert(vertex={}, data_size={}, commit={})",
                         vertex,
                         payload.size(),
@@ -137,11 +142,12 @@ Status GraphImpl::vertices_insert(const vertex_uid_t& vertex,
                                    rocksdb::Slice(payload.data(), payload.size())));
 }
 
-Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
-                                  const gsl::span<const vertex_id_t> ids,
-                                  const gsl::span<const char* const> payloads,
-                                  const gsl::span<const std::size_t> payloads_sizes,
-                                  bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_insert(const gsl::span<const vertex_t> types,
+                                               const gsl::span<const vertex_id_t> ids,
+                                               const gsl::span<const char* const> payloads,
+                                               const gsl::span<const std::size_t> payloads_sizes,
+                                               bool commit) {
     logger_get()->debug("vertices_insert(vertices={}, payloads={}, commit={}",
                         types.length(),
                         payloads.length() != 0,
@@ -151,14 +157,14 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
 
     if (payloads.empty()) {
         const rocksdb::Slice empty_payload;
-        for (auto i = 0u; i < types.length(); ++i) {
+        for (auto i = 0ul; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
             batch.Put(vertices_column_.get(),
                       rocksdb::Slice(key.data(), key.size()),
                       empty_payload);
         }
     } else {
-        for (auto i = 0u; i < types.length(); ++i) {
+        for (auto i = 0ul; i < types.length(); ++i) {
             GraphKV::encode(types[i], ids[i], key);
             batch.Put(vertices_column_.get(),
                       rocksdb::Slice(key.data(), key.size()),
@@ -168,8 +174,8 @@ Status GraphImpl::vertices_insert(const gsl::span<const vertex_t> types,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-
-Status GraphImpl::vertices_has(const vertex_uid_t& vertex, bool& result) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_has(const vertex_uid_t& vertex, bool& result) const {
     logger_get()->debug("vertices_has(vertex={})", vertex);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -186,7 +192,8 @@ Status GraphImpl::vertices_has(const vertex_uid_t& vertex, bool& result) const {
     return to_status(status);
 }
 
-Status GraphImpl::vertices_get(const vertex_uid_t& vertex, std::string* value) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_get(const vertex_uid_t& vertex, std::string* value) {
     logger_get()->debug("vertices_get(vertex={})", vertex);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -200,7 +207,8 @@ Status GraphImpl::vertices_get(const vertex_uid_t& vertex, std::string* value) {
     return to_status(status);
 }
 
-Status GraphImpl::vertices_erase(const vertex_uid_t& vertex, bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_erase(const vertex_uid_t& vertex, bool commit) {
     logger_get()->debug("vertices_erase(vertex={}, commit={})", vertex, commit);
     GraphKV::vertex_key_t key;
     GraphKV::encode(vertex, key);
@@ -215,7 +223,8 @@ Status GraphImpl::vertices_erase(const vertex_uid_t& vertex, bool commit) {
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::vertices_count(std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_count(std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->vertices_column_.get());
@@ -228,7 +237,8 @@ Status GraphImpl::vertices_count(std::size_t& count) const {
     return to_status(iter->status());
 }
 
-Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_count(vertex_t type, std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->vertices_column_.get());
@@ -246,27 +256,31 @@ Status GraphImpl::vertices_count(vertex_t type, std::size_t& count) const {
     return to_status(iter->status());
 }
 
-std::shared_ptr<VertexIteratorImpl> GraphImpl::vertex_iterator(std::size_t from) const {
+template <EdgeOrientation Orientation>
+std::shared_ptr<VertexIteratorImpl> GraphImpl<Orientation>::vertex_iterator(
+    std::size_t from) const {
     logger_get()->debug("vertex_iterator(from={})", from);
     return std::make_shared<VertexIteratorImpl>(db_get(), vertices_column_.get(), "N", from);
 }
 
-std::shared_ptr<EdgeIteratorImpl> GraphImpl::edge_iterator(std::size_t from) const {
+template <EdgeOrientation Orientation>
+std::shared_ptr<EdgeIteratorImpl> GraphImpl<Orientation>::edge_iterator(std::size_t from) const {
     logger_get()->debug("edge_iterator(from={})", from);
     return std::make_shared<EdgeIteratorImpl>(db_get(), edges_column_.get(), "E", from);
 }
 
-Status GraphImpl::vertices_clear(bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::vertices_clear(bool commit) {
     rocksdb::WriteBatch batch;
     clear(batch, vertices_column_);
     clear(batch, edges_column_);
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-
 ///// edges methods
 
-Status GraphImpl::edges_count(std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_count(std::size_t& count) const {
     std::size_t num_vertices{};
 
     auto iter = db_get()->NewIterator(default_read_options(), this->edges_column_.get());
@@ -275,28 +289,30 @@ Status GraphImpl::edges_count(std::size_t& count) const {
         ++num_vertices;
         iter->Next();
     }
-    count = num_vertices / 2;
+    count = num_vertices;
+    if (Orientation == EdgeOrientation::undirected) {
+        count /= 2;
+    }
     return to_status(iter->status());
 }
 
-Status GraphImpl::edges_clear(bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_clear(bool commit) {
     rocksdb::WriteBatch batch;
     clear(batch, edges_column_);
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
-                               const vertex_uid_t& vertex2,
-                               const gsl::span<const char>& payload,
-                               bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex1,
+                                            const vertex_uid_t& vertex2,
+                                            const gsl::span<const char>& payload,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex1={}, vertex2={}, payload={}, commit={})",
                         vertex1,
                         vertex2,
                         !payload.empty(),
                         commit);
-    if (vertex1 == vertex2) {
-        return Status::error_invalid_edge(vertex1, vertex2);
-    }
     {  // check presence of both vertices
         bool vertex_present = false;
         vertices_has(vertex1, vertex_present).raise_on_error();
@@ -309,7 +325,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
         }
     }
 
-    GraphKV::edge_keys_t keys;
+    edge_keys_t keys;
     GraphKV::encode(vertex1, vertex2, keys);
     const rocksdb::Slice data_slice(payload.data(), payload.size());
     rocksdb::WriteBatch batch;
@@ -320,13 +336,15 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex1,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_t type,
-                               const gsl::span<const vertex_id_t>& vertices,
-                               const gsl::span<const char* const> vertex_payloads,
-                               const gsl::span<const std::size_t>& vertex_payloads_sizes,
-                               bool create_vertices,
-                               bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_insert(
+    const vertex_uid_t& vertex,
+    const vertex_t type,
+    const gsl::span<const vertex_id_t>& vertices,
+    const gsl::span<const char* const> vertex_payloads,
+    const gsl::span<const std::size_t>& vertex_payloads_sizes,
+    bool create_vertices,
+    bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -357,9 +375,9 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                   rocksdb::Slice(key.data(), key.size()),
                   rocksdb::Slice());
     }
-    std::vector<GraphKV::edge_keys_t> keys(vertices.size());
+    std::vector<edge_keys_t> keys(vertices.size());
     GraphKV::vertex_key_t vertex_key;
-    for (auto i = 0u; i < keys.size(); ++i) {
+    for (auto i = 0ul; i < keys.size(); ++i) {
         const auto target = make_id(type, vertices[i]);
         if (create_vertices) {
             GraphKV::encode(target, vertex_key);
@@ -378,11 +396,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_t type,
-                               const gsl::span<const vertex_id_t>& vertices,
-                               bool create_vertices,
-                               bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
+                                            const vertex_t type,
+                                            const gsl::span<const vertex_id_t>& vertices,
+                                            bool create_vertices,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex={}, type={}, count={}, create_vertices={}, commit={})",
                         vertex,
                         type,
@@ -413,9 +432,9 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
                   rocksdb::Slice(key.data(), key.size()),
                   rocksdb::Slice());
     }
-    std::vector<GraphKV::edge_keys_t> keys(vertices.size());
+    std::vector<edge_keys_t> keys(vertices.size());
     GraphKV::vertex_key_t vertex_key;
-    for (auto i = 0u; i < keys.size(); ++i) {
+    for (auto i = 0ul; i < keys.size(); ++i) {
         const auto target = make_id(type, vertices[i]);
         if (create_vertices) {
             GraphKV::encode(target, vertex_key);
@@ -433,11 +452,12 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
-                               const vertex_uids_t& vertices,
-                               const std::vector<const char*>& data,
-                               const std::vector<std::size_t>& sizes,
-                               bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_insert(const vertex_uid_t& vertex,
+                                            const vertex_uids_t& vertices,
+                                            const std::vector<const char*>& data,
+                                            const std::vector<std::size_t>& sizes,
+                                            bool commit) {
     logger_get()->debug("edges_insert(vertex={}, vertices={}, commit={})",
                         vertex,
                         vertices,
@@ -449,9 +469,6 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
             return Status::error_missing_vertex(vertex);
         }
         for (auto const& dest_vertex: vertices) {
-            if (vertex == dest_vertex) {
-                return Status::error_invalid_edge(vertex, dest_vertex);
-            }
             vertices_has(dest_vertex, vertex_present).raise_on_error();
             if (!vertex_present) {
                 return Status::error_missing_vertex(dest_vertex);
@@ -459,10 +476,10 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
         }
     }
 
-    std::vector<GraphKV::edge_keys_t> keys(vertices.size());
+    std::vector<edge_keys_t> keys(vertices.size());
     rocksdb::WriteBatch batch;
     if (data.empty()) {
-        for (auto i = 0u; i < vertices.size(); ++i) {
+        for (auto i = 0ul; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
             for (const auto& key: keys[i]) {
                 batch.Put(edges_column_.get(),
@@ -471,7 +488,7 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
             }
         }
     } else {
-        for (auto i = 0u; i < vertices.size(); ++i) {
+        for (auto i = 0ul; i < vertices.size(); ++i) {
             GraphKV::encode(vertex, vertices[i], keys[i]);
             for (const auto& key: keys[i]) {
                 batch.Put(edges_column_.get(),
@@ -483,9 +500,10 @@ Status GraphImpl::edges_insert(const vertex_uid_t& vertex,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_has(const vertex_uid_t& vertex1,
-                            const vertex_uid_t& vertex2,
-                            bool& result) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_has(const vertex_uid_t& vertex1,
+                                         const vertex_uid_t& vertex2,
+                                         bool& result) const {
     logger_get()->debug("edges_has(vertex1={}, vertex2={})", vertex1, vertex2);
     GraphKV::edge_key_t key;
     GraphKV::encode(vertex1, vertex2, key);
@@ -502,7 +520,8 @@ Status GraphImpl::edges_has(const vertex_uid_t& vertex1,
     return to_status(status);
 }
 
-Status GraphImpl::edges_get(const edge_uid_t& edge, std::string* value) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_get(const edge_uid_t& edge, std::string* value) const {
     logger_get()->debug("edges_get(edge={})", edge);
     GraphKV::edge_key_t key;
     GraphKV::encode(edge.first, edge.second, key);
@@ -516,7 +535,8 @@ Status GraphImpl::edges_get(const edge_uid_t& edge, std::string* value) const {
     return to_status(status);
 }
 
-Status GraphImpl::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) const {
     logger_get()->debug("edges_get(vertex={})", vertex);
     GraphKV::edge_key_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, key);
@@ -536,9 +556,10 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex, vertex_uids_t& edges) co
     return to_status(iter->status());
 }
 
-Status GraphImpl::edges_get(const vertex_uid_t& vertex,
-                            vertex_t filter,
-                            vertex_uids_t& edges) const {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_get(const vertex_uid_t& vertex,
+                                         vertex_t filter,
+                                         vertex_uids_t& edges) const {
     logger_get()->debug("edges_get(vertex={}, filter={}, edges_column_={})", vertex, filter, edges);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -561,12 +582,13 @@ Status GraphImpl::edges_get(const vertex_uid_t& vertex,
     return Status::ok();
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex1,
-                              const vertex_uid_t& vertex2,
-                              bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex1,
+                                           const vertex_uid_t& vertex2,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex1={}, vertex2={}, commit={})", vertex1, vertex2, commit);
 
-    GraphKV::edge_keys_t keys;
+    edge_keys_t keys;
     GraphKV::encode(vertex1, vertex2, keys);
     rocksdb::WriteBatch batch;
 
@@ -576,9 +598,10 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex1,
     return to_status(db_get()->Write(write_options(commit), &batch));
 }
 
-Status GraphImpl::edges_erase(rocksdb::WriteBatch& batch,
-                              const vertex_uid_t& vertex,
-                              size_t& removed) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_erase(rocksdb::WriteBatch& batch,
+                                           const vertex_uid_t& vertex,
+                                           size_t& removed) {
     GraphKV::edge_key_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, key);
     const rocksdb::Slice slice(key.data(), key.size());
@@ -612,7 +635,10 @@ Status GraphImpl::edges_erase(rocksdb::WriteBatch& batch,
     return to_status(status);
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex,
+                                           size_t& removed,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex={}, commit={})", vertex, commit);
     rocksdb::WriteBatch batch;
     auto edges = 0ul;
@@ -626,10 +652,11 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex, size_t& removed, bool 
     return status;
 }
 
-Status GraphImpl::edges_erase(const vertex_uid_t& vertex,
-                              vertex_t filter,
-                              size_t& removed,
-                              bool commit) {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::edges_erase(const vertex_uid_t& vertex,
+                                           vertex_t filter,
+                                           size_t& removed,
+                                           bool commit) {
     logger_get()->debug("edges_erase(vertex={}, filter={}, commit={})", vertex, filter, commit);
     GraphKV::edge_key_type_prefix_t key;
     GraphKV::encode_edge_prefix(vertex, filter, key);
@@ -665,19 +692,22 @@ Status GraphImpl::edges_erase(const vertex_uid_t& vertex,
     return to_status(status);
 }
 
-Status GraphImpl::commit() {
+template <EdgeOrientation Orientation>
+Status GraphImpl<Orientation>::commit() {
     logger_get()->debug("commit()");
     to_status(db_get()->Flush(rocksdb::FlushOptions(), vertices_column_.get())).raise_on_error();
     return to_status(db_get()->Flush(rocksdb::FlushOptions(), edges_column_.get()))
         .raise_on_error();
 }
 
-std::string GraphImpl::statistics() const {
+template <EdgeOrientation Orientation>
+std::string GraphImpl<Orientation>::statistics() const {
     return statistics_->ToString();
 }
 
-void GraphImpl::clear(rocksdb::WriteBatch& batch,
-                      const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
+template <EdgeOrientation Orientation>
+void GraphImpl<Orientation>::clear(rocksdb::WriteBatch& batch,
+                                   const std::unique_ptr<rocksdb::ColumnFamilyHandle>& handle) {
     auto iter = db_get()->NewIterator(default_read_options(), handle.get());
     iter->SeekToFirst();
     if (iter->Valid()) {
@@ -687,5 +717,8 @@ void GraphImpl::clear(rocksdb::WriteBatch& batch,
         }
     }
 }
+
+template class GraphImpl<EdgeOrientation::directed>;
+template class GraphImpl<EdgeOrientation::undirected>;
 
 }  // namespace basalt

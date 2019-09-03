@@ -26,7 +26,8 @@ class EdgeIterator: public std::iterator<std::input_iterator_tag, const edge_uid
      * \param pimpl  Pointer to implementation
      * \param from Move iterator a specified index
      */
-    EdgeIterator(const GraphImpl& pimpl, size_t from);
+    template <EdgeOrientation Orientation>
+    EdgeIterator(const GraphImpl<Orientation>& pimpl, size_t from);
 
     /**
      * Copy constructor
@@ -65,5 +66,12 @@ class EdgeIterator: public std::iterator<std::input_iterator_tag, const edge_uid
   private:
     EdgeIteratorImpl_ptr pimpl_;
 };
+
+extern template EdgeIterator::EdgeIterator(
+    const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+    size_t from);
+extern template EdgeIterator::EdgeIterator(
+    const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+    size_t from);
 
 }  // namespace basalt
