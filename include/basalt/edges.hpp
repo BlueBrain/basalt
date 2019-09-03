@@ -137,8 +137,10 @@ class Edges {
 
     /**
      * \brief get vertices connected to a vertex
-     * \param vertex for directed graph, the head of the edges to look for, any end of the edges
-     * otherwise \param edges accumulator where connected vertices are added. \return information
+     * \param vertex for directed graph, the head of the edges to look for,
+     * any end of the edges otherwise
+     * \param edges accumulator where connected vertices are added.
+     * \return information
      * whether operation succeeded or not
      */
     Status get(const vertex_uid_t& vertex, vertex_uids_t& edges) const
