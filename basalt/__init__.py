@@ -9,7 +9,7 @@ Lesser General Public License. See top-level LICENSE file for details.
 import functools
 from pkg_resources import get_distribution, DistributionNotFound
 
-from ._basalt import Status, Vertices, Edges, Graph, DirectedGraph, make_id, default_config_file
+from ._basalt import Status, Vertices, Edges, UndirectedGraph, DirectedGraph, make_id, default_config_file
 from ._basalt import __rocksdb_version__  # noqa
 
 try:
@@ -17,4 +17,4 @@ try:
 except DistributionNotFound:
     from ._basalt import __version__
 
-__all__ = ["default_config_file", "Edges", "Graph", "DirectedGraph", "make_id", "Status", "Vertices"]
+__all__ = ["default_config_file", "DirectedGraph", "Edges", "make_id", "Status", "UndirectedGraph", "Vertices"]

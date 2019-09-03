@@ -210,18 +210,18 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
             return oss.str();
         });
 
-    py::class_<basalt::Graph>(m, "Graph", docstring::graph)
+    py::class_<basalt::UndirectedGraph>(m, "UndirectedGraph", docstring::graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
         .def(py::init<const std::string&, const std::string&>(),
              "path"_a,
              "config"_a,
              docstring::graph_init_with_config)
-        .def_property_readonly("vertices", &basalt::Graph::vertices, docstring::graph_vertices)
-        .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
+        .def_property_readonly("vertices", &basalt::UndirectedGraph::vertices, docstring::graph_vertices)
+        .def_property_readonly("edges", &basalt::UndirectedGraph::edges, docstring::graph_edges)
         .def("commit",
-             [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
+             [](basalt::UndirectedGraph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)
-        .def("statistics", &basalt::Graph::statistics, docstring::graph_statistics);
+        .def("statistics", &basalt::UndirectedGraph::statistics, docstring::graph_statistics);
 
     py::class_<basalt::DirectedGraph>(m, "DirectedGraph", docstring::directed_graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)

@@ -6,16 +6,16 @@ import unittest
 
 import numpy as np
 
-from basalt import Graph, make_id, default_config_file
+from basalt import UndirectedGraph, make_id, default_config_file
 
 N42 = (0, 42)
 
 
-class TestGraph(unittest.TestCase):
+class TestUndirectedGraph(unittest.TestCase):
     def test_persistence(self):
         path = tempfile.mkdtemp()
 
-        g = Graph(path)
+        g = UndirectedGraph(path)
         self.assertEqual(len(g.vertices), 0)
         self.assertFalse(N42 in g.vertices)
         g.vertices.add(N42)
@@ -23,13 +23,13 @@ class TestGraph(unittest.TestCase):
         self.assertTrue(N42 in g.vertices)
         del g
 
-        g = Graph(path)
+        g = UndirectedGraph(path)
         self.assertTrue(N42 in g.vertices)
         self.assertEqual(len(g.vertices), 1)
 
     def test_node_iteration(self):
         path = tempfile.mkdtemp()
-        g = Graph(path)
+        g = UndirectedGraph(path)
         self.assertEqual(list(g.vertices), [])
 
         g.vertices.add(N42)
@@ -42,7 +42,7 @@ class TestGraph(unittest.TestCase):
     def test_deletion(self):
         path = tempfile.mkdtemp()
 
-        g = Graph(path)
+        g = UndirectedGraph(path)
         # try to erase a missing node from type and id
         g.vertices.discard(N42)
         g.vertices.add(N42)
@@ -53,7 +53,7 @@ class TestGraph(unittest.TestCase):
 
     def test_single_connection(self):
         path = tempfile.mkdtemp()
-        g = Graph(path)
+        g = UndirectedGraph(path)
         A = make_id(1, 42)
         S1 = make_id(1, 1)
 
@@ -74,7 +74,7 @@ class TestGraph(unittest.TestCase):
         del g
 
         # test persistence
-        g = Graph(path)
+        g = UndirectedGraph(path)
         self.assertTrue((A, S1) in g.edges)
         self.assertTrue((S1, A) in g.edges)
 
@@ -91,7 +91,7 @@ class TestGraph(unittest.TestCase):
 
     def test_edges(self):
         path = tempfile.mkdtemp()
-        g = Graph(path)
+        g = UndirectedGraph(path)
         A = make_id(1, 42)
         S1 = make_id(3, 1)
         S2 = make_id(3, 2)
@@ -110,7 +110,7 @@ class TestGraph(unittest.TestCase):
         self.assertEqual(len(g.edges.get(A, 2)), 1)
 
     def test_node_removal(self):
-        g = Graph(tempfile.mkdtemp())
+        g = UndirectedGraph(tempfile.mkdtemp())
         A = make_id(0, 1)
         B = make_id(0, 2)
         C = make_id(0, 3)
@@ -144,7 +144,7 @@ class TestGraph(unittest.TestCase):
         self.assertCountEqual(g.edges.get(D), [C])
 
     def test_node_bulk_insertion_no_payload(self):
-        g = Graph(tempfile.mkdtemp())
+        g = UndirectedGraph(tempfile.mkdtemp())
         g.vertices.add(
             np.full(42, fill_value=3, dtype=np.int32), np.arange(42, dtype=np.uint64)
         )

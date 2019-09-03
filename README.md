@@ -15,10 +15,10 @@ The C++ and Python APIs of Basalt are stable already, but substantial additions 
 
 ## Python
 
-### MetaGraph API
+### Graph Topology API
 
 ```python
-class PLInfluences(basalt.MetaGraph):
+class PLInfluences(basalt.GraphTopology):
     """A directed graph where vertices are programming languages.
     """
     directed(True)
@@ -43,7 +43,7 @@ for language in g.languages:
 ### Python bindings
 
 ```python
-g = basalt.Graph("/path/on/disk")
+g = basalt.UndirectedGraph("/path/on/disk")
 g.vertices.add((0, 1)) # vertex type=0 id=1
 g.vertices.add(numpy.full((10,), 1, dtype=numpy.int32), # types
                numpy.arange(10, dtype=numpy.int64)) # ids
@@ -57,7 +57,7 @@ g.commit()
 ## C++
 
 ```cpp
-Graph g("/path/on/disk");
+basalt::UndirectedGraph g("/path/on/disk");
 g.vertices().insert({0, 1});
 g.vertices().insert({0, 2});
 for (const auto& vertex: g.vertices()) {

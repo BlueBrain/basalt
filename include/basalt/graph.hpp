@@ -20,7 +20,7 @@
 namespace basalt {
 
 template <EdgeOrientation Orientation>
-class MetaGraph {
+class Graph {
   public:
     /** \brief iterator over vertices */
     using vertex_const_iterator_t = std::iterator<std::input_iterator_tag, const vertex_t>;
@@ -34,16 +34,16 @@ class MetaGraph {
      * \brief load graph if present on disk, initialize it otherwise
      * \param path graph directory on disk
      */
-    explicit MetaGraph(const std::string& path);
+    explicit Graph(const std::string& path);
 
     /**
      * \brief create graph on disk at the given path with the given configuration
      * \param path the graph directory on disk (must not exist)
      * \param config the path to a JSON file
      */
-    MetaGraph(const std::string& path, const std::string& config);
+    Graph(const std::string& path, const std::string& config);
 
-    ~MetaGraph();
+    ~Graph();
 
     /**
      * \}
@@ -81,15 +81,15 @@ class MetaGraph {
 /**
  * \brief Undirected Connectivity Graph
  */
-using Graph = MetaGraph<EdgeOrientation::undirected>;
+using UndirectedGraph = Graph<EdgeOrientation::undirected>;
 
 /**
  *  \brief Graph in which edges have orientations.
  */
-using DirectedGraph = MetaGraph<EdgeOrientation::directed>;
+using DirectedGraph = Graph<EdgeOrientation::directed>;
 
-extern template class MetaGraph<EdgeOrientation::directed>;
-extern template class MetaGraph<EdgeOrientation::undirected>;
+extern template class Graph<EdgeOrientation::directed>;
+extern template class Graph<EdgeOrientation::undirected>;
 
 /**
  * \brief \a vertex_uid_t constructor helper function

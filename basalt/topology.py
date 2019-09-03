@@ -13,10 +13,10 @@ from cached_property import cached_property
 import numpy as np
 from six import string_types, with_metaclass
 
-from basalt import DirectedGraph, Graph
+from basalt import DirectedGraph, UndirectedGraph
 from .serialization import serialization_method
 
-__all__ = ["vertex", "edge", "MetaGraph"]
+__all__ = ["vertex", "edge", "Graph"]
 
 
 def dedupe(sequence):
@@ -78,7 +78,7 @@ class DirectiveMeta(type):
         DirectiveMeta._directives_to_be_executed = []
 
         new_cls = super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
-        if new_cls.__name__ != "MetaGraph":
+        if new_cls.__name__ != "GraphTopology":
             # Ensure the presence of the dictionaries associated
             # with the directives
             for d in DirectiveMeta._directive_names:
@@ -107,7 +107,7 @@ class DirectiveMeta(type):
 
         This directive allows you write:
 
-            class Foo(MetaGraph):
+            class Foo(GraphTopology):
                 edge(...)
 
         The ``@directive`` decorator handles a couple things for you:
@@ -202,8 +202,8 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
         default_payload(bool): whether new vertex has an empty payload (default: True)
     """
 
-    def _register(metagraph):
-        metagraph.vertex_types[name] = (type, serialization, plural, default_payload)
+    def _register(topology):
+        topology.vertex_types[name] = (type, serialization, plural, default_payload)
 
     return _register
 
@@ -236,8 +236,8 @@ def edge(head, tail, name=None, plural=None, serialization=None, default_payload
     if plural is None:
         if name is not None:
             plural = name + 's'
-    def _register(metagraph):
-        metagraph.edges_types.setdefault(head, set()).add(
+    def _register(topology):
+        topology.edges_types.setdefault(head, set()).add(
             EdgeType(tail=tail, serialization=serialization, default_payload=default_payload, name=name, plural=plural)
         )
 
@@ -248,9 +248,9 @@ def edge(head, tail, name=None, plural=None, serialization=None, default_payload
 def directed(value):
     """Directive to declare whether the graph is directed or not (the default)"""
 
-    def _register(metagraph):
+    def _register(topology):
         assert isinstance(value, bool)
-        metagraph.settings["directed"] = value
+        topology.settings["directed"] = value
 
     return _register
 
@@ -362,10 +362,10 @@ class VertexInfo(
         self.__cls = cls
 
 
-class MetaGraph(with_metaclass(DirectiveMeta)):
+class Graph(with_metaclass(DirectiveMeta)):
     @classmethod
     def _generate_methods(cls):
-        """Shape MetaGraph child class according to the :func:`vertex` and :func:`edge`
+        """Shape the GraphTopology child class according to the :func:`vertex` and :func:`edge`
         directives.
         """
         cls._data_serializers = cls._create_data_serializers()
@@ -642,7 +642,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             path(str): the path to basalt database on filesystem.
                 The database is created if path does not exists
 
-            kwargs: additional arguments given to the :class:`basalt.Graph` constructor
+            kwargs: additional arguments given to the inner graph constructor.
         """
         return cls(path=path, **kwargs)
 
@@ -651,7 +651,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         """Create a new graph instance
 
         Args:
-            graph(basalt.Graph): low-level graph instance
+            graph(basalt.UndirectedGraph or DirectedGraph): low-level graph instance
         """
         return cls(graph=graph)
 
@@ -660,7 +660,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             self.g = graph
         else:
             assert path is not None
-            graph_cls = DirectedGraph if self.settings.get("directed", False) else Graph
+            graph_cls = DirectedGraph if self.settings.get("directed", False) else UndirectedGraph
             self.g = graph_cls(path, **kwargs)
 
     @property

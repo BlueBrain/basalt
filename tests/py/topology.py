@@ -9,7 +9,7 @@ import unittest
 
 import numpy as np
 
-from basalt.schema import directed, edge, MetaGraph, vertex
+from basalt.topology import directed, edge, Graph, vertex
 from basalt.serialization import PickleSerialization
 
 
@@ -25,7 +25,7 @@ def tempdir(func):
     return _func
 
 
-class Skills(MetaGraph):
+class Skills(Graph):
     class Vertex(Enum):
         PERSON = 1
         SKILL = 2
@@ -40,7 +40,7 @@ class Skills(MetaGraph):
     edge(Vertex.CATEGORY, Vertex.CATEGORY)
 
 
-class PLInfluence(MetaGraph):
+class PLInfluence(Graph):
     directed(True)
 
     class Vertex(Enum):
@@ -204,7 +204,7 @@ class TestPLGraph(unittest.TestCase):
         self.assertEqual(len(c_rec_influenced), 134)
 
 
-class TestSkillMetaGraph(unittest.TestCase):
+class TestSkillGraph(unittest.TestCase):
     @tempdir
     def test_skills_graph(self, path):
         g = Skills.from_path(path)

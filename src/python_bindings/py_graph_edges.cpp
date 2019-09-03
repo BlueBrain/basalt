@@ -46,7 +46,7 @@ static const char* edges_class = R"(
     >>> len(graph.edges)
     1
 
-    Graph is undirected, meaning that the 2 possible
+    if the graph is undirected, then the 2 possible
     uids represents the same edge:
 
     >>> (v1, v2) in graph.edges
