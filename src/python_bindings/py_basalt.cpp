@@ -119,6 +119,11 @@ static const char* graph = R"(
 
 )";
 
+static const char* directed_graph = R"(
+    Directed Connectivity Graph
+
+)";
+
 static const char* graph_init = R"(
     Construct a graph object
 
@@ -157,6 +162,10 @@ static const char* graph_vertices = R"(
 
     Returns:
         instance of :py:class:`Vertices`
+)";
+
+static const char* graph_statistics = R"(
+    Get RocksDB usage statistics as a string
 )";
 
 }  // namespace docstring
@@ -201,18 +210,33 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
             return oss.str();
         });
 
-    py::class_<basalt::Graph>(m, "Graph", docstring::graph)
+    py::class_<basalt::UndirectedGraph>(m, "UndirectedGraph", docstring::graph)
         .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
         .def(py::init<const std::string&, const std::string&>(),
              "path"_a,
              "config"_a,
              docstring::graph_init_with_config)
-        .def_property_readonly("vertices", &basalt::Graph::vertices, docstring::graph_vertices)
-        .def_property_readonly("edges", &basalt::Graph::edges, docstring::graph_edges)
+        .def_property_readonly("vertices", &basalt::UndirectedGraph::vertices, docstring::graph_vertices)
+        .def_property_readonly("edges", &basalt::UndirectedGraph::edges, docstring::graph_edges)
         .def("commit",
-             [](basalt::Graph& graph) { graph.commit().raise_on_error(); },
+             [](basalt::UndirectedGraph& graph) { graph.commit().raise_on_error(); },
              docstring::graph_commit)
-        .def("statistics", &basalt::Graph::statistics, docstring::graph_vertices);
+        .def("statistics", &basalt::UndirectedGraph::statistics, docstring::graph_statistics);
+
+    py::class_<basalt::DirectedGraph>(m, "DirectedGraph", docstring::directed_graph)
+        .def(py::init<const std::string&>(), "path"_a, docstring::graph_init)
+        .def(py::init<const std::string&, const std::string&>(),
+             "path"_a,
+             "config"_a,
+             docstring::graph_init_with_config)
+        .def_property_readonly("vertices",
+                               &basalt::DirectedGraph::vertices,
+                               docstring::graph_vertices)
+        .def_property_readonly("edges", &basalt::DirectedGraph::edges, docstring::graph_edges)
+        .def("commit",
+             [](basalt::DirectedGraph& graph) { graph.commit().raise_on_error(); },
+             docstring::graph_commit)
+        .def("statistics", &basalt::DirectedGraph::statistics, docstring::graph_vertices);
 
     basalt::register_graph_edges(m);
     basalt::register_graph_vertices(m);

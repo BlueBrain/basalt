@@ -6,9 +6,11 @@
 
 #include <basalt/basalt.hpp>
 
+using basalt::DirectedGraph;
 using basalt::edge_uid_t;
 using basalt::Graph;
 using basalt::make_id;
+using basalt::UndirectedGraph;
 using basalt::vertex_id_t;
 using basalt::vertex_t;
 using basalt::vertex_uid_t;
@@ -23,8 +25,8 @@ using basalt::vertex_uids_t;
  * \param payload vertex content
  * \return vertex unique identifier
  */
-template <typename Payload>
-inline vertex_uid_t checked_insert(Graph& g,
+template <typename Payload, basalt::EdgeOrientation Ordered>
+inline vertex_uid_t checked_insert(Graph<Ordered>& g,
                                    vertex_t type,
                                    vertex_id_t id,
                                    const Payload& payload) {
@@ -42,7 +44,7 @@ inline vertex_uid_t checked_insert(Graph& g,
  * \param id vertex identifier
  * \return vertex unique identifier
  */
-inline vertex_uid_t checked_insert(Graph& g, vertex_t type, vertex_id_t id) {
+inline vertex_uid_t checked_insert(UndirectedGraph& g, vertex_t type, vertex_id_t id) {
     auto uid = make_id(type, id);
     const auto result = g.vertices().insert(uid);
     REQUIRE(result);
@@ -104,7 +106,7 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
     const auto path = new_db_path();
     const auto vertex = make_id(42, 3);
     {
-        Graph g(path);
+        UndirectedGraph g(path);
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 0);
         {
             std::string data;
@@ -115,7 +117,7 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
         g.vertices().insert(vertex).raise_on_error();
     }
     {
-        Graph g(path);
+        UndirectedGraph g(path);
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 1);
         {
             std::string data;
@@ -130,18 +132,42 @@ TEST_CASE("one-vertex-db", "[GraphKV]") {
     }
     {
         // try to remove an inexistant vertex
-        Graph g(path);
+        UndirectedGraph g(path);
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 1);
         g.vertices().erase(vertex).raise_on_error();
         REQUIRE(std::distance(g.vertices().begin(), g.vertices().end()) == 0);
     }
 }
 
-TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
-    using basalt::Graph;
+TEST_CASE("ordered graph", "[GraphKV]") {
     using bbp::in_silico::synapse_t;
 
-    Graph g(new_db_path());
+    DirectedGraph g(new_db_path());
+
+    // add synapses with id 0 and 1
+    const auto s0 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   0,
+                                   synapse_t{0, 42, 42, 42, false, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    const auto s1 = checked_insert(g,
+                                   vertex_type::synapse,
+                                   1,
+                                   synapse_t{0, 43, 43, 43, true, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0});
+    // connect the 2 synapses together
+    check_is_ok(g.edges().insert(s0, s1));
+
+    bool result = false;
+    REQUIRE(g.edges().has(s0, s1, result));
+    REQUIRE(result);
+    REQUIRE(g.edges().has(s1, s0, result));
+    REQUIRE(!result);
+}
+
+TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
+    using basalt::UndirectedGraph;
+    using bbp::in_silico::synapse_t;
+
+    UndirectedGraph g(new_db_path());
 
     // add synapses with id 0 and 1
     const auto s0 = checked_insert(g,

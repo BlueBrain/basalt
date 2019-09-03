@@ -26,7 +26,8 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
      * \param pimpl Pointer to implementation
      * \param from Move iterator at specified index
      */
-    VertexIterator(const GraphImpl& pimpl, size_t from);
+    template <EdgeOrientation Orientation>
+    VertexIterator(const GraphImpl<Orientation>& pimpl, size_t from);
 
     /**
      * Copy constructor
@@ -65,5 +66,12 @@ class VertexIterator: public std::iterator<std::input_iterator_tag, const vertex
   private:
     VertexIteratorImpl_ptr pimpl_;
 };
+
+extern template VertexIterator::VertexIterator(
+    const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+    size_t from);
+extern template VertexIterator::VertexIterator(
+    const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+    size_t from);
 
 }  // namespace basalt

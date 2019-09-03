@@ -24,7 +24,7 @@ EdgeIteratorImpl::EdgeIteratorImpl(const basalt::db_t& db,
     if (!iter_->Valid()) {
         position_ = std::numeric_limits<std::size_t>::max();
     }
-    GraphImpl::to_status(iter_->status()).raise_on_error();
+    GraphImpl<EdgeOrientation::directed>::to_status(iter_->status()).raise_on_error();
 }
 
 bool EdgeIteratorImpl::operator==(const basalt::EdgeIteratorImpl& other) const {

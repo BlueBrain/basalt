@@ -13,26 +13,30 @@
 
 namespace basalt {
 
-Vertices::Vertices(GraphImpl& pimpl)
+template <EdgeOrientation Orientation>
+Vertices<Orientation>::Vertices(GraphImpl<Orientation>& pimpl)
     : pimpl_(pimpl) {}
 
-Status Vertices::insert(const basalt::vertex_uid_t& vertex,
-                        const char* data,
-                        std::size_t size,
-                        bool commit) {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::insert(const basalt::vertex_uid_t& vertex,
+                                     const char* data,
+                                     std::size_t size,
+                                     bool commit) {
     return pimpl_.vertices_insert(vertex, {data, size}, commit);
 }
 
-Status Vertices::insert(const basalt::vertex_uid_t& vertex, bool commit) {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::insert(const basalt::vertex_uid_t& vertex, bool commit) {
     return pimpl_.vertices_insert(vertex, commit);
 }
 
-Status Vertices::insert(const vertex_t* types,
-                        const vertex_id_t* ids,
-                        const char* const* payloads,
-                        const std::size_t* payloads_sizes,
-                        size_t num_vertices,
-                        bool commit) {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::insert(const vertex_t* types,
+                                     const vertex_id_t* ids,
+                                     const char* const* payloads,
+                                     const std::size_t* payloads_sizes,
+                                     size_t num_vertices,
+                                     bool commit) {
     if (payloads == nullptr) {
         return pimpl_.vertices_insert({types, num_vertices}, {ids, num_vertices}, {}, {}, commit);
     }
@@ -43,36 +47,47 @@ Status Vertices::insert(const vertex_t* types,
                                   commit);
 }
 
-Status Vertices::has(const vertex_uid_t& vertex, bool& result) const {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::has(const vertex_uid_t& vertex, bool& result) const {
     return pimpl_.vertices_has(vertex, result);
 }
 
-Status Vertices::get(const basalt::vertex_uid_t& vertex, std::string* value) const {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::get(const basalt::vertex_uid_t& vertex, std::string* value) const {
     return pimpl_.vertices_get(vertex, value);
 }
 
-Status Vertices::erase(const vertex_uid_t& vertex, bool commit) {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::erase(const vertex_uid_t& vertex, bool commit) {
     return pimpl_.vertices_erase(vertex, commit);
 }
 
-Status Vertices::count(std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::count(std::size_t& count) const {
     return pimpl_.vertices_count(count);
 }
 
-Status Vertices::count(vertex_t type, std::size_t& count) const {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::count(vertex_t type, std::size_t& count) const {
     return pimpl_.vertices_count(type, count);
 }
 
-VertexIterator Vertices::begin(size_t position) const {
+template <EdgeOrientation Orientation>
+VertexIterator Vertices<Orientation>::begin(size_t position) const {
     return {pimpl_, position};
 }
 
-VertexIterator Vertices::end() const {
+template <EdgeOrientation Orientation>
+VertexIterator Vertices<Orientation>::end() const {
     return {pimpl_, std::numeric_limits<std::size_t>::max()};
 }
 
-Status Vertices::clear(bool commit) {
+template <EdgeOrientation Orientation>
+Status Vertices<Orientation>::clear(bool commit) {
     return pimpl_.vertices_clear(commit);
 }
+
+template class Vertices<EdgeOrientation::directed>;
+template class Vertices<EdgeOrientation::undirected>;
 
 }  // namespace basalt

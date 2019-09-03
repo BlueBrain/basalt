@@ -12,7 +12,8 @@
 
 namespace basalt {
 
-VertexIterator::VertexIterator(const basalt::GraphImpl& pimpl, size_t from) {
+template <EdgeOrientation Orientation>
+VertexIterator::VertexIterator(const basalt::GraphImpl<Orientation>& pimpl, size_t from) {
     // \fixme TCL this limit value is VertexIteratorImpl internal stuff
     // and so should not be used here
     if (from == std::numeric_limits<std::size_t>::max()) {
@@ -56,5 +57,10 @@ bool VertexIterator::operator!=(const basalt::VertexIterator& other) const {
 const VertexIterator::value_type& VertexIterator::operator*() {
     return **pimpl_;
 }
+
+template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::directed>& pimpl,
+                                        size_t from);
+template VertexIterator::VertexIterator(const basalt::GraphImpl<EdgeOrientation::undirected>& pimpl,
+                                        size_t from);
 
 }  // namespace basalt

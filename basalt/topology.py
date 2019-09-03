@@ -13,10 +13,10 @@ from cached_property import cached_property
 import numpy as np
 from six import string_types, with_metaclass
 
-from basalt import Graph
+from basalt import DirectedGraph, UndirectedGraph
 from .serialization import serialization_method
 
-__all__ = ["vertex", "edge", "MetaGraph"]
+__all__ = ["vertex", "edge", "Graph"]
 
 
 def dedupe(sequence):
@@ -78,7 +78,7 @@ class DirectiveMeta(type):
         DirectiveMeta._directives_to_be_executed = []
 
         new_cls = super(DirectiveMeta, cls).__new__(cls, name, bases, attr_dict)
-        if new_cls.__name__ != "MetaGraph":
+        if new_cls.__name__ != "GraphTopology":
             # Ensure the presence of the dictionaries associated
             # with the directives
             for d in DirectiveMeta._directive_names:
@@ -95,7 +95,7 @@ class DirectiveMeta(type):
     def directive(dicts=None):
         """Decorator for Basalt directives.
 
-        Basalt directives allow you to describe a graph typology
+        Basalt directives allow you to describe a graph topology
         while defining a graph Python class., e.g. describe the kind
         of vertices and the possible edges between these vertices.
 
@@ -107,7 +107,7 @@ class DirectiveMeta(type):
 
         This directive allows you write:
 
-            class Foo(MetaGraph):
+            class Foo(GraphTopology):
                 edge(...)
 
         The ``@directive`` decorator handles a couple things for you:
@@ -119,16 +119,6 @@ class DirectiveMeta(type):
 
           2. It automatically adds a dictionary called "edges_types" to the
              graph class so that you can refer to it later..
-
-        The ``(dicts='versions')`` part ensures that ALL packages in Spack
-        will have a ``versions`` attribute after they're constructed, and
-        that if no directive actually modified it, it will just be an
-        empty dict.
-
-        This is just a modular way to add storage attributes to the
-        Package class, and it's how Spack gets information from the
-        packages to the core.
-
 
         """
         global __all__
@@ -212,30 +202,55 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
         default_payload(bool): whether new vertex has an empty payload (default: True)
     """
 
-    def _register(metagraph):
-        metagraph.vertex_types[name] = (type, serialization, plural, default_payload)
+    def _register(topology):
+        topology.vertex_types[name] = (type, serialization, plural, default_payload)
 
     return _register
 
 
+class EdgeType(
+    collections.namedtuple("Edge", ["tail", "serialization", "default_payload", "name", "plural"])
+):
+    def reverse(self, head):
+        return EdgeType(
+            tail=head,
+            serialization=self.serialization,
+            default_payload=self.default_payload,
+            name=self.name,
+            plural=self.plural,
+        )
+
+
 @directive(dicts="edges_types")
-def edge(lhs, rhs, serialization=None, default_payload=True):
+def edge(head, tail, name=None, plural=None, serialization=None, default_payload=True):
     """Directive to declare an edge between 2 type of vertices
 
     Args:
-        lhs(enum value): vertex type at one end of the edge
-        rhs(enum value): vertex type at the other end of the edge
+        head(enum value): vertex type at one end of the edge
+        tail(enum value): vertex type at the other end of the edge
+        name(str): edge name, default is the type of the edge tail
+        plural(str): overwrite default plural (name + 's')
         serialization: optional serialization method. see :func:`vertex`
         default_payload(bool): whether new edge has an empty payload (default: True)
     """
+    if plural is None:
+        if name is not None:
+            plural = name + 's'
+    def _register(topology):
+        topology.edges_types.setdefault(head, set()).add(
+            EdgeType(tail=tail, serialization=serialization, default_payload=default_payload, name=name, plural=plural)
+        )
 
-    def _register(metagraph):
-        metagraph.edges_types.setdefault(lhs, set()).add(
-            (rhs, serialization, default_payload)
-        )
-        metagraph.edges_types.setdefault(rhs, set()).add(
-            (lhs, serialization, default_payload)
-        )
+    return _register
+
+
+@directive(dicts="settings")
+def directed(value):
+    """Directive to declare whether the graph is directed or not (the default)"""
+
+    def _register(topology):
+        assert isinstance(value, bool)
+        topology.settings["directed"] = value
 
     return _register
 
@@ -347,19 +362,25 @@ class VertexInfo(
         self.__cls = cls
 
 
-class MetaGraph(with_metaclass(DirectiveMeta)):
+class Graph(with_metaclass(DirectiveMeta)):
     @classmethod
     def _generate_methods(cls):
-        """Shape MetaGraph child class according to the :func:`vertex` and :func:`edge`
+        """Shape the GraphTopology child class according to the :func:`vertex` and :func:`edge`
         directives.
         """
         cls._data_serializers = cls._create_data_serializers()
+        # add opposite edge if graph is undirected
+        if not cls.settings.setdefault("directed", False):
+            edges = list(cls.edges_types.items())
+            for lhs, conns in edges:
+                for conn in conns:
+                    cls.edges_types.setdefault(conn.tail, set()).add(conn.reverse(lhs))
         cls._vertices = {
             type: VertexInfo(
-                name,
-                plural if plural else name + "s",
-                type,
-                (e[0] for e in cls.edges_types.get(type, [])),
+                name=name,
+                plural=plural if plural else name + "s",
+                type=type,
+                connections=cls.edges_types.get(type, []),
             )
             for name, (type, _, plural, _) in cls.vertex_types.items()
         }
@@ -414,9 +435,9 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         eax = dict()
         for type, method, _, default_payload in cls.vertex_types.values():
             eax[type] = serialization_method(method, default_payload)
-        for lhs, others in cls.edges_types.items():
-            for rhs, method, default_payload in others:
-                eax[(lhs, rhs)] = serialization_method(method, default_payload)
+        for lhs, conns in cls.edges_types.items():
+            for conn in conns:
+                eax[(lhs, conn.tail)] = serialization_method(conn.serialization, conn.default_payload)
         return eax
 
     @classmethod
@@ -436,6 +457,15 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
                 self._data = data
                 if self._data is not None:
                     self._data = self.deserialize(self._data)
+
+            def __hash__(self):
+                return hash((self.type, self.id))
+
+            def __eq__(self, other):
+                return (self.type, self.id) == (other.type, other.id)
+
+            def __str__(self):
+                return "({type}:{id})".format(type=self.type, id=self.id)
 
             @property
             def id(self):
@@ -590,11 +620,18 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
 
         new_type = type(info.name.capitalize() + "Vertex", (Vertex, object), {})
 
-        for vertex_type in info.connections:
-            other_info = cls._vertices[vertex_type]
-            setattr(new_type, other_info.plural, _iterator(other_info))
-            setattr(new_type, "add_" + other_info.name, _add(other_info))
-            setattr(new_type, "discard_" + other_info.name, _discard(other_info))
+        for edge_info in info.connections:
+            other_vertex_info = cls._vertices[edge_info.tail]
+            name = other_vertex_info.name
+            plural = other_vertex_info.plural
+            if edge_info.name is not None:
+                name = edge_info.name
+                plural = edge_info.plural
+            if plural is None:
+                raise Exception(name)
+            setattr(new_type, plural, _iterator(other_vertex_info))
+            setattr(new_type, "add_" + name, _add(other_vertex_info))
+            setattr(new_type, "discard_" + name, _discard(other_vertex_info))
         return new_type
 
     @classmethod
@@ -605,7 +642,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             path(str): the path to basalt database on filesystem.
                 The database is created if path does not exists
 
-            kwargs: additional arguments given to the :class:`basalt.Graph` constructor
+            kwargs: additional arguments given to the inner graph constructor.
         """
         return cls(path=path, **kwargs)
 
@@ -614,7 +651,7 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
         """Create a new graph instance
 
         Args:
-            graph(basalt.Graph): low-level graph instance
+            graph(basalt.UndirectedGraph or DirectedGraph): low-level graph instance
         """
         return cls(graph=graph)
 
@@ -623,7 +660,8 @@ class MetaGraph(with_metaclass(DirectiveMeta)):
             self.g = graph
         else:
             assert path is not None
-            self.g = Graph(path, **kwargs)
+            graph_cls = DirectedGraph if self.settings.get("directed", False) else UndirectedGraph
+            self.g = graph_cls(path, **kwargs)
 
     @property
     def vertices(self):
