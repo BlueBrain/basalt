@@ -26,7 +26,7 @@ class PLInfluences(basalt.GraphTopology):
     class Vertex(Enum):
         LANGUAGE = 1
 
-    vertex("language", Vertex.LANGUAGE, serialization="pickle")
+    vertex("language", Vertex.LANGUAGE)
     edge(Vertex.LANGUAGE, Vertex.LANGUAGE, name="influenced", plural="influenced")
 
     @classmethod
