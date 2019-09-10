@@ -1,4 +1,4 @@
-![basalt logo](https://github.com/BlueBrain/basalt/raw/master/doc/source/_static/basalt-logo.png)
+![basalt logo](https://github.com/BlueBrain/basalt/raw/master/doc/source/_static/basalt-logo.png =250x)
 
 # Basalt - Graph Storage API for C++ and Python
 
