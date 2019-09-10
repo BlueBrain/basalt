@@ -1,5 +1,5 @@
 //
-// gsl-lite is based on GSL: Guideline Support Library.
+// gsl-lite is based on GSL: Guidelines Support Library.
 // For more information see https://github.com/martinmoene/gsl-lite
 //
 // Copyright (c) 2015-2018 Martin Moene
@@ -32,8 +32,9 @@
 #include <vector>
 
 #define  gsl_lite_MAJOR  0
-#define  gsl_lite_MINOR  32
+#define  gsl_lite_MINOR  34
 #define  gsl_lite_PATCH  0
+
 #define  gsl_lite_VERSION  gsl_STRINGIFY(gsl_lite_MAJOR) "." gsl_STRINGIFY(gsl_lite_MINOR) "." gsl_STRINGIFY(gsl_lite_PATCH)
 
 // gsl-lite backward compatibility:
@@ -71,12 +72,12 @@
 # define gsl_FEATURE_BYTE_SPAN_TO_STD  99
 #endif
 
-#ifndef  gsl_FEATURE_HAVE_IMPLICIT_MACRO
-# define gsl_FEATURE_HAVE_IMPLICIT_MACRO  1
+#ifndef  gsl_FEATURE_IMPLICIT_MACRO
+# define gsl_FEATURE_IMPLICIT_MACRO  1
 #endif
 
-#ifndef  gsl_FEATURE_HAVE_OWNER_MACRO
-# define gsl_FEATURE_HAVE_OWNER_MACRO  1
+#ifndef  gsl_FEATURE_OWNER_MACRO
+# define gsl_FEATURE_OWNER_MACRO  1
 #endif
 
 #ifndef  gsl_FEATURE_EXPERIMENTAL_RETURN_GUARD
@@ -138,13 +139,15 @@
 # error only one of gsl_CONFIG_CONTRACT_VIOLATION_THROWS and gsl_CONFIG_CONTRACT_VIOLATION_TERMINATES may be defined.
 #endif
 
-// Compiler detection (C++20 is speculative):
+// C++ language version detection (C++20 is speculative):
 // Note: VC14.0/1900 (VS2015) lacks too much from C++14.
 
-#if defined _MSVC_LANG
-# define gsl_CPLUSPLUS  (_MSC_VER == 1900 ? 201103L : _MSVC_LANG )
-#else
-# define gsl_CPLUSPLUS  __cplusplus
+#ifndef   gsl_CPLUSPLUS
+# if defined(_MSVC_LANG ) && !defined(__clang__)
+#  define gsl_CPLUSPLUS  (_MSC_VER == 1900 ? 201103L : _MSVC_LANG )
+# else
+#  define gsl_CPLUSPLUS  __cplusplus
+# endif
 #endif
 
 #define gsl_CPP98_OR_GREATER  ( gsl_CPLUSPLUS >= 199711L )
@@ -160,29 +163,58 @@
 // half-open range [lo..hi):
 #define gsl_BETWEEN( v, lo, hi ) ( (lo) <= (v) && (v) < (hi) )
 
-#if defined( _MSC_VER ) && !defined( __clang__ )
-# define gsl_COMPILER_MSVC_VERSION ( _MSC_VER / 10 - 10 * ( 5 + ( _MSC_VER < 1900 ) ) )
+// Compiler versions:
+//
+// MSVC++ 6.0  _MSC_VER == 1200 (Visual Studio 6.0)
+// MSVC++ 7.0  _MSC_VER == 1300 (Visual Studio .NET 2002)
+// MSVC++ 7.1  _MSC_VER == 1310 (Visual Studio .NET 2003)
+// MSVC++ 8.0  _MSC_VER == 1400 (Visual Studio 2005)
+// MSVC++ 9.0  _MSC_VER == 1500 (Visual Studio 2008)
+// MSVC++ 10.0 _MSC_VER == 1600 (Visual Studio 2010)
+// MSVC++ 11.0 _MSC_VER == 1700 (Visual Studio 2012)
+// MSVC++ 12.0 _MSC_VER == 1800 (Visual Studio 2013)
+// MSVC++ 14.0 _MSC_VER == 1900 (Visual Studio 2015)
+// MSVC++ 14.1 _MSC_VER >= 1910 (Visual Studio 2017)
+
+#if defined(_MSC_VER ) && !defined(__clang__)
+# define gsl_COMPILER_MSVC_VER      (_MSC_VER )
+# define gsl_COMPILER_MSVC_VERSION  (_MSC_VER / 10 - 10 * ( 5 + (_MSC_VER < 1900 ) ) )
 #else
-# define gsl_COMPILER_MSVC_VERSION 0
+# define gsl_COMPILER_MSVC_VER      0
+# define gsl_COMPILER_MSVC_VERSION  0
 #endif
 
 #define gsl_COMPILER_VERSION( major, minor, patch ) ( 10 * ( 10 * (major) + (minor) ) + (patch) )
 
-#if defined __clang__
+#if defined(__clang__)
 # define gsl_COMPILER_CLANG_VERSION gsl_COMPILER_VERSION( __clang_major__, __clang_minor__, __clang_patchlevel__ )
 #else
 # define gsl_COMPILER_CLANG_VERSION 0
 #endif
 
-#if defined __GNUC__
+#if defined(__GNUC__) && !defined(__clang__)
 # define gsl_COMPILER_GNUC_VERSION gsl_COMPILER_VERSION( __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__ )
 #else
 # define gsl_COMPILER_GNUC_VERSION 0
 #endif
 
+// Method enabling (C++98, VC120 (VS2013) cannot use __VA_ARGS__)
+
+#define gsl_REQUIRES_0(VA) \
+    template< bool B = (VA), typename std::enable_if<B, int>::type = 0 >
+
+#define gsl_REQUIRES_T(VA) \
+    , typename = typename std::enable_if< (VA), gsl::detail::enabler >::type
+
+#define gsl_REQUIRES_R(R, VA) \
+    typename std::enable_if<VA, R>::type
+
+#define gsl_REQUIRES_A(VA) \
+    , typename std::enable_if<VA, void*>::type = nullptr
+
 // Compiler non-strict aliasing:
 
-#if defined __clang__ || defined __GNUC__
+#if defined(__clang__) || defined(__GNUC__)
 # define gsl_may_alias  __attribute__((__may_alias__))
 #else
 # define gsl_may_alias
@@ -190,7 +222,7 @@
 
 // Presence of gsl, language and library features:
 
-#define gsl_IN_STD( v )  ( (v) == 98 || (v) >= gsl_CPLUSPLUS_V )
+#define gsl_IN_STD( v )  ( ((v) == 98 ? 3 : (v)) >= gsl_CPLUSPLUS_V )
 
 #define gsl_DEPRECATE_TO_LEVEL( level )  ( level <= gsl_CONFIG_DEPRECATE_TO_LEVEL )
 #define gsl_FEATURE_TO_STD(   feature )  ( gsl_IN_STD( gsl_FEATURE( feature##_TO_STD ) ) )
@@ -214,19 +246,20 @@
 # define gsl_HAS_CPP0X  0
 #endif
 
-#define gsl_CPP11_100  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 100)
-#define gsl_CPP11_110  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 110)
-#define gsl_CPP11_120  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 120)
-#define gsl_CPP11_140  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 140)
+#define gsl_CPP11_100  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1600)
+#define gsl_CPP11_110  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1700)
+#define gsl_CPP11_120  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1800)
+#define gsl_CPP11_140  (gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1900)
 
 #define gsl_CPP14_000  (gsl_CPP14_OR_GREATER)
-#define gsl_CPP14_120  (gsl_CPP14_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 120)
-#define gsl_CPP14_140  (gsl_CPP14_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 140)
+#define gsl_CPP14_120  (gsl_CPP14_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1800)
+#define gsl_CPP14_140  (gsl_CPP14_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1900)
 
 #define gsl_CPP17_000  (gsl_CPP17_OR_GREATER)
+#define gsl_CPP17_140  (gsl_CPP17_OR_GREATER || gsl_COMPILER_MSVC_VER >= 1900)
 
-#define gsl_CPP11_140_CPP0X_90   (gsl_CPP11_140 || (gsl_COMPILER_MSVC_VERSION >=  90 && gsl_HAS_CPP0X))
-#define gsl_CPP11_140_CPP0X_100  (gsl_CPP11_140 || (gsl_COMPILER_MSVC_VERSION >= 100 && gsl_HAS_CPP0X))
+#define gsl_CPP11_140_CPP0X_90   (gsl_CPP11_140 || (gsl_COMPILER_MSVC_VER >= 1500 && gsl_HAS_CPP0X))
+#define gsl_CPP11_140_CPP0X_100  (gsl_CPP11_140 || (gsl_COMPILER_MSVC_VER >= 1600 && gsl_HAS_CPP0X))
 
 // Presence of C++11 language features:
 
@@ -279,6 +312,8 @@
 
 #define gsl_HAVE_MAKE_UNIQUE            gsl_CPP14_120
 
+#define gsl_HAVE_UNCAUGHT_EXCEPTIONS    gsl_CPP17_140
+
 #define gsl_HAVE_ADD_CONST              gsl_HAVE_TYPE_TRAITS
 #define gsl_HAVE_INTEGRAL_CONSTANT      gsl_HAVE_TYPE_TRAITS
 #define gsl_HAVE_REMOVE_CONST           gsl_HAVE_TYPE_TRAITS
@@ -288,8 +323,6 @@
 #define gsl_HAVE_TR1_INTEGRAL_CONSTANT  gsl_HAVE_TR1_TYPE_TRAITS
 #define gsl_HAVE_TR1_REMOVE_CONST       gsl_HAVE_TR1_TYPE_TRAITS
 #define gsl_HAVE_TR1_REMOVE_REFERENCE   gsl_HAVE_TR1_TYPE_TRAITS
-
-// For the rest, consider VC12, VC14 as C++11 for GSL Lite.
 
 // C++ feature usage:
 
@@ -317,7 +350,7 @@
 # define gsl_explicit /*explicit*/
 #endif
 
-#if gsl_FEATURE( HAVE_IMPLICIT_MACRO )
+#if gsl_FEATURE( IMPLICIT_MACRO )
 # define implicit /*implicit*/
 #endif
 
@@ -418,9 +451,9 @@ namespace gsl {
 template< class T >
 class span;
 
-namespace details {
-
 // C++11 emulation:
+
+namespace std11 {
 
 #if gsl_HAVE( ADD_CONST )
 
@@ -459,7 +492,7 @@ template< class T > struct remove_volatile<T volatile> { typedef T type; };
 template< class T >
 struct remove_cv
 {
-    typedef typename details::remove_volatile<typename details::remove_const<T>::type>::type type;
+    typedef typename remove_volatile<typename remove_const<T>::type>::type type;
 };
 
 #endif // gsl_HAVE( REMOVE_CONST )
@@ -484,42 +517,50 @@ typedef integral_constant< false > false_type;
 
 #endif
 
+} // namespace std11
+
+namespace detail {
+
+/// for nsel_REQUIRES_T
+
+/*enum*/ class enabler{};
+
 #if gsl_HAVE( TYPE_TRAITS )
 
 template< class Q >
-struct is_span_oracle : std::false_type{};
+struct is_span_oracle : std11::false_type{};
 
 template< class T>
-struct is_span_oracle< span<T> > : std::true_type{};
+struct is_span_oracle< span<T> > : std11::true_type{};
 
 template< class Q >
-struct is_span : is_span_oracle< typename std::remove_cv<Q>::type >{};
+struct is_span : is_span_oracle< typename std11::remove_cv<Q>::type >{};
 
 template< class Q >
-struct is_std_array_oracle : std::false_type{};
+struct is_std_array_oracle : std11::false_type{};
 
 #if gsl_HAVE( ARRAY )
 
 template< class T, std::size_t Extent >
-struct is_std_array_oracle< std::array<T, Extent> > : std::true_type{};
+struct is_std_array_oracle< std::array<T, Extent> > : std11::true_type{};
 
 #endif
 
 template< class Q >
-struct is_std_array : is_std_array_oracle< typename std::remove_cv<Q>::type >{};
+struct is_std_array : is_std_array_oracle< typename std11::remove_cv<Q>::type >{};
 
 template< class Q >
-struct is_array : std::false_type {};
+struct is_array : std11::false_type {};
 
 template< class T >
-struct is_array<T[]> : std::true_type {};
+struct is_array<T[]> : std11::true_type {};
 
 template< class T, std::size_t N >
-struct is_array<T[N]> : std::true_type {};
+struct is_array<T[N]> : std11::true_type {};
 
 #endif // gsl_HAVE( TYPE_TRAITS )
 
-} // namespace details
+} // namespace detail
 
 //
 // GSL.util: utilities
@@ -542,7 +583,9 @@ typedef gsl_CONFIG_SPAN_INDEX_TYPE index;   // p0122r3 uses std::ptrdiff_t
 
 #if  gsl_HAVE( ALIAS_TEMPLATE )
 # if gsl_HAVE( TYPE_TRAITS )
-  template< class T, class = typename std::enable_if< std::is_pointer<T>::value >::type >
+  template< class T
+    gsl_REQUIRES_T( std::is_pointer<T>::value )
+  >
   using owner = T;
 # else
   template< class T > using owner = T;
@@ -553,7 +596,7 @@ typedef gsl_CONFIG_SPAN_INDEX_TYPE index;   // p0122r3 uses std::ptrdiff_t
 
 #define gsl_HAVE_OWNER_TEMPLATE  gsl_HAVE_ALIAS_TEMPLATE
 
-#if gsl_FEATURE( HAVE_OWNER_MACRO )
+#if gsl_FEATURE( OWNER_MACRO )
 # if gsl_HAVE( OWNER_TEMPLATE )
 #  define Owner(t)  ::gsl::owner<t>
 # else
@@ -574,6 +617,12 @@ typedef gsl_CONFIG_SPAN_INDEX_TYPE index;   // p0122r3 uses std::ptrdiff_t
 # define Expects( x )  ::gsl::fail_fast_assert( (x), "GSL: Precondition failure at " __FILE__ ":" gsl_STRINGIFY(__LINE__) );
 #else
 # define Expects( x )  ::gsl::fail_fast_assert( (x) )
+#endif
+
+#if gsl_ELIDE_CONTRACT_EXPECTS
+# define gsl_EXPECTS_UNUSED_PARAM( x )  /* Make param unnamed if Expects elided */
+#else
+# define gsl_EXPECTS_UNUSED_PARAM( x )  x
 #endif
 
 #if gsl_ELIDE_CONTRACT_ENSURES
@@ -640,6 +689,48 @@ gsl_api inline gsl_constexpr14 void fail_fast_assert( bool cond ) gsl_noexcept
 // GSL.util: utilities
 //
 
+#if gsl_FEATURE( EXPERIMENTAL_RETURN_GUARD )
+
+// Add uncaught_exceptions for pre-2017 MSVC, GCC and Clang
+// Return unsigned char to save stack space, uncaught_exceptions can only increase by 1 in a scope
+
+namespace detail {
+
+inline unsigned char to_uchar( unsigned x ) gsl_noexcept
+{
+    return static_cast<unsigned char>( x );
+}
+
+} // namespace detail
+
+namespace std11 {
+
+#if gsl_HAVE( UNCAUGHT_EXCEPTIONS )
+
+inline unsigned char uncaught_exceptions() gsl_noexcept
+{
+    return detail::to_uchar( std::uncaught_exceptions() );
+}
+
+#elif gsl_COMPILER_MSVC_VERSION
+
+extern "C" char * __cdecl _getptd();
+inline unsigned char uncaught_exceptions() gsl_noexcept
+{
+    return detail::to_uchar( *reinterpret_cast<unsigned*>(_getptd() + (sizeof(void*) == 8 ? 0x100 : 0x90) ) );
+}
+
+#elif gsl_COMPILER_CLANG_VERSION || gsl_COMPILER_GNUC_VERSION
+
+extern "C" char * __cxa_get_globals();
+inline unsigned char uncaught_exceptions() gsl_noexcept
+{
+    return detail::to_uchar( *reinterpret_cast<unsigned*>(__cxa_get_globals() + sizeof(void*) ) );
+}
+#endif
+} // namespace std11
+#endif
+
 #if gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 110
 
 template< class F >
@@ -675,18 +766,6 @@ protected:
         invoke_ = false;
     }
 
-#if gsl_CPP17_OR_GREATER
-    gsl_api int uncaught_exceptions() gsl_noexcept
-    {
-        return std::uncaught_exceptions();
-    }
-#else
-    gsl_api int uncaught_exceptions()
-    {
-        return std::uncaught_exception() ? 1 : 0;
-    }
-#endif
-
 private:
     F action_;
     bool invoke_;
@@ -712,21 +791,26 @@ class final_action_return : public final_action<F>
 public:
     gsl_api explicit final_action_return( F && action ) gsl_noexcept
         : final_action<F>( std::move( action ) )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api final_action_return( final_action_return && other ) gsl_noexcept
         : final_action<F>( std::move( other ) )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api ~final_action_return() override
     {
-        if ( this->uncaught_exceptions() )
+        if ( std11::uncaught_exceptions() != exception_count )
             this->dismiss();
     }
 
 gsl_is_delete_access:
     gsl_api final_action_return( final_action_return const & ) gsl_is_delete;
     gsl_api final_action_return & operator=( final_action_return const & ) gsl_is_delete;
+
+private:
+    unsigned char exception_count;
 };
 
 template< class F >
@@ -747,21 +831,26 @@ class final_action_error : public final_action<F>
 public:
     gsl_api explicit final_action_error( F && action ) gsl_noexcept
         : final_action<F>( std::move( action ) )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api final_action_error( final_action_error && other ) gsl_noexcept
         : final_action<F>( std::move( other ) )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api ~final_action_error() override
     {
-        if ( ! this->uncaught_exceptions() )
+        if ( std11::uncaught_exceptions() == exception_count )
             this->dismiss();
     }
 
 gsl_is_delete_access:
     gsl_api final_action_error( final_action_error const & ) gsl_is_delete;
     gsl_api final_action_error & operator=( final_action_error const & ) gsl_is_delete;
+
+private:
+    unsigned char exception_count;
 };
 
 template< class F >
@@ -809,11 +898,6 @@ protected:
         invoke_ = false;
     }
 
-    gsl_api int uncaught_exceptions()
-    {
-        return std::uncaught_exception() ? 1 : 0;
-    }
-
 private:
     gsl_api final_action & operator=( final_action const & );
 
@@ -835,16 +919,20 @@ class final_action_return : public final_action
 public:
     gsl_api explicit final_action_return( Action action )
         : final_action( action )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api ~final_action_return()
     {
-        if ( this->uncaught_exceptions() )
+        if ( std11::uncaught_exceptions() != exception_count )
             this->dismiss();
     }
 
 private:
     gsl_api final_action_return & operator=( final_action_return const & );
+
+private:
+    unsigned char exception_count;
 };
 
 template< class F >
@@ -858,16 +946,20 @@ class final_action_error : public final_action
 public:
     gsl_api explicit final_action_error( Action action )
         : final_action( action )
+        , exception_count( std11::uncaught_exceptions() )
     {}
 
     gsl_api ~final_action_error()
     {
-        if ( ! this->uncaught_exceptions() )
+        if ( std11::uncaught_exceptions() == exception_count )
             this->dismiss();
     }
 
 private:
     gsl_api final_action_error & operator=( final_action_error const & );
+
+private:
+    unsigned char exception_count;
 };
 
 template< class F >
@@ -902,7 +994,7 @@ struct narrowing_error : public std::exception {};
 
 #if gsl_HAVE( TYPE_TRAITS )
 
-namespace details
+namespace detail
 {
     template< class T, class U >
     struct is_same_signedness : public std::integral_constant<bool, std::is_signed<T>::value == std::is_signed<U>::value>
@@ -927,9 +1019,9 @@ gsl_api inline T narrow( U u )
 #if gsl_HAVE( TYPE_TRAITS )
 # if gsl_COMPILER_MSVC_VERSION
     // Suppress MSVC level 4 warning C4127 (conditional expression is constant)
-    if ( 0, ! details::is_same_signedness<T, U>::value && ( ( t < T() ) != ( u < U() ) ) )
+    if ( 0, ! detail::is_same_signedness<T, U>::value && ( ( t < T() ) != ( u < U() ) ) )
 # else
-    if (    ! details::is_same_signedness<T, U>::value && ( ( t < T() ) != ( u < U() ) ) )
+    if (    ! detail::is_same_signedness<T, U>::value && ( ( t < T() ) != ( u < U() ) ) )
 # endif
 #else
     // Don't assume T() works:
@@ -1018,10 +1110,10 @@ public:
 
     template< class U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class Dummy = typename std::enable_if<std::is_constructible<T, U>::value>::type
+        gsl_REQUIRES_T(( std::is_constructible<T, U>::value ))
 #endif
     >
-    gsl_api gsl_constexpr14 gsl_not_null_explicit 
+    gsl_api gsl_constexpr14 gsl_not_null_explicit
 #if gsl_HAVE( RVALUE_REFERENCE )
     not_null( U && u )
     : ptr_( std::forward<U>( u ) )
@@ -1033,7 +1125,7 @@ public:
         Expects( ptr_ != gsl_nullptr );
     }
 #undef gsl_not_null_explicit
-    
+
 #if gsl_HAVE( IS_DEFAULT )
     gsl_api                ~not_null() = default;
     gsl_api gsl_constexpr   not_null( not_null &&      other ) = default;
@@ -1052,7 +1144,7 @@ public:
 
     template< class U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class Dummy = typename std::enable_if<std::is_convertible<U, T>::value>::type
+        gsl_REQUIRES_T(( std::is_convertible<U, T>::value ))
 #endif
     >
     gsl_api gsl_constexpr not_null( not_null<U> const & other )
@@ -1108,7 +1200,7 @@ class not_null_ic : public not_null<T>
 public:
     template< class U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class Dummy = typename std::enable_if<std::is_constructible<T, U>::value>::type
+        gsl_REQUIRES_T(( std::is_constructible<T, U>::value )) 
 #endif
     >
     gsl_api gsl_constexpr14
@@ -1145,31 +1237,31 @@ gsl_api inline gsl_constexpr bool operator==( not_null<T> const & l, not_null<U>
 }
 
 template< class T, class U >
-gsl_api inline gsl_constexpr bool operator< ( not_null<U> const & l, not_null<U> const & r )
+gsl_api inline gsl_constexpr bool operator< ( not_null<T> const & l, not_null<U> const & r )
 {
     return l.get() < r.get();
 }
 
 template< class T, class U >
-gsl_api inline gsl_constexpr bool operator!=( not_null<U> const & l, not_null<U> const & r )
+gsl_api inline gsl_constexpr bool operator!=( not_null<T> const & l, not_null<U> const & r )
 {
     return !( l == r );
 }
 
 template< class T, class U >
-gsl_api inline gsl_constexpr bool operator<=( not_null<U> const & l, not_null<U> const & r )
+gsl_api inline gsl_constexpr bool operator<=( not_null<T> const & l, not_null<U> const & r )
 {
     return !( r < l );
 }
 
 template< class T, class U >
-gsl_api inline gsl_constexpr bool operator> ( not_null<U> const & l, not_null<U> const & r )
+gsl_api inline gsl_constexpr bool operator> ( not_null<T> const & l, not_null<U> const & r )
 {
     return ( r < l );
 }
 
 template< class T, class U >
-gsl_api inline gsl_constexpr bool operator>=( not_null<U> const & l, not_null<U> const & r )
+gsl_api inline gsl_constexpr bool operator>=( not_null<T> const & l, not_null<U> const & r )
 {
     return !( l < r );
 }
@@ -1185,7 +1277,7 @@ gsl_api inline gsl_constexpr bool operator>=( not_null<U> const & l, not_null<U>
 
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
 # define gsl_ENABLE_IF_INTEGRAL_T(T)  \
-    , class = typename std::enable_if<std::is_integral<T>::value>::type
+    gsl_REQUIRES_T(( std::is_integral<T>::value ))
 #else
 # define gsl_ENABLE_IF_INTEGRAL_T(T)
 #endif
@@ -1345,34 +1437,34 @@ const  gsl_constexpr   with_container_t with_container;
 
 #if gsl_HAVE( CONSTRAINED_SPAN_CONTAINER_CTOR )
 
-namespace details {
+namespace detail {
 
 // Can construct from containers that:
 
-template<
-    class Container, class ElementType
-    , class = typename std::enable_if<
-        ! details::is_span< Container >::value &&
-        ! details::is_array< Container >::value &&
-        ! details::is_std_array< Container >::value &&
-          std::is_convertible<typename std::remove_pointer<decltype(std::declval<Container>().data())>::type(*)[], ElementType(*)[] >::value
-    >::type
+template< class Container, class ElementType
+    gsl_REQUIRES_T((
+        ! detail::is_span< Container >::value
+        && ! detail::is_array< Container >::value
+        && ! detail::is_std_array< Container >::value
+        && std::is_convertible<typename std::remove_pointer<decltype(std::declval<Container>().data())>::type(*)[], ElementType(*)[] >::value
+    ))
 #if gsl_HAVE( STD_DATA )
       // data(cont) and size(cont) well-formed:
     , class = decltype( std::data( std::declval<Container>() ) )
     , class = decltype( std::size( std::declval<Container>() ) )
 #endif
 >
-struct can_construct_span_from : details::true_type{};
+struct can_construct_span_from : std11::true_type{};
 
-} // namespace details
+} // namespace detail
+
 #endif
 
 //
 // span<> - A 1D view of contiguous T's, replace (*,len).
 //
 template< class T >
-class   span
+class span
 {
     template< class U > friend class span;
 
@@ -1380,7 +1472,7 @@ public:
     typedef index index_type;
 
     typedef T element_type;
-    typedef typename details::remove_cv< T >::type value_type;
+    typedef typename std11::remove_cv< T >::type value_type;
 
     typedef T & reference;
     typedef T * pointer;
@@ -1407,7 +1499,7 @@ public:
 #if ! gsl_DEPRECATE_TO_LEVEL( 5 )
 
 #if gsl_HAVE( NULLPTR )
-    gsl_api gsl_constexpr14 span( std::nullptr_t, index_type size_in )
+    gsl_api gsl_constexpr14 span( std::nullptr_t, index_type gsl_EXPECTS_UNUSED_PARAM( size_in ) )
         : first_( nullptr )
         , last_ ( nullptr )
     {
@@ -1468,9 +1560,7 @@ public:
 #else
     template< size_t N
 # if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class = typename std::enable_if<
-            std::is_convertible<value_type(*)[], element_type(*)[] >::value
-        >::type
+        gsl_REQUIRES_T(( std::is_convertible<value_type(*)[], element_type(*)[] >::value ))
 # endif
     >
     gsl_api gsl_constexpr span( element_type (&arr)[N] ) gsl_noexcept
@@ -1498,9 +1588,7 @@ public:
 
     template< size_t N
 # if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class = typename std::enable_if<
-            std::is_convertible<value_type(*)[], element_type(*)[] >::value
-        >::type
+        gsl_REQUIRES_T(( std::is_convertible<value_type(*)[], element_type(*)[] >::value ))
 # endif
     >
     gsl_api gsl_constexpr span( std::array< value_type, N > & arr )
@@ -1510,9 +1598,7 @@ public:
 
     template< size_t N
 # if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class = typename std::enable_if<
-            std::is_convertible<value_type(*)[], element_type(*)[] >::value
-        >::type
+        gsl_REQUIRES_T(( std::is_convertible<value_type(*)[], element_type(*)[] >::value ))
 # endif
     >
     gsl_api gsl_constexpr span( std::array< value_type, N > const & arr )
@@ -1525,9 +1611,7 @@ public:
 
 #if gsl_HAVE( CONSTRAINED_SPAN_CONTAINER_CTOR )
     template< class Container
-        , class = typename std::enable_if<
-            details::can_construct_span_from< Container, element_type >::value
-        >::type
+        gsl_REQUIRES_T(( detail::can_construct_span_from< Container, element_type >::value ))
     >
     gsl_api gsl_constexpr span( Container & cont )
         : first_( cont.data() )
@@ -1535,10 +1619,10 @@ public:
     {}
 
     template< class Container
-        , class = typename std::enable_if<
-            std::is_const< element_type >::value &&
-            details::can_construct_span_from< Container, element_type >::value
-        >::type
+        gsl_REQUIRES_T(( 
+            std::is_const< element_type >::value 
+            && detail::can_construct_span_from< Container, element_type >::value
+        ))
     >
     gsl_api gsl_constexpr span( Container const & cont )
         : first_( cont.data() )
@@ -1583,7 +1667,7 @@ public:
 #if gsl_HAVE( SHARED_PTR )
     gsl_api gsl_constexpr span( shared_ptr<element_type> const & ptr )
         : first_( ptr.get() )
-        , last_ ( ptr.get() ? ptr.get() + 1 : 0 )
+        , last_ ( ptr.get() ? ptr.get() + 1 : gsl_nullptr )
     {}
 #endif
 
@@ -1602,7 +1686,7 @@ public:
 
     gsl_api gsl_constexpr span( unique_ptr<element_type> const & ptr )
         : first_( ptr.get() )
-        , last_ ( ptr.get() ? ptr.get() + 1 : 0 )
+        , last_ ( ptr.get() ? ptr.get() + 1 : gsl_nullptr )
     {}
 #endif
 
@@ -1637,9 +1721,7 @@ public:
 
     template< class U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class = typename std::enable_if<
-            std::is_convertible<U(*)[], element_type(*)[]>::value
-        >::type
+        gsl_REQUIRES_T(( std::is_convertible<U(*)[], element_type(*)[]>::value ))
 #endif
     >
     gsl_api gsl_constexpr span( span<U> const & other )
@@ -1676,7 +1758,7 @@ public:
     {
         Expects(
             0 <= offset && offset <= this->size() &&
-            0 <= count  && count + offset <= this->size() );
+            0 <= count  && count <= this->size() - offset );
         return span( this->data() + offset, count );
     }
 
@@ -1685,6 +1767,11 @@ public:
     gsl_api gsl_constexpr index_type size() const gsl_noexcept
     {
         return narrow_cast<index_type>( last_ - first_ );
+    }
+
+    gsl_api gsl_constexpr std::ptrdiff_t ssize() const gsl_noexcept
+    {
+        return narrow_cast<std::ptrdiff_t>( last_ - first_ );
     }
 
     gsl_api gsl_constexpr index_type size_bytes() const gsl_noexcept
@@ -1900,7 +1987,19 @@ gsl_api inline gsl_constexpr bool operator>=( span<T> const & l, span<U> const &
 
 // span algorithms
 
-namespace details {
+template< class T >
+gsl_api inline gsl_constexpr std::size_t size( span<T> const & spn )
+{
+    return static_cast<std::size_t>( spn.size() );
+}
+
+template< class T >
+gsl_api inline gsl_constexpr std::ptrdiff_t ssize( span<T> const & spn )
+{
+    return spn.ssize();
+}
+
+namespace detail {
 
 template< class II, class N, class OI >
 gsl_api inline OI copy_n( II first, N count, OI result )
@@ -1924,7 +2023,7 @@ gsl_api inline void copy( span<T> src, span<U> dest )
     static_assert( std::is_assignable<U &, T const &>::value, "Cannot assign elements of source span to elements of destination span" );
 #endif
     Expects( dest.size() >= src.size() );
-    details::copy_n( src.data(), src.size(), dest.data() );
+    detail::copy_n( src.data(), src.size(), dest.data() );
 }
 
 // span creator functions (see ctors)
@@ -2073,16 +2172,16 @@ byte_span( T const & t ) gsl_noexcept
 template< class T >
 class basic_string_span;
 
-namespace details {
+namespace detail {
 
 template< class T >
-struct is_basic_string_span_oracle : false_type {};
+struct is_basic_string_span_oracle : std11::false_type {};
 
 template< class T >
-struct is_basic_string_span_oracle< basic_string_span<T> > : true_type {};
+struct is_basic_string_span_oracle< basic_string_span<T> > : std11::true_type {};
 
 template< class T >
-struct is_basic_string_span : is_basic_string_span_oracle< typename remove_cv<T>::type > {};
+struct is_basic_string_span : is_basic_string_span_oracle< typename std11::remove_cv<T>::type > {};
 
 template< class T >
 gsl_api inline gsl_constexpr14 std::size_t string_length( T * ptr, std::size_t max )
@@ -2097,7 +2196,7 @@ gsl_api inline gsl_constexpr14 std::size_t string_length( T * ptr, std::size_t m
     return len;
 }
 
-} // namespace details
+} // namespace detail
 
 //
 // basic_string_span<> - A view of contiguous characters, replace (*,len).
@@ -2135,7 +2234,7 @@ public:
 #endif
 
     gsl_api gsl_constexpr basic_string_span( pointer ptr )
-    : span_( remove_z( ptr, std::numeric_limits<index_type>::max() ) )
+    : span_( remove_z( ptr, (std::numeric_limits<index_type>::max)() ) )
     {}
 
     gsl_api gsl_constexpr basic_string_span( pointer ptr, index_type count )
@@ -2154,12 +2253,12 @@ public:
 #if gsl_HAVE( ARRAY )
 
     template< std::size_t N >
-    gsl_api gsl_constexpr basic_string_span( std::array< typename details::remove_const<element_type>::type, N> & arr )
+    gsl_api gsl_constexpr basic_string_span( std::array< typename std11::remove_const<element_type>::type, N> & arr )
     : span_( remove_z( arr ) )
     {}
 
     template< std::size_t N >
-    gsl_api gsl_constexpr basic_string_span( std::array< typename details::remove_const<element_type>::type, N> const & arr )
+    gsl_api gsl_constexpr basic_string_span( std::array< typename std11::remove_const<element_type>::type, N> const & arr )
     : span_( remove_z( arr ) )
     {}
 
@@ -2169,14 +2268,13 @@ public:
 
     // Exclude: array, [basic_string,] basic_string_span
 
-    template<
-        class Container,
-        class = typename std::enable_if<
-            ! details::is_std_array< Container >::value
-            && ! details::is_basic_string_span< Container >::value
+    template< class Container
+        gsl_REQUIRES_T((
+            ! detail::is_std_array< Container >::value
+            && ! detail::is_basic_string_span< Container >::value
             && std::is_convertible< typename Container::pointer, pointer >::value
             && std::is_convertible< typename Container::pointer, decltype(std::declval<Container>().data()) >::value
-        >::type
+        ))
     >
     gsl_api gsl_constexpr basic_string_span( Container & cont )
     : span_( ( cont ) )
@@ -2184,14 +2282,13 @@ public:
 
     // Exclude: array, [basic_string,] basic_string_span
 
-    template<
-        class Container,
-        class = typename std::enable_if<
-            ! details::is_std_array< Container >::value
-            && ! details::is_basic_string_span< Container >::value
+    template< class Container
+        gsl_REQUIRES_T((
+            ! detail::is_std_array< Container >::value
+            && ! detail::is_basic_string_span< Container >::value
             && std::is_convertible< typename Container::pointer, pointer >::value
             && std::is_convertible< typename Container::pointer, decltype(std::declval<Container const &>().data()) >::value
-        >::type
+        ))
     >
     gsl_api gsl_constexpr basic_string_span( Container const & cont )
     : span_( ( cont ) )
@@ -2240,7 +2337,7 @@ public:
 
     template< class U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
-        , class = typename std::enable_if< std::is_convertible<typename basic_string_span<U>::pointer, pointer>::value >::type
+        gsl_REQUIRES_T(( std::is_convertible<typename basic_string_span<U>::pointer, pointer>::value ))
 #endif
     >
     gsl_api gsl_constexpr basic_string_span( basic_string_span<U> const & rhs )
@@ -2249,7 +2346,7 @@ public:
 
 #if gsl_CPP11_OR_GREATER || gsl_COMPILER_MSVC_VERSION >= 120
     template< class U
-        , class = typename std::enable_if< std::is_convertible<typename basic_string_span<U>::pointer, pointer>::value >::type
+        gsl_REQUIRES_T(( std::is_convertible<typename basic_string_span<U>::pointer, pointer>::value ))
     >
     gsl_api gsl_constexpr basic_string_span( basic_string_span<U> && rhs )
     : span_( reinterpret_cast<pointer>( rhs.data() ), rhs.length() ) // NOLINT
@@ -2258,13 +2355,13 @@ public:
 
     template< class CharTraits, class Allocator >
     gsl_api gsl_constexpr basic_string_span(
-        std::basic_string< typename details::remove_const<element_type>::type, CharTraits, Allocator > & str )
+        std::basic_string< typename std11::remove_const<element_type>::type, CharTraits, Allocator > & str )
     : span_( gsl_ADDRESSOF( str[0] ), str.length() )
     {}
 
     template< class CharTraits, class Allocator >
     gsl_api gsl_constexpr basic_string_span(
-        std::basic_string< typename details::remove_const<element_type>::type, CharTraits, Allocator > const & str )
+        std::basic_string< typename std11::remove_const<element_type>::type, CharTraits, Allocator > const & str )
     : span_( gsl_ADDRESSOF( str[0] ), str.length() )
     {}
 
@@ -2387,18 +2484,18 @@ public:
 private:
     gsl_api static gsl_constexpr14 span_type remove_z( pointer const & sz, std::size_t max )
     {
-        return span_type( sz, details::string_length( sz, max ) );
+        return span_type( sz, detail::string_length( sz, max ) );
     }
 
 #if gsl_HAVE( ARRAY )
     template< size_t N >
-    gsl_api static gsl_constexpr14 span_type remove_z( std::array<typename details::remove_const<element_type>::type, N> & arr )
+    gsl_api static gsl_constexpr14 span_type remove_z( std::array<typename std11::remove_const<element_type>::type, N> & arr )
     {
         return remove_z( gsl_ADDRESSOF( arr[0] ), narrow_cast< std::size_t >( N ) );
     }
 
     template< size_t N >
-    gsl_api static gsl_constexpr14 span_type remove_z( std::array<typename details::remove_const<element_type>::type, N> const & arr )
+    gsl_api static gsl_constexpr14 span_type remove_z( std::array<typename std11::remove_const<element_type>::type, N> const & arr )
     {
         return remove_z( gsl_ADDRESSOF( arr[0] ), narrow_cast< std::size_t >( N ) );
     }
@@ -2415,7 +2512,7 @@ private:
 template< class T, class U >
 gsl_api inline gsl_constexpr14 bool operator==( basic_string_span<T> const & l, U const & u ) gsl_noexcept
 {
-    const basic_string_span< typename details::add_const<T>::type > r( u );
+    const basic_string_span< typename std11::add_const<T>::type > r( u );
 
     return l.size() == r.size()
         && std::equal( l.begin(), l.end(), r.begin() );
@@ -2424,28 +2521,30 @@ gsl_api inline gsl_constexpr14 bool operator==( basic_string_span<T> const & l, 
 template< class T, class U >
 gsl_api inline gsl_constexpr14 bool operator<( basic_string_span<T> const & l, U const & u ) gsl_noexcept
 {
-    const basic_string_span< typename details::add_const<T>::type > r( u );
+    const basic_string_span< typename std11::add_const<T>::type > r( u );
 
     return std::lexicographical_compare( l.begin(), l.end(), r.begin(), r.end() );
 }
 
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value )) 
+>
 gsl_api inline gsl_constexpr14 bool operator==( U const & u, basic_string_span<T> const & r ) gsl_noexcept
 {
-    const basic_string_span< typename details::add_const<T>::type > l( u );
+    const basic_string_span< typename std11::add_const<T>::type > l( u );
 
     return l.size() == r.size()
         && std::equal( l.begin(), l.end(), r.begin() );
 }
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value ))
+>
 gsl_api inline gsl_constexpr14 bool operator<( U const & u, basic_string_span<T> const & r ) gsl_noexcept
 {
-    const basic_string_span< typename details::add_const<T>::type > l( u );
+    const basic_string_span< typename std11::add_const<T>::type > l( u );
 
     return std::lexicographical_compare( l.begin(), l.end(), r.begin(), r.end() );
 }
@@ -2480,7 +2579,7 @@ gsl_api inline gsl_constexpr14 bool operator<=( basic_string_span<T> const & l, 
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG ) || ! gsl_CONFIG( ALLOWS_NONSTRICT_SPAN_COMPARISON )
     return !( r < l );
 #else
-    basic_string_span< typename details::add_const<T>::type > rr( r );
+    basic_string_span< typename std11::add_const<T>::type > rr( r );
     return !( rr < l );
 #endif
 }
@@ -2491,7 +2590,7 @@ gsl_api inline gsl_constexpr14 bool operator>( basic_string_span<T> const & l, U
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG ) || ! gsl_CONFIG( ALLOWS_NONSTRICT_SPAN_COMPARISON )
     return ( r < l );
 #else
-    basic_string_span< typename details::add_const<T>::type > rr( r );
+    basic_string_span< typename std11::add_const<T>::type > rr( r );
     return ( rr < l );
 #endif
 }
@@ -2504,29 +2603,33 @@ gsl_api inline gsl_constexpr14 bool operator>=( basic_string_span<T> const & l, 
 
 #if gsl_HAVE( DEFAULT_FUNCTION_TEMPLATE_ARG )
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value ))
+>
 gsl_api inline gsl_constexpr14 bool operator!=( U const & l, basic_string_span<T> const & r ) gsl_noexcept
 {
     return !( l == r );
 }
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value ))
+>
 gsl_api inline gsl_constexpr14 bool operator<=( U const & l, basic_string_span<T> const & r ) gsl_noexcept
 {
     return !( r < l );
 }
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value ))
+>
 gsl_api inline gsl_constexpr14 bool operator>( U const & l, basic_string_span<T> const & r ) gsl_noexcept
 {
     return ( r < l );
 }
 
-template< class T, class U,
-    class = typename std::enable_if<!details::is_basic_string_span<U>::value >::type >
+template< class T, class U
+    gsl_REQUIRES_T(( !detail::is_basic_string_span<U>::value ))
+>
 gsl_api inline gsl_constexpr14 bool operator>=( U const & l, basic_string_span<T> const & r ) gsl_noexcept
 {
     return !( l < r );
@@ -2603,7 +2706,7 @@ gsl_api inline std::wstring to_string( cwstring_span const & spn )
 // Stream output for string_span types
 //
 
-namespace details {
+namespace detail {
 
 template< class Stream >
 gsl_api void write_padding( Stream & os, std::streamsize n )
@@ -2641,18 +2744,18 @@ gsl_api Stream & write_to_stream( Stream & os, Span const & spn )
     return os;
 }
 
-} // namespace details
+} // namespace detail
 
 template< typename Traits >
 gsl_api std::basic_ostream< char, Traits > & operator<<( std::basic_ostream< char, Traits > & os, string_span const & spn )
 {
-    return details::write_to_stream( os, spn );
+    return detail::write_to_stream( os, spn );
 }
 
 template< typename Traits >
 gsl_api std::basic_ostream< char, Traits > & operator<<( std::basic_ostream< char, Traits > & os, cstring_span const & spn )
 {
-    return details::write_to_stream( os, spn );
+    return detail::write_to_stream( os, spn );
 }
 
 #if gsl_HAVE( WCHAR )
@@ -2660,13 +2763,13 @@ gsl_api std::basic_ostream< char, Traits > & operator<<( std::basic_ostream< cha
 template< typename Traits >
 gsl_api std::basic_ostream< wchar_t, Traits > & operator<<( std::basic_ostream< wchar_t, Traits > & os, wstring_span const & spn )
 {
-    return details::write_to_stream( os, spn );
+    return detail::write_to_stream( os, spn );
 }
 
 template< typename Traits >
 gsl_api std::basic_ostream< wchar_t, Traits > & operator<<( std::basic_ostream< wchar_t, Traits > & os, cwstring_span const & spn )
 {
-    return details::write_to_stream( os, spn );
+    return detail::write_to_stream( os, spn );
 }
 
 #endif // gsl_HAVE( WCHAR )
@@ -2679,10 +2782,10 @@ gsl_api std::basic_ostream< wchar_t, Traits > & operator<<( std::basic_ostream< 
 //
 // Will fail-fast if sentinel cannot be found before max elements are examined.
 //
-namespace details {
+namespace detail {
 
 template< class T, class SizeType, const T Sentinel >
-gsl_api static span<T> ensure_sentinel( T * seq, SizeType max = std::numeric_limits<SizeType>::max() )
+gsl_api static span<T> ensure_sentinel( T * seq, SizeType max = (std::numeric_limits<SizeType>::max)() )
 {
     typedef T * pointer;
 
@@ -2697,7 +2800,7 @@ gsl_api static span<T> ensure_sentinel( T * seq, SizeType max = std::numeric_lim
 
     return span<T>( seq, narrow_cast< typename span<T>::index_type >( cur - seq ) );
 }
-} // namespace details
+} // namespace detail
 
 //
 // ensure_z - creates a string_span for a czstring or cwzstring.
@@ -2706,9 +2809,9 @@ gsl_api static span<T> ensure_sentinel( T * seq, SizeType max = std::numeric_lim
 //
 
 template< class T >
-gsl_api inline span<T> ensure_z( T * const & sz, size_t max = std::numeric_limits<size_t>::max() )
+gsl_api inline span<T> ensure_z( T * const & sz, size_t max = (std::numeric_limits<size_t>::max)() )
 {
-    return details::ensure_sentinel<T, size_t, 0>( sz, max );
+    return detail::ensure_sentinel<T, size_t, 0>( sz, max );
 }
 
 template< class T, size_t N >
