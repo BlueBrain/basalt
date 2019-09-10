@@ -216,7 +216,9 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
              "path"_a,
              "config"_a,
              docstring::graph_init_with_config)
-        .def_property_readonly("vertices", &basalt::UndirectedGraph::vertices, docstring::graph_vertices)
+        .def_property_readonly("vertices",
+                               &basalt::UndirectedGraph::vertices,
+                               docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::UndirectedGraph::edges, docstring::graph_edges)
         .def("commit",
              [](basalt::UndirectedGraph& graph) { graph.commit().raise_on_error(); },
