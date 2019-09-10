@@ -1,3 +1,5 @@
+![basalt logo](https://github.com/BlueBrain/basalt/raw/master/doc/source/_static/basalt-logo.png)
+
 # Basalt - Graph Storage API for C++ and Python
 
 Basalt is a graph storage API powered by RocksDB persistent

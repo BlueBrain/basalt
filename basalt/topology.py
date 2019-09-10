@@ -209,7 +209,9 @@ def vertex(name, type, serialization=None, plural=None, default_payload=True):
 
 
 class EdgeType(
-    collections.namedtuple("Edge", ["tail", "serialization", "default_payload", "name", "plural"])
+    collections.namedtuple(
+        "Edge", ["tail", "serialization", "default_payload", "name", "plural"]
+    )
 ):
     def reverse(self, head):
         return EdgeType(
@@ -236,9 +238,16 @@ def edge(head, tail, name=None, plural=None, serialization=None, default_payload
     if plural is None:
         if name is not None:
             plural = name + 's'
+
     def _register(topology):
         topology.edges_types.setdefault(head, set()).add(
-            EdgeType(tail=tail, serialization=serialization, default_payload=default_payload, name=name, plural=plural)
+            EdgeType(
+                tail=tail,
+                serialization=serialization,
+                default_payload=default_payload,
+                name=name,
+                plural=plural,
+            )
         )
 
     return _register
@@ -365,8 +374,8 @@ class VertexInfo(
 class Graph(with_metaclass(DirectiveMeta)):
     @classmethod
     def _generate_methods(cls):
-        """Shape the GraphTopology child class according to the :func:`vertex` and :func:`edge`
-        directives.
+        """Shape the GraphTopology child class according to the
+        :func:`vertex` and :func:`edge` directives.
         """
         cls._data_serializers = cls._create_data_serializers()
         # add opposite edge if graph is undirected
@@ -437,7 +446,9 @@ class Graph(with_metaclass(DirectiveMeta)):
             eax[type] = serialization_method(method, default_payload)
         for lhs, conns in cls.edges_types.items():
             for conn in conns:
-                eax[(lhs, conn.tail)] = serialization_method(conn.serialization, conn.default_payload)
+                eax[(lhs, conn.tail)] = serialization_method(
+                    conn.serialization, conn.default_payload
+                )
         return eax
 
     @classmethod
@@ -660,7 +671,11 @@ class Graph(with_metaclass(DirectiveMeta)):
             self.g = graph
         else:
             assert path is not None
-            graph_cls = DirectedGraph if self.settings.get("directed", False) else UndirectedGraph
+            graph_cls = (
+                DirectedGraph
+                if self.settings.get("directed", False)
+                else UndirectedGraph
+            )
             self.g = graph_cls(path, **kwargs)
 
     @property
