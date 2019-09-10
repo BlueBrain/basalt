@@ -62,12 +62,7 @@ class PLInfluence(Graph):
         license_ids = OrderedDict()
         language_ids = OrderedDict()
         links = {}
-        vip_pl = {
-            "Java": "JAVA",
-             "C": "C",
-            "C++": "CPP",
-            "Haskell": "HASKELL",
-        }
+        vip_pl = {"Java": "JAVA", "C": "C", "C++": "CPP", "Haskell": "HASKELL"}
 
         # load language -> developer data
         # dbpedia SPARQL query (http://dbpedia.org/sparql):
@@ -77,9 +72,7 @@ class PLInfluence(Graph):
         with open(file_fmt.format("developer")) as istr:
             data = json.load(istr)['results']['bindings']
         for entry in data:
-            developer = (
-                entry['developer']['value'].rsplit('/', 1)[-1].replace('_', ' ')
-            )
+            developer = entry['developer']['value'].rsplit('/', 1)[-1].replace('_', ' ')
             developer_id = developers_ids.setdefault(developer, len(developers_ids))
             del developer
             language = entry['p']['value'].rsplit('/', 1)[-1]
@@ -177,7 +170,9 @@ class TestPLGraph(unittest.TestCase):
         self.assertEqual(c.id, g.C)
         self.assertEqual(c.data, "C")
         authors = [dev.data for dev in c.authors]
-        self.assertCountEqual(authors, ['ANSI C', 'Cornell University', 'Dennis Ritchie', 'ISO standard'])
+        self.assertCountEqual(
+            authors, ['ANSI C', 'Cornell University', 'Dennis Ritchie', 'ISO standard']
+        )
         self.assertEqual(len(list(c.influenced)), 24)
 
         # languages directly inspired from Java
