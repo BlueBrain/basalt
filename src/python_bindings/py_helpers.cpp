@@ -4,7 +4,7 @@
  * This file is part of Basalt distributed under the terms of the GNU
  * Lesser General Public License. See top-level LICENSE file for details.
  *************************************************************************/
-#include <gsl-lite/gsl-lite.hpp>
+#include <gsl>
 
 #include "py_helpers.hpp"
 

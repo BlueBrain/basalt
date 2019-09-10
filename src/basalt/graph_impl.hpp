@@ -6,7 +6,7 @@
  *************************************************************************/
 #pragma once
 
-#include <gsl-lite/gsl-lite.hpp>
+#include <gsl>
 
 #include <basalt/edges.hpp>
 #include <basalt/graph.hpp>
