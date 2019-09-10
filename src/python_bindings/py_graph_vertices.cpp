@@ -45,6 +45,7 @@ static const char* vertices_class = R"(
     >>> graph.vertices.discard((0, 1))
     >>> (0, 1) in graph.vertices
     False
+
 )";
 
 static const char* discard = R"(
@@ -70,6 +71,7 @@ static const char* count_type = R"(
 
     Returns:
         Number of vertices of the given type
+
 )";
 
 static const char* add = R"(
@@ -78,6 +80,7 @@ static const char* add = R"(
     Args:
         vertex(tuple): vertex unique identifier.
         commit(bool): whether uncommitted operations should be flushed or not.
+
 )";
 
 static const char* add_payload = R"(
@@ -87,6 +90,7 @@ static const char* add_payload = R"(
         vertex(tuple): vertex unique identifier.
         data(numpy.array(dtype=numpy.byte)): payload attached to the vertex.
         commit(bool): whether uncommitted operations should be flushed or not.
+
 )";
 
 static const char* add_bulk = R"(

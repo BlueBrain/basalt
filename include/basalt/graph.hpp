@@ -43,6 +43,9 @@ class Graph {
      */
     Graph(const std::string& path, const std::string& config);
 
+    /**
+     * \brief graph instance destructor
+     */
     ~Graph();
 
     /**
@@ -58,10 +61,6 @@ class Graph {
      * \brief vertices accessor
      */
     Vertices<Orientation>& vertices();
-
-    /**
-     * \}
-     * */
 
     /**
      * \brief Process uncommitted operations
