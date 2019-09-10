@@ -374,8 +374,8 @@ class VertexInfo(
 class Graph(with_metaclass(DirectiveMeta)):
     @classmethod
     def _generate_methods(cls):
-        """Shape the GraphTopology child class according to the :func:`vertex` and :func:`edge`
-        directives.
+        """Shape the GraphTopology child class according to the
+        :func:`vertex` and :func:`edge` directives.
         """
         cls._data_serializers = cls._create_data_serializers()
         # add opposite edge if graph is undirected
