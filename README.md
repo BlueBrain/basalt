@@ -28,7 +28,10 @@ class PLInfluences(basalt.GraphTopology):
     class Vertex(Enum):
         LANGUAGE = 1
 
+    # Declare a vertex type
     vertex("language", Vertex.LANGUAGE)
+    # Declare a directed edge between 2 programming languages
+    # to represent how they relate.
     edge(Vertex.LANGUAGE, Vertex.LANGUAGE, name="influenced", plural="influenced")
 
     @classmethod
@@ -36,38 +39,56 @@ class PLInfluences(basalt.GraphTopology):
         # [...]
 
 g = PLInfluences.load_from_dbpedia("/path/on/disk")
+# Iterate over all vertices of type "languages"
 for language in g.languages:
   print(language.id, language.data())
+  # Iterate over all vertices connected to vertex `language`
+  # through the `influenced` edge type.
   for influenced in language.influenced:
     print("  ", influenced.data())
 ```
 
-### Python bindings
+### Low-level Python bindings
 
 ```python
+# Load or initialize a graph on disk
 g = basalt.UndirectedGraph("/path/on/disk")
-g.vertices.add((0, 1)) # vertex type=0 id=1
+# Add one vertex of type 0 and identifier 1
+g.vertices.add((0, 1))
+# Insert 10 vertices at once
+# (10, 0), (10, 1), ... (10, 10)
 g.vertices.add(numpy.full((10,), 1, dtype=numpy.int32), # types
                numpy.arange(10, dtype=numpy.int64)) # ids
+# Connect 2 vertices
 g.edges.add((0, 1), (1, 0))
+# Connect vertex (0, 1) to several vertices at once
+# (0,1)->(1,0), (0,1)->(1,1), ... (0,1)->(1,9)
 g.edges.add((0, 1),
-            numpy.full(9,), 1, dtype=numpy.int32),
+            numpy.full((9,), 1, dtype=numpy.int32),
             numpy.arange(9, dtype=numpy.int64)
+# Commit changes on disk
 g.commit()
 ```
 
-## C++
+## C++ API
 
 ```cpp
+// Load or initialize a graph on disk
 basalt::UndirectedGraph g("/path/on/disk");
+// Add one vertex of type 0 and identifier 1
 g.vertices().insert({0, 1});
+// Add one vertex of type 0 and identifier 2
 g.vertices().insert({0, 2});
+// Iterate over vertices
 for (const auto& vertex: g.vertices()) {
   std::clog << vertex << '\n';
 }
+// Connect both vertices
+g.edges().insert({0, 1}, {0, 2}));
 for (const auto& edge: g.edges()) {
   std::clog << edge.first << " -> " << edge.second << '\n';
 }
+// Commit changes on disk
 g.commit();
 ```
 
