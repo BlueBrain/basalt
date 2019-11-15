@@ -12,5 +12,5 @@ temp_dir=`mktemp -d`
 cp "$1" "$temp_dir"
 
 docker build -f "$DIR/${SCRIPT}.Dockerfile" -t "$SCRIPT":3.7 $DIR
-docker run --rm -v "$temp_dir:/src" "$SCRIPT:3.7" bash -c "pip3 install /src/${1##*/} ; basalt-cli --version"
+docker run --rm -v "$temp_dir:/src" "$SCRIPT:3.7" bash -c "pip3 install /src/${1##*/} ; python -c 'import basalt ; print(basalt.__version__)'"
 rm -rf "$temp_dir"
