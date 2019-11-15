@@ -5,6 +5,7 @@
 Basalt is a graph storage API powered by RocksDB persistent
 key-value store for fast storage like NVMe technologies.
 
+[![DOI](https://zenodo.org/badge/158816247.svg)](https://zenodo.org/badge/latestdoi/158816247)
 [![Build Status](https://api.travis-ci.com/BlueBrain/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&branch=master)](https://travis-ci.org/BlueBrain/basalt)
 
 Documentation is currently hosted on GitHub: [https://bluebrain.github.io/basalt]

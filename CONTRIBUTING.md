@@ -171,12 +171,13 @@ cmake .. -DENABLE_CLANG_TIDY=ON
 # Release
 
 1. Build and test from scratch: `tox -r`
-2. Run benchmarks in `tests/benchmarks` and ensure there is no regression.
-3. Create a git tag.
-4. Create source distribution: `python setup.py sdist`
-5. Test installation with pip within a Docker container:
+1. Run benchmarks in `tests/benchmarks` and ensure there is no regression.
+1. Create a git tag.
+1. Create source distribution: `python setup.py sdist`
+1. Test installation with pip within a Docker container:
    `dev/check-source-distribution dist/basalt-VERSION.tar.gz`
-6. Build documentation and update the *gh-pages* accordingly.
-7. Upload source distribution on pypi:
+1. Build documentation and update the *gh-pages* accordingly.
+1. Upload source distribution on pypi:
    `twine upload -s basalt-VERSION.tar.gz`
-8. Create release on GitHub project.
+1. Upload the tag: `git push --tags`
+1. Create release on GitHub project.
