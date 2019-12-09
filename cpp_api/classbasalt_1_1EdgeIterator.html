@@ -1,0 +1,343 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class EdgeIterator &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Template Class Edges" href="classbasalt_1_1Edges.html" />
+    <link rel="prev" title="Struct Status" href="structbasalt_1_1Status.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API</a> &raquo;</li>
+        
+      <li>Class EdgeIterator</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp_api/classbasalt_1_1EdgeIterator.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-edgeiterator">
+<span id="exhale-class-classbasalt-1-1edgeiterator"></span><h1>Class EdgeIterator<a class="headerlink" href="#class-edgeiterator" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-edge-iterator-hpp"><span class="std std-ref">File edge_iterator.hpp</span></a></p></li>
+</ul>
+<div class="section" id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="base-type">
+<h3>Base Type<a class="headerlink" href="#base-type" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">std::iterator&lt;</span> <span class="pre">std::input_iterator_tag,</span> <span class="pre">const</span> <span class="pre">edge_uid_t</span> <span class="pre">&gt;</span></code></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N6basalt12EdgeIteratorE">
+<span id="_CPPv3N6basalt12EdgeIteratorE"></span><span id="_CPPv2N6basalt12EdgeIteratorE"></span><span id="basalt::EdgeIterator"></span><span class="target" id="classbasalt_1_1EdgeIterator"></span><em class="property">class </em><code class="descname">EdgeIterator</code> : <em class="property">public</em> std::iterator&lt;std::input_iterator_tag, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#_CPPv4N6basalt10edge_uid_tE" title="basalt::edge_uid_t">edge_uid_t</a>&gt;<a class="headerlink" href="#_CPPv4N6basalt12EdgeIteratorE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Iterator class for edges. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Unnamed Group</p>
+<dl class="function">
+<dt id="_CPPv4I_15EdgeOrientationEN6basalt12EdgeIterator12EdgeIteratorERK9GraphImplI11OrientationE6size_t">
+<span id="_CPPv3I_15EdgeOrientationEN6basalt12EdgeIterator12EdgeIteratorERK9GraphImplI11OrientationE6size_t"></span><span id="_CPPv2I_15EdgeOrientationEN6basalt12EdgeIterator12EdgeIteratorERK9GraphImplI11OrientationE6size_t"></span><span class="target" id="classbasalt_1_1EdgeIterator_1a744bcee0509aef12e1a624d1b7e7f712"></span>template&lt;<a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#_CPPv4N6basalt15EdgeOrientationE" title="basalt::EdgeOrientation">EdgeOrientation</a> <code class="descname">Orientation</code>&gt;<br /><code class="descname">EdgeIterator</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="classbasalt_1_1GraphImpl.html#_CPPv4I_15EdgeOrientationEN6basalt9GraphImplE" title="basalt::GraphImpl">GraphImpl</a>&lt;<a class="reference internal" href="#_CPPv4I_15EdgeOrientationEN6basalt12EdgeIterator12EdgeIteratorERK9GraphImplI11OrientationE6size_t" title="basalt::EdgeIterator::EdgeIterator::Orientation">Orientation</a>&gt; &amp;<em>pimpl</em>, size_t <em>from</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I_15EdgeOrientationEN6basalt12EdgeIterator12EdgeIteratorERK9GraphImplI11OrientationE6size_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Ctors and dtors. </p>
+<p>Create an iterator over edges <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">from</span></code>: Move iterator a specified index </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt12EdgeIterator12EdgeIteratorERK12EdgeIterator">
+<span id="_CPPv3N6basalt12EdgeIterator12EdgeIteratorERK12EdgeIterator"></span><span id="_CPPv2N6basalt12EdgeIterator12EdgeIteratorERK12EdgeIterator"></span><span id="basalt::EdgeIterator::EdgeIterator__EdgeIteratorCR"></span><span class="target" id="classbasalt_1_1EdgeIterator_1a0149d44b43a20682d20c43507497ba2f"></span><code class="descname">EdgeIterator</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt12EdgeIterator12EdgeIteratorERK12EdgeIterator" title="basalt::EdgeIterator::EdgeIterator">EdgeIterator</a> &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt12EdgeIterator12EdgeIteratorERK12EdgeIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy constructor <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">other</span></code>: Other iterator </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv4N6basalt12EdgeIterator20EdgeIteratorImpl_ptrE">
+<span id="_CPPv3N6basalt12EdgeIterator20EdgeIteratorImpl_ptrE"></span><span id="_CPPv2N6basalt12EdgeIterator20EdgeIteratorImpl_ptrE"></span><span class="target" id="classbasalt_1_1EdgeIterator_1acf82b5969be148dba1841b6069d82ae9"></span><em class="property">using </em><code class="descname">EdgeIteratorImpl_ptr</code> = std::shared_ptr&lt;EdgeIteratorImpl&gt;<a class="headerlink" href="#_CPPv4N6basalt12EdgeIterator20EdgeIteratorImpl_ptrE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt12EdgeIteratorppEv">
+<span id="_CPPv3N6basalt12EdgeIteratorppEv"></span><span id="_CPPv2N6basalt12EdgeIteratorppEv"></span><span id="basalt::EdgeIterator::inc-operator"></span><span class="target" id="classbasalt_1_1EdgeIterator_1a5253b9365c8b0a187a66baa2de0d3008"></span><a class="reference internal" href="#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> &amp;<code class="descname">operator++</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt12EdgeIteratorppEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Move iterator to next element. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>this instance </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt12EdgeIteratorppEi">
+<span id="_CPPv3N6basalt12EdgeIteratorppEi"></span><span id="_CPPv2N6basalt12EdgeIteratorppEi"></span><span id="basalt::EdgeIterator::inc-operator__i"></span><span class="target" id="classbasalt_1_1EdgeIterator_1aaf8fa69853fc5a0baf1457be9a7e88a5"></span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> <code class="descname">operator++</code><span class="sig-paren">(</span>int<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt12EdgeIteratorppEi" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Advance the iterator by specified element positions. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>copy of the iterator before the operation </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt12EdgeIteratoreqERK12EdgeIterator">
+<span id="_CPPv3NK6basalt12EdgeIteratoreqERK12EdgeIterator"></span><span id="_CPPv2NK6basalt12EdgeIteratoreqERK12EdgeIterator"></span><span id="basalt::EdgeIterator::eq-operator__EdgeIteratorCRC"></span><span class="target" id="classbasalt_1_1EdgeIterator_1ac5dd9ff6305bfd2c45a8d730ee448e26"></span>bool <code class="descname">operator==</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> &amp;<em>other</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt12EdgeIteratoreqERK12EdgeIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>compare 2 edge iterators </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt12EdgeIteratorneERK12EdgeIterator">
+<span id="_CPPv3NK6basalt12EdgeIteratorneERK12EdgeIterator"></span><span id="_CPPv2NK6basalt12EdgeIteratorneERK12EdgeIterator"></span><span id="basalt::EdgeIterator::neq-operator__EdgeIteratorCRC"></span><span class="target" id="classbasalt_1_1EdgeIterator_1a555ee8ec318271abeab97c8aa5bb3c18"></span>bool <code class="descname">operator!=</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> &amp;<em>other</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt12EdgeIteratorneERK12EdgeIterator" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>compare 2 edge iterators </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt12EdgeIteratormlEv">
+<span id="_CPPv3N6basalt12EdgeIteratormlEv"></span><span id="_CPPv2N6basalt12EdgeIteratormlEv"></span><span id="basalt::EdgeIterator::mul-operator"></span><span class="target" id="classbasalt_1_1EdgeIterator_1ac5d78b1734703ee0f928d29529ff4a87"></span><em class="property">const</em> value_type &amp;<code class="descname">operator*</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt12EdgeIteratormlEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Get edge at the current iterator position <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>constant reference to element </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classbasalt_1_1Edges.html" class="btn btn-neutral float-right" title="Template Class Edges" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="structbasalt_1_1Status.html" class="btn btn-neutral float-left" title="Struct Status" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

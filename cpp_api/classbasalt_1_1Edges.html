@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Class Edges &mdash; Basalt 0.2.3 documentation</title>
+  <title>Template Class Edges &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Class Graph" href="classbasalt_1_1Graph.html" />
-    <link rel="prev" title="Struct Status" href="structbasalt_1_1Status.html" /> 
+    <link rel="next" title="Template Class Graph" href="classbasalt_1_1Graph.html" />
+    <link rel="prev" title="Class EdgeIterator" href="classbasalt_1_1EdgeIterator.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,12 +87,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -100,7 +101,16 @@
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -153,7 +163,7 @@
         
           <li><a href="library_root.html">C++ API</a> &raquo;</li>
         
-      <li>Class Edges</li>
+      <li>Template Class Edges</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,27 +182,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="class-edges">
-<span id="exhale-class-classbasalt-1-1edges"></span><h1>Class Edges<a class="headerlink" href="#class-edges" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-class-edges">
+<span id="exhale-class-classbasalt-1-1edges"></span><h1>Template Class Edges<a class="headerlink" href="#template-class-edges" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Defined in <a class="reference internal" href="file_include_basalt_edges.hpp.html#file-include-basalt-edges-hpp"><span class="std std-ref">File edges.hpp</span></a></li>
+<li><p>Defined in <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-edges-hpp"><span class="std std-ref">File edges.hpp</span></a></p></li>
 </ul>
 <div class="section" id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="_CPPv4N6basalt5EdgesE">
-<span id="_CPPv3N6basalt5EdgesE"></span><span id="_CPPv2N6basalt5EdgesE"></span><span id="basalt::Edges"></span><span class="target" id="classbasalt_1_1Edges"></span><em class="property">class </em><code class="descname">Edges</code><a class="headerlink" href="#_CPPv4N6basalt5EdgesE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Manipulate the edges of a graph </p>
+<dt id="_CPPv4I_15EdgeOrientationEN6basalt5EdgesE">
+<span id="_CPPv3I_15EdgeOrientationEN6basalt5EdgesE"></span><span id="_CPPv2I_15EdgeOrientationEN6basalt5EdgesE"></span><span class="target" id="classbasalt_1_1Edges"></span>template&lt;<a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#_CPPv4N6basalt15EdgeOrientationE" title="basalt::EdgeOrientation">EdgeOrientation</a> <code class="descname">Orientation</code>&gt;<br /><em class="property">class </em><code class="descname">Edges</code><a class="headerlink" href="#_CPPv4I_15EdgeOrientationEN6basalt5EdgesE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Forward declarations. </p>
+<p>Manipulate the edges of a graph </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="function">
-<dt id="_CPPv4N6basalt5Edges5EdgesER9GraphImpl">
-<span id="_CPPv3N6basalt5Edges5EdgesER9GraphImpl"></span><span id="_CPPv2N6basalt5Edges5EdgesER9GraphImpl"></span><span id="basalt::Edges::Edges__GraphImplR"></span><span class="target" id="classbasalt_1_1Edges_1aa448480dcab0d1132c957859aeb6fc7a"></span><code class="descname">Edges</code><span class="sig-paren">(</span>GraphImpl &amp;<em>pimpl</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5EdgesER9GraphImpl" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4N6basalt5Edges5EdgesER9GraphImplI11OrientationE">
+<span id="_CPPv3N6basalt5Edges5EdgesER9GraphImplI11OrientationE"></span><span id="_CPPv2N6basalt5Edges5EdgesER9GraphImplI11OrientationE"></span><span id="basalt::Edges::Edges__GraphImpl:Orientation:R"></span><span class="target" id="classbasalt_1_1Edges_1aafbf50340bf021c4e3962bd60e74c45c"></span><code class="descname">Edges</code><span class="sig-paren">(</span><a class="reference internal" href="classbasalt_1_1GraphImpl.html#_CPPv4I_15EdgeOrientationEN6basalt9GraphImplE" title="basalt::GraphImpl">GraphImpl</a>&lt;Orientation&gt; &amp;<em>pimpl</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5EdgesER9GraphImplI11OrientationE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Construct a <em><a class="reference internal" href="#classbasalt_1_1Edges"><span class="std std-ref">Edges</span></a></em>. </p>
-<p><dl class="docutils">
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </p></li>
 </ul>
 </dd>
 </dl>
@@ -200,17 +210,41 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="_CPPv4NK6basalt5Edges5beginENSt6size_tE">
+<span id="_CPPv3NK6basalt5Edges5beginENSt6size_tE"></span><span id="_CPPv2NK6basalt5Edges5beginENSt6size_tE"></span><span id="basalt::Edges::begin__std::sC"></span><span class="target" id="classbasalt_1_1Edges_1a1a625f33c2228831c3f14d128e289c28"></span><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> <code class="descname">begin</code><span class="sig-paren">(</span>std::size_t <em>position</em> = 0<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges5beginENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Iterator over the edges of the graph. </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>edge iterator </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>: starting position, default at the beginning </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK6basalt5Edges3endEv">
+<span id="_CPPv3NK6basalt5Edges3endEv"></span><span id="_CPPv2NK6basalt5Edges3endEv"></span><span id="basalt::Edges::endC"></span><span class="target" id="classbasalt_1_1Edges_1a4cd646642d28fc1c08ff55f9e1dcfa10"></span><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#_CPPv4N6basalt12EdgeIteratorE" title="basalt::EdgeIterator">EdgeIterator</a> <code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an iterator referring to the past-the-end </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb">
-<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Edges_1acdd3ff728d7be59be88b1ab987804128"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Edges_1a9385a9c292304f1f829cec2d3077269f"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Create an edge between 2 vertices. Both vertices must already be in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -219,18 +253,17 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb">
-<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uid_tCR.cCP.std::s.b"></span><span class="target" id="classbasalt_1_1Edges_1ab2ea5dce93a943917af6d071dbc43cba"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uid_tCR.cCP.std::s.b"></span><span class="target" id="classbasalt_1_1Edges_1ac9bd02b70eeffe5afefe4b1fde5513b0"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK12vertex_uid_tPKcNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Create an edge between 2 vertices. Both vertices must already be in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge </li>
-<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: payload of the edge </li>
-<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: payload length </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: payload of the edge </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>: payload length </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -239,18 +272,17 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb">
-<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uids_tCR.std::vector:cCP:CR.std::vector:std::s:CR.b"></span><span class="target" id="classbasalt_1_1Edges_1a0e79d25f3fb283349890ff701eb1ae6f"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>vertices</em>, <em class="property">const</em> std::vector&lt;<em class="property">const</em> char *&gt; &amp;<em>data</em> = {}, <em class="property">const</em> std::vector&lt;std::size_t&gt; &amp;<em>sizes</em> = {}, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_uids_tCR.std::vector:cCP:CR.std::vector:std::s:CR.b"></span><span class="target" id="classbasalt_1_1Edges_1aca387ae0c54a7bf7b1f29c6b63bc2a9f"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>vertices</em>, <em class="property">const</em> std::vector&lt;<em class="property">const</em> char *&gt; &amp;<em>data</em> = {}, <em class="property">const</em> std::vector&lt;std::size_t&gt; &amp;<em>sizes</em> = {}, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_tRK13vertex_uids_tRKNSt6vectorIPKcEERKNSt6vectorINSt6size_tEEEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Create edges between a vertex and several vertices. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </li>
-<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: payloads of every edges to create </li>
-<li><code class="docutils literal notranslate"><span class="pre">sizes</span></code>: the sizes of the payloads </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: payloads of every edges to create </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sizes</span></code>: the sizes of the payloads </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -259,19 +291,18 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb">
-<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_t.vertex_id_tCP.s.b.b"></span><span class="target" id="classbasalt_1_1Edges_1adfd43cbbf59c226c826fa93ce9bc30b2"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#_CPPv4N6basalt11vertex_id_tE" title="basalt::vertex_id_t">vertex_id_t</a> *<em>vertices</em>, size_t <em>num_vertices</em>, bool <em>create_vertices</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_t.vertex_id_tCP.s.b.b"></span><span class="target" id="classbasalt_1_1Edges_1a84eb8671173a97264908c48c66e7045a"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#_CPPv4N6basalt11vertex_id_tE" title="basalt::vertex_id_t">vertex_id_t</a> *<em>vertices</em>, size_t <em>num_vertices</em>, bool <em>create_vertices</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPK11vertex_id_t6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Create edges between a vertex and several vertices of the same type. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </li>
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: target vertices type </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </li>
-<li><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of target vertices </li>
-<li><code class="docutils literal notranslate"><span class="pre">create_vertices</span></code>: whether vertices should be created as well </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: target vertices type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of target vertices </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_vertices</span></code>: whether vertices should be created as well </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -280,21 +311,20 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb">
-<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_t.std::sCP.cCPCP.std::sCP.s.b.b"></span><span class="target" id="classbasalt_1_1Edges_1a46e881580e52b5631ad3416f948859dc"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, <em class="property">const</em> std::size_t *<em>vertices</em>, <em class="property">const</em> char *<em class="property">const</em> *<em>vertex_payloads</em>, <em class="property">const</em> std::size_t *<em>vertex_payloads_sizes</em>, size_t <em>num_vertices</em>, bool <em>create_vertices</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="_CPPv2N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb"></span><span id="basalt::Edges::insert__vertex_uid_tCR.vertex_t.std::sCP.cCPCP.std::sCP.s.b.b"></span><span class="target" id="classbasalt_1_1Edges_1a9df57c46dec891468e9dc628b83a5fcd"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, <em class="property">const</em> std::size_t *<em>vertices</em>, <em class="property">const</em> char *<em class="property">const</em> *<em>vertex_payloads</em>, <em class="property">const</em> std::size_t *<em>vertex_payloads_sizes</em>, size_t <em>num_vertices</em>, bool <em>create_vertices</em> = false, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges6insertERK12vertex_uid_t8vertex_tPKNSt6size_tEPPCKcPKNSt6size_tE6size_tbb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Creates edges between a vertex and several vertices of the same type. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </li>
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: target vertices type </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex_payloads</span></code>: payload of every target vertex Use <em>nullptr</em> is there is no payload. </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex_payloads_sizes</span></code>: payload size of every target vertex </li>
-<li><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of target vertices </li>
-<li><code class="docutils literal notranslate"><span class="pre">create_vertices</span></code>: whether vertices should be created as well </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to connect to others </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: target vertices type </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertices</span></code>: the vertices to connect to <em>vertex</em> </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex_payloads</span></code>: payload of every target vertex Use <em>nullptr</em> is there is no payload. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex_payloads_sizes</span></code>: payload size of every target vertex </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of target vertices </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">create_vertices</span></code>: whether vertices should be created as well </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -303,15 +333,14 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE">
-<span id="_CPPv3NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE"></span><span id="_CPPv2NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE"></span><span id="basalt::Edges::get__edge_uid_tCR.ssPC"></span><span class="target" id="classbasalt_1_1Edges_1a7de11e88f47b709315d550ee0b4a237e"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#_CPPv4N6basalt10edge_uid_tE" title="basalt::edge_uid_t">edge_uid_t</a> &amp;<em>edge</em>, std::string *<em>value</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE"></span><span id="_CPPv2NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE"></span><span id="basalt::Edges::get__edge_uid_tCR.ssPC"></span><span class="target" id="classbasalt_1_1Edges_1a165a7af5aa7fa153ac207806d82ec666"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#_CPPv4N6basalt10edge_uid_tE" title="basalt::edge_uid_t">edge_uid_t</a> &amp;<em>edge</em>, std::string *<em>value</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK10edge_uid_tPNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieve an edge payload. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">edge</span></code>: unique identifier to retrieve </li>
-<li><code class="docutils literal notranslate"><span class="pre">value</span></code>: payload object updated if the edge exists and has an associated payload </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">edge</span></code>: unique identifier to retrieve </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: payload object updated if the edge exists and has an associated payload </p></li>
 </ul>
 </dd>
 </dl>
@@ -320,16 +349,15 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb">
-<span id="_CPPv3NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb"></span><span id="_CPPv2NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb"></span><span id="basalt::Edges::has__vertex_uid_tCR.vertex_uid_tCR.bRC"></span><span class="target" id="classbasalt_1_1Edges_1a3ecb18d65adc357f48f2af12a8b61c45"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">has</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool &amp;<em>result</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb"></span><span id="_CPPv2NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb"></span><span id="basalt::Edges::has__vertex_uid_tCR.vertex_uid_tCR.bRC"></span><span class="target" id="classbasalt_1_1Edges_1ab68099c3c18ce9f34a59b3e9d4188b4b"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">has</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool &amp;<em>result</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3hasERK12vertex_uid_tRK12vertex_uid_tRb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>check connectivity between 2 vertices </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>provides information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: first end of the edge to look for </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge to look for </li>
-<li><code class="docutils literal notranslate"><span class="pre">result</span></code>: a boolean indicating whether vertex1 and vertex2 are connected </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>provides information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: first end of the edge to look for </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: second end of the edge to look for </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code>: a boolean indicating whether vertex1 and vertex2 are connected </p></li>
 </ul>
 </dd>
 </dl>
@@ -338,15 +366,14 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t">
-<span id="_CPPv3NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t"></span><span id="_CPPv2NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t"></span><span id="basalt::Edges::get__vertex_uid_tCR.vertex_uids_tRC"></span><span class="target" id="classbasalt_1_1Edges_1aed3a4ae19e99267f9fa73b47d77704c2"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>edges</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>get vertices connected to one vertex </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: one end of the edges to look </li>
-<li><code class="docutils literal notranslate"><span class="pre">edges</span></code>: accumulator where connected vertices are added. </li>
+<span id="_CPPv3NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t"></span><span id="_CPPv2NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t"></span><span id="basalt::Edges::get__vertex_uid_tCR.vertex_uids_tRC"></span><span class="target" id="classbasalt_1_1Edges_1a4a8345e819a3637895d4f906b5a2bd82"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>edges</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK12vertex_uid_tR13vertex_uids_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>get vertices connected to a vertex </p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: for directed graph, the head of the edges to look for, any end of the edges otherwise </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: accumulator where connected vertices are added. </p></li>
 </ul>
 </dd>
 </dl>
@@ -355,16 +382,15 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t">
-<span id="_CPPv3NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t"></span><span id="_CPPv2NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t"></span><span id="basalt::Edges::get__vertex_uid_tCR.vertex_t.vertex_uids_tRC"></span><span class="target" id="classbasalt_1_1Edges_1a3fc59e9654b8ae44baa3767389a74811"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>filter</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>edges</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t"></span><span id="_CPPv2NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t"></span><span id="basalt::Edges::get__vertex_uid_tCR.vertex_t.vertex_uids_tRC"></span><span class="target" id="classbasalt_1_1Edges_1a233b809e763d294f24323356891d4e91"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>filter</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#_CPPv4N6basalt13vertex_uids_tE" title="basalt::vertex_uids_t">vertex_uids_t</a> &amp;<em>edges</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges3getERK12vertex_uid_t8vertex_tR13vertex_uids_t" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get vertices of a specific type connected to one vertex </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: one end of the edges to look </li>
-<li><code class="docutils literal notranslate"><span class="pre">filter</span></code>: type of target vertices </li>
-<li><code class="docutils literal notranslate"><span class="pre">edges</span></code>: accumulator where connected vertices are added </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: one end of the edges to look </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filter</span></code>: type of target vertices </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: accumulator where connected vertices are added </p></li>
 </ul>
 </dd>
 </dl>
@@ -373,16 +399,15 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb">
-<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Edges_1a9c26ab900ac45bafcc28b333e939cb65"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Edges_1a50c5b543e05fd914ee428bb7b8c37d2c"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex1</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex2</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>remove edge between 2 vertices </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge to remove </li>
-<li><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: other end of the edge to remove </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex1</span></code>: one end of the edge to remove </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex2</span></code>: other end of the edge to remove </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -391,17 +416,16 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb">
-<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.vertex_t.sR.b"></span><span class="target" id="classbasalt_1_1Edges_1a67bec46ed228e8528d7c11f3e587b115"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>filter</em>, size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.vertex_t.sR.b"></span><span class="target" id="classbasalt_1_1Edges_1a9f9d55571ad321349ea132d6286e6353"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>filter</em>, size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_t8vertex_tR6size_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>remove edges of a given type </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: vertex from which to remove edges </li>
-<li><code class="docutils literal notranslate"><span class="pre">filter</span></code>: type of target vertices </li>
-<li><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of vertices removed during the operation </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: vertex from which to remove edges </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">filter</span></code>: type of target vertices </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of vertices removed during the operation </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -410,16 +434,15 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb">
-<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.std::sR.b"></span><span class="target" id="classbasalt_1_1Edges_1a8dad3dc101713d735f826494853c27a4"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, std::size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb"></span><span id="_CPPv2N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb"></span><span id="basalt::Edges::erase__vertex_uid_tCR.std::sR.b"></span><span class="target" id="classbasalt_1_1Edges_1adaf182ca2ee1c23ef525fbc9d9ff9e6d"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, std::size_t &amp;<em>removed</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5eraseERK12vertex_uid_tRNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>remove all edges of a vertex </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: one end of the edges to remove </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
-<li><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of vertices removed during the operation </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: one end of the edges to remove </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">removed</span></code>: number of vertices removed during the operation </p></li>
 </ul>
 </dd>
 </dl>
@@ -428,13 +451,12 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Edges5countERNSt6size_tE">
-<span id="_CPPv3NK6basalt5Edges5countERNSt6size_tE"></span><span id="_CPPv2NK6basalt5Edges5countERNSt6size_tE"></span><span id="basalt::Edges::count__std::sRC"></span><span class="target" id="classbasalt_1_1Edges_1a93505ecd72b9b73da9bfd1a569f2a701"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span>std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges5countERNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function with the number of edges in the graph </li>
+<span id="_CPPv3NK6basalt5Edges5countERNSt6size_tE"></span><span id="_CPPv2NK6basalt5Edges5countERNSt6size_tE"></span><span id="basalt::Edges::count__std::sRC"></span><span class="target" id="classbasalt_1_1Edges_1a6bcecd6b1f01d3b49a4ca9b4adeeadfd"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span>std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Edges5countERNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function with the number of edges in the graph </p></li>
 </ul>
 </dd>
 </dl>
@@ -443,14 +465,13 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Edges5clearEb">
-<span id="_CPPv3N6basalt5Edges5clearEb"></span><span id="_CPPv2N6basalt5Edges5clearEb"></span><span id="basalt::Edges::clear__b"></span><span class="target" id="classbasalt_1_1Edges_1a8de90cbf51af14413451381461cfa87e"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">clear</code><span class="sig-paren">(</span>bool <em>commit</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5clearEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Edges5clearEb"></span><span id="_CPPv2N6basalt5Edges5clearEb"></span><span id="basalt::Edges::clear__b"></span><span class="target" id="classbasalt_1_1Edges_1a4277488fc86f66380ac96c86f18ff4ba"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">clear</code><span class="sig-paren">(</span>bool <em>commit</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Edges5clearEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Remove all edges of the graph along. <a class="reference internal" href="classbasalt_1_1Vertices.html#classbasalt_1_1Vertices"><span class="std std-ref">Vertices</span></a> are kept intact. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -471,10 +492,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="classbasalt_1_1Graph.html" class="btn btn-neutral float-right" title="Class Graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="classbasalt_1_1Graph.html" class="btn btn-neutral float-right" title="Template Class Graph" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="structbasalt_1_1Status.html" class="btn btn-neutral float-left" title="Struct Status" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="classbasalt_1_1EdgeIterator.html" class="btn btn-neutral float-left" title="Class EdgeIterator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

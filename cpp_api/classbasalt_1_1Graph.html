@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Class Graph &mdash; Basalt 0.2.3 documentation</title>
+  <title>Template Class Graph &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Class VertexIterator" href="classbasalt_1_1VertexIterator.html" />
-    <link rel="prev" title="Class Edges" href="classbasalt_1_1Edges.html" /> 
+    <link rel="next" title="Template Class GraphImpl" href="classbasalt_1_1GraphImpl.html" />
+    <link rel="prev" title="Template Class Edges" href="classbasalt_1_1Edges.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,12 +87,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -100,7 +101,16 @@
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -153,7 +163,7 @@
         
           <li><a href="library_root.html">C++ API</a> &raquo;</li>
         
-      <li>Class Graph</li>
+      <li>Template Class Graph</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,51 +182,39 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="class-graph">
-<span id="exhale-class-classbasalt-1-1graph"></span><h1>Class Graph<a class="headerlink" href="#class-graph" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-class-graph">
+<span id="exhale-class-classbasalt-1-1graph"></span><h1>Template Class Graph<a class="headerlink" href="#template-class-graph" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Defined in <a class="reference internal" href="file_include_basalt_graph.hpp.html#file-include-basalt-graph-hpp"><span class="std std-ref">File graph.hpp</span></a></li>
+<li><p>Defined in <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-graph-hpp"><span class="std std-ref">File graph.hpp</span></a></p></li>
 </ul>
 <div class="section" id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="_CPPv4N6basalt5GraphE">
-<span id="_CPPv3N6basalt5GraphE"></span><span id="_CPPv2N6basalt5GraphE"></span><span id="basalt::Graph"></span><span class="target" id="classbasalt_1_1Graph"></span><em class="property">class </em><code class="descname">Graph</code><a class="headerlink" href="#_CPPv4N6basalt5GraphE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Undirected Connectivity <a class="reference internal" href="#classbasalt_1_1Graph"><span class="std std-ref">Graph</span></a>. </p>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">edges accessor</p>
-<dl class="function">
-<dt id="_CPPv4N6basalt5Graph5edgesEv">
-<span id="_CPPv3N6basalt5Graph5edgesEv"></span><span id="_CPPv2N6basalt5Graph5edgesEv"></span><span id="basalt::Graph::edges"></span><span class="target" id="classbasalt_1_1Graph_1a8fc96521f39a2a6e8fcd9c19d0b33a91"></span><a class="reference internal" href="classbasalt_1_1Edges.html#_CPPv4N6basalt5EdgesE" title="basalt::Edges">Edges</a> &amp;<code class="descname">edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph5edgesEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>edges accessor </p>
-</dd></dl>
-
-<dl class="function">
-<dt id="_CPPv4N6basalt5Graph8verticesEv">
-<span id="_CPPv3N6basalt5Graph8verticesEv"></span><span id="_CPPv2N6basalt5Graph8verticesEv"></span><span id="basalt::Graph::vertices"></span><span class="target" id="classbasalt_1_1Graph_1adb5d7d05472e516bca9178028c70c1f6"></span><a class="reference internal" href="classbasalt_1_1Vertices.html#_CPPv4N6basalt8VerticesE" title="basalt::Vertices">Vertices</a> &amp;<code class="descname">vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph8verticesEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>vertices accessor </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Types</p>
-<dl class="type">
-<dt id="_CPPv4N6basalt5Graph23vertex_const_iterator_tE">
-<span id="_CPPv3N6basalt5Graph23vertex_const_iterator_tE"></span><span id="_CPPv2N6basalt5Graph23vertex_const_iterator_tE"></span><span class="target" id="classbasalt_1_1Graph_1a6dc489a950934fd0c82d6f2360ebefac"></span><em class="property">using </em><code class="descname">vertex_const_iterator_t</code> = std::iterator&lt;std::input_iterator_tag, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a>&gt;<a class="headerlink" href="#_CPPv4N6basalt5Graph23vertex_const_iterator_tE" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>iterator over vertices </p>
-</dd></dl>
-
-</div>
-<div class="breathe-sectiondef docutils container">
-<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dt id="_CPPv4I_15EdgeOrientationEN6basalt5GraphE">
+<span id="_CPPv3I_15EdgeOrientationEN6basalt5GraphE"></span><span id="_CPPv2I_15EdgeOrientationEN6basalt5GraphE"></span><span class="target" id="classbasalt_1_1Graph"></span>template&lt;<a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#_CPPv4N6basalt15EdgeOrientationE" title="basalt::EdgeOrientation">EdgeOrientation</a> <code class="descname">Orientation</code>&gt;<br /><em class="property">class </em><code class="descname">Graph</code><a class="headerlink" href="#_CPPv4I_15EdgeOrientationEN6basalt5GraphE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Ctors &amp; Dtor</p>
 <dl class="function">
 <dt id="_CPPv4N6basalt5Graph5GraphERKNSt6stringE">
-<span id="_CPPv3N6basalt5Graph5GraphERKNSt6stringE"></span><span id="_CPPv2N6basalt5Graph5GraphERKNSt6stringE"></span><span id="basalt::Graph::Graph__ssCR"></span><span class="target" id="classbasalt_1_1Graph_1aee2920d092507ce5952710ca62927288"></span><code class="descname">Graph</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph5GraphERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Graph5GraphERKNSt6stringE"></span><span id="_CPPv2N6basalt5Graph5GraphERKNSt6stringE"></span><span id="basalt::Graph::Graph__ssCR"></span><span class="target" id="classbasalt_1_1Graph_1a1fd4711e27649eedc1a8ffc1b3247664"></span><code class="descname">Graph</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph5GraphERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>load graph if present on disk, initialize it otherwise </p>
-<p><dl class="docutils">
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">path</span></code>: graph location on filesystem </li>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: graph directory on disk </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt5Graph5GraphERKNSt6stringERKNSt6stringE">
+<span id="_CPPv3N6basalt5Graph5GraphERKNSt6stringERKNSt6stringE"></span><span id="_CPPv2N6basalt5Graph5GraphERKNSt6stringERKNSt6stringE"></span><span id="basalt::Graph::Graph__ssCR.ssCR"></span><span class="target" id="classbasalt_1_1Graph_1a16d8c69a77e21b1bba2fc7fd9fb583b8"></span><code class="descname">Graph</code><span class="sig-paren">(</span><em class="property">const</em> std::string &amp;<em>path</em>, <em class="property">const</em> std::string &amp;<em>config</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph5GraphERKNSt6stringERKNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>create graph on disk at the given path with the given configuration </p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">path</span></code>: the graph directory on disk (must not exist) </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">config</span></code>: the path to a JSON file </p></li>
 </ul>
 </dd>
 </dl>
@@ -225,23 +223,48 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5GraphD0Ev">
-<span id="_CPPv3N6basalt5GraphD0Ev"></span><span id="_CPPv2N6basalt5GraphD0Ev"></span><span id="basalt::Graph::~Graph"></span><span class="target" id="classbasalt_1_1Graph_1adcfa800b2f6630a9ae6e2e489fac5735"></span><code class="descname">~Graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5GraphD0Ev" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<span id="_CPPv3N6basalt5GraphD0Ev"></span><span id="_CPPv2N6basalt5GraphD0Ev"></span><span id="basalt::Graph::~Graph"></span><span class="target" id="classbasalt_1_1Graph_1aa413974dae22ec2da37cd592aa98895f"></span><code class="descname">~Graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5GraphD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>graph instance destructor </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="type">
+<dt id="_CPPv4IEN6basalt5GraphI11OrientationE23vertex_const_iterator_tE">
+<span id="_CPPv3IEN6basalt5GraphI11OrientationE23vertex_const_iterator_tE"></span><span id="_CPPv2IEN6basalt5GraphI11OrientationE23vertex_const_iterator_tE"></span>template&lt;&gt;<br /><span class="target" id="classbasalt_1_1Graph_1a5c35c4075b5a847eeff903dd6d20357d"></span><em class="property">using </em><code class="descname">vertex_const_iterator_t</code> = std::iterator&lt;std::input_iterator_tag, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a>&gt;<a class="headerlink" href="#_CPPv4IEN6basalt5GraphI11OrientationE23vertex_const_iterator_tE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>iterator over vertices </p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N6basalt5Graph5edgesEv">
+<span id="_CPPv3N6basalt5Graph5edgesEv"></span><span id="_CPPv2N6basalt5Graph5edgesEv"></span><span id="basalt::Graph::edges"></span><span class="target" id="classbasalt_1_1Graph_1ac198f15cc79a9ce1aea84638b93d49c3"></span>Edges&lt;Orientation&gt; &amp;<code class="descname">edges</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph5edgesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>edges accessor </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N6basalt5Graph8verticesEv">
+<span id="_CPPv3N6basalt5Graph8verticesEv"></span><span id="_CPPv2N6basalt5Graph8verticesEv"></span><span id="basalt::Graph::vertices"></span><span class="target" id="classbasalt_1_1Graph_1a8fc14c5ecc87c80fc147261ea0b6679a"></span>Vertices&lt;Orientation&gt; &amp;<code class="descname">vertices</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph8verticesEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>vertices accessor </p>
+</dd></dl>
 
 <dl class="function">
 <dt id="_CPPv4N6basalt5Graph6commitEv">
-<span id="_CPPv3N6basalt5Graph6commitEv"></span><span id="_CPPv2N6basalt5Graph6commitEv"></span><span id="basalt::Graph::commit"></span><span class="target" id="classbasalt_1_1Graph_1a11ddcdf7f98cf2e1dcd1816ee137d958"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">commit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph6commitEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt5Graph6commitEv"></span><span id="_CPPv2N6basalt5Graph6commitEv"></span><span id="basalt::Graph::commit"></span><span class="target" id="classbasalt_1_1Graph_1a020d116f2165d7463949a5b79d62efbc"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">commit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt5Graph6commitEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Process uncommitted operations. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
 </dl>
 </p>
 </dd></dl>
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt5Graph10statisticsEv">
-<span id="_CPPv3NK6basalt5Graph10statisticsEv"></span><span id="_CPPv2NK6basalt5Graph10statisticsEv"></span><span id="basalt::Graph::statisticsC"></span><span class="target" id="classbasalt_1_1Graph_1a2f6ee2120649861bb44a6abd52685efd"></span>std::string <code class="descname">statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Graph10statisticsEv" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt5Graph10statisticsEv"></span><span id="_CPPv2NK6basalt5Graph10statisticsEv"></span><span id="basalt::Graph::statisticsC"></span><span class="target" id="classbasalt_1_1Graph_1a98605bf226ba177de78e1dcded66f550"></span>std::string <code class="descname">statistics</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt5Graph10statisticsEv" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Provides human readable string of all database counters. </p>
 </dd></dl>
 
@@ -259,10 +282,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="classbasalt_1_1VertexIterator.html" class="btn btn-neutral float-right" title="Class VertexIterator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="classbasalt_1_1GraphImpl.html" class="btn btn-neutral float-right" title="Template Class GraphImpl" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="classbasalt_1_1Edges.html" class="btn btn-neutral float-left" title="Class Edges" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="classbasalt_1_1Edges.html" class="btn btn-neutral float-left" title="Template Class Edges" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

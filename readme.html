@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; Basalt 0.2.3 documentation</title>
+  <title>Basalt - Graph Storage API for C++ and Python &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,29 +87,61 @@
               
             
             
-              <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#build-and-installation-instructions">Build and installation instructions</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#python">Python</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#graph-topology-api">Graph Topology API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#low-level-python-bindings">Low-level Python bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#c-api">C++ API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#installation">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">C++ API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conan-package">Conan package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cmake">CMake</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#python-api">Python API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pypi">Pypi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#blue-brain-5-supercomputer">Blue Brain 5 supercomputer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#manual-build-and-installation-instructions">Manual build and installation instructions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getting-the-code">Getting the code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#c-library">C++ Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#python-3-bindings">Python 3 bindings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-library-101">Building the library 101</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#c-library-only">C++ Library only</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#python-3-bindings">Python 3 bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cmake-variables-and-targets">CMake variables and targets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python-setuptools-commands">Python setuptools commands</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#embedded-third-parties">Embedded third-parties</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#contributing">Contributing</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#pull-requests">pull-requests</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="#contributing">Contributing</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -160,7 +192,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Introduction</li>
+      <li>Basalt - Graph Storage API for C++ and Python</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,25 +211,125 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="basalt-c-11-graph-storage-library">
-<h1>Basalt - C++11 Graph Storage library<a class="headerlink" href="#basalt-c-11-graph-storage-library" title="Permalink to this headline">¶</a></h1>
-<p>Basic graph database backed by RocksDB key-value storage</p>
-<a class="reference external image-reference" href="https://travis-ci.org/tristan0x/basalt"><img alt="Build Status" src="https://api.travis-ci.com/tristan0x/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&amp;branch=master" /></a>
+  <a class="reference external image-reference" href="https://github.com/BlueBrain/basalt/raw/master/doc/source/_static/basalt-logo-400.png"><img alt="basalt logo" src="https://github.com/BlueBrain/basalt/raw/master/doc/source/_static/basalt-logo-400.png" /></a>
+<div class="section" id="basalt-graph-storage-api-for-c-and-python">
+<h1>Basalt - Graph Storage API for C++ and Python<a class="headerlink" href="#basalt-graph-storage-api-for-c-and-python" title="Permalink to this headline">¶</a></h1>
+<p>Basalt is a graph storage API powered by RocksDB persistent
+key-value store for fast storage like NVMe technologies.</p>
+<a class="reference external image-reference" href="https://zenodo.org/badge/latestdoi/158816247"><img alt="DOI" src="https://zenodo.org/badge/158816247.svg" /></a>
+<a class="reference external image-reference" href="https://travis-ci.org/BlueBrain/basalt"><img alt="Build Status" src="https://api.travis-ci.com/BlueBrain/basalt.svg?token=p3ijqmiSc83uPHF74Ay8&amp;branch=master" /></a>
+<p>Documentation is currently hosted on GitHub: [<a class="reference external" href="https://bluebrain.github.io/basalt">https://bluebrain.github.io/basalt</a>]</p>
 </div>
 <div class="section" id="development-stage">
 <h1>Development stage<a class="headerlink" href="#development-stage" title="Permalink to this headline">¶</a></h1>
-<p>This library is still under active development, and is not meant to be used
-in a production environment.</p>
+<p>The C++ and Python APIs of Basalt are stable already, but substantial additions might come in the future. Thus this library development status is still beta.</p>
 </div>
-<div class="section" id="usage-on-bluebrain-5">
-<h1>Usage on BlueBrain 5<a class="headerlink" href="#usage-on-bluebrain-5" title="Permalink to this headline">¶</a></h1>
-<p>Basalt is currently released as a Nix module on BB5 supercomputer:</p>
+<div class="section" id="usage">
+<h1>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="python">
+<h2>Python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="graph-topology-api">
+<h3>Graph Topology API<a class="headerlink" href="#graph-topology-api" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PLInfluences</span><span class="p">(</span><span class="n">basalt</span><span class="o">.</span><span class="n">GraphTopology</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A directed graph where vertices are programming languages.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">directed</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+        <span class="n">LANGUAGE</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="c1"># Declare a vertex type</span>
+    <span class="n">vertex</span><span class="p">(</span><span class="s2">&quot;language&quot;</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">LANGUAGE</span><span class="p">)</span>
+    <span class="c1"># Declare a directed edge between 2 programming languages</span>
+    <span class="c1"># to represent how they relate.</span>
+    <span class="n">edge</span><span class="p">(</span><span class="n">Vertex</span><span class="o">.</span><span class="n">LANGUAGE</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">LANGUAGE</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;influenced&quot;</span><span class="p">,</span> <span class="n">plural</span><span class="o">=</span><span class="s2">&quot;influenced&quot;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">load_from_dbpedia</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="c1"># [...]</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">PLInfluences</span><span class="o">.</span><span class="n">load_from_dbpedia</span><span class="p">(</span><span class="s2">&quot;/path/on/disk&quot;</span><span class="p">)</span>
+<span class="c1"># Iterate over all vertices of type &quot;languages&quot;</span>
+<span class="k">for</span> <span class="n">language</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">languages</span><span class="p">:</span>
+  <span class="k">print</span><span class="p">(</span><span class="n">language</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">language</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+  <span class="c1"># Iterate over all vertices connected to vertex `language`</span>
+  <span class="c1"># through the `influenced` edge type.</span>
+  <span class="k">for</span> <span class="n">influenced</span> <span class="ow">in</span> <span class="n">language</span><span class="o">.</span><span class="n">influenced</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;  &quot;</span><span class="p">,</span> <span class="n">influenced</span><span class="o">.</span><span class="n">data</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="low-level-python-bindings">
+<h3>Low-level Python bindings<a class="headerlink" href="#low-level-python-bindings" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load or initialize a graph on disk</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">basalt</span><span class="o">.</span><span class="n">UndirectedGraph</span><span class="p">(</span><span class="s2">&quot;/path/on/disk&quot;</span><span class="p">)</span>
+<span class="c1"># Add one vertex of type 0 and identifier 1</span>
+<span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+<span class="c1"># Insert 10 vertices at once</span>
+<span class="c1"># (10, 0), (10, 1), ... (10, 10)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">10</span><span class="p">,),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span> <span class="c1"># types</span>
+               <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">))</span> <span class="c1"># ids</span>
+<span class="c1"># Connect 2 vertices</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+<span class="c1"># Connect vertex (0, 1) to several vertices at once</span>
+<span class="c1"># (0,1)-&gt;(1,0), (0,1)-&gt;(1,1), ... (0,1)-&gt;(1,9)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="mi">9</span><span class="p">,),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int32</span><span class="p">),</span>
+            <span class="n">numpy</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">numpy</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+<span class="c1"># Commit changes on disk</span>
+<span class="n">g</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="c-api">
+<h2>C++ API<a class="headerlink" href="#c-api" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">// Load or initialize a graph on disk</span>
+<span class="n">basalt</span><span class="o">::</span><span class="n">UndirectedGraph</span> <span class="n">g</span><span class="p">(</span><span class="s">&quot;/path/on/disk&quot;</span><span class="p">);</span>
+<span class="c1">// Add one vertex of type 0 and identifier 1</span>
+<span class="n">g</span><span class="p">.</span><span class="n">vertices</span><span class="p">().</span><span class="n">insert</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">});</span>
+<span class="c1">// Add one vertex of type 0 and identifier 2</span>
+<span class="n">g</span><span class="p">.</span><span class="n">vertices</span><span class="p">().</span><span class="n">insert</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">});</span>
+<span class="c1">// Iterate over vertices</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">vertex</span><span class="p">:</span> <span class="n">g</span><span class="p">.</span><span class="n">vertices</span><span class="p">())</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">clog</span> <span class="o">&lt;&lt;</span> <span class="n">vertex</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// Connect both vertices</span>
+<span class="n">g</span><span class="p">.</span><span class="n">edges</span><span class="p">().</span><span class="n">insert</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">}));</span>
+<span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">edge</span><span class="p">:</span> <span class="n">g</span><span class="p">.</span><span class="n">edges</span><span class="p">())</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">clog</span> <span class="o">&lt;&lt;</span> <span class="n">edge</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; -&gt; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">edge</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="c1">// Commit changes on disk</span>
+<span class="n">g</span><span class="p">.</span><span class="n">commit</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>C++ API<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="conan-package">
+<h3>Conan package<a class="headerlink" href="#conan-package" title="Permalink to this headline">¶</a></h3>
+<p>This repository provides a <a class="reference external" href="https://conan.io/">Conan</a> package to ease integration into your existing projects.</p>
+</div>
+<div class="section" id="cmake">
+<h3>CMake<a class="headerlink" href="#cmake" title="Permalink to this headline">¶</a></h3>
+<p>It is also possible to build and install the library using CMake, see <a class="reference external" href="#manual-build-and-installation-instructions">build section</a> below.</p>
+</div>
+</div>
+<div class="section" id="python-api">
+<h2>Python API<a class="headerlink" href="#python-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pypi">
+<h3>Pypi<a class="headerlink" href="#pypi" title="Permalink to this headline">¶</a></h3>
+<p>Python bindings of Basalt are available on <a class="reference external" href="https://pypi.org/simple/basalt">Pypi</a>.</p>
+</div>
+<div class="section" id="blue-brain-5-supercomputer">
+<h3>Blue Brain 5 supercomputer<a class="headerlink" href="#blue-brain-5-supercomputer" title="Permalink to this headline">¶</a></h3>
+<p>Basalt is currently released as module on Blue Brain 5 supercomputer:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ module purge
 $ . /gpfs/bbp.cscs.ch/apps/hpc/jenkins/config/modules.sh
-$ module load py-basalt/0.2.2/python3
+$ module load py-basalt
 $ python3
 Python <span class="m">3</span>.6.3 <span class="o">(</span>default, Oct  <span class="m">3</span> <span class="m">2017</span>, <span class="m">07</span>:47:49<span class="o">)</span>
 <span class="o">[</span>GCC <span class="m">6</span>.4.0<span class="o">]</span> on linux
@@ -207,32 +339,35 @@ Type <span class="s2">&quot;help&quot;</span>, <span class="s2">&quot;copyright&
 <span class="s1">&#39;0.2.2&#39;</span>
 &gt;&gt;&gt; basalt.__rocksdb_version__
 <span class="s1">&#39;5.17.2&#39;</span>
-&gt;&gt;&gt; basalt.serve_doc<span class="o">()</span>
-Serving HTTP on <span class="m">0</span>.0.0.0 port <span class="m">8000</span> <span class="o">(</span>http://0.0.0.0:8000/<span class="o">)</span> ...
 </pre></div>
 </div>
 </div>
-<div class="section" id="build-and-installation-instructions">
-<h1>Build and installation instructions<a class="headerlink" href="#build-and-installation-instructions" title="Permalink to this headline">¶</a></h1>
+</div>
+</div>
+<div class="section" id="manual-build-and-installation-instructions">
+<h1>Manual build and installation instructions<a class="headerlink" href="#manual-build-and-installation-instructions" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference external" href="https://cmake.org">CMake</a> build system, version 3.5.1 or higher.</li>
-<li><a class="reference external" href="https://rocksdb.org/">RocksDB</a>, a persistent key-value store,
-version version 4.1.1 or higher.</li>
-<li><a class="reference external" href="https://python.org/">Python 3</a></li>
+<li><p><a class="reference external" href="https://cmake.org">CMake</a> build system, version 3.5.1 or higher.</p></li>
+<li><p><a class="reference external" href="https://rocksdb.org/">RocksDB</a>, a persistent key-value store,
+version 4.1.1 or higher.</p></li>
+<li><p><a class="reference external" href="https://python.org/">Python 3</a>, version 3.5 or higher.</p></li>
 </ul>
 </div>
 <div class="section" id="getting-the-code">
 <h2>Getting the code<a class="headerlink" href="#getting-the-code" title="Permalink to this headline">¶</a></h2>
-<p>This repository grabs few third-party libraries as <em>git submodules</em>.
+<p>This repository grabs a few third-party libraries as <em>git modules</em>.
 To clone them when you clone basalt, use <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">--recursive</span></code> option.</p>
-<p>If you have already cloned basalt, you can get the submodules with command:
+<p>If you have already cloned basalt, you can get the git submodules with
+the command:
 <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--recursive</span> <span class="pre">--init</span></code></p>
 </div>
-<div class="section" id="c-library">
-<h2>C++ Library<a class="headerlink" href="#c-library" title="Permalink to this headline">¶</a></h2>
-<p>To build and run tests:</p>
+<div class="section" id="building-the-library-101">
+<h2>Building the library 101<a class="headerlink" href="#building-the-library-101" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="c-library-only">
+<h3>C++ Library only<a class="headerlink" href="#c-library-only" title="Permalink to this headline">¶</a></h3>
+<p>To build the basalt C++ shared library and run the tests:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to/basalt
 mkdir build
 <span class="nb">pushd</span> build
@@ -240,7 +375,7 @@ cmake ..
 <span class="nv">CTEST_OUTPUT_ON_FAILURE</span><span class="o">=</span><span class="m">1</span> make all <span class="nb">test</span>
 </pre></div>
 </div>
-<p>To install the library</p>
+<p>To install the library:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">pushd</span> build
 cmake -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr/local .
 make all install
@@ -248,74 +383,101 @@ make all install
 </div>
 </div>
 <div class="section" id="python-3-bindings">
-<h2>Python 3 bindings<a class="headerlink" href="#python-3-bindings" title="Permalink to this headline">¶</a></h2>
-<p>To build and run tests</p>
+<h3>Python 3 bindings<a class="headerlink" href="#python-3-bindings" title="Permalink to this headline">¶</a></h3>
+<p>To build and run the tests:</p>
 <div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /path/to/basalt
-python setup.py <span class="nb">test</span>
+python3 setup.py <span class="nb">test</span>
 </pre></div>
 </div>
-<p>To install:</p>
+<p>To install the package:</p>
 <ul class="simple">
-<li>with <em>pip</em>: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">.</span></code></li>
-<li>with <em>distutils</em>: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></li>
-<li>to create a binary tarballs:<ul>
-<li>most simple: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist</span></code></li>
-<li><a class="reference external" href="https://www.python.org/dev/peps/pep-0427/">wheel</a>: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">wheels;</span> <span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_wheel</span></code></li>
-<li>relocatable archive: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">bdist_dumb</span> <span class="pre">--relative</span></code></li>
+<li><p>with <em>pip</em>: <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">-U</span> <span class="pre">.</span></code></p></li>
+<li><p>with <em>distutils</em>: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">install</span></code></p></li>
+<li><p>to create binary tarballs:</p>
+<ul>
+<li><p>most simple: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">bdist</span></code></p></li>
+<li><p><a class="reference external" href="https://www.python.org/dev/peps/pep-0427/">wheel</a>: <code class="docutils literal notranslate"><span class="pre">pip3</span> <span class="pre">install</span> <span class="pre">wheel;</span> <span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">bdist_wheel</span></code></p></li>
+<li><p>relocatable archive: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">bdist_dumb</span> <span class="pre">--relative</span></code></p></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
+<div class="section" id="cmake-variables-and-targets">
+<h2>CMake variables and targets<a class="headerlink" href="#cmake-variables-and-targets" title="Permalink to this headline">¶</a></h2>
+<p>Main CMake variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_FORMATTING:BOOL</span></code>: provide the build target <code class="docutils literal notranslate"><span class="pre">clang-format</span></code> to check C++ code formatting</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_STATIC_ANALYSIS:BOOL</span></code>: provide the build target <code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> to perform static analysis of the C++ code</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_ARCH</span></code>: value given to the <code class="docutils literal notranslate"><span class="pre">-m</span></code> compiler option. “native” for instance</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_PRECOMMIT:BOOL</span></code>: Enable automatic checks before git commits</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_CXX_OPTIMIZE:BOOL</span></code>: Compile C++ with optimization</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_CXX_SYMBOLS:BOOL</span></code>: Compile C++ with debug symbols</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Basalt_CXX_WARNINGS:BOOL=ON</span></code>: Compile C++ with warnings</p></li>
+</ul>
+<p>For a more detailed list, please refer to file <code class="docutils literal notranslate"><span class="pre">CMakeCache.txt</span></code> in CMake build directory.</p>
+<p>CMake targets:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">basalt</span></code>: build the pure C++ library (without Python bindings)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">_basalt</span></code>: build the C++ library with Python bindings</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">unit-tests</span></code>: build a C++ executable testing the C++ pure library</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">all</span></code>: build the 3 targets above</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: execute the tests. It is recommended to execute the command <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">--output-on-failure</span> <span class="pre">-VV</span></code> instead</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install</span></code>: install the pure C++ library and the CMake configuration required to easily use basalt
+in another CMake project</p></li>
+</ul>
+</div>
+<div class="section" id="python-setuptools-commands">
+<h2>Python setuptools commands<a class="headerlink" href="#python-setuptools-commands" title="Permalink to this headline">¶</a></h2>
+<p>Here are the main Python  setuptools commands available.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">build</span></code>: build native library</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">test</span></code>: build and test the package. It also executes the C++ unit-tests as well as the code snippets in the Sphinx documentation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">install</span></code>: install the Python package</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">doctest</span></code>: execute the code snippets in the Sphinx documentation</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">build_sphinx</span></code>: build the Sphinx documentation</p></li>
+</ul>
+<p>For instance: <code class="docutils literal notranslate"><span class="pre">python3</span> <span class="pre">setup.py</span> <span class="pre">build_sphinx</span></code></p>
+</div>
+</div>
 <div class="section" id="files-layout">
 <h1>Files Layout<a class="headerlink" href="#files-layout" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">basalt/</span></code> directory: Python code of the package</li>
-<li><code class="docutils literal notranslate"><span class="pre">include/</span></code> directory: public headers of the library</li>
-<li><code class="docutils literal notranslate"><span class="pre">src/basalt/</span></code> directory: source code of the library</li>
-<li><code class="docutils literal notranslate"><span class="pre">tests/unit/</span></code> directory: C++ unit-tests using
-<a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a> library</li>
-<li><code class="docutils literal notranslate"><span class="pre">tests/py/</span></code> directory: unit-tests of the Python package</li>
-<li><code class="docutils literal notranslate"><span class="pre">cmake/</span></code> directory: Additional CMake scripts</li>
-<li><code class="docutils literal notranslate"><span class="pre">dev/</span></code> directory: development utilities</li>
-<li><code class="docutils literal notranslate"><span class="pre">docs</span></code> directory: source code of Sphinx documentation</li>
-</ul>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>├── basalt ................... python code of the package
+├── cmake
+│   └── hpc-coding-conventions git module for C++ code guidelines
+├── dev ...................... development related scripts
+├── doc ...................... sphinx documentation source code
+├── include
+│   └── basalt ............... public headers of the C++ library
+├── README.md ................ that&#39;s me!
+├── src
+│   ├── basalt ............... C++ library implementation
+│   └── third_party .......... C++ libraries (mostly as git modules)
+└── tests
+    ├── benchmarks ........... scripts to execute before creating a git tag
+    ├── py ................... python unit-tests
+    └── unit ................. C++ unit-tests using Catch2
+</pre></div>
+</div>
 </div>
 <div class="section" id="embedded-third-parties">
 <h1>Embedded third-parties<a class="headerlink" href="#embedded-third-parties" title="Permalink to this headline">¶</a></h1>
 <p>External libraries are including either by copy/paste or git submodules
 in <code class="docutils literal notranslate"><span class="pre">src/third_party</span></code> directory.</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a>:
+<li><p><a class="reference external" href="https://github.com/catchorg/Catch2">Catch2</a>:
 modern, C++-native, header-only, test framework for unit-tests, TDD
-and BDD unit-test library.</li>
-<li><a class="reference external" href="https://github.com/fmtlib/fmt">fmt</a>: A modern formatting library
-<strong>(not part of CMake build yet)</strong></li>
-<li><a class="reference external" href="https://pybind11.rtfd.io">pybind11</a>: Seamless operability between C++11 and Python</li>
-<li><a class="reference external" href="https://github.com/gabime/spdlog">SpdLog</a>: Fast C++ logging library.</li>
+and BDD unit-test library.</p></li>
+<li><p><a class="reference external" href="https://github.com/fmtlib/fmt">fmt</a>: A modern formatting library
+<strong>(not part of CMake build yet)</strong></p></li>
+<li><p><a class="reference external" href="https://pybind11.rtfd.io">pybind11</a>: Seamless operability between C++11 and Python</p></li>
+<li><p><a class="reference external" href="https://github.com/gabime/spdlog">SpdLog</a>: Fast C++ logging library.</p></li>
 </ul>
 </div>
 <div class="section" id="contributing">
 <h1>Contributing<a class="headerlink" href="#contributing" title="Permalink to this headline">¶</a></h1>
-<p>Contributions are welcome, via GitHub pull-requests and bug tracker.</p>
-<div class="section" id="pull-requests">
-<h2>pull-requests<a class="headerlink" href="#pull-requests" title="Permalink to this headline">¶</a></h2>
-<p>Enable CMake environment variables <code class="docutils literal notranslate"><span class="pre">Basalt_FORMATTING</span></code>
-and <code class="docutils literal notranslate"><span class="pre">Basalt_PRECOMMIT</span></code> to ensure that your change complies
-with the coding conventions of this project.</p>
-<p><code class="docutils literal notranslate"><span class="pre">cmake</span> <span class="pre">-DBasalt_FORMATTING:BOOL=ON</span> <span class="pre">-DBasalt_PRECOMMIT:BOOL=ON</span> <span class="pre">&lt;path&gt;</span></code></p>
-<p>Please make sure to execute <code class="docutils literal notranslate"><span class="pre">dev/check.sh</span></code> before submitting a patch in order to:</p>
-<ul class="simple">
-<li>run static analysis of C++ code with
-<a class="reference external" href="http://clang.llvm.org/extra/clang-tidy/">clang-tidy</a></li>
-<li>run Python static analysis and code formatting with
-<a class="reference external" href="http://flake8.pycqa.org">flake8</a> and <a class="reference external" href="https://github.com/ambv/black">black</a>.
-Also install <a class="reference external" href="https://github.com/PyCQA/flake8-bugbear">flake8-bugbear</a>
-<em>flake8</em> plugin.</li>
-</ul>
-<p>Valgrind memory checker is run on unit-tests by Travis. You can execute it locally
-with the <em>memcheck</em> CTest action: <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-VV</span> <span class="pre">--output-on-failure</span> <span class="pre">-T</span> <span class="pre">memcheck</span></code></p>
-</div>
+<p>If you want to improve the project or you see any issue, every contribution is welcome.
+Please check <a class="reference external" href="CONTRIBUTING.md">contribution guidelines</a> for more information.</p>
 </div>
 
 

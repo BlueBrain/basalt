@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Typedef basalt::DirectedGraph &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Typedef basalt::edge_uid_t" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html" />
+    <link rel="prev" title="Function operator&lt;&lt;(std::ostream&amp;, const basalt::Status&amp;)" href="function_status_8hpp_1ac68f335887b2d98d11fc97b6cc543014.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API</a> &raquo;</li>
+        
+      <li>Typedef basalt::DirectedGraph</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp_api/typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="typedef-basalt-directedgraph">
+<span id="exhale-typedef-graph-8hpp-1abfdd634bcaf4b3d33b4c3c0cbfa865a7"></span><h1>Typedef basalt::DirectedGraph<a class="headerlink" href="#typedef-basalt-directedgraph" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-graph-hpp"><span class="std std-ref">File graph.hpp</span></a></p></li>
+</ul>
+<div class="section" id="typedef-documentation">
+<h2>Typedef Documentation<a class="headerlink" href="#typedef-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="type">
+<dt id="_CPPv4N6basalt13DirectedGraphE">
+<span id="_CPPv3N6basalt13DirectedGraphE"></span><span id="_CPPv2N6basalt13DirectedGraphE"></span><span class="target" id="graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7"></span><em class="property">using </em><code class="descclassname">basalt<code class="descclassname">::</code></code><code class="descname">DirectedGraph</code> = Graph&lt;<a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#_CPPv4N6basalt15EdgeOrientationE" title="basalt::EdgeOrientation">EdgeOrientation</a>::directed&gt;<br /></dt>
+<dd><p><a class="reference internal" href="classbasalt_1_1MetaGraph.html#classbasalt_1_1Graph"><span class="std std-ref">Graph</span></a> in which edges have orientations. </p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html" class="btn btn-neutral float-right" title="Typedef basalt::edge_uid_t" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="function_status_8hpp_1ac68f335887b2d98d11fc97b6cc543014.html" class="btn btn-neutral float-left" title="Function operator&lt;&lt;(std::ostream&amp;, const basalt::Status&amp;)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

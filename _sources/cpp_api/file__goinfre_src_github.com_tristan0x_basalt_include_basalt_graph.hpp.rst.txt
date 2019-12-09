@@ -1,0 +1,99 @@
+
+.. _file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp:
+
+File graph.hpp
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir__goinfre_src_github.com_tristan0x_basalt_include_basalt>` (``/goinfre/src/github.com/tristan0x/basalt/include/basalt``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``/goinfre/src/github.com/tristan0x/basalt/include/basalt/graph.hpp``)
+----------------------------------------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``basalt/fwd.hpp`` (:ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp`)
+
+- ``basalt/status.hpp`` (:ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp`)
+
+- ``fstream``
+
+- ``iosfwd``
+
+- ``limits``
+
+- ``memory``
+
+- ``string``
+
+- ``utility``
+
+- ``vector``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp`
+
+- :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp`
+
+- :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_basalt`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classbasalt_1_1Graph`
+
+
+Functions
+---------
+
+
+- :ref:`exhale_function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2`
+
+- :ref:`exhale_function_graph_8hpp_1a3a48b23d0486e9330b139aec791f15aa`
+
+- :ref:`exhale_function_graph_8hpp_1ac63a64cdc2948f45d0de8149fa14e58f`
+
+- :ref:`exhale_function_graph_8hpp_1a6c5a52c86ad459518d169da4c16ce108`
+
+
+Typedefs
+--------
+
+
+- :ref:`exhale_typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7`
+
+- :ref:`exhale_typedef_graph_8hpp_1a5419ef6e4f9754aa6afd363350a8e572`
+

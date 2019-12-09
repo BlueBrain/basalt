@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Namespace basalt &mdash; Basalt 0.2.3 documentation</title>
+  <title>Namespace basalt &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,12 +87,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -100,7 +101,16 @@
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -177,35 +187,46 @@
 <div class="contents local topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#classes" id="id2">Classes</a></li>
-<li><a class="reference internal" href="#functions" id="id3">Functions</a></li>
-<li><a class="reference internal" href="#typedefs" id="id4">Typedefs</a></li>
+<li><p><a class="reference internal" href="#classes" id="id2">Classes</a></p></li>
+<li><p><a class="reference internal" href="#enums" id="id3">Enums</a></p></li>
+<li><p><a class="reference internal" href="#functions" id="id4">Functions</a></p></li>
+<li><p><a class="reference internal" href="#typedefs" id="id5">Typedefs</a></p></li>
 </ul>
 </div>
 <div class="section" id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="structbasalt_1_1Status.html#exhale-struct-structbasalt-1-1status"><span class="std std-ref">Struct Status</span></a></li>
-<li><a class="reference internal" href="classbasalt_1_1Edges.html#exhale-class-classbasalt-1-1edges"><span class="std std-ref">Class Edges</span></a></li>
-<li><a class="reference internal" href="classbasalt_1_1Graph.html#exhale-class-classbasalt-1-1graph"><span class="std std-ref">Class Graph</span></a></li>
-<li><a class="reference internal" href="classbasalt_1_1VertexIterator.html#exhale-class-classbasalt-1-1vertexiterator"><span class="std std-ref">Class VertexIterator</span></a></li>
-<li><a class="reference internal" href="classbasalt_1_1Vertices.html#exhale-class-classbasalt-1-1vertices"><span class="std std-ref">Class Vertices</span></a></li>
+<li><p><a class="reference internal" href="structbasalt_1_1Status.html#exhale-struct-structbasalt-1-1status"><span class="std std-ref">Struct Status</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#exhale-class-classbasalt-1-1edgeiterator"><span class="std std-ref">Class EdgeIterator</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1Edges.html#exhale-class-classbasalt-1-1edges"><span class="std std-ref">Template Class Edges</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1Graph.html#exhale-class-classbasalt-1-1graph"><span class="std std-ref">Template Class Graph</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1GraphImpl.html#exhale-class-classbasalt-1-1graphimpl"><span class="std std-ref">Template Class GraphImpl</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1VertexIterator.html#exhale-class-classbasalt-1-1vertexiterator"><span class="std std-ref">Class VertexIterator</span></a></p></li>
+<li><p><a class="reference internal" href="classbasalt_1_1Vertices.html#exhale-class-classbasalt-1-1vertices"><span class="std std-ref">Template Class Vertices</span></a></p></li>
+</ul>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#exhale-enum-fwd-8hpp-1a0db75f518986b127ba62beba1a517bf3"><span class="std std-ref">Enum EdgeOrientation</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="functions">
 <h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2.html#exhale-function-graph-8hpp-1a2c62ae82b920bd5e72c228541cac0ce2"><span class="std std-ref">Function basalt::make_id</span></a></li>
+<li><p><a class="reference internal" href="function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2.html#exhale-function-graph-8hpp-1a2c62ae82b920bd5e72c228541cac0ce2"><span class="std std-ref">Function basalt::make_id</span></a></p></li>
 </ul>
 </div>
 <div class="section" id="typedefs">
 <h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#exhale-typedef-fwd-8hpp-1a59a98d91f23e0047afa9a057b3cfb7cc"><span class="std std-ref">Typedef basalt::edge_uid_t</span></a></li>
-<li><a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#exhale-typedef-fwd-8hpp-1ab2c428ebed712d45856d370722d0cd17"><span class="std std-ref">Typedef basalt::vertex_id_t</span></a></li>
-<li><a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#exhale-typedef-fwd-8hpp-1a473d7e62a9171f4d949cc15f70c3e89e"><span class="std std-ref">Typedef basalt::vertex_t</span></a></li>
-<li><a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#exhale-typedef-fwd-8hpp-1a1184bfd9f51a8686000de3b523862935"><span class="std std-ref">Typedef basalt::vertex_uid_t</span></a></li>
-<li><a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#exhale-typedef-fwd-8hpp-1a1b8cdd0a34702f61cce7674ac6b33b85"><span class="std std-ref">Typedef basalt::vertex_uids_t</span></a></li>
+<li><p><a class="reference internal" href="typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7.html#exhale-typedef-graph-8hpp-1abfdd634bcaf4b3d33b4c3c0cbfa865a7"><span class="std std-ref">Typedef basalt::DirectedGraph</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#exhale-typedef-fwd-8hpp-1a59a98d91f23e0047afa9a057b3cfb7cc"><span class="std std-ref">Typedef basalt::edge_uid_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_graph_8hpp_1a5419ef6e4f9754aa6afd363350a8e572.html#exhale-typedef-graph-8hpp-1a5419ef6e4f9754aa6afd363350a8e572"><span class="std std-ref">Typedef basalt::UndirectedGraph</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#exhale-typedef-fwd-8hpp-1ab2c428ebed712d45856d370722d0cd17"><span class="std std-ref">Typedef basalt::vertex_id_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#exhale-typedef-fwd-8hpp-1a473d7e62a9171f4d949cc15f70c3e89e"><span class="std std-ref">Typedef basalt::vertex_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#exhale-typedef-fwd-8hpp-1a1184bfd9f51a8686000de3b523862935"><span class="std std-ref">Typedef basalt::vertex_uid_t</span></a></p></li>
+<li><p><a class="reference internal" href="typedef_fwd_8hpp_1a1b8cdd0a34702f61cce7674ac6b33b85.html#exhale-typedef-fwd-8hpp-1a1b8cdd0a34702f61cce7674ac6b33b85"><span class="std std-ref">Typedef basalt::vertex_uids_t</span></a></p></li>
 </ul>
 </div>
 </div>

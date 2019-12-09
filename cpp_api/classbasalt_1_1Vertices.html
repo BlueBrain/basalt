@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Class Vertices &mdash; Basalt 0.2.3 documentation</title>
+  <title>Template Class Vertices &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Function basalt::make_id" href="function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2.html" />
+    <link rel="next" title="Enum EdgeOrientation" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html" />
     <link rel="prev" title="Class VertexIterator" href="classbasalt_1_1VertexIterator.html" /> 
 </head>
 
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,12 +87,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -100,7 +101,16 @@
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -153,7 +163,7 @@
         
           <li><a href="library_root.html">C++ API</a> &raquo;</li>
         
-      <li>Class Vertices</li>
+      <li>Template Class Vertices</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -172,26 +182,25 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="class-vertices">
-<span id="exhale-class-classbasalt-1-1vertices"></span><h1>Class Vertices<a class="headerlink" href="#class-vertices" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="template-class-vertices">
+<span id="exhale-class-classbasalt-1-1vertices"></span><h1>Template Class Vertices<a class="headerlink" href="#template-class-vertices" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li>Defined in <a class="reference internal" href="file_include_basalt_vertices.hpp.html#file-include-basalt-vertices-hpp"><span class="std std-ref">File vertices.hpp</span></a></li>
+<li><p>Defined in <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-fwd-hpp"><span class="std std-ref">File fwd.hpp</span></a></p></li>
 </ul>
 <div class="section" id="class-documentation">
 <h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
-<dt id="_CPPv4N6basalt8VerticesE">
-<span id="_CPPv3N6basalt8VerticesE"></span><span id="_CPPv2N6basalt8VerticesE"></span><span id="basalt::Vertices"></span><span class="target" id="classbasalt_1_1Vertices"></span><em class="property">class </em><code class="descname">Vertices</code><a class="headerlink" href="#_CPPv4N6basalt8VerticesE" title="Permalink to this definition">¶</a><br /></dt>
+<dt id="_CPPv4I_15EdgeOrientationEN6basalt8VerticesE">
+<span id="_CPPv3I_15EdgeOrientationEN6basalt8VerticesE"></span><span id="_CPPv2I_15EdgeOrientationEN6basalt8VerticesE"></span><span class="target" id="classbasalt_1_1Vertices"></span>template&lt;<a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#_CPPv4N6basalt15EdgeOrientationE" title="basalt::EdgeOrientation">EdgeOrientation</a> <code class="descname">Orientation</code>&gt;<br /><em class="property">class </em><code class="descname">Vertices</code><a class="headerlink" href="#_CPPv4I_15EdgeOrientationEN6basalt8VerticesE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Manipulate graph vertices. </p>
 <div class="breathe-sectiondef docutils container">
 <p class="breathe-sectiondef-title rubric">Public Functions</p>
 <dl class="function">
-<dt id="_CPPv4N6basalt8Vertices8VerticesER9GraphImpl">
-<span id="_CPPv3N6basalt8Vertices8VerticesER9GraphImpl"></span><span id="_CPPv2N6basalt8Vertices8VerticesER9GraphImpl"></span><span id="basalt::Vertices::Vertices__GraphImplR"></span><span class="target" id="classbasalt_1_1Vertices_1a0fa6a76e8bbec5e2e8d559d1f3af0875"></span><code class="descname">Vertices</code><span class="sig-paren">(</span>GraphImpl &amp;<em>pimpl</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices8VerticesER9GraphImpl" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Build a <em><a class="reference internal" href="#classbasalt_1_1Vertices"><span class="std std-ref">Vertices</span></a></em> <dl class="docutils">
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </li>
+<dt id="_CPPv4N6basalt8Vertices8VerticesER9GraphImplI11OrientationE">
+<span id="_CPPv3N6basalt8Vertices8VerticesER9GraphImplI11OrientationE"></span><span id="_CPPv2N6basalt8Vertices8VerticesER9GraphImplI11OrientationE"></span><span id="basalt::Vertices::Vertices__GraphImpl:Orientation:R"></span><span class="target" id="classbasalt_1_1Vertices_1ac1c4d61185b2056b3b92d60fb415cf6c"></span><code class="descname">Vertices</code><span class="sig-paren">(</span><a class="reference internal" href="classbasalt_1_1GraphImpl.html#_CPPv4I_15EdgeOrientationEN6basalt9GraphImplE" title="basalt::GraphImpl">GraphImpl</a>&lt;Orientation&gt; &amp;<em>pimpl</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices8VerticesER9GraphImplI11OrientationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Build a <em><a class="reference internal" href="#classbasalt_1_1Vertices"><span class="std std-ref">Vertices</span></a></em> <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">pimpl</span></code>: Pointer to implementation </p></li>
 </ul>
 </dd>
 </dl>
@@ -200,14 +209,13 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices5beginENSt6size_tE">
-<span id="_CPPv3NK6basalt8Vertices5beginENSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5beginENSt6size_tE"></span><span id="basalt::Vertices::begin__std::sC"></span><span class="target" id="classbasalt_1_1Vertices_1a6300c7563f77d8277b47d1fb07ce0c70"></span><a class="reference internal" href="classbasalt_1_1VertexIterator.html#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> <code class="descname">begin</code><span class="sig-paren">(</span>std::size_t <em>position</em> = 0<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5beginENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt8Vertices5beginENSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5beginENSt6size_tE"></span><span id="basalt::Vertices::begin__std::sC"></span><span class="target" id="classbasalt_1_1Vertices_1af911ba790339be4a6fa69dd4ac785301"></span><a class="reference internal" href="classbasalt_1_1VertexIterator.html#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> <code class="descname">begin</code><span class="sig-paren">(</span>std::size_t <em>position</em> = 0<span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5beginENSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Iterate over vertices. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>vertex iterator </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">position</span></code>: starting position, default at the beginning </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>vertex iterator </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">position</span></code>: starting position, default at the beginning </p></li>
 </ul>
 </dd>
 </dl>
@@ -216,24 +224,23 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices3endEv">
-<span id="_CPPv3NK6basalt8Vertices3endEv"></span><span id="_CPPv2NK6basalt8Vertices3endEv"></span><span id="basalt::Vertices::endC"></span><span class="target" id="classbasalt_1_1Vertices_1addb3f6c4792c61a049340af98a2b0654"></span><a class="reference internal" href="classbasalt_1_1VertexIterator.html#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> <code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3endEv" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>an iterator referring to the past-the-end </dd>
+<span id="_CPPv3NK6basalt8Vertices3endEv"></span><span id="_CPPv2NK6basalt8Vertices3endEv"></span><span id="basalt::Vertices::endC"></span><span class="target" id="classbasalt_1_1Vertices_1a61ddfe667af527a2aac0d952dbd38dd9"></span><a class="reference internal" href="classbasalt_1_1VertexIterator.html#_CPPv4N6basalt14VertexIteratorE" title="basalt::VertexIterator">VertexIterator</a> <code class="descname">end</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3endEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>an iterator referring to the past-the-end </p>
+</dd>
 </dl>
 </p>
 </dd></dl>
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices5countERNSt6size_tE">
-<span id="_CPPv3NK6basalt8Vertices5countERNSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5countERNSt6size_tE"></span><span id="basalt::Vertices::count__std::sRC"></span><span class="target" id="classbasalt_1_1Vertices_1ab2b9c1e6afc1fdc582cbdc750c3c26f3"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span>std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5countERNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt8Vertices5countERNSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5countERNSt6size_tE"></span><span id="basalt::Vertices::count__std::sRC"></span><span class="target" id="classbasalt_1_1Vertices_1a251a65ab3103ce6521e994ac6a8da073"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span>std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5countERNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get number of vertices in the graph </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function with the number of vertices in the graph </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function with the number of vertices in the graph </p></li>
 </ul>
 </dd>
 </dl>
@@ -242,15 +249,14 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices5countE8vertex_tRNSt6size_tE">
-<span id="_CPPv3NK6basalt8Vertices5countE8vertex_tRNSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5countE8vertex_tRNSt6size_tE"></span><span id="basalt::Vertices::count__vertex_t.std::sRC"></span><span class="target" id="classbasalt_1_1Vertices_1a24f4aab66fd34a2cd2c6aeaacb46f7be"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span><a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5countE8vertex_tRNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt8Vertices5countE8vertex_tRNSt6size_tE"></span><span id="_CPPv2NK6basalt8Vertices5countE8vertex_tRNSt6size_tE"></span><span id="basalt::Vertices::count__vertex_t.std::sRC"></span><span class="target" id="classbasalt_1_1Vertices_1a59e6f2184dfd8be2d0759f00f291f5a5"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">count</code><span class="sig-paren">(</span><a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> <em>type</em>, std::size_t &amp;<em>count</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices5countE8vertex_tRNSt6size_tE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>get number of vertices of a certain type in the graph </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">type</span></code>: type of vertex </li>
-<li><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">type</span></code>: type of vertex </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code>: non-const reference updated by this member function </p></li>
 </ul>
 </dd>
 </dl>
@@ -259,14 +265,13 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt8Vertices5clearEb">
-<span id="_CPPv3N6basalt8Vertices5clearEb"></span><span id="_CPPv2N6basalt8Vertices5clearEb"></span><span id="basalt::Vertices::clear__b"></span><span class="target" id="classbasalt_1_1Vertices_1aee6c15ee5940c621835fe1b8fa671985"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">clear</code><span class="sig-paren">(</span>bool <em>commit</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices5clearEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt8Vertices5clearEb"></span><span id="_CPPv2N6basalt8Vertices5clearEb"></span><span id="basalt::Vertices::clear__b"></span><span class="target" id="classbasalt_1_1Vertices_1a2ac625d0e14b4ab9a20a7ad3c71b411f"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">clear</code><span class="sig-paren">(</span>bool <em>commit</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices5clearEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Remove all vertices of the graph along with their edges. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -275,15 +280,14 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tb">
-<span id="_CPPv3N6basalt8Vertices6insertERK12vertex_uid_tb"></span><span id="_CPPv2N6basalt8Vertices6insertERK12vertex_uid_tb"></span><span id="basalt::Vertices::insert__vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Vertices_1ae1ac171509311c14bcf4d651eaa52acc"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt8Vertices6insertERK12vertex_uid_tb"></span><span id="_CPPv2N6basalt8Vertices6insertERK12vertex_uid_tb"></span><span id="basalt::Vertices::insert__vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Vertices_1ab5200c83faccbfb9ae12277e3a7a50eb"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Insert a vertex in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex unique identifier to insert </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex unique identifier to insert </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -292,21 +296,19 @@
 
 <dl class="function">
 <dt id="_CPPv4I0EN6basalt8Vertices6insertE6StatusRK12vertex_uid_tRK7Payloadb">
-<span id="_CPPv3I0EN6basalt8Vertices6insertERK12vertex_uid_tRK7Payloadb"></span><span id="_CPPv2I0EN6basalt8Vertices6insertERK12vertex_uid_tRK7Payloadb"></span><span class="target" id="classbasalt_1_1Vertices_1a5e30982229d1104dad8b8c6125f9d72a"></span>template&lt;typename <code class="descname">Payload</code>&gt;<br /><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN6basalt8Vertices6insertE6StatusRK12vertex_uid_tRK7Payloadb" title="basalt::Vertices::insert::Payload">Payload</a> &amp;<em>data</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN6basalt8Vertices6insertE6StatusRK12vertex_uid_tRK7Payloadb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3I0EN6basalt8Vertices6insertERK12vertex_uid_tRK7Payloadb"></span><span id="_CPPv2I0EN6basalt8Vertices6insertERK12vertex_uid_tRK7Payloadb"></span><span class="target" id="classbasalt_1_1Vertices_1a605455df393ebdbcc51508c9d9ced65f"></span>template&lt;typename <code class="descname">Payload</code>&gt;<br /><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4I0EN6basalt8Vertices6insertE6StatusRK12vertex_uid_tRK7Payloadb" title="basalt::Vertices::insert::Payload">Payload</a> &amp;<em>data</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4I0EN6basalt8Vertices6insertE6StatusRK12vertex_uid_tRK7Payloadb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Insert a vertex in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Template Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span></code>: vertex payload type </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">Payload</span></code>: vertex payload type </p></li>
 </ul>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex unique identifier to insert </li>
-<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: vertex payload </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex unique identifier to insert </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: vertex payload </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -315,22 +317,16 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb">
-<span id="_CPPv3N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb"></span><span id="_CPPv2N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb"></span><span id="basalt::Vertices::insert__vertex_uid_tCR.cCP.std::s.b"></span><span class="target" id="classbasalt_1_1Vertices_1a2a637ae9053f39ecc38b87b8e3a76c31"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb"></span><span id="_CPPv2N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb"></span><span id="basalt::Vertices::insert__vertex_uid_tCR.cCP.std::s.b"></span><span class="target" id="classbasalt_1_1Vertices_1a6014f1f443f5a8cb29720fa36fab547d"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <em class="property">const</em> char *<em>data</em>, std::size_t <em>size</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertERK12vertex_uid_tPKcNSt6size_tEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Insert a vertex in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Template Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span></code>: vertex payload type </li>
-</ul>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: vertex unique identifier to insert </li>
-<li><code class="docutils literal notranslate"><span class="pre">data</span></code>: vertex payload </li>
-<li><code class="docutils literal notranslate"><span class="pre">size</span></code>: payload length </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: vertex unique identifier to insert </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: vertex payload </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">size</span></code>: payload length </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -339,19 +335,18 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb">
-<span id="_CPPv3N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb"></span><span id="_CPPv2N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb"></span><span id="basalt::Vertices::insert__vertex_tCP.vertex_id_tCP.cCPCP.std::sCP.s.b"></span><span class="target" id="classbasalt_1_1Vertices_1a3e7b1f8e5a23f95a47537022397f2a78"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> *<em>types</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#_CPPv4N6basalt11vertex_id_tE" title="basalt::vertex_id_t">vertex_id_t</a> *<em>ids</em>, <em class="property">const</em> char *<em class="property">const</em> *<em>payloads</em>, <em class="property">const</em> std::size_t *<em>payloads_sizes</em>, size_t <em>num_vertices</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb"></span><span id="_CPPv2N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb"></span><span id="basalt::Vertices::insert__vertex_tCP.vertex_id_tCP.cCPCP.std::sCP.s.b"></span><span class="target" id="classbasalt_1_1Vertices_1aa83a33f58ad50869ad0749fe839753d9"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">insert</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a473d7e62a9171f4d949cc15f70c3e89e.html#_CPPv4N6basalt8vertex_tE" title="basalt::vertex_t">vertex_t</a> *<em>types</em>, <em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1ab2c428ebed712d45856d370722d0cd17.html#_CPPv4N6basalt11vertex_id_tE" title="basalt::vertex_id_t">vertex_id_t</a> *<em>ids</em>, <em class="property">const</em> char *<em class="property">const</em> *<em>payloads</em>, <em class="property">const</em> std::size_t *<em>payloads_sizes</em>, size_t <em>num_vertices</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices6insertEPK8vertex_tPK11vertex_id_tPPCKcPKNSt6size_tE6size_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Insert a list of vertices all at once. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">types</span></code>: array of vertex types </li>
-<li><code class="docutils literal notranslate"><span class="pre">ids</span></code>: array of vertex identifiers </li>
-<li><code class="docutils literal notranslate"><span class="pre">payloads</span></code>: array of serialized data, <em>nullptr</em> if none of the vertices have a payload </li>
-<li><code class="docutils literal notranslate"><span class="pre">payloads_sizes</span></code>: size of every payloads, <em>nullptr</em> if none of the vertex have a payload </li>
-<li><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of vertexs to insert </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">types</span></code>: array of vertex types </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ids</span></code>: array of vertex identifiers </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payloads</span></code>: array of serialized data, <em>nullptr</em> if none of the vertices have a payload </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payloads_sizes</span></code>: size of every payloads, <em>nullptr</em> if none of the vertex have a payload </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_vertices</span></code>: number of vertexs to insert </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -360,20 +355,18 @@
 
 <dl class="function">
 <dt id="_CPPv4I0ENK6basalt8Vertices3getE6StatusRK12vertex_uid_tR1T">
-<span id="_CPPv3I0ENK6basalt8Vertices3getERK12vertex_uid_tR1T"></span><span id="_CPPv2I0ENK6basalt8Vertices3getERK12vertex_uid_tR1T"></span><span class="target" id="classbasalt_1_1Vertices_1a1904768bcd00c0b50b2029ccf35b4f3d"></span>template&lt;typename <code class="descname">T</code>&gt;<br /><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="#_CPPv4I0ENK6basalt8Vertices3getE6StatusRK12vertex_uid_tR1T" title="basalt::Vertices::get::T">T</a> &amp;<em>payload</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK6basalt8Vertices3getE6StatusRK12vertex_uid_tR1T" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3I0ENK6basalt8Vertices3getERK12vertex_uid_tR1T"></span><span id="_CPPv2I0ENK6basalt8Vertices3getERK12vertex_uid_tR1T"></span><span class="target" id="classbasalt_1_1Vertices_1ab21ae091857ee1e5c1614cfd617f615d"></span>template&lt;typename <code class="descname">T</code>&gt;<br /><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, <a class="reference internal" href="#_CPPv4I0ENK6basalt8Vertices3getE6StatusRK12vertex_uid_tR1T" title="basalt::Vertices::get::T">T</a> &amp;<em>payload</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4I0ENK6basalt8Vertices3getE6StatusRK12vertex_uid_tR1T" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieve a vertex from the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Template Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">T</span></code>: vertex payload type </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Template Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">T</span></code>: vertex payload type </p></li>
 </ul>
 </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to retrieve </li>
-<li><code class="docutils literal notranslate"><span class="pre">payload</span></code>: object updated if vertex is present </li>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to retrieve </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">payload</span></code>: object updated if vertex is present </p></li>
 </ul>
 </dd>
 </dl>
@@ -382,15 +375,14 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE">
-<span id="_CPPv3NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE"></span><span id="_CPPv2NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE"></span><span id="basalt::Vertices::get__vertex_uid_tCR.ssPC"></span><span class="target" id="classbasalt_1_1Vertices_1af2891c039df982d0d2cefd3caa14a3f7"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, std::string *<em>value</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE"></span><span id="_CPPv2NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE"></span><span id="basalt::Vertices::get__vertex_uid_tCR.ssPC"></span><span class="target" id="classbasalt_1_1Vertices_1a562db545898a19e2db8fbaec65cdcb21"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">get</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, std::string *<em>value</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3getERK12vertex_uid_tPNSt6stringE" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Retrieve a vertex payload. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to retrieve </li>
-<li><code class="docutils literal notranslate"><span class="pre">value</span></code>: payload object updated if vertex exists and has an associated payload </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to retrieve </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">value</span></code>: payload object updated if vertex exists and has an associated payload </p></li>
 </ul>
 </dd>
 </dl>
@@ -399,15 +391,14 @@
 
 <dl class="function">
 <dt id="_CPPv4NK6basalt8Vertices3hasERK12vertex_uid_tRb">
-<span id="_CPPv3NK6basalt8Vertices3hasERK12vertex_uid_tRb"></span><span id="_CPPv2NK6basalt8Vertices3hasERK12vertex_uid_tRb"></span><span id="basalt::Vertices::has__vertex_uid_tCR.bRC"></span><span class="target" id="classbasalt_1_1Vertices_1a2c16a18e561bad968e954fdc98f040b2"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">has</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool &amp;<em>result</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3hasERK12vertex_uid_tRb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3NK6basalt8Vertices3hasERK12vertex_uid_tRb"></span><span id="_CPPv2NK6basalt8Vertices3hasERK12vertex_uid_tRb"></span><span id="basalt::Vertices::has__vertex_uid_tCR.bRC"></span><span class="target" id="classbasalt_1_1Vertices_1a013adc32b081c1ce14f8506a29f39ad4"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">has</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool &amp;<em>result</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK6basalt8Vertices3hasERK12vertex_uid_tRb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Check presence of a vertex in the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation managed to update <em>result</em> </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to look for </li>
-<li><code class="docutils literal notranslate"><span class="pre">result</span></code>: reference set to true if vertex exists, false otherwise </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation managed to update <em>result</em> </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to look for </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result</span></code>: reference set to true if vertex exists, false otherwise </p></li>
 </ul>
 </dd>
 </dl>
@@ -416,15 +407,14 @@
 
 <dl class="function">
 <dt id="_CPPv4N6basalt8Vertices5eraseERK12vertex_uid_tb">
-<span id="_CPPv3N6basalt8Vertices5eraseERK12vertex_uid_tb"></span><span id="_CPPv2N6basalt8Vertices5eraseERK12vertex_uid_tb"></span><span id="basalt::Vertices::erase__vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Vertices_1aefd5eeedff0df0981b87b18c04487d25"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices5eraseERK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
+<span id="_CPPv3N6basalt8Vertices5eraseERK12vertex_uid_tb"></span><span id="_CPPv2N6basalt8Vertices5eraseERK12vertex_uid_tb"></span><span id="basalt::Vertices::erase__vertex_uid_tCR.b"></span><span class="target" id="classbasalt_1_1Vertices_1ad8eb6bcf1892bbb8db779dc48ddaed29"></span><a class="reference internal" href="structbasalt_1_1Status.html#_CPPv4N6basalt6StatusE" title="basalt::Status">Status</a> <code class="descname">erase</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="typedef_fwd_8hpp_1a1184bfd9f51a8686000de3b523862935.html#_CPPv4N6basalt12vertex_uid_tE" title="basalt::vertex_uid_t">vertex_uid_t</a> &amp;<em>vertex</em>, bool <em>commit</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N6basalt8Vertices5eraseERK12vertex_uid_tb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Remove a vertex from the graph. </p>
-<p><dl class="docutils">
-<dt><strong>Return</strong></dt>
-<dd>information whether operation succeeded or not </dd>
-<dt><strong>Parameters</strong></dt>
-<dd><ul class="breatheparameterlist first last simple">
-<li><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to remove </li>
-<li><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </li>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>information whether operation succeeded or not </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">vertex</span></code>: the vertex to remove </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">commit</span></code>: whether uncommitted operations should be flushed or not </p></li>
 </ul>
 </dd>
 </dl>
@@ -445,7 +435,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="function_graph_8hpp_1a2c62ae82b920bd5e72c228541cac0ce2.html" class="btn btn-neutral float-right" title="Function basalt::make_id" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html" class="btn btn-neutral float-right" title="Enum EdgeOrientation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="classbasalt_1_1VertexIterator.html" class="btn btn-neutral float-left" title="Class VertexIterator" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -1,0 +1,428 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Contribution Guide &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python package" href="modules.html" />
+    <link rel="prev" title="Graphs" href="contents/graphs.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="contents/graphs.html">Graphs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#submission-guidelines">Submission Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#issues">Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-requests">Pull Requests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#after-your-pull-request-is-merged">After your pull request is merged</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#development">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#coding-conventions">Coding conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#wrap-up">Wrap up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#memory-leaks-and-clang-tidy">Memory Leaks and clang-tidy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#release">Release</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpp_api/library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Contribution Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/contributing.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="contribution-guide">
+<h1>Contribution Guide<a class="headerlink" href="#contribution-guide" title="Permalink to this headline">¶</a></h1>
+<p>We would love for you to contribute to the basalt project and help make it better than it is today.
+As a contributor, here are the guidelines we would like you to follow:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#got-a-question">Question or Problem?</a></p></li>
+<li><p><a class="reference external" href="#found-a-bug">Issues and Bugs</a></p></li>
+<li><p><a class="reference external" href="#missing-a-feature">Feature Requests</a></p></li>
+<li><p><a class="reference external" href="#submission-guidelines">Submissions</a></p></li>
+<li><p><a class="reference external" href="#development">Development Guidelines</a></p></li>
+<li><p><a class="reference external" href="#release">Release Procedure</a></p></li>
+</ul>
+</div>
+<div class="section" id="got-a-question">
+<h1>Got a Question?<a class="headerlink" href="#got-a-question" title="Permalink to this headline">¶</a></h1>
+<p>Please do not hesitate to raise an issue on <a class="reference external" href="https://github.com/tristan0x/basalt">github project page</a>.</p>
+</div>
+<div class="section" id="found-a-bug">
+<h1>Found a Bug?<a class="headerlink" href="#found-a-bug" title="Permalink to this headline">¶</a></h1>
+<p>If you find a bug in the source code, you can help us by <a class="reference external" href="#issues">submitting an issue</a> to our <a class="reference external" href="https://github.com/tristan0x/basalt">GitHub Repository</a>. Even better, you can <a class="reference external" href="#pull-requests">submit a Pull Request</a> with a fix.</p>
+</div>
+<div class="section" id="missing-a-feature">
+<h1>Missing a Feature?<a class="headerlink" href="#missing-a-feature" title="Permalink to this headline">¶</a></h1>
+<p>You can <em>request</em> a new feature by <a class="reference external" href="#issues">submitting an issue</a> to our GitHub Repository. If you would like to <em>implement</em> a new feature, please submit an issue with a proposal for your work first, to be sure that we can use it.</p>
+<p>Please consider what kind of change it is:</p>
+<ul class="simple">
+<li><p>For a <strong>Major Feature</strong>, first open an issue and outline your proposal so that it can be
+discussed. This will also allow us to better coordinate our efforts, prevent duplication of work,
+and help you to craft the change so that it is successfully accepted into the project.</p></li>
+<li><p><strong>Small Features</strong> can be crafted and directly <a class="reference external" href="#pull-requests">submitted as a Pull Request</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="submission-guidelines">
+<h1>Submission Guidelines<a class="headerlink" href="#submission-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="issues">
+<h2>Issues<a class="headerlink" href="#issues" title="Permalink to this headline">¶</a></h2>
+<p>Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the
+discussion might inform you of workarounds readily available.</p>
+<p>We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it. In order to reproduce bugs we will need as much information as possible, and preferably with an example.</p>
+</div>
+<div class="section" id="pull-requests">
+<h2>Pull Requests<a class="headerlink" href="#pull-requests" title="Permalink to this headline">¶</a></h2>
+<p>When you wish to contribute to the code base, please consider the following guidelines:</p>
+<ul>
+<li><p>Make a <a class="reference external" href="https://guides.github.com/activities/forking/">fork</a> of this repository.</p></li>
+<li><p>Make your changes in your fork, in a new git branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout -b my-fix-branch master
+</pre></div>
+</div>
+</li>
+<li><p>Create your patch, <strong>including appropriate test cases</strong>.</p></li>
+<li><p>Enable CMake environment variables <code class="docutils literal notranslate"><span class="pre">Basalt_FORMATTING</span></code>
+and <code class="docutils literal notranslate"><span class="pre">Basalt_PRECOMMIT</span></code> to ensure that your contribution complies
+with the coding conventions of this project.
+Please check the coding <a class="reference external" href="#coding-conventions">conventions</a> for more information.</p></li>
+<li><p>Run the full test suite, and ensure that all tests pass.</p></li>
+<li><p>Commit your changes using a descriptive commit message.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git commit -a
+</pre></div>
+</div>
+</li>
+<li><p>Push your branch to GitHub:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git push origin my-fix-branch
+</pre></div>
+</div>
+</li>
+<li><p>In GitHub, send a Pull Request to the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch of the upstream repository of the relevant component.</p></li>
+<li><p>If we suggest changes then:</p>
+<ul>
+<li><p>Make the required updates.</p></li>
+<li><p>Re-run the test suites to ensure tests are still passing.</p></li>
+<li><p>Rebase your branch and force push to your GitHub repository (this will update your Pull Request):</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git rebase master -i
+git push -f
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<p>That’s it! Thank you for your contribution!</p>
+<div class="section" id="after-your-pull-request-is-merged">
+<h3>After your pull request is merged<a class="headerlink" href="#after-your-pull-request-is-merged" title="Permalink to this headline">¶</a></h3>
+<p>After your pull request is merged, you can safely delete your branch and pull the changes from the main (upstream)
+repository:</p>
+<ul>
+<li><p>Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git push origin --delete my-fix-branch
+</pre></div>
+</div>
+</li>
+<li><p>Check out the master branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git checkout master -f
+</pre></div>
+</div>
+</li>
+<li><p>Delete the local branch:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git branch -D my-fix-branch
+</pre></div>
+</div>
+</li>
+<li><p>Update your master with the latest upstream version:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git pull --ff upstream master
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="development">
+<h1>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h1>
+<p>During the development phase, it is recommended to install basalt in
+editable mode with pip (see pip install <code class="docutils literal notranslate"><span class="pre">--editable</span></code> option).</p>
+<div class="section" id="coding-conventions">
+<h2>Coding conventions<a class="headerlink" href="#coding-conventions" title="Permalink to this headline">¶</a></h2>
+<p>Make sure to enable both <code class="docutils literal notranslate"><span class="pre">Basalt_FORMATTING</span></code> and <code class="docutils literal notranslate"><span class="pre">Basalt_PRECOMMIT</span></code>
+CMake variables to ensure that your contributions follow the coding conventions of this project:</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span>cmake -DBasalt_FORMATTING:BOOL=ON -DBasalt_PRECOMMIT:BOOL=ON &lt;path&gt;
+</pre></div>
+</div>
+<p>The first variable provides the following additional targets to format
+C, C++, and CMake files:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>make clang-format cmake-format
+</pre></div>
+</div>
+<p>The second option activates Git hooks that will discard commits that
+do not comply with coding conventions of this project. These 2 CMake variables require additional utilities:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://releases.llvm.org/7.0.0/tools/clang/docs/ClangFormat.html">ClangFormat 7</a></p></li>
+<li><p><a class="reference external" href="https://github.com/cheshirekow/cmake_format">cmake-format</a></p></li>
+<li><p><a class="reference external" href="https://pre-commit.com/">pre-commit</a></p></li>
+</ul>
+<p>clang-format can be installed on Linux thanks
+to <a class="reference external" href="http://apt.llvm.org/">LLVM apt page</a>. On MacOS, there is a
+<a class="reference external" href="https://gist.github.com/ffeu/0460bb1349fa7e4ab4c459a6192cbb25">brew recipe</a>
+to install clang-format 7. <em>cmake-format</em> and <em>pre-commit</em> utilities can be installed with <em>pip</em>.</p>
+</div>
+<div class="section" id="wrap-up">
+<h2>Wrap up<a class="headerlink" href="#wrap-up" title="Permalink to this headline">¶</a></h2>
+<p>When your contribution is ready and tests pass, then you can
+execute the <code class="docutils literal notranslate"><span class="pre">dev/travis-build</span></code> script to foresee issues in the
+Python package that may happen during the continuous integration
+process later on.</p>
+</div>
+<div class="section" id="memory-leaks-and-clang-tidy">
+<h2>Memory Leaks and clang-tidy<a class="headerlink" href="#memory-leaks-and-clang-tidy" title="Permalink to this headline">¶</a></h2>
+<p>Additionally, to perform memory checking over unit-tests with valgrind,
+C++ and CMake code formatting checks, as well as C++ static analysis
+check at once, execute the script as follow:
+<code class="docutils literal notranslate"><span class="pre">CHECK_NATIVE=yes</span> <span class="pre">dev/travis-build</span></code></p>
+<p>To perform the checks manually, run the corresponding commands from
+cmake build directory:</p>
+<ul class="simple">
+<li><p>memory check: <code class="docutils literal notranslate"><span class="pre">ctest</span> <span class="pre">-VV</span> <span class="pre">--output-on-failure</span> <span class="pre">-T</span> <span class="pre">memcheck</span></code></p></li>
+<li><p>C++ code formatting check: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check-clang-format</span></code>
+(<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clang-format</span></code> to fix it)</p></li>
+<li><p>CMake code formatting check: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">check-cmake-format</span></code>
+(<code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">cmake-format</span></code> to fix it)</p></li>
+<li><p>C++ static analysis check: <code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">clang-tidy</span></code></p></li>
+</ul>
+<p>If you want to enable <code class="docutils literal notranslate"><span class="pre">clang-tidy</span></code> checks with CMake, make sure to have <code class="docutils literal notranslate"><span class="pre">CMake</span> <span class="pre">&gt;=</span> <span class="pre">3.5</span></code> and use following cmake option:</p>
+<div class="highlight-guess notranslate"><div class="highlight"><pre><span></span>cmake .. -DENABLE_CLANG_TIDY=ON
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="release">
+<h1>Release<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><p>Build and test from scratch: <code class="docutils literal notranslate"><span class="pre">tox</span> <span class="pre">-r</span></code></p></li>
+<li><p>Run benchmarks in <code class="docutils literal notranslate"><span class="pre">tests/benchmarks</span></code> and ensure there is no regression.</p></li>
+<li><p>Create a git tag.</p></li>
+<li><p>Create source distribution: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">sdist</span></code></p></li>
+<li><p>Test installation with pip within a Docker container:
+<code class="docutils literal notranslate"><span class="pre">dev/check-source-distribution</span> <span class="pre">dist/basalt-VERSION.tar.gz</span></code></p></li>
+<li><p>Build documentation and update the <em>gh-pages</em> accordingly.</p></li>
+<li><p>Upload source distribution on pypi:
+<code class="docutils literal notranslate"><span class="pre">twine</span> <span class="pre">upload</span> <span class="pre">-s</span> <span class="pre">basalt-VERSION.tar.gz</span></code></p></li>
+<li><p>Upload the tag: <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">--tags</span></code></p></li>
+<li><p>Create release on GitHub project.</p></li>
+</ol>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="modules.html" class="btn btn-neutral float-right" title="Python package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="contents/graphs.html" class="btn btn-neutral float-left" title="Graphs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

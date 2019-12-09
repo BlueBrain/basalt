@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Graphs &mdash; Basalt 0.2.3 documentation</title>
+  <title>Graphs &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -38,8 +38,8 @@
   <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="NGV" href="ngv.html" />
-    <link rel="prev" title="Introduction" href="../readme.html" /> 
+    <link rel="next" title="Contribution Guide" href="../contributing.html" />
+    <link rel="prev" title="Basalt - Graph Storage API for C++ and Python" href="../readme.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -63,7 +63,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -87,12 +87,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -105,7 +106,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#graph-class-generation">Graph Class Generation</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -179,54 +189,59 @@
 <h1>Graphs<a class="headerlink" href="#graphs" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="definition">
 <h2>Definition<a class="headerlink" href="#definition" title="Permalink to this headline">¶</a></h2>
-<p>Basalt allows manipulation of undirected graphs. A graph is made of vertices and edges.</p>
-<dl class="docutils">
-<dt>A vertex is made of:</dt>
-<dd><ul class="first last simple">
-<li>a type (<code class="docutils literal notranslate"><span class="pre">integer</span></code>)</li>
-<li>an identifier (<code class="docutils literal notranslate"><span class="pre">integer</span></code>)</li>
-<li>an optional payload</li>
+<p>Basalt allows manipulation of graphs. They can be directed or undirected.
+A graph is made of vertices and edges.</p>
+<dl class="simple">
+<dt>A vertex is made of:</dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>an Unique Identifier made of:</dt><dd><ul>
+<li><p>a type (<code class="docutils literal notranslate"><span class="pre">integer</span></code>)</p></li>
+<li><p>an identifier (<code class="docutils literal notranslate"><span class="pre">integer</span></code>)</p></li>
 </ul>
 </dd>
-<dt>An edge is made of:</dt>
-<dd><ul class="first last simple">
-<li>2 vertices identifiers</li>
-<li>an optional payload</li>
+</dl>
+</li>
+<li><p>an optional payload</p></li>
 </ul>
 </dd>
-<dt>A payload can be attached to vertices and edges</dt>
-<dd>Internally it is stored as
-a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray(dtype=numpy.byte)</span></code>, but multiple serialization methods
-to also support pickle serialization as well as payloads classes coming
-from Python bindings of the basalt C++ library.</dd>
+<dt>An edge is made of:</dt><dd><ul class="simple">
+<li><p>2 vertices unique identifiers</p></li>
+<li><p>an optional payload</p></li>
+</ul>
+</dd>
+<dt>A payload can be attached to vertices and edges</dt><dd><p>Internally a payload is stored as
+a <code class="docutils literal notranslate"><span class="pre">numpy.ndarray(dtype=numpy.byte)</span></code>, but it is possible to
+pass any object that supports pickle serialization</p>
+</dd>
 </dl>
 <p>Basalt Python package provides 2 graph API to use undirected graphs:</p>
 <ul class="simple">
-<li>low level bindings of the basalt C++ library.</li>
-<li>a graph class generation API to generate Python classes dedicated
-to a particular graph schema.</li>
+<li><p>low level bindings of the basalt C++ library.</p></li>
+<li><p>a graph class generation API to generate Python classes dedicated
+to a particular graph topology.</p></li>
 </ul>
 </div>
 <div class="section" id="python-bindings">
 <h2>Python bindings<a class="headerlink" href="#python-bindings" title="Permalink to this headline">¶</a></h2>
 <p>Basalt core is a C++ library that leverage rockdb to provide a graph oriented API.
 This library is exposed in Python through bindings. The best way to get started right now
-is to start reading reference documentation of <a class="reference internal" href="../basalt.html#basalt.Graph" title="basalt.Graph"><code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.Graph</span></code></a></p>
+is to start reading reference documentation of <a class="reference internal" href="../basalt.html#basalt.UndirectedGraph" title="basalt.UndirectedGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.UndirectedGraph</span></code></a></p>
 </div>
 <div class="section" id="graph-class-generation">
 <h2>Graph Class Generation<a class="headerlink" href="#graph-class-generation" title="Permalink to this headline">¶</a></h2>
 <p>Python bindings of C++ library are very low level, and is only about vertices and edges.
-Graph topology is not taken into account at all.</p>
-<p>This API allows one to define a Python graph class from its topology. For instance:</p>
+UndirectedGraph topology is not taken into account at all.</p>
+<p>This Python API allows one to define a Python graph class from its topology.
+For instance:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">enum</span> <span class="k">import</span> <span class="n">Enum</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">basalt.schema</span> <span class="k">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">basalt.topology</span> <span class="k">import</span> <span class="o">*</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Vertex</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">PERSON</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="gp">... </span>    <span class="n">SKILL</span> <span class="o">=</span> <span class="mi">2</span>
 <span class="gp">... </span>    <span class="n">CATEGORY</span> <span class="o">=</span> <span class="mi">3</span>
 <span class="go">&gt;&gt;&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Skills</span><span class="p">(</span><span class="n">MetaGraph</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Skills</span><span class="p">(</span><span class="n">Graph</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="n">vertex</span><span class="p">(</span><span class="s2">&quot;person&quot;</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">PERSON</span><span class="p">,</span> <span class="s2">&quot;pickle&quot;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">vertex</span><span class="p">(</span><span class="s2">&quot;skill&quot;</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">SKILL</span><span class="p">,</span> <span class="s2">&quot;pickle&quot;</span><span class="p">)</span>
 <span class="gp">... </span>    <span class="n">vertex</span><span class="p">(</span><span class="s2">&quot;category&quot;</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">CATEGORY</span><span class="p">,</span> <span class="s2">&quot;pickle&quot;</span><span class="p">,</span> <span class="s2">&quot;categories&quot;</span><span class="p">)</span>
@@ -236,15 +251,17 @@ Graph topology is not taken into account at all.</p>
 <span class="gp">... </span>    <span class="n">edge</span><span class="p">(</span><span class="n">Vertex</span><span class="o">.</span><span class="n">CATEGORY</span><span class="p">,</span> <span class="n">Vertex</span><span class="o">.</span><span class="n">CATEGORY</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><a class="reference internal" href="../basalt.html#module-basalt.schema" title="basalt.schema"><code class="xref py py-mod docutils literal notranslate"><span class="pre">basalt.schema</span></code></a> module provides 3 important symbols:</p>
+<p><a class="reference internal" href="../basalt.html#module-basalt.topology" title="basalt.topology"><code class="xref py py-mod docutils literal notranslate"><span class="pre">basalt.topology</span></code></a> module provides 4 important symbols:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../basalt.html#basalt.schema.vertex" title="basalt.schema.vertex"><code class="xref py py-func docutils literal notranslate"><span class="pre">basalt.schema.vertex()</span></code></a>: directive to declare a vertex. It take a name,
-an enum value type, and optional a serialization method.</li>
-<li><a class="reference internal" href="../basalt.html#basalt.schema.edge" title="basalt.schema.edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">basalt.schema.edge()</span></code></a>: a directive to specify a connection between 2 type of
+<li><p><a class="reference internal" href="../basalt.html#basalt.topology.vertex" title="basalt.topology.vertex"><code class="xref py py-func docutils literal notranslate"><span class="pre">basalt.topology.vertex()</span></code></a>: directive to declare a vertex. It take a name,
+an enum value type, and optional a serialization method.</p></li>
+<li><p><a class="reference internal" href="../basalt.html#basalt.topology.edge" title="basalt.topology.edge"><code class="xref py py-func docutils literal notranslate"><span class="pre">basalt.topology.edge()</span></code></a>: a directive to specify a connection between 2 type of
 vertices. Because an edge can also have a payload, a serialization method
-can also be given to the <cite>edge</cite> function.</li>
-<li><a class="reference internal" href="../basalt.html#basalt.schema.MetaGraph" title="basalt.schema.MetaGraph"><code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.schema.MetaGraph</span></code></a>: a base class having a custom metaclass that takes
-the directives below into account.</li>
+can also be given to the <cite>edge</cite> function.</p></li>
+<li><p><a class="reference internal" href="../basalt.html#basalt.topology.directed" title="basalt.topology.directed"><code class="xref py py-func docutils literal notranslate"><span class="pre">basalt.topology.directed()</span></code></a>: a directive to specify whether the graph is directed or not.
+Default is undirected.</p></li>
+<li><p><a class="reference internal" href="../basalt.html#basalt.topology.Graph" title="basalt.topology.Graph"><code class="xref py py-class docutils literal notranslate"><span class="pre">basalt.topology.Graph</span></code></a>: a base class having a custom metaclass that takes
+the directives below into account.</p></li>
 </ul>
 <p>The <cite>Skills</cite> class provides named methods to create vertices and edges so that it
 is not necessary to pass vertices and edges types anymore.</p>
@@ -262,13 +279,13 @@ or from a filesystem path.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Java identifier 0 does not conflict with</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Alice identifier because they have different types</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">g</span><span class="o">.</span><span class="n">skills</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;Java&quot;</span><span class="p">)</span>
-<span class="go">&lt;basalt.schema.SkillVertex...</span>
+<span class="go">&lt;basalt.topology.SkillVertex...</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alice</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">cpp</span><span class="p">)</span>
-<span class="go">&lt;basalt.schema.PersonVertex...</span>
+<span class="go">&lt;basalt.topology.PersonVertex...</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># or connect both from cpp identifier</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">alice</span><span class="o">.</span><span class="n">add_skill</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
-<span class="go">&lt;basalt.schema.PersonVertex...</span>
+<span class="go">&lt;basalt.topology.PersonVertex...</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">skill</span> <span class="ow">in</span> <span class="n">alice</span><span class="o">.</span><span class="n">skills</span><span class="p">:</span>
 <span class="gp">... </span>  <span class="nb">print</span><span class="p">(</span><span class="n">skill</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">skill</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
@@ -288,10 +305,10 @@ or from a filesystem path.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="ngv.html" class="btn btn-neutral float-right" title="NGV" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../contributing.html" class="btn btn-neutral float-right" title="Contribution Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../readme.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../readme.html" class="btn btn-neutral float-left" title="Basalt - Graph Storage API for C++ and Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

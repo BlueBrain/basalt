@@ -1,0 +1,13 @@
+.. _exhale_typedef_graph_8hpp_1acf94090430feb6b3b92429c79c751192:
+
+Typedef basalt::DirectedGraph
+=============================
+
+- Defined in :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp`
+
+
+Typedef Documentation
+---------------------
+
+
+.. doxygentypedef:: basalt::DirectedGraph

@@ -3,7 +3,7 @@
 Function operator<<(std::ostream&, const basalt::edge_uid_t&)
 =============================================================
 
-- Defined in :ref:`file_include_basalt_graph.hpp`
+- Defined in :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp`
 
 
 Function Documentation

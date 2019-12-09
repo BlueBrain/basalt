@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Full API &mdash; Basalt 0.2.3 documentation</title>
+  <title>Full API &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
   
 
   
@@ -61,7 +61,7 @@
             
             
               <div class="version">
-                0.2.3
+                0.2.9
               </div>
             
           
@@ -85,12 +85,13 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#basalt-c-11-graph-storage-library">Basalt - C++11 Graph Storage library</a></li>
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage-on-bluebrain-5">Usage on BlueBrain 5</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html#build-and-installation-instructions">Build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
@@ -98,7 +99,16 @@
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contents/ngv.html">NGV</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Reference</span></p>
 <ul>
@@ -176,6 +186,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="namespace_basalt.html">Namespace basalt</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="namespace_basalt.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="namespace_basalt.html#enums">Enums</a></li>
 <li class="toctree-l2"><a class="reference internal" href="namespace_basalt.html#functions">Functions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="namespace_basalt.html#typedefs">Typedefs</a></li>
 </ul>
@@ -195,7 +206,19 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Edges.html">Class Edges</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1EdgeIterator.html">Class EdgeIterator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#inheritance-relationships">Inheritance Relationships</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#base-type">Base Type</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1EdgeIterator.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Edges.html">Template Class Edges</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1Edges.html#class-documentation">Class Documentation</a></li>
 </ul>
 </li>
@@ -203,8 +226,16 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Graph.html">Class Graph</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Graph.html">Template Class Graph</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1Graph.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1GraphImpl.html">Template Class GraphImpl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1GraphImpl.html#class-documentation">Class Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -223,8 +254,19 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Vertices.html">Class Vertices</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="classbasalt_1_1Vertices.html">Template Class Vertices</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="classbasalt_1_1Vertices.html#class-documentation">Class Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="enums">
+<h2>Enums<a class="headerlink" href="#enums" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html">Enum EdgeOrientation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.html#enum-documentation">Enum Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -277,8 +319,24 @@
 <h2>Typedefs<a class="headerlink" href="#typedefs" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7.html">Typedef basalt::DirectedGraph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html">Typedef basalt::edge_uid_t</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.html#typedef-documentation">Typedef Documentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="typedef_graph_8hpp_1a5419ef6e4f9754aa6afd363350a8e572.html">Typedef basalt::UndirectedGraph</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="typedef_graph_8hpp_1a5419ef6e4f9754aa6afd363350a8e572.html#typedef-documentation">Typedef Documentation</a></li>
 </ul>
 </li>
 </ul>
@@ -320,16 +378,16 @@
 <h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dir_include.html">Directory include</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dir_include.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dir__goinfre_src_github.com_tristan0x_basalt_include.html">Directory include</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir__goinfre_src_github.com_tristan0x_basalt_include.html#subdirectories">Subdirectories</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="dir_include_basalt.html">Directory basalt</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="dir_include_basalt.html#files">Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dir__goinfre_src_github.com_tristan0x_basalt_include_basalt.html">Directory basalt</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir__goinfre_src_github.com_tristan0x_basalt_include_basalt.html#files">Files</a></li>
 </ul>
 </li>
 </ul>
@@ -339,118 +397,136 @@
 <h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_basalt.hpp.html">File basalt.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_basalt.hpp.html#definition-include-basalt-basalt-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/basalt.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_basalt.hpp.html">Program Listing for File basalt.hpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp.html">File basalt.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-basalt-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/basalt.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp.html">Program Listing for File basalt.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_basalt.hpp.html#includes">Includes</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_edges.hpp.html">File edges.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_edges.hpp.html#definition-include-basalt-edges-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/edges.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_edges.hpp.html">Program Listing for File edges.hpp</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_edges.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_edges.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_edges.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_edges.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp.html#includes">Includes</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_fwd.hpp.html">File fwd.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_fwd.hpp.html#definition-include-basalt-fwd-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/fwd.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_fwd.hpp.html">Program Listing for File fwd.hpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html">File edge_iterator.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-edge-iterator-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/edge_iterator.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html">Program Listing for File edge_iterator.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_fwd.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_fwd.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_fwd.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_fwd.hpp.html#typedefs">Typedefs</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_graph.hpp.html">File graph.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#definition-include-basalt-graph-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/graph.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_graph.hpp.html">Program Listing for File graph.hpp</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#classes">Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_graph.hpp.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.html#classes">Classes</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_status.hpp.html">File status.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#definition-include-basalt-status-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/status.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_status.hpp.html">Program Listing for File status.hpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html">File edges.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-edges-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/edges.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html">Program Listing for File edges.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#classes">Classes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_status.hpp.html#functions">Functions</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html">File vertex_iterator.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#definition-include-basalt-vertex-iterator-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/vertex_iterator.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_vertex_iterator.hpp.html">Program Listing for File vertex_iterator.hpp</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertex_iterator.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#classes">Classes</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_vertices.hpp.html">File vertices.hpp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.hpp.html#definition-include-basalt-vertices-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/vertices.hpp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_vertices.hpp.html">Program Listing for File vertices.hpp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html">File fwd.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-fwd-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/fwd.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html">Program Listing for File fwd.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.hpp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.hpp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.hpp.html#namespaces">Namespaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#enums">Enums</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html#typedefs">Typedefs</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="file_include_basalt_vertices.ipp.html">File vertices.ipp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.ipp.html#definition-include-basalt-vertices-ipp">Definition (<code class="docutils literal notranslate"><span class="pre">include/basalt/vertices.ipp</span></code>)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="program_listing_file_include_basalt_vertices.ipp.html">Program Listing for File vertices.ipp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html">File graph.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-graph-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/graph.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html">Program Listing for File graph.hpp</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.ipp.html#includes">Includes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.ipp.html#included-by">Included By</a></li>
-<li class="toctree-l2"><a class="reference internal" href="file_include_basalt_vertices.ipp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#functions">Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.html#typedefs">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html">File status.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-status-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/status.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html">Program Listing for File status.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html">File vertex_iterator.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-vertex-iterator-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/vertex_iterator.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html">Program Listing for File vertex_iterator.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html">File vertices.hpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-vertices-hpp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/vertices.hpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html">Program Listing for File vertices.hpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html">File vertices.ipp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html#definition-goinfre-src-github-com-tristan0x-basalt-include-basalt-vertices-ipp">Definition (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/vertices.ipp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html">Program Listing for File vertices.ipp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.html#namespaces">Namespaces</a></li>
 </ul>
 </li>
 </ul>

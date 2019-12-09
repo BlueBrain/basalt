@@ -1,4 +1,2 @@
-Introduction
-============
 
-.. mdinclude:: ../README.md
+.. mdinclude:: ../../README.md

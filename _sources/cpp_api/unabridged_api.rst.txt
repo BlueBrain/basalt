@@ -24,6 +24,11 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   classbasalt_1_1EdgeIterator.rst
+
+.. toctree::
+   :maxdepth: 5
+
    classbasalt_1_1Edges.rst
 
 .. toctree::
@@ -34,12 +39,26 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   classbasalt_1_1GraphImpl.rst
+
+.. toctree::
+   :maxdepth: 5
+
    classbasalt_1_1VertexIterator.rst
 
 .. toctree::
    :maxdepth: 5
 
    classbasalt_1_1Vertices.rst
+
+Enums
+*****
+
+
+.. toctree::
+   :maxdepth: 5
+
+   enum_fwd_8hpp_1a0db75f518986b127ba62beba1a517bf3.rst
 
 Functions
 *********
@@ -77,7 +96,17 @@ Typedefs
 .. toctree::
    :maxdepth: 5
 
+   typedef_graph_8hpp_1abfdd634bcaf4b3d33b4c3c0cbfa865a7.rst
+
+.. toctree::
+   :maxdepth: 5
+
    typedef_fwd_8hpp_1a59a98d91f23e0047afa9a057b3cfb7cc.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   typedef_graph_8hpp_1a5419ef6e4f9754aa6afd363350a8e572.rst
 
 .. toctree::
    :maxdepth: 5
@@ -106,12 +135,12 @@ Directories
 .. toctree::
    :maxdepth: 5
 
-   dir_include.rst
+   dir__goinfre_src_github.com_tristan0x_basalt_include.rst
 
 .. toctree::
    :maxdepth: 5
 
-   dir_include_basalt.rst
+   dir__goinfre_src_github.com_tristan0x_basalt_include_basalt.rst
 
 Files
 *****
@@ -120,39 +149,44 @@ Files
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_basalt.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_basalt.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_edges.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edge_iterator.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_fwd.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_graph.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_status.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_graph.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_vertex_iterator.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_vertices.hpp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertex_iterator.hpp.rst
 
 .. toctree::
    :maxdepth: 5
 
-   file_include_basalt_vertices.ipp.rst
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.hpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file__goinfre_src_github.com_tristan0x_basalt_include_basalt_vertices.ipp.rst

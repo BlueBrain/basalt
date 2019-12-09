@@ -3,7 +3,7 @@
 Struct Status
 =============
 
-- Defined in :ref:`file_include_basalt_status.hpp`
+- Defined in :ref:`file__goinfre_src_github.com_tristan0x_basalt_include_basalt_status.hpp`
 
 
 Struct Documentation

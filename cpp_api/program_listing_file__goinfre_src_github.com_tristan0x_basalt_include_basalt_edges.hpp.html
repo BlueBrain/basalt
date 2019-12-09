@@ -1,0 +1,329 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Program Listing for File edges.hpp &mdash; Basalt 0.2.9.dev2+g139a91f.d20191209 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="File fwd.hpp" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html" />
+    <link rel="prev" title="File edges.hpp" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Basalt
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.2.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">Basalt - Graph Storage API for C++ and Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#development-stage">Development stage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#manual-build-and-installation-instructions">Manual build and installation instructions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#files-layout">Files Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#embedded-third-parties">Embedded third-parties</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html#contributing">Contributing</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contents/graphs.html">Graphs</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Contributing:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contribution Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#got-a-question">Got a Question?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#found-a-bug">Found a Bug?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#missing-a-feature">Missing a Feature?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#submission-guidelines">Submission Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#development">Development</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html#release">Release</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">Python package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="library_root.html">C++ API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Basalt</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="library_root.html">C++ API</a> &raquo;</li>
+        
+          <li><a href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html">File edges.hpp</a> &raquo;</li>
+        
+      <li>Program Listing for File edges.hpp</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cpp_api/program_listing_file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="program-listing-for-file-edges-hpp">
+<span id="program-listing-file-goinfre-src-github-com-tristan0x-basalt-include-basalt-edges-hpp"></span><h1>Program Listing for File edges.hpp<a class="headerlink" href="#program-listing-for-file-edges-hpp" title="Permalink to this headline">¶</a></h1>
+<p>↰ <a class="reference internal" href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html#file-goinfre-src-github-com-tristan0x-basalt-include-basalt-edges-hpp"><span class="std std-ref">Return to documentation for file</span></a> (<code class="docutils literal notranslate"><span class="pre">/goinfre/src/github.com/tristan0x/basalt/include/basalt/edges.hpp</span></code>)</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="cm">/*************************************************************************</span>
+<span class="cm"> * Copyright (C) 2019 Blue Brain Project</span>
+<span class="cm"> *</span>
+<span class="cm"> * This file is part of Basalt distributed under the terms of the GNU</span>
+<span class="cm"> * Lesser General Public License. See top-level LICENSE file for details.</span>
+<span class="cm"> *************************************************************************/</span>
+<span class="cp">#pragma once</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;basalt/fwd.hpp&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;basalt/status.hpp&gt;</span><span class="cp"></span>
+
+<span class="k">namespace</span> <span class="n">basalt</span> <span class="p">{</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="n">EdgeOrientation</span> <span class="n">Orientation</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Edges</span> <span class="p">{</span>
+  <span class="k">public</span><span class="o">:</span>
+    <span class="k">explicit</span> <span class="n">Edges</span><span class="p">(</span><span class="n">GraphImpl</span><span class="o">&lt;</span><span class="n">Orientation</span><span class="o">&gt;&amp;</span> <span class="n">pimpl</span><span class="p">);</span>
+
+    <span class="n">EdgeIterator</span> <span class="nf">begin</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">position</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">EdgeIterator</span> <span class="nf">end</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span>
+
+    <span class="n">Status</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex1</span><span class="p">,</span> <span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex2</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex1</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex2</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">data</span><span class="p">,</span>
+                  <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span>
+                  <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">vertex_uids_t</span><span class="o">&amp;</span> <span class="n">vertices</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="k">const</span> <span class="kt">char</span><span class="o">*&gt;&amp;</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{},</span>
+                  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&gt;&amp;</span> <span class="n">sizes</span> <span class="o">=</span> <span class="p">{},</span>
+                  <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+
+    <span class="n">Status</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span>
+                  <span class="n">vertex_t</span> <span class="n">type</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">vertex_id_t</span><span class="o">*</span> <span class="n">vertices</span><span class="p">,</span>
+                  <span class="kt">size_t</span> <span class="n">num_vertices</span><span class="p">,</span>
+                  <span class="kt">bool</span> <span class="n">create_vertices</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                  <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">insert</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span>
+                  <span class="n">vertex_t</span> <span class="n">type</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">*</span> <span class="n">vertices</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="k">const</span><span class="o">*</span> <span class="n">vertex_payloads</span><span class="p">,</span>
+                  <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">*</span> <span class="n">vertex_payloads_sizes</span><span class="p">,</span>
+                  <span class="kt">size_t</span> <span class="n">num_vertices</span><span class="p">,</span>
+                  <span class="kt">bool</span> <span class="n">create_vertices</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span>
+                  <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">get</span><span class="p">(</span><span class="k">const</span> <span class="n">edge_uid_t</span><span class="o">&amp;</span> <span class="n">edge</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">*</span> <span class="n">value</span><span class="p">)</span> <span class="k">const</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">has</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex1</span><span class="p">,</span> <span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex2</span><span class="p">,</span> <span class="kt">bool</span><span class="o">&amp;</span> <span class="n">result</span><span class="p">)</span> <span class="k">const</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">get</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_uids_t</span><span class="o">&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="k">const</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">get</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_t</span> <span class="n">filter</span><span class="p">,</span> <span class="n">vertex_uids_t</span><span class="o">&amp;</span> <span class="n">edges</span><span class="p">)</span> <span class="k">const</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">erase</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex1</span><span class="p">,</span> <span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex2</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">erase</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">vertex_t</span> <span class="n">filter</span><span class="p">,</span> <span class="kt">size_t</span><span class="o">&amp;</span> <span class="n">removed</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">erase</span><span class="p">(</span><span class="k">const</span> <span class="n">vertex_uid_t</span><span class="o">&amp;</span> <span class="n">vertex</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&amp;</span> <span class="n">removed</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">commit</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+        <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">count</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="kt">size_t</span><span class="o">&amp;</span> <span class="n">count</span><span class="p">)</span> <span class="k">const</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+    <span class="n">Status</span> <span class="nf">clear</span><span class="p">(</span><span class="kt">bool</span> <span class="n">commit</span><span class="p">)</span> <span class="n">__attribute__</span><span class="p">((</span><span class="n">warn_unused_result</span><span class="p">));</span>
+
+  <span class="k">private</span><span class="o">:</span>
+    <span class="n">GraphImpl</span><span class="o">&lt;</span><span class="n">Orientation</span><span class="o">&gt;&amp;</span> <span class="n">pimpl_</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">extern</span> <span class="k">template</span> <span class="k">class</span> <span class="nc">Edges</span><span class="o">&lt;</span><span class="n">EdgeOrientation</span><span class="o">::</span><span class="n">directed</span><span class="o">&gt;</span><span class="p">;</span>
+<span class="k">extern</span> <span class="k">template</span> <span class="k">class</span> <span class="nc">Edges</span><span class="o">&lt;</span><span class="n">EdgeOrientation</span><span class="o">::</span><span class="n">undirected</span><span class="o">&gt;</span><span class="p">;</span>
+
+<span class="p">}</span>  <span class="c1">// namespace basalt</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_fwd.hpp.html" class="btn btn-neutral float-right" title="File fwd.hpp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="file__goinfre_src_github.com_tristan0x_basalt_include_basalt_edges.hpp.html" class="btn btn-neutral float-left" title="File edges.hpp" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, BlueBrain HPC Team
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
