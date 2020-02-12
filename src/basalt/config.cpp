@@ -306,11 +306,11 @@ static void create_columns_families(const nlohmann::json& config,
     {  // open db
         rocksdb::DB* db;
         rocksdb::Status status = rocksdb::DB::Open(options, db_path, &db);
-        db_ptr.reset(db);
         if (status.code() == rocksdb::Status::kInvalidArgument) {
             return;
         }
         to_status(status).raise_on_error();
+        db_ptr.reset(db);
     }
 
     std::vector<std::string> column_family_names;
