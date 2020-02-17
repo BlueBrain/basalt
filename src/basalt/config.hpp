@@ -48,7 +48,6 @@ class Config {
 
     /**
      * Setup RocksDB configuration option
-     * \param db_path path to database
      */
     void configure(rocksdb::Options& options) const;
 
