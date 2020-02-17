@@ -48,10 +48,9 @@ class Config {
 
     /**
      * Setup RocksDB configuration option
-     * \param options RocksDB configuration to update
      * \param db_path path to database
      */
-    void configure(rocksdb::Options& options, const std::string& db_path) const;
+    void configure(rocksdb::Options& options) const;
 
     /**
      * Write configuration to an output stream in JSON format
