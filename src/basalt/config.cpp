@@ -88,13 +88,6 @@ compression_if_present(const nlohmann::json& config) {
 }
 
 /**
- * Convert rocksdb status object to a basalt one
- */
-static inline Status to_status(const rocksdb::Status& status) {
-    return {static_cast<Status::Code>(status.code()), status.ToString()};
-}
-
-/**
  * Get real column family name from one specified in the JSON config
  */
 static inline std::string column_family_name(const std::string& name) {
