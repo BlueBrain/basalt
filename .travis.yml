@@ -46,7 +46,7 @@ addons: &clang6
     - python3-wheel
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-xenial-6.0
+    - llvm-toolchain-bionic-6.0
 
 addons: &clang7
   apt:
@@ -67,7 +67,7 @@ addons: &clang7
     - valgrind
     sources:
       - ubuntu-toolchain-r-test
-      - llvm-toolchain-xenial-7
+      - llvm-toolchain-bionic-7
 
 addons: &clang8
   apt:
@@ -88,7 +88,7 @@ addons: &clang8
     - python3-wheel
     sources:
     - ubuntu-toolchain-r-test
-    - llvm-toolchain-xenial-8
+    - llvm-toolchain-bionic-8
 
 matrix:
   allow_failures:
@@ -97,25 +97,25 @@ matrix:
       # Test gcc-7: C++11
     - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
-      dist: xenial
+      dist: bionic
       addons: *gcc7
 
       # Test clang-6.0: C++11
     - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
       os: linux
-      dist: xenial
+      dist: bionic
       addons: *clang6
 
       # Test clang-7: C++11
     - env: CPP_CHECK=yes CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
       os: linux
-      dist: xenial
+      dist: bionic
       addons: *clang7
 
       # Test clang-8: C++11
     - env: CLANG_VERSION=8 CXX_OPTIMIZE=OFF CPP=11
       os: linux
-      dist: xenial
+      dist: bionic
       addons: *clang8
 
       # osx

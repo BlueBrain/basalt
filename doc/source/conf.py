@@ -60,7 +60,7 @@ doctest_global_setup = textwrap.dedent("""\
     import basalt
 
     tmpdir = tempfile.mkdtemp()
-    graph = basalt.Graph(tmpdir)
+    graph = basalt.UndirectedGraph(tmpdir)
 """)
 
 doctest_global_cleanup = textwrap.dedent("""\
