@@ -3,12 +3,13 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 
 # get version from Python package
 find_package(PythonInterp 3.5 REQUIRED)
-execute_process(COMMAND ${PYTHON_EXECUTABLE} setup.py --version
-                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-                RESULT_VARIABLE PY_VERSION_FAILED
-                OUTPUT_VARIABLE PY_PKG_VERSION_FULL
-                ERROR_VARIABLE PY_VERSION_ERROR
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
+execute_process(
+  COMMAND ${PYTHON_EXECUTABLE} setup.py --version
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  RESULT_VARIABLE PY_VERSION_FAILED
+  OUTPUT_VARIABLE PY_PKG_VERSION_FULL
+  ERROR_VARIABLE PY_VERSION_ERROR
+  OUTPUT_STRIP_TRAILING_WHITESPACE)
 if(PY_VERSION_FAILED)
   message(
     FATAL_ERROR
@@ -16,24 +17,22 @@ if(PY_VERSION_FAILED)
       ${PY_VERSION_ERROR})
 endif()
 # keep last line of command output
-string(REPLACE "\n"
-               ";"
-               PY_PKG_VERSION_FULL
-               "${PY_PKG_VERSION_FULL}")
+string(REPLACE "\n" ";" PY_PKG_VERSION_FULL "${PY_PKG_VERSION_FULL}")
 list(GET PY_PKG_VERSION_FULL -1 PY_PKG_VERSION_FULL)
 # keep MAJOR.MINOR.PATCH
-string(REGEX
-       REPLACE "([0-9]+\\.[0-9]+\\.[0-9]+).*"
-               "\\1"
-               PY_PKG_VERSION
-               "${PY_PKG_VERSION_FULL}")
+string(REGEX REPLACE "([0-9]+\\.[0-9]+\\.[0-9]+).*" "\\1" PY_PKG_VERSION "${PY_PKG_VERSION_FULL}")
 
-project(Basalt VERSION ${PY_PKG_VERSION} LANGUAGES CXX)
+project(
+  Basalt
+  VERSION ${PY_PKG_VERSION}
+  LANGUAGES CXX)
 
 if(NOT IS_DIRECTORY ${CMAKE_SOURCE_DIR}/cmake/hpc-coding-conventions)
-  message(FATAL_ERROR "It seems the git modules are missing.\n"
-                      "You can retrieve them by running the following command:\n"
-                      "    git submodule update --recursive --init")
+  message(
+    FATAL_ERROR
+      "It seems the git modules are missing.\n"
+      "You can retrieve them by running the following command:\n"
+      "    git submodule update --recursive --init")
 endif()
 add_subdirectory(cmake/hpc-coding-conventions/cpp)
 
@@ -45,9 +44,7 @@ bob_option(Basalt_USE_pybind11 "Build Python bindings" OFF)
 bob_option(USE_CLANG_TIDY "Perform C++ static analysis while compiling" OFF)
 
 set(Basalt_SERIALIZATION_METHODS CEREAL SSTREAM)
-bob_input(Basalt_SERIALIZATION
-          CEREAL
-          STRING
+bob_input(Basalt_SERIALIZATION CEREAL STRING
           "Serialization method: ${Basalt_SERIALIZATION_METHODS}")
 set_property(CACHE Basalt_SERIALIZATION PROPERTY STRINGS "${Basalt_SERIALIZATION_METHODS}")
 list(FIND Basalt_SERIALIZATION_METHODS ${Basalt_SERIALIZATION} index)
@@ -55,7 +52,7 @@ if(index EQUAL -1)
   message(
     FATAL_ERROR
       "Unknown serialization '${Basalt_SERIALIZATION}'. Expected one of : ${Basalt_SERIALIZATION_METHODS}"
-    )
+  )
 endif()
 unset(Basalt_SERIALIZATION_METHODS)
 unset(index)

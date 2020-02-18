@@ -11,10 +11,9 @@
 
 find_program(MEMORYCHECK_COMMAND valgrind DOC "Memory checking utility (valgrind by default)")
 
-set(
-  MEMORYCHECK_COMMAND_OPTIONS
-  "--tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose --gen-suppressions=all"
-  CACHE STRING "Commands passed to valgrind")
+set(MEMORYCHECK_COMMAND_OPTIONS
+    "--tool=memcheck --track-origins=yes --leak-check=full --show-leak-kinds=all --verbose --gen-suppressions=all"
+    CACHE STRING "Commands passed to valgrind")
 
 # Look for suppressions files
 file(GLOB dartconfig_supp_files ${CMAKE_SOURCE_DIR}/tests/memorycheck/*.supp)

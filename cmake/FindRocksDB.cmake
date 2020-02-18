@@ -21,27 +21,18 @@ find_library(RocksDB_LIBRARIES NAMES rocksdb)
 if(RocksDB_INCLUDE_DIR AND EXISTS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h)
   file(STRINGS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h rocksdb_version_str
        REGEX "^#define ROCKSDB_MAJOR")
-  string(REGEX
-         REPLACE "^.*ROCKSDB_MAJOR (.*)$"
-                 "\\1"
-                 RocksDB_VERSION_MAJOR
-                 "${rocksdb_version_str}")
+  string(REGEX REPLACE "^.*ROCKSDB_MAJOR (.*)$" "\\1" RocksDB_VERSION_MAJOR
+                       "${rocksdb_version_str}")
 
   file(STRINGS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h rocksdb_version_str
        REGEX "^#define ROCKSDB_MINOR")
-  string(REGEX
-         REPLACE "^.*ROCKSDB_MINOR (.*)$"
-                 "\\1"
-                 RocksDB_VERSION_MINOR
-                 "${rocksdb_version_str}")
+  string(REGEX REPLACE "^.*ROCKSDB_MINOR (.*)$" "\\1" RocksDB_VERSION_MINOR
+                       "${rocksdb_version_str}")
 
   file(STRINGS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h rocksdb_version_str
        REGEX "^#define ROCKSDB_PATCH")
-  string(REGEX
-         REPLACE "^.*ROCKSDB_PATCH (.*)$"
-                 "\\1"
-                 RocksDB_VERSION_PATCH
-                 "${rocksdb_version_str}")
+  string(REGEX REPLACE "^.*ROCKSDB_PATCH (.*)$" "\\1" RocksDB_VERSION_PATCH
+                       "${rocksdb_version_str}")
 
   set(ROCKSDB_VERSION_STRING
       "${RocksDB_VERSION_MAJOR}.${RocksDB_VERSION_MINOR}.${RocksDB_VERSION_PATCH}")
@@ -49,13 +40,14 @@ if(RocksDB_INCLUDE_DIR AND EXISTS ${RocksDB_INCLUDE_DIR}/rocksdb/version.h)
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(RocksDB
-                                  FOUND_VAR
-                                  RocksDB_FOUND
-                                  REQUIRED_VARS
-                                  RocksDB_LIBRARIES
-                                  RocksDB_INCLUDE_DIR
-                                  VERSION_VAR
-                                  ROCKSDB_VERSION_STRING)
+find_package_handle_standard_args(
+  RocksDB
+  FOUND_VAR
+  RocksDB_FOUND
+  REQUIRED_VARS
+  RocksDB_LIBRARIES
+  RocksDB_INCLUDE_DIR
+  VERSION_VAR
+  ROCKSDB_VERSION_STRING)
 
 mark_as_advanced(RocksDB_INCLUDE_DIR RocksDB_LIBRARIES)
