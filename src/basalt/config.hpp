@@ -48,6 +48,7 @@ class Config {
 
     /**
      * Setup RocksDB configuration option
+     * \param options RocksDB configuration to update
      */
     void configure(rocksdb::Options& options) const;
 
