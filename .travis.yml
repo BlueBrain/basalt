@@ -129,6 +129,7 @@ matrix:
           - hdf5
           - llvm
           - numpy
+          - python
           - rocksdb
 
 before_script:
