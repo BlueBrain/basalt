@@ -88,13 +88,6 @@ compression_if_present(const nlohmann::json& config) {
 }
 
 /**
- * Convert rocksdb status object to a basalt one
- */
-static inline Status to_status(const rocksdb::Status& status) {
-    return {static_cast<Status::Code>(status.code()), status.ToString()};
-}
-
-/**
  * Get real column family name from one specified in the JSON config
  */
 static inline std::string column_family_name(const std::string& name) {
@@ -296,40 +289,6 @@ static rocksdb::ColumnFamilyOptions column_families_options(
 }
 
 /**
- * Prepare the rocksdb column families on the filesystem if they do not already exist.
- */
-static void create_columns_families(const nlohmann::json& config,
-                                    const std::string& db_path,
-                                    rocksdb::Options& options,
-                                    std::shared_ptr<rocksdb::Cache> global_block_cache) {
-    std::unique_ptr<rocksdb::DB> db_ptr;
-    {  // open db
-        rocksdb::DB* db;
-        rocksdb::Status status = rocksdb::DB::Open(options, db_path, &db);
-        db_ptr.reset(db);
-        if (status.code() == rocksdb::Status::kInvalidArgument) {
-            return;
-        }
-        to_status(status).raise_on_error();
-    }
-
-    std::vector<std::string> column_family_names;
-    rocksdb::DB::ListColumnFamilies(options, db_ptr->GetName(), &column_family_names);
-
-    for (auto const& cf_config: config) {
-        auto const& name = column_family_name(cf_config["name"]);
-        if (std::find(column_family_names.begin(), column_family_names.end(), name) ==
-            column_family_names.end()) {
-            gsl::owner<rocksdb::ColumnFamilyHandle*> cf = nullptr;
-            auto const& cf_options = column_families_options(cf_config["config"],
-                                                             global_block_cache);
-            to_status(db_ptr->CreateColumnFamily(cf_options, name, &cf)).raise_on_error();
-            delete cf;
-        }
-    }
-}
-
-/**
  * Setup rocksdb statistics according to JSON config
  */
 static void setup_statistics(const nlohmann::json& config, rocksdb::Options& options) {
@@ -352,9 +311,18 @@ static void setup_max_open_files(const nlohmann::json& config, rocksdb::Options&
 }
 
 static void setup_create_if_missing(const nlohmann::json& config, rocksdb::Options& options) {
-    auto const& value = config.find("create_if_missing");
-    if (value != config.end()) {
-        options.create_if_missing = value.value().get<decltype(options.create_if_missing)>();
+    {
+        auto const& value = config.find("create_if_missing");
+        if (value != config.end()) {
+            options.create_if_missing = value.value().get<decltype(options.create_if_missing)>();
+        }
+    }
+    {
+        auto const& value = config.find("create_missing_column_families");
+        if (value != config.end()) {
+            options.create_missing_column_families =
+                value.value().get<decltype(options.create_missing_column_families)>();
+        }
     }
 }
 
@@ -375,6 +343,7 @@ static nlohmann::json default_json() {
     config["statistics"] = true;
     config["max_open_files"] = -1;
     config["create_if_missing"] = true;
+    config["create_missing_column_families"] = true;
     // clang-format off
     config["block_cache"] = {
         {"type", "lru"},
@@ -483,7 +452,7 @@ Config::Config()
 Config::Config(std::ifstream& istr)
     : config_(from_stream(istr)) {}
 
-void Config::configure(rocksdb::Options& options, const std::string& db_path) const {
+void Config::configure(rocksdb::Options& options) const {
     setup_statistics(config_, options);
     setup_max_open_files(config_, options);
     setup_create_if_missing(config_, options);
@@ -491,7 +460,6 @@ void Config::configure(rocksdb::Options& options, const std::string& db_path) co
 
     std::shared_ptr<rocksdb::Cache> empty;
     auto global_block_cache = block_cache_if_present(config_, empty);
-    create_columns_families(config_["column_families"], db_path, options, global_block_cache);
 }
 
 std::ostream& Config::write(std::ostream& ostr, std::streamsize indent) const {

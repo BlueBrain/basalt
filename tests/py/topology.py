@@ -85,8 +85,6 @@ class PLInfluence(Graph):
             del language
             links.setdefault("la_de", set()).add((language_id, developer_id))
 
-        print(sorted(language_ids.keys()))
-
         # load language -> license data
         # dbpedia SPARQL query (http://dbpedia.org/sparql):
         #   SELECT *
