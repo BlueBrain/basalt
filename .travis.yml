@@ -73,6 +73,7 @@ addons: &clang9
   apt:
     packages:
     - clang-9
+    - clang-format-9
     - doxygen
     - libhdf5-dev
     - librocksdb-dev
