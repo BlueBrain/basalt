@@ -238,7 +238,7 @@ py::class_<basalt::Vertices<Orientation>> register_graph_vertices_class(
                  if (ids.size() != types.size()) {
                      throw std::runtime_error("Number of types and ids differ");
                  }
-                 if (payloads.size() != 0) {
+                 if (!payloads.empty()) {
                      if (static_cast<std::size_t>(ids.size()) != payloads.size()) {
                          throw std::runtime_error("Number of ids and payloads differ");
                      }
