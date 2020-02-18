@@ -27,10 +27,10 @@ addons: &gcc7
     sources:
     - ubuntu-toolchain-r-test
 
-addons: &clang6
+addons: &clang7
   apt:
     packages:
-    - clang-6.0
+    - clang-7
     - doxygen
     - libhdf5-dev
     - librocksdb-dev
@@ -44,27 +44,6 @@ addons: &clang6
     - python3-pyparsing
     - python3-setuptools
     - python3-wheel
-    sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-bionic-6.0
-
-addons: &clang7
-  apt:
-    packages:
-    - clang-7
-    - libhdf5-dev
-    - librocksdb-dev
-    - python3-babel
-    - python3-bs4
-    - python3-docutils
-    - python3-h5py
-    - python3-lxml
-    - python3-numpy
-    - python3-pygments
-    - python3-pyparsing
-    - python3-setuptools
-    - python3-wheel
-    - valgrind
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-bionic-7
@@ -90,6 +69,28 @@ addons: &clang8
     - ubuntu-toolchain-r-test
     - llvm-toolchain-bionic-8
 
+addons: &clang9
+  apt:
+    packages:
+    - clang-9
+    - doxygen
+    - libhdf5-dev
+    - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pygments
+    - python3-pyparsing
+    - python3-setuptools
+    - python3-wheel
+    - valgrind
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-bionic-9
+
 matrix:
   allow_failures:
     - os: osx
@@ -100,14 +101,8 @@ matrix:
       dist: bionic
       addons: *gcc7
 
-      # Test clang-6.0: C++11
-    - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
-      os: linux
-      dist: bionic
-      addons: *clang6
-
       # Test clang-7: C++11
-    - env: CPP_CHECK=yes CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
+    - env: CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
       os: linux
       dist: bionic
       addons: *clang7
@@ -117,6 +112,12 @@ matrix:
       os: linux
       dist: bionic
       addons: *clang8
+
+      # Test clang-9: C++11
+    - env: CPP_CHECK=yes CLANG_VERSION=9 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
+      os: linux
+      dist: bionic
+      addons: *clang9
 
       # osx
     - env: CXX_OPTIMIZE=OFF CPP=11

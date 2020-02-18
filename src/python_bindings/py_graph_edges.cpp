@@ -235,11 +235,12 @@ py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
     return py::class_<basalt::Edges<Orientation>>(m,
                                                   (class_prefix + "Edges").c_str(),
                                                   docstring::edges_class)
-        .def("__iter__",
-             [](const basalt::Edges<Orientation>& edges) {
-                 return py::make_iterator(edges.begin(), edges.end());
-             },
-             py::keep_alive<0, 1>())
+        .def(
+            "__iter__",
+            [](const basalt::Edges<Orientation>& edges) {
+                return py::make_iterator(edges.begin(), edges.end());
+            },
+            py::keep_alive<0, 1>())
 
         .def("__len__",
              [](const basalt::Edges<Orientation>& edges) {
@@ -248,191 +249,202 @@ py::class_<basalt::Edges<Orientation>> register_graph_edges_class(
                  return count;
              })
 
-        .def("add",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex1,
-                const basalt::vertex_uid_t& vertex2,
-                bool commit) {
-                 const auto status = edges.insert(vertex1, vertex2, commit);
-                 status.raise_on_error();
-             },
-             "vertex1"_a,
-             "vertex2"_a,
-             "commit"_a = false,
-             docstring::add_edge)
+        .def(
+            "add",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex1,
+               const basalt::vertex_uid_t& vertex2,
+               bool commit) {
+                const auto status = edges.insert(vertex1, vertex2, commit);
+                status.raise_on_error();
+            },
+            "vertex1"_a,
+            "vertex2"_a,
+            "commit"_a = false,
+            docstring::add_edge)
 
-        .def("add",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex1,
-                const basalt::vertex_uid_t& vertex2,
-                py::array_t<char> data,
-                bool commit = false) {
-                 if (data.ndim() != 1) {
-                     throw std::runtime_error("Number of dimensions of array 'data' must be one");
-                 }
-                 const auto status = edges.insert(
-                     vertex1, vertex2, data.data(), static_cast<std::size_t>(data.size()), commit);
-                 status.raise_on_error();
-             },
-             "vertex1"_a,
-             "vertex2"_a,
-             "data"_a,
-             "commit"_a = false,
-             docstring::add_edge_payload)
+        .def(
+            "add",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex1,
+               const basalt::vertex_uid_t& vertex2,
+               py::array_t<char> data,
+               bool commit = false) {
+                if (data.ndim() != 1) {
+                    throw std::runtime_error("Number of dimensions of array 'data' must be one");
+                }
+                const auto status = edges.insert(
+                    vertex1, vertex2, data.data(), static_cast<std::size_t>(data.size()), commit);
+                status.raise_on_error();
+            },
+            "vertex1"_a,
+            "vertex2"_a,
+            "data"_a,
+            "commit"_a = false,
+            docstring::add_edge_payload)
 
-        .def("add",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex,
-                const basalt::vertex_t type,
-                py::array_t<basalt::vertex_id_t> vertices,
-                bool commit,
-                bool create_vertices) {
-                 if (vertices.ndim() != 1) {
-                     throw std::runtime_error(
-                         "Number of dimensions of array 'vertices' must be one");
-                 }
-                 edges
-                     .insert(vertex,
-                             type,
-                             vertices.data(),
-                             static_cast<std::size_t>(vertices.size()),
-                             create_vertices,
-                             commit)
-                     .raise_on_error();
-             },
-             "vertex"_a,
-             "type"_a,
-             "vertices"_a,
-             "commit"_a = false,
-             "create_vertices"_a = false,
-             docstring::add_bulk)
+        .def(
+            "add",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex,
+               const basalt::vertex_t type,
+               py::array_t<basalt::vertex_id_t> vertices,
+               bool commit,
+               bool create_vertices) {
+                if (vertices.ndim() != 1) {
+                    throw std::runtime_error(
+                        "Number of dimensions of array 'vertices' must be one");
+                }
+                edges
+                    .insert(vertex,
+                            type,
+                            vertices.data(),
+                            static_cast<std::size_t>(vertices.size()),
+                            create_vertices,
+                            commit)
+                    .raise_on_error();
+            },
+            "vertex"_a,
+            "type"_a,
+            "vertices"_a,
+            "commit"_a = false,
+            "create_vertices"_a = false,
+            docstring::add_bulk)
 
-        .def("add",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex,
-                const basalt::vertex_t type,
-                py::array_t<basalt::vertex_id_t> vertices,
-                py::list vertex_payloads,
-                bool commit,
-                bool create_vertices) {
-                 if (vertices.ndim() != 1) {
-                     throw std::runtime_error(
-                         "Number of dimensions of array 'vertices' must be one");
-                 }
-                 if (static_cast<std::size_t>(vertices.size()) != vertex_payloads.size()) {
-                     throw std::runtime_error("Number of vertices and vertex_payloads differ");
-                 }
-                 std::vector<const char*> vertex_payloads_data;
-                 vertex_payloads_data.reserve(vertex_payloads.size());
-                 std::vector<std::size_t> vertex_payloads_sizes;
-                 vertex_payloads_sizes.reserve(vertex_payloads.size());
-                 for (py::handle handle: vertex_payloads) {
-                     py::array_t<char> vertex_payload = py::cast<py::array_t<char>>(handle);
-                     vertex_payloads_data.push_back(vertex_payload.data());
-                     vertex_payloads_sizes.push_back(
-                         static_cast<std::size_t>(vertex_payload.size()));
-                 }
-                 edges
-                     .insert(vertex,
-                             type,
-                             vertices.data(),
-                             vertex_payloads_data.data(),
-                             vertex_payloads_sizes.data(),
-                             static_cast<std::size_t>(vertices.size()),
-                             create_vertices,
-                             commit)
-                     .raise_on_error();
-             },
-             "vertex"_a,
-             "type"_a,
-             "vertices"_a,
-             "vertex_payloads"_a,
-             "commit"_a = false,
-             "create_vertices"_a = false,
-             docstring::add_bulk_payload)
+        .def(
+            "add",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex,
+               const basalt::vertex_t type,
+               py::array_t<basalt::vertex_id_t> vertices,
+               py::list vertex_payloads,
+               bool commit,
+               bool create_vertices) {
+                if (vertices.ndim() != 1) {
+                    throw std::runtime_error(
+                        "Number of dimensions of array 'vertices' must be one");
+                }
+                if (static_cast<std::size_t>(vertices.size()) != vertex_payloads.size()) {
+                    throw std::runtime_error("Number of vertices and vertex_payloads differ");
+                }
+                std::vector<const char*> vertex_payloads_data;
+                vertex_payloads_data.reserve(vertex_payloads.size());
+                std::vector<std::size_t> vertex_payloads_sizes;
+                vertex_payloads_sizes.reserve(vertex_payloads.size());
+                for (py::handle handle: vertex_payloads) {
+                    py::array_t<char> vertex_payload = py::cast<py::array_t<char>>(handle);
+                    vertex_payloads_data.push_back(vertex_payload.data());
+                    vertex_payloads_sizes.push_back(
+                        static_cast<std::size_t>(vertex_payload.size()));
+                }
+                edges
+                    .insert(vertex,
+                            type,
+                            vertices.data(),
+                            vertex_payloads_data.data(),
+                            vertex_payloads_sizes.data(),
+                            static_cast<std::size_t>(vertices.size()),
+                            create_vertices,
+                            commit)
+                    .raise_on_error();
+            },
+            "vertex"_a,
+            "type"_a,
+            "vertices"_a,
+            "vertex_payloads"_a,
+            "commit"_a = false,
+            "create_vertices"_a = false,
+            docstring::add_bulk_payload)
 
-        .def("__contains__",
-             [](const basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge) {
-                 bool result = false;
-                 edges.has(edge.first, edge.second, result).raise_on_error();
-                 return result;
-             },
-             "edge"_a,
-             "Check connectivity between 2 vertices")
+        .def(
+            "__contains__",
+            [](const basalt::Edges<Orientation>& edges, const basalt::edge_uid_t& edge) {
+                bool result = false;
+                edges.has(edge.first, edge.second, result).raise_on_error();
+                return result;
+            },
+            "edge"_a,
+            "Check connectivity between 2 vertices")
 
-        .def("get",
-             [](const basalt::Edges<Orientation>& edges,
-                const basalt::edge_uid_t& edge) -> py::object {
-                 std::string data;
-                 const auto& status = edges.get(edge, &data);
-                 if (status.code == basalt::Status::missing_edge_code) {
-                     throw py::key_error();
-                 }
-                 status.raise_on_error();
-                 if (data.empty()) {
-                     return py::none();
-                 }
-                 return std::move(basalt::to_py_array(data));
-             },
-             "edge"_a,
-             docstring::get_data)
+        .def(
+            "get",
+            [](const basalt::Edges<Orientation>& edges,
+               const basalt::edge_uid_t& edge) -> py::object {
+                std::string data;
+                const auto& status = edges.get(edge, &data);
+                if (status.code == basalt::Status::missing_edge_code) {
+                    throw py::key_error();
+                }
+                status.raise_on_error();
+                if (data.empty()) {
+                    return py::none();
+                }
+                return std::move(basalt::to_py_array(data));
+            },
+            "edge"_a,
+            docstring::get_data)
 
-        .def("get",
-             [](const basalt::Edges<Orientation>& edges, const basalt::vertex_uid_t& vertex) {
-                 basalt::vertex_uids_t eax;
-                 edges.get(vertex, eax).raise_on_error();
-                 return eax;
-             },
-             "vertex"_a,
-             docstring::get_edges)
+        .def(
+            "get",
+            [](const basalt::Edges<Orientation>& edges, const basalt::vertex_uid_t& vertex) {
+                basalt::vertex_uids_t eax;
+                edges.get(vertex, eax).raise_on_error();
+                return eax;
+            },
+            "vertex"_a,
+            docstring::get_edges)
 
-        .def("get",
-             [](const basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex,
-                basalt::vertex_t filter) {
-                 basalt::vertex_uids_t eax;
-                 edges.get(vertex, filter, eax).raise_on_error();
-                 return eax;
-             },
-             "vertex"_a,
-             "filter"_a,
-             docstring::get_edges_filter)
+        .def(
+            "get",
+            [](const basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex,
+               basalt::vertex_t filter) {
+                basalt::vertex_uids_t eax;
+                edges.get(vertex, filter, eax).raise_on_error();
+                return eax;
+            },
+            "vertex"_a,
+            "filter"_a,
+            docstring::get_edges_filter)
 
-        .def("discard",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::edge_uid_t& edge,
-                bool commit = false) {
-                 edges.erase(edge.first, edge.second, commit).raise_on_error();
-             },
-             "edge"_a,
-             "commit"_a = false,
-             docstring::discard_edge)
+        .def(
+            "discard",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::edge_uid_t& edge,
+               bool commit = false) {
+                edges.erase(edge.first, edge.second, commit).raise_on_error();
+            },
+            "edge"_a,
+            "commit"_a = false,
+            docstring::discard_edge)
 
-        .def("discard",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex,
-                bool commit = false) {
-                 std::size_t removed;
-                 edges.erase(vertex, removed, commit).raise_on_error();
-                 return removed;
-             },
-             "vertex"_a,
-             "commit"_a = false,
-             docstring::discard_edges)
+        .def(
+            "discard",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex,
+               bool commit = false) {
+                std::size_t removed;
+                edges.erase(vertex, removed, commit).raise_on_error();
+                return removed;
+            },
+            "vertex"_a,
+            "commit"_a = false,
+            docstring::discard_edges)
 
-        .def("discard",
-             [](basalt::Edges<Orientation>& edges,
-                const basalt::vertex_uid_t& vertex,
-                basalt::vertex_t filter,
-                bool commit = false) {
-                 std::size_t removed;
-                 edges.erase(vertex, filter, removed, commit).raise_on_error();
-                 return removed;
-             },
-             "vertex"_a,
-             "filter"_a,
-             "commit"_a = false,
-             docstring::discard_edges_if);
+        .def(
+            "discard",
+            [](basalt::Edges<Orientation>& edges,
+               const basalt::vertex_uid_t& vertex,
+               basalt::vertex_t filter,
+               bool commit = false) {
+                std::size_t removed;
+                edges.erase(vertex, filter, removed, commit).raise_on_error();
+                return removed;
+            },
+            "vertex"_a,
+            "filter"_a,
+            "commit"_a = false,
+            docstring::discard_edges_if);
 }
 
 void register_graph_edges(py::module& m) {

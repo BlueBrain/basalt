@@ -168,175 +168,186 @@ py::class_<basalt::Vertices<Orientation>> register_graph_vertices_class(
     return py::class_<basalt::Vertices<Orientation>>(m,
                                                      (class_prefix + "Vertices").c_str(),
                                                      docstring::vertices_class)
-        .def("__iter__",
-             [](const basalt::Vertices<Orientation>& vertices) {
-                 return py::make_iterator(vertices.begin(), vertices.end());
-             },
-             py::keep_alive<0, 1>())
+        .def(
+            "__iter__",
+            [](const basalt::Vertices<Orientation>& vertices) {
+                return py::make_iterator(vertices.begin(), vertices.end());
+            },
+            py::keep_alive<0, 1>())
 
-        .def("__len__",
-             [](const basalt::Vertices<Orientation>& vertices) {
-                 std::size_t count;
-                 vertices.count(count).raise_on_error();
-                 return count;
-             },
-             docstring::len)
+        .def(
+            "__len__",
+            [](const basalt::Vertices<Orientation>& vertices) {
+                std::size_t count;
+                vertices.count(count).raise_on_error();
+                return count;
+            },
+            docstring::len)
 
-        .def("count",
-             [](const basalt::Vertices<Orientation>& vertices,
-                basalt::vertex_t type) -> std::size_t {
-                 std::size_t count;
-                 vertices.count(type, count).raise_on_error();
-                 return count;
-             },
-             "type"_a,
-             docstring::count_type)
+        .def(
+            "count",
+            [](const basalt::Vertices<Orientation>& vertices,
+               basalt::vertex_t type) -> std::size_t {
+                std::size_t count;
+                vertices.count(type, count).raise_on_error();
+                return count;
+            },
+            "type"_a,
+            docstring::count_type)
 
-        .def("add",
-             [](basalt::Vertices<Orientation>& vertices,
-                basalt::vertex_uid_t vertex,
-                bool commit = false) {
-                 const auto status = vertices.insert(vertex, commit);
-                 status.raise_on_error();
-             },
-             "vertex"_a,
-             "commit"_a = false,
-             docstring::add)
+        .def(
+            "add",
+            [](basalt::Vertices<Orientation>& vertices,
+               basalt::vertex_uid_t vertex,
+               bool commit = false) {
+                const auto status = vertices.insert(vertex, commit);
+                status.raise_on_error();
+            },
+            "vertex"_a,
+            "commit"_a = false,
+            docstring::add)
 
-        .def("add",
-             [](basalt::Vertices<Orientation>& vertices,
-                const basalt::vertex_uid_t& vertex,
-                py::array_t<char> data,
-                bool commit = false) {
-                 if (data.ndim() != 1) {
-                     throw std::runtime_error("Number of dimensions must be one");
-                 }
-                 const auto status = vertices.insert(vertex,
-                                                     data.data(),
-                                                     static_cast<std::size_t>(data.size()),
-                                                     commit);
-                 status.raise_on_error();
-             },
-             "vertex"_a,
-             "data"_a,
-             "commit"_a = false,
-             docstring::add_payload)
+        .def(
+            "add",
+            [](basalt::Vertices<Orientation>& vertices,
+               const basalt::vertex_uid_t& vertex,
+               py::array_t<char> data,
+               bool commit = false) {
+                if (data.ndim() != 1) {
+                    throw std::runtime_error("Number of dimensions must be one");
+                }
+                const auto status = vertices.insert(vertex,
+                                                    data.data(),
+                                                    static_cast<std::size_t>(data.size()),
+                                                    commit);
+                status.raise_on_error();
+            },
+            "vertex"_a,
+            "data"_a,
+            "commit"_a = false,
+            docstring::add_payload)
 
         /// TODO: replace types and ids by numpy.array([(0, 1), (2,3)], dtype="int32,int64")
-        .def("add",
-             [](basalt::Vertices<Orientation>& instance,
-                py::array_t<basalt::vertex_t> types,
-                py::array_t<basalt::vertex_id_t> ids,
-                py::list payloads,
-                bool commit = false) {
-                 if (ids.ndim() != 1) {
-                     throw std::runtime_error("Number of dimensions of array 'ids' must be one");
-                 }
-                 if (types.ndim() != 1) {
-                     throw std::runtime_error("Number of dimensions of array 'types' must be one");
-                 }
-                 if (ids.size() != types.size()) {
-                     throw std::runtime_error("Number of types and ids differ");
-                 }
-                 if (!payloads.empty()) {
-                     if (static_cast<std::size_t>(ids.size()) != payloads.size()) {
-                         throw std::runtime_error("Number of ids and payloads differ");
-                     }
-                 }
-                 std::vector<const char*> payloads_data;
-                 std::vector<std::size_t> payloads_sizes;
-                 payloads_data.reserve(payloads.size());
-                 payloads_sizes.reserve(payloads.size());
-                 for (py::handle list_item: payloads) {
-                     py::array_t<char> payload = py::cast<py::array_t<char>>(list_item);
-                     payloads_data.push_back(payload.data());
-                     payloads_sizes.push_back(static_cast<std::size_t>(payload.size()));
-                 }
-                 if (payloads_data.empty()) {
-                     instance
-                         .insert(types.data(),
-                                 ids.data(),
-                                 nullptr,
-                                 nullptr,
-                                 static_cast<std::size_t>(ids.size()),
-                                 commit)
-                         .raise_on_error();
-                 } else {
-                     instance
-                         .insert(types.data(),
-                                 ids.data(),
-                                 payloads_data.data(),
-                                 payloads_sizes.data(),
-                                 static_cast<std::size_t>(ids.size()),
-                                 commit)
-                         .raise_on_error();
-                 }
-             },
-             "types"_a,
-             "ids"_a,
-             "payloads"_a = py::list(),
-             "commit"_a = false,
-             docstring::add_bulk)
+        .def(
+            "add",
+            [](basalt::Vertices<Orientation>& instance,
+               py::array_t<basalt::vertex_t> types,
+               py::array_t<basalt::vertex_id_t> ids,
+               py::list payloads,
+               bool commit = false) {
+                if (ids.ndim() != 1) {
+                    throw std::runtime_error("Number of dimensions of array 'ids' must be one");
+                }
+                if (types.ndim() != 1) {
+                    throw std::runtime_error("Number of dimensions of array 'types' must be one");
+                }
+                if (ids.size() != types.size()) {
+                    throw std::runtime_error("Number of types and ids differ");
+                }
+                if (!payloads.empty()) {
+                    if (static_cast<std::size_t>(ids.size()) != payloads.size()) {
+                        throw std::runtime_error("Number of ids and payloads differ");
+                    }
+                }
+                std::vector<const char*> payloads_data;
+                std::vector<std::size_t> payloads_sizes;
+                payloads_data.reserve(payloads.size());
+                payloads_sizes.reserve(payloads.size());
+                for (py::handle list_item: payloads) {
+                    py::array_t<char> payload = py::cast<py::array_t<char>>(list_item);
+                    payloads_data.push_back(payload.data());
+                    payloads_sizes.push_back(static_cast<std::size_t>(payload.size()));
+                }
+                if (payloads_data.empty()) {
+                    instance
+                        .insert(types.data(),
+                                ids.data(),
+                                nullptr,
+                                nullptr,
+                                static_cast<std::size_t>(ids.size()),
+                                commit)
+                        .raise_on_error();
+                } else {
+                    instance
+                        .insert(types.data(),
+                                ids.data(),
+                                payloads_data.data(),
+                                payloads_sizes.data(),
+                                static_cast<std::size_t>(ids.size()),
+                                commit)
+                        .raise_on_error();
+                }
+            },
+            "types"_a,
+            "ids"_a,
+            "payloads"_a = py::list(),
+            "commit"_a = false,
+            docstring::add_bulk)
 
-        .def("get",
-             [](basalt::Vertices<Orientation>& vertices,
-                const basalt::vertex_uid_t& vertex) -> py::object {
-                 std::string data;
-                 auto const& status = vertices.get(vertex, &data);
-                 if (status.code == basalt::Status::missing_vertex_code) {
-                     return py::none();
-                 }
-                 status.raise_on_error();
-                 if (data.empty()) {
-                     return py::none();
-                 }
-                 return std::move(basalt::to_py_array(data));
-             },
-             "vertex"_a,
-             docstring::get)
+        .def(
+            "get",
+            [](basalt::Vertices<Orientation>& vertices,
+               const basalt::vertex_uid_t& vertex) -> py::object {
+                std::string data;
+                auto const& status = vertices.get(vertex, &data);
+                if (status.code == basalt::Status::missing_vertex_code) {
+                    return py::none();
+                }
+                status.raise_on_error();
+                if (data.empty()) {
+                    return py::none();
+                }
+                return std::move(basalt::to_py_array(data));
+            },
+            "vertex"_a,
+            docstring::get)
 
-        .def("__getitem__",
-             [](basalt::Vertices<Orientation>& vertices,
-                const basalt::vertex_uid_t& vertex) -> py::object {
-                 std::string data;
-                 auto const& status = vertices.get(vertex, &data);
-                 if (status.code == basalt::Status::missing_vertex_code) {
-                     throw py::key_error();
-                 }
-                 status.raise_on_error();
-                 if (data.empty()) {
-                     return py::none();
-                 }
-                 return std::move(basalt::to_py_array(data));
-             },
-             "vertex"_a,
-             docstring::getitem)
+        .def(
+            "__getitem__",
+            [](basalt::Vertices<Orientation>& vertices,
+               const basalt::vertex_uid_t& vertex) -> py::object {
+                std::string data;
+                auto const& status = vertices.get(vertex, &data);
+                if (status.code == basalt::Status::missing_vertex_code) {
+                    throw py::key_error();
+                }
+                status.raise_on_error();
+                if (data.empty()) {
+                    return py::none();
+                }
+                return std::move(basalt::to_py_array(data));
+            },
+            "vertex"_a,
+            docstring::getitem)
 
 
-        .def("clear",
-             [](basalt::Vertices<Orientation>& vertices, bool commit = false) {
-                 vertices.clear(commit).raise_on_error();
-             },
-             "commit"_a = false,
-             docstring::clear)
+        .def(
+            "clear",
+            [](basalt::Vertices<Orientation>& vertices, bool commit = false) {
+                vertices.clear(commit).raise_on_error();
+            },
+            "commit"_a = false,
+            docstring::clear)
 
-        .def("__contains__",
-             [](basalt::Vertices<Orientation>& vertices, const basalt::vertex_uid_t& vertex) {
-                 bool result = false;
-                 auto const status = vertices.has(vertex, result);
-                 status.raise_on_error();
-                 return result;
-             },
-             "Check presence of a vertex in the graph",
-             "vertex"_a)
+        .def(
+            "__contains__",
+            [](basalt::Vertices<Orientation>& vertices, const basalt::vertex_uid_t& vertex) {
+                bool result = false;
+                auto const status = vertices.has(vertex, result);
+                status.raise_on_error();
+                return result;
+            },
+            "Check presence of a vertex in the graph",
+            "vertex"_a)
 
-        .def("discard",
-             [](basalt::Vertices<Orientation>& vertices,
-                const basalt::vertex_uid_t& vertex,
-                bool commit = false) { vertices.erase(vertex, commit).raise_on_error(); },
-             "vertex"_a,
-             "commit"_a = false,
-             docstring::discard);
+        .def(
+            "discard",
+            [](basalt::Vertices<Orientation>& vertices,
+               const basalt::vertex_uid_t& vertex,
+               bool commit = false) { vertices.erase(vertex, commit).raise_on_error(); },
+            "vertex"_a,
+            "commit"_a = false,
+            docstring::discard);
 }
 
 void register_graph_vertices(py::module& m) {
