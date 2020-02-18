@@ -311,20 +311,19 @@ static void setup_max_open_files(const nlohmann::json& config, rocksdb::Options&
 }
 
 static void setup_create_if_missing(const nlohmann::json& config, rocksdb::Options& options) {
-  {
-    auto const &value = config.find("create_if_missing");
-    if (value != config.end()) {
-      options.create_if_missing =
-          value.value().get<decltype(options.create_if_missing)>();
+    {
+        auto const& value = config.find("create_if_missing");
+        if (value != config.end()) {
+            options.create_if_missing = value.value().get<decltype(options.create_if_missing)>();
+        }
     }
-  }
-  {
-    auto const &value = config.find("create_missing_column_families");
-    if (value != config.end()) {
-      options.create_missing_column_families =
-          value.value().get<decltype(options.create_missing_column_families)>();
+    {
+        auto const& value = config.find("create_missing_column_families");
+        if (value != config.end()) {
+            options.create_missing_column_families =
+                value.value().get<decltype(options.create_missing_column_families)>();
+        }
     }
-  }
 }
 
 static void setup_compression(const nlohmann::json& config, rocksdb::Options& options) {
