@@ -72,7 +72,7 @@ GraphImpl<Orientation>::GraphImpl(const std::string& path, Config config, bool t
 
     rocksdb::DB* db;
 
-    this->config_.configure(*options_, path);
+    this->config_.configure(*options_);
     const auto& column_families = this->config_.column_families();
     std::vector<rocksdb::ColumnFamilyHandle*> handles;
     handles.reserve(column_families.size());

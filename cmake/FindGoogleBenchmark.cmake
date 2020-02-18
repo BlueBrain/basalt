@@ -29,14 +29,15 @@ endif()
 # Checks 'REQUIRED', 'QUIET' and versions.
 include(FindPackageHandleStandardArgs)
 
-find_package_handle_standard_args(GoogleBenchmark
-                                  FOUND_VAR
-                                  GoogleBenchmark_FOUND
-                                  REQUIRED_VARS
-                                  GoogleBenchmark_INCLUDE_DIR
-                                  GoogleBenchmark_LIBRARY
-                                  GoogleBenchmark_LIB_DIR
-                                  VERSION_VAR
-                                  GoogleBenchmark_VERSION_STRING)
+find_package_handle_standard_args(
+  GoogleBenchmark
+  FOUND_VAR
+  GoogleBenchmark_FOUND
+  REQUIRED_VARS
+  GoogleBenchmark_INCLUDE_DIR
+  GoogleBenchmark_LIBRARY
+  GoogleBenchmark_LIB_DIR
+  VERSION_VAR
+  GoogleBenchmark_VERSION_STRING)
 
 mark_as_advanced(GoogleBenchmark_INCLUDE_DIR GoogleBenchmark_LIBRARY GoogleBenchmark_LIB_DIR)
