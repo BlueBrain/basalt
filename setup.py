@@ -115,13 +115,21 @@ class PkgTest(test):
     for the "test" command.
     """
 
-    new_commands = [('test_ext', lambda self: True), ('test_doc', lambda self: True)]
+    user_options = test.user_options + [
+        ('no-doc-test', None, "Do not test documentation snippets"),
+    ]
+    new_commands = [('test_ext', lambda self: true), ('test_doc', lambda self: not self.no_doc_test)]
     sub_commands = test.sub_commands + new_commands
+
+    def initialize_options(self):
+        super().initialize_options()
+        self.no_doc_test = False
 
     def run(self):
         super().run()
         self.run_command('test_ext')
-        self.run_command('test_doc')
+        if not self.no_doc_test:
+            self.run_command('test_doc')
 
 
 install_requirements = ["cached-property>=1.5.1", "numpy>=1.11"]
