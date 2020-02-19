@@ -11,6 +11,7 @@ if [ "x${CPP_CHECK}" != x ] ;then
   rm -rf build-ci && mkdir -p build-ci && cd build-ci
   cmake .. \
     --warn-uninitialized \
+    -DClangFormat_EXECUTABLE=clang-format-9 \
     -DBasalt_FORMATTING:BOOL=ON \
     -DBasalt_STATIC_ANALYSIS:BOOL=ON \
     -DBasalt_CXX_OPTIMIZE:BOOL="$CXX_OPTIMIZE" \
