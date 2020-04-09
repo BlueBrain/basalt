@@ -6,7 +6,7 @@ plugins:
       check: all
       language: c++
       stds:
-        - c++11
+        - c++14
       platform: unix64
       includes:
       - include/
