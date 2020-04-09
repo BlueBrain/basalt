@@ -1,0 +1,14 @@
+version: "2"
+plugins:
+  cppcheck:
+    enabled: true
+    config:
+      check: all
+      language: c++
+      stds:
+        - c++11
+      platform: unix64
+      includes:
+      - include/
+      max_configs: 42
+      inconclusive: false
