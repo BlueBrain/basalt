@@ -9,8 +9,7 @@ the instructions to regenerate the 2 following files:
 
 1. Run the benchmarks and export results in a JSON file
 
-   ```
-   make
+   ```make
    ./map_benchmark --benchmark_out=map_benchmark.json --benchmark_out_format=json
    ```
 
