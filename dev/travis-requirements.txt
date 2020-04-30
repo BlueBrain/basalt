@@ -1,0 +1,2 @@
+breathe<4.15
+sphinx<3

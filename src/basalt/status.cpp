@@ -29,11 +29,6 @@ const Status& Status::ok() {
     return ok_;
 }
 
-const Status& Status::error_not_implemented() {
-    static const Status not_implemented_{Status::not_implemented_code, "operation-not-implemented"};
-    return not_implemented_;
-}
-
 Status Status::error_missing_vertex(const vertex_uid_t& vertex) {
     std::ostringstream oss;
     oss << "Missing vertex " << vertex;

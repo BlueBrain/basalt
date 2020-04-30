@@ -276,8 +276,4 @@ TEST_CASE("create simple GraphKV and check entities", "[GraphKV]") {
         REQUIRE(edges_set.size() == 8);
         REQUIRE(edges_set == expected);
     }
-    {
-        const auto& error = basalt::Status::error_not_implemented();
-        REQUIRE(error.code == basalt::Status::Code::not_implemented_code);
-    }
 }
