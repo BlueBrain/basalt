@@ -22,10 +22,9 @@ struct Status {
      */
     enum Code {
         ok_code = 0,
-        not_implemented_code = -1,
-        missing_vertex_code = -2,
-        invalid_edge_code = -3,
-        missing_edge_code = -4,
+        missing_vertex_code = -1,
+        invalid_edge_code = -2,
+        missing_edge_code = -3,
     };
 
 
@@ -63,12 +62,6 @@ struct Status {
      * \return this instance if member does not throw
      */
     const Status& raise_on_error() const;
-
-    /**
-     * \brief Construct a \a Status
-     * \return A status representing a not implemented state
-     */
-    static const Status& error_not_implemented();
 
     /**
      * \brief Construct a \a Status

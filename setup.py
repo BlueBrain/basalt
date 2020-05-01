@@ -134,7 +134,7 @@ class PkgTest(test):
 
 install_requirements = ["cached-property>=1.5.1", "numpy>=1.11"]
 
-doc_requirements = ["exhale", "m2r", "mistune<2", "sphinx-rtd-theme", "sphinx>=2"]
+doc_requirements = ["exhale", "m2r", "mistune<2", "sphinx-rtd-theme", "sphinx"]
 
 # read the contents of your README file
 this_directory = osp.abspath(osp.dirname(__file__))
