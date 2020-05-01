@@ -22,7 +22,7 @@ if [ "x${CPP_CHECK}" != x ] ;then
   make check-cmake-format
   make clang-tidy
 else
-  pip3 install --user -r $SCRIPT_DIR/travis-requirements.txt
+  python3 -m pip install --user -r $SCRIPT_DIR/travis-requirements.txt
   cd "${TRAVIS_BUILD_DIR}"
   python3 setup.py sdist
   cd dist
