@@ -182,13 +182,14 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
 
     m.def("make_id", &basalt::make_id, "type"_a, "id"_a, docstring::make_id);
 
-    m.def("default_config_file",
-          [](const std::string& path) {
-              std::ofstream ostr(path);
-              ostr << basalt::Config();
-          },
-          "path"_a,
-          docstring::default_json_config);
+    m.def(
+        "default_config_file",
+        [](const std::string& path) {
+            std::ofstream ostr(path);
+            ostr << basalt::Config();
+        },
+        "path"_a,
+        docstring::default_json_config);
 
     py::class_<basalt::Status>(m, "Status", docstring::status)
         .def(py::init([](int code, const std::string& message) {
@@ -220,9 +221,10 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
                                &basalt::UndirectedGraph::vertices,
                                docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::UndirectedGraph::edges, docstring::graph_edges)
-        .def("commit",
-             [](basalt::UndirectedGraph& graph) { graph.commit().raise_on_error(); },
-             docstring::graph_commit)
+        .def(
+            "commit",
+            [](basalt::UndirectedGraph& graph) { graph.commit().raise_on_error(); },
+            docstring::graph_commit)
         .def("statistics", &basalt::UndirectedGraph::statistics, docstring::graph_statistics);
 
     py::class_<basalt::DirectedGraph>(m, "DirectedGraph", docstring::directed_graph)
@@ -235,9 +237,10 @@ PYBIND11_MODULE(_basalt, m) {  // NOLINT
                                &basalt::DirectedGraph::vertices,
                                docstring::graph_vertices)
         .def_property_readonly("edges", &basalt::DirectedGraph::edges, docstring::graph_edges)
-        .def("commit",
-             [](basalt::DirectedGraph& graph) { graph.commit().raise_on_error(); },
-             docstring::graph_commit)
+        .def(
+            "commit",
+            [](basalt::DirectedGraph& graph) { graph.commit().raise_on_error(); },
+            docstring::graph_commit)
         .def("statistics", &basalt::DirectedGraph::statistics, docstring::graph_vertices);
 
     basalt::register_graph_edges(m);

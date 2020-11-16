@@ -28,10 +28,10 @@ addons: &gcc7
     sources:
     - ubuntu-toolchain-r-test
 
-addons: &clang6
+addons: &clang7
   apt:
     packages:
-    - clang-6.0
+    - clang-7
     - doxygen
     - libhdf5-dev
     - librocksdb-dev
@@ -46,28 +46,6 @@ addons: &clang6
     - python3-pyparsing
     - python3-setuptools
     - python3-wheel
-    sources:
-    - ubuntu-toolchain-r-test
-    - llvm-toolchain-bionic-6.0
-
-addons: &clang7
-  apt:
-    packages:
-    - clang-7
-    - libhdf5-dev
-    - librocksdb-dev
-    - python3-babel
-    - python3-bs4
-    - python3-docutils
-    - python3-h5py
-    - python3-lxml
-    - python3-numpy
-    - python3-pip
-    - python3-pygments
-    - python3-pyparsing
-    - python3-setuptools
-    - python3-wheel
-    - valgrind
     sources:
       - ubuntu-toolchain-r-test
       - llvm-toolchain-bionic-7
@@ -94,48 +72,43 @@ addons: &clang8
     - ubuntu-toolchain-r-test
     - llvm-toolchain-bionic-8
 
+addons: &clang9
+  apt:
+    packages:
+    - clang-9
+    - clang-format-9
+    - doxygen
+    - libhdf5-dev
+    - librocksdb-dev
+    - python3-babel
+    - python3-bs4
+    - python3-docutils
+    - python3-h5py
+    - python3-lxml
+    - python3-numpy
+    - python3-pip
+    - python3-pygments
+    - python3-pyparsing
+    - python3-setuptools
+    - python3-wheel
+    - valgrind
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-bionic-9
+
 matrix:
-  allow_failures:
-    - os: osx
   include:
       # Test gcc-7: C++11
-    - env: GCC_VERSION=7 CXX_OPTIMIZE=OFF CPP=11
+ 
+      # Test clang-9: C++11
+    - env: CPP_CHECK=yes CLANG_VERSION=9 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
       os: linux
       dist: bionic
-      addons: *gcc7
-
-      # Test clang-6.0: C++11
-    - env: CLANG_VERSION=6.0 CXX_OPTIMIZE=OFF CPP=11
-      os: linux
-      dist: bionic
-      addons: *clang6
-
-      # Test clang-7: C++11
-    - env: CPP_CHECK=yes CLANG_VERSION=7 CXX_OPTIMIZE=OFF CPP=11 CTEST_ACTION="-T memcheck"
-      os: linux
-      dist: bionic
-      addons: *clang7
-
-      # Test clang-8: C++11
-    - env: CLANG_VERSION=8 CXX_OPTIMIZE=OFF CPP=11
-      os: linux
-      dist: bionic
-      addons: *clang8
-
-      # osx
-    - env: CXX_OPTIMIZE=OFF CPP=11
-      os: osx
-      addons:
-        homebrew:
-          update: true
-          packages:
-          - doxygen
-          - hdf5
-          - llvm
-          - numpy
-          - rocksdb
+      addons: *clang9
 
 before_script:
+  - clang-format-9 --version
+  - exit 1
   - if [ -n "$GCC_VERSION" ]; then export CXX="g++-${GCC_VERSION}" CC="gcc-${GCC_VERSION}"; fi
   - if [ -n "$CLANG_VERSION" ]; then export CXX="clang++-${CLANG_VERSION}" CC="clang-${CLANG_VERSION}"; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CXX="clang++" CC="clang"; ln -s "/usr/local/opt/llvm/bin/clang-tidy" "/usr/local/bin/clang-tidy"; fi
