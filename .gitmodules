@@ -1,14 +1,14 @@
 [submodule "src/third_party/spdlog"]
-	path = src/third_party/spdlog
+	path = 3rdparty/src/spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "src/third_party/fmt"]
-	path = src/third_party/fmt
+	path = 3rdparty/src/fmt
 	url = https://github.com/fmtlib/fmt.git
 [submodule "src/third_party/pybind11"]
-	path = src/third_party/pybind11
+	path = 3rdparty/src/pybind11
 	url = https://github.com/pybind/pybind11.git
 [submodule "src/third_party/cereal"]
-	path = src/third_party/cereal
+	path = 3rdparty/src/cereal
 	url = https://github.com/USCiLab/cereal.git
 [submodule "cmake/hpc-coding-conventions"]
 	path = cmake/hpc-coding-conventions

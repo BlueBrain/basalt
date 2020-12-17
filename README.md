@@ -224,6 +224,7 @@ For instance: `python3 setup.py build_sphinx`
 # Files Layout
 
 ```
+├── 3rdparty/src ............. C++ libraries (mostly as git modules)
 ├── basalt ................... python code of the package
 ├── cmake
 │   └── hpc-coding-conventions git module for C++ code guidelines
@@ -234,7 +235,6 @@ For instance: `python3 setup.py build_sphinx`
 ├── README.md ................ that's me!
 ├── src
 │   ├── basalt ............... C++ library implementation
-│   └── third_party .......... C++ libraries (mostly as git modules)
 └── tests
     ├── benchmarks ........... scripts to execute before creating a git tag
     ├── py ................... python unit-tests

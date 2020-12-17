@@ -71,6 +71,5 @@ set(PYBIND11_SOURCES
     python_bindings/py_helpers.hpp
     python_bindings/py_helpers.cpp)
 set(PYBIND11_CPP_STANDARD -std=c++11)
-add_subdirectory(${pybind11_project_directory})
 pybind11_add_module(_basalt SHARED ${PYBIND11_SOURCES} $<TARGET_OBJECTS:basalt_obj>)
 target_link_libraries(_basalt PRIVATE ${RocksDB_LIBRARIES})
