@@ -103,7 +103,7 @@ repository:
     git pull --ff upstream master
     ```
 
-[github]: https://github.com/tristan0x/basalt
+[github]: https://github.com/BlueBrain/basalt
 
 # Development
 
